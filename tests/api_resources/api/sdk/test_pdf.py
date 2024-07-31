@@ -18,14 +18,14 @@ class TestPdf:
 
     @parametrize
     def test_method_create(self, client: Steel) -> None:
-        pdf = client.v1.sdk.pdf.create(
+        pdf = client.api.sdk.pdf.create(
             url="https://example.com",
         )
         assert_matches_type(object, pdf, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Steel) -> None:
-        response = client.v1.sdk.pdf.with_raw_response.create(
+        response = client.api.sdk.pdf.with_raw_response.create(
             url="https://example.com",
         )
 
@@ -36,7 +36,7 @@ class TestPdf:
 
     @parametrize
     def test_streaming_response_create(self, client: Steel) -> None:
-        with client.v1.sdk.pdf.with_streaming_response.create(
+        with client.api.sdk.pdf.with_streaming_response.create(
             url="https://example.com",
         ) as response:
             assert not response.is_closed
@@ -53,14 +53,14 @@ class TestAsyncPdf:
 
     @parametrize
     async def test_method_create(self, async_client: AsyncSteel) -> None:
-        pdf = await async_client.v1.sdk.pdf.create(
+        pdf = await async_client.api.sdk.pdf.create(
             url="https://example.com",
         )
         assert_matches_type(object, pdf, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSteel) -> None:
-        response = await async_client.v1.sdk.pdf.with_raw_response.create(
+        response = await async_client.api.sdk.pdf.with_raw_response.create(
             url="https://example.com",
         )
 
@@ -71,7 +71,7 @@ class TestAsyncPdf:
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSteel) -> None:
-        async with async_client.v1.sdk.pdf.with_streaming_response.create(
+        async with async_client.api.sdk.pdf.with_streaming_response.create(
             url="https://example.com",
         ) as response:
             assert not response.is_closed
