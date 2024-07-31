@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from typing import List
+from typing_extensions import Literal
+
 import httpx
 
 from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
@@ -18,24 +21,25 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.v1.sdk import screenshot_create_params
+from ....types.api.sdk import scrape_create_params
 
-__all__ = ["ScreenshotResource", "AsyncScreenshotResource"]
+__all__ = ["ScrapeResource", "AsyncScrapeResource"]
 
 
-class ScreenshotResource(SyncAPIResource):
+class ScrapeResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ScreenshotResourceWithRawResponse:
-        return ScreenshotResourceWithRawResponse(self)
+    def with_raw_response(self) -> ScrapeResourceWithRawResponse:
+        return ScrapeResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ScreenshotResourceWithStreamingResponse:
-        return ScreenshotResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> ScrapeResourceWithStreamingResponse:
+        return ScrapeResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
         url: str,
+        format: List[Literal["html", "readability"]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -54,8 +58,14 @@ class ScreenshotResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/sdk/screenshot/",
-            body=maybe_transform({"url": url}, screenshot_create_params.ScreenshotCreateParams),
+            "/v1/sdk/scrape/",
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "format": format,
+                },
+                scrape_create_params.ScrapeCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -63,19 +73,20 @@ class ScreenshotResource(SyncAPIResource):
         )
 
 
-class AsyncScreenshotResource(AsyncAPIResource):
+class AsyncScrapeResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncScreenshotResourceWithRawResponse:
-        return AsyncScreenshotResourceWithRawResponse(self)
+    def with_raw_response(self) -> AsyncScrapeResourceWithRawResponse:
+        return AsyncScrapeResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncScreenshotResourceWithStreamingResponse:
-        return AsyncScreenshotResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> AsyncScrapeResourceWithStreamingResponse:
+        return AsyncScrapeResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
         url: str,
+        format: List[Literal["html", "readability"]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -94,8 +105,14 @@ class AsyncScreenshotResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/sdk/screenshot/",
-            body=await async_maybe_transform({"url": url}, screenshot_create_params.ScreenshotCreateParams),
+            "/v1/sdk/scrape/",
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "format": format,
+                },
+                scrape_create_params.ScrapeCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -103,37 +120,37 @@ class AsyncScreenshotResource(AsyncAPIResource):
         )
 
 
-class ScreenshotResourceWithRawResponse:
-    def __init__(self, screenshot: ScreenshotResource) -> None:
-        self._screenshot = screenshot
+class ScrapeResourceWithRawResponse:
+    def __init__(self, scrape: ScrapeResource) -> None:
+        self._scrape = scrape
 
         self.create = to_raw_response_wrapper(
-            screenshot.create,
+            scrape.create,
         )
 
 
-class AsyncScreenshotResourceWithRawResponse:
-    def __init__(self, screenshot: AsyncScreenshotResource) -> None:
-        self._screenshot = screenshot
+class AsyncScrapeResourceWithRawResponse:
+    def __init__(self, scrape: AsyncScrapeResource) -> None:
+        self._scrape = scrape
 
         self.create = async_to_raw_response_wrapper(
-            screenshot.create,
+            scrape.create,
         )
 
 
-class ScreenshotResourceWithStreamingResponse:
-    def __init__(self, screenshot: ScreenshotResource) -> None:
-        self._screenshot = screenshot
+class ScrapeResourceWithStreamingResponse:
+    def __init__(self, scrape: ScrapeResource) -> None:
+        self._scrape = scrape
 
         self.create = to_streamed_response_wrapper(
-            screenshot.create,
+            scrape.create,
         )
 
 
-class AsyncScreenshotResourceWithStreamingResponse:
-    def __init__(self, screenshot: AsyncScreenshotResource) -> None:
-        self._screenshot = screenshot
+class AsyncScrapeResourceWithStreamingResponse:
+    def __init__(self, scrape: AsyncScrapeResource) -> None:
+        self._scrape = scrape
 
         self.create = async_to_streamed_response_wrapper(
-            screenshot.create,
+            scrape.create,
         )

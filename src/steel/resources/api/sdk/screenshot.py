@@ -2,9 +2,6 @@
 
 from __future__ import annotations
 
-from typing import List
-from typing_extensions import Literal
-
 import httpx
 
 from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
@@ -21,25 +18,24 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.v1.sdk import scrape_create_params
+from ....types.api.sdk import screenshot_create_params
 
-__all__ = ["ScrapeResource", "AsyncScrapeResource"]
+__all__ = ["ScreenshotResource", "AsyncScreenshotResource"]
 
 
-class ScrapeResource(SyncAPIResource):
+class ScreenshotResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ScrapeResourceWithRawResponse:
-        return ScrapeResourceWithRawResponse(self)
+    def with_raw_response(self) -> ScreenshotResourceWithRawResponse:
+        return ScreenshotResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ScrapeResourceWithStreamingResponse:
-        return ScrapeResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> ScreenshotResourceWithStreamingResponse:
+        return ScreenshotResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
         url: str,
-        format: List[Literal["html", "readability"]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -58,14 +54,8 @@ class ScrapeResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/sdk/scrape/",
-            body=maybe_transform(
-                {
-                    "url": url,
-                    "format": format,
-                },
-                scrape_create_params.ScrapeCreateParams,
-            ),
+            "/v1/sdk/screenshot/",
+            body=maybe_transform({"url": url}, screenshot_create_params.ScreenshotCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -73,20 +63,19 @@ class ScrapeResource(SyncAPIResource):
         )
 
 
-class AsyncScrapeResource(AsyncAPIResource):
+class AsyncScreenshotResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncScrapeResourceWithRawResponse:
-        return AsyncScrapeResourceWithRawResponse(self)
+    def with_raw_response(self) -> AsyncScreenshotResourceWithRawResponse:
+        return AsyncScreenshotResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncScrapeResourceWithStreamingResponse:
-        return AsyncScrapeResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> AsyncScreenshotResourceWithStreamingResponse:
+        return AsyncScreenshotResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
         url: str,
-        format: List[Literal["html", "readability"]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -105,14 +94,8 @@ class AsyncScrapeResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/sdk/scrape/",
-            body=await async_maybe_transform(
-                {
-                    "url": url,
-                    "format": format,
-                },
-                scrape_create_params.ScrapeCreateParams,
-            ),
+            "/v1/sdk/screenshot/",
+            body=await async_maybe_transform({"url": url}, screenshot_create_params.ScreenshotCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -120,37 +103,37 @@ class AsyncScrapeResource(AsyncAPIResource):
         )
 
 
-class ScrapeResourceWithRawResponse:
-    def __init__(self, scrape: ScrapeResource) -> None:
-        self._scrape = scrape
+class ScreenshotResourceWithRawResponse:
+    def __init__(self, screenshot: ScreenshotResource) -> None:
+        self._screenshot = screenshot
 
         self.create = to_raw_response_wrapper(
-            scrape.create,
+            screenshot.create,
         )
 
 
-class AsyncScrapeResourceWithRawResponse:
-    def __init__(self, scrape: AsyncScrapeResource) -> None:
-        self._scrape = scrape
+class AsyncScreenshotResourceWithRawResponse:
+    def __init__(self, screenshot: AsyncScreenshotResource) -> None:
+        self._screenshot = screenshot
 
         self.create = async_to_raw_response_wrapper(
-            scrape.create,
+            screenshot.create,
         )
 
 
-class ScrapeResourceWithStreamingResponse:
-    def __init__(self, scrape: ScrapeResource) -> None:
-        self._scrape = scrape
+class ScreenshotResourceWithStreamingResponse:
+    def __init__(self, screenshot: ScreenshotResource) -> None:
+        self._screenshot = screenshot
 
         self.create = to_streamed_response_wrapper(
-            scrape.create,
+            screenshot.create,
         )
 
 
-class AsyncScrapeResourceWithStreamingResponse:
-    def __init__(self, scrape: AsyncScrapeResource) -> None:
-        self._scrape = scrape
+class AsyncScreenshotResourceWithStreamingResponse:
+    def __init__(self, screenshot: AsyncScreenshotResource) -> None:
+        self._screenshot = screenshot
 
         self.create = async_to_streamed_response_wrapper(
-            scrape.create,
+            screenshot.create,
         )

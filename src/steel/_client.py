@@ -47,7 +47,6 @@ __all__ = [
 
 class Steel(SyncAPIClient):
     api: resources.APIResource
-    v1: resources.V1Resource
     with_raw_response: SteelWithRawResponse
     with_streaming_response: SteelWithStreamedResponse
 
@@ -93,7 +92,6 @@ class Steel(SyncAPIClient):
         )
 
         self.api = resources.APIResource(self)
-        self.v1 = resources.V1Resource(self)
         self.with_raw_response = SteelWithRawResponse(self)
         self.with_streaming_response = SteelWithStreamedResponse(self)
 
@@ -196,7 +194,6 @@ class Steel(SyncAPIClient):
 
 class AsyncSteel(AsyncAPIClient):
     api: resources.AsyncAPIResource
-    v1: resources.AsyncV1Resource
     with_raw_response: AsyncSteelWithRawResponse
     with_streaming_response: AsyncSteelWithStreamedResponse
 
@@ -242,7 +239,6 @@ class AsyncSteel(AsyncAPIClient):
         )
 
         self.api = resources.AsyncAPIResource(self)
-        self.v1 = resources.AsyncV1Resource(self)
         self.with_raw_response = AsyncSteelWithRawResponse(self)
         self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
 
@@ -346,25 +342,21 @@ class AsyncSteel(AsyncAPIClient):
 class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
         self.api = resources.APIResourceWithRawResponse(client.api)
-        self.v1 = resources.V1ResourceWithRawResponse(client.v1)
 
 
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
         self.api = resources.AsyncAPIResourceWithRawResponse(client.api)
-        self.v1 = resources.AsyncV1ResourceWithRawResponse(client.v1)
 
 
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
         self.api = resources.APIResourceWithStreamingResponse(client.api)
-        self.v1 = resources.V1ResourceWithStreamingResponse(client.v1)
 
 
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
         self.api = resources.AsyncAPIResourceWithStreamingResponse(client.api)
-        self.v1 = resources.AsyncV1ResourceWithStreamingResponse(client.v1)
 
 
 Client = Steel

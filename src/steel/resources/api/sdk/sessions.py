@@ -20,33 +20,33 @@ from ...._response import (
     async_to_streamed_response_wrapper,
 )
 from ...._base_client import make_request_options
-from ....types.v1.sdk import context_create_params, context_update_params
-from ....types.v1.sdk.context import Context
-from ....types.v1.sdk.context_list_response import ContextListResponse
+from ....types.api.sdk import session_create_params, session_update_params
+from ....types.api.sdk.session import Session
+from ....types.api.sdk.session_list_response import SessionListResponse
 
-__all__ = ["ContextResource", "AsyncContextResource"]
+__all__ = ["SessionsResource", "AsyncSessionsResource"]
 
 
-class ContextResource(SyncAPIResource):
+class SessionsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ContextResourceWithRawResponse:
-        return ContextResourceWithRawResponse(self)
+    def with_raw_response(self) -> SessionsResourceWithRawResponse:
+        return SessionsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ContextResourceWithStreamingResponse:
-        return ContextResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> SessionsResourceWithStreamingResponse:
+        return SessionsResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
-        proxy: str | NotGiven = NOT_GIVEN,
+        org_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> Session:
         """
         Args:
           extra_headers: Send extra headers
@@ -58,12 +58,12 @@ class ContextResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/sdk/context/",
-            body=maybe_transform({"proxy": proxy}, context_create_params.ContextCreateParams),
+            "/v1/sdk/sessions/",
+            body=maybe_transform({"org_id": org_id}, session_create_params.SessionCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=Session,
         )
 
     def retrieve(
@@ -76,7 +76,7 @@ class ContextResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> Session:
         """
         Args:
           extra_headers: Send extra headers
@@ -90,25 +90,25 @@ class ContextResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sdk/context/{id}/",
+            f"/v1/sdk/sessions/{id}/",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=Session,
         )
 
     def update(
         self,
         id: str,
         *,
-        proxy: Optional[str] | NotGiven = NOT_GIVEN,
+        websocket_url: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> Session:
         """
         Args:
           extra_headers: Send extra headers
@@ -122,12 +122,12 @@ class ContextResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._patch(
-            f"/v1/sdk/context/{id}/",
-            body=maybe_transform({"proxy": proxy}, context_update_params.ContextUpdateParams),
+            f"/v1/sdk/sessions/{id}/",
+            body=maybe_transform({"websocket_url": websocket_url}, session_update_params.SessionUpdateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=Session,
         )
 
     def list(
@@ -139,13 +139,13 @@ class ContextResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextListResponse:
+    ) -> SessionListResponse:
         return self._get(
-            "/v1/sdk/context/",
+            "/v1/sdk/sessions/",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextListResponse,
+            cast_to=SessionListResponse,
         )
 
     def delete(
@@ -173,7 +173,7 @@ class ContextResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/sdk/context/{id}/",
+            f"/v1/sdk/sessions/{id}/",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -181,26 +181,26 @@ class ContextResource(SyncAPIResource):
         )
 
 
-class AsyncContextResource(AsyncAPIResource):
+class AsyncSessionsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncContextResourceWithRawResponse:
-        return AsyncContextResourceWithRawResponse(self)
+    def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
+        return AsyncSessionsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncContextResourceWithStreamingResponse:
-        return AsyncContextResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> AsyncSessionsResourceWithStreamingResponse:
+        return AsyncSessionsResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
-        proxy: str | NotGiven = NOT_GIVEN,
+        org_id: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> Session:
         """
         Args:
           extra_headers: Send extra headers
@@ -212,12 +212,12 @@ class AsyncContextResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/sdk/context/",
-            body=await async_maybe_transform({"proxy": proxy}, context_create_params.ContextCreateParams),
+            "/v1/sdk/sessions/",
+            body=await async_maybe_transform({"org_id": org_id}, session_create_params.SessionCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=Session,
         )
 
     async def retrieve(
@@ -230,7 +230,7 @@ class AsyncContextResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> Session:
         """
         Args:
           extra_headers: Send extra headers
@@ -244,25 +244,25 @@ class AsyncContextResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sdk/context/{id}/",
+            f"/v1/sdk/sessions/{id}/",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=Session,
         )
 
     async def update(
         self,
         id: str,
         *,
-        proxy: Optional[str] | NotGiven = NOT_GIVEN,
+        websocket_url: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> Session:
         """
         Args:
           extra_headers: Send extra headers
@@ -276,12 +276,14 @@ class AsyncContextResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._patch(
-            f"/v1/sdk/context/{id}/",
-            body=await async_maybe_transform({"proxy": proxy}, context_update_params.ContextUpdateParams),
+            f"/v1/sdk/sessions/{id}/",
+            body=await async_maybe_transform(
+                {"websocket_url": websocket_url}, session_update_params.SessionUpdateParams
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=Session,
         )
 
     async def list(
@@ -293,13 +295,13 @@ class AsyncContextResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextListResponse:
+    ) -> SessionListResponse:
         return await self._get(
-            "/v1/sdk/context/",
+            "/v1/sdk/sessions/",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextListResponse,
+            cast_to=SessionListResponse,
         )
 
     async def delete(
@@ -327,7 +329,7 @@ class AsyncContextResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/sdk/context/{id}/",
+            f"/v1/sdk/sessions/{id}/",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -335,85 +337,85 @@ class AsyncContextResource(AsyncAPIResource):
         )
 
 
-class ContextResourceWithRawResponse:
-    def __init__(self, context: ContextResource) -> None:
-        self._context = context
+class SessionsResourceWithRawResponse:
+    def __init__(self, sessions: SessionsResource) -> None:
+        self._sessions = sessions
 
         self.create = to_raw_response_wrapper(
-            context.create,
+            sessions.create,
         )
         self.retrieve = to_raw_response_wrapper(
-            context.retrieve,
+            sessions.retrieve,
         )
         self.update = to_raw_response_wrapper(
-            context.update,
+            sessions.update,
         )
         self.list = to_raw_response_wrapper(
-            context.list,
+            sessions.list,
         )
         self.delete = to_raw_response_wrapper(
-            context.delete,
+            sessions.delete,
         )
 
 
-class AsyncContextResourceWithRawResponse:
-    def __init__(self, context: AsyncContextResource) -> None:
-        self._context = context
+class AsyncSessionsResourceWithRawResponse:
+    def __init__(self, sessions: AsyncSessionsResource) -> None:
+        self._sessions = sessions
 
         self.create = async_to_raw_response_wrapper(
-            context.create,
+            sessions.create,
         )
         self.retrieve = async_to_raw_response_wrapper(
-            context.retrieve,
+            sessions.retrieve,
         )
         self.update = async_to_raw_response_wrapper(
-            context.update,
+            sessions.update,
         )
         self.list = async_to_raw_response_wrapper(
-            context.list,
+            sessions.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            context.delete,
+            sessions.delete,
         )
 
 
-class ContextResourceWithStreamingResponse:
-    def __init__(self, context: ContextResource) -> None:
-        self._context = context
+class SessionsResourceWithStreamingResponse:
+    def __init__(self, sessions: SessionsResource) -> None:
+        self._sessions = sessions
 
         self.create = to_streamed_response_wrapper(
-            context.create,
+            sessions.create,
         )
         self.retrieve = to_streamed_response_wrapper(
-            context.retrieve,
+            sessions.retrieve,
         )
         self.update = to_streamed_response_wrapper(
-            context.update,
+            sessions.update,
         )
         self.list = to_streamed_response_wrapper(
-            context.list,
+            sessions.list,
         )
         self.delete = to_streamed_response_wrapper(
-            context.delete,
+            sessions.delete,
         )
 
 
-class AsyncContextResourceWithStreamingResponse:
-    def __init__(self, context: AsyncContextResource) -> None:
-        self._context = context
+class AsyncSessionsResourceWithStreamingResponse:
+    def __init__(self, sessions: AsyncSessionsResource) -> None:
+        self._sessions = sessions
 
         self.create = async_to_streamed_response_wrapper(
-            context.create,
+            sessions.create,
         )
         self.retrieve = async_to_streamed_response_wrapper(
-            context.retrieve,
+            sessions.retrieve,
         )
         self.update = async_to_streamed_response_wrapper(
-            context.update,
+            sessions.update,
         )
         self.list = async_to_streamed_response_wrapper(
-            context.list,
+            sessions.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            context.delete,
+            sessions.delete,
         )

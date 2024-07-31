@@ -8,6 +8,14 @@ from .api import (
     APIResourceWithStreamingResponse,
     AsyncAPIResourceWithStreamingResponse,
 )
+from .sdk import (
+    SDKResource,
+    AsyncSDKResource,
+    SDKResourceWithRawResponse,
+    AsyncSDKResourceWithRawResponse,
+    SDKResourceWithStreamingResponse,
+    AsyncSDKResourceWithStreamingResponse,
+)
 from .schema import (
     SchemaResource,
     AsyncSchemaResource,
@@ -24,6 +32,12 @@ __all__ = [
     "AsyncSchemaResourceWithRawResponse",
     "SchemaResourceWithStreamingResponse",
     "AsyncSchemaResourceWithStreamingResponse",
+    "SDKResource",
+    "AsyncSDKResource",
+    "SDKResourceWithRawResponse",
+    "AsyncSDKResourceWithRawResponse",
+    "SDKResourceWithStreamingResponse",
+    "AsyncSDKResourceWithStreamingResponse",
     "APIResource",
     "AsyncAPIResource",
     "APIResourceWithRawResponse",
