@@ -2,39 +2,39 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
-from ...._utils import (
+from ..types import context_create_params
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import (
     maybe_transform,
     async_maybe_transform,
 )
-from ...._compat import cached_property
-from ...._resource import SyncAPIResource, AsyncAPIResource
-from ...._response import (
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...._base_client import make_request_options
-from ....types.api.sdk import context_create_params, context_update_params
-from ....types.api.sdk.context import Context
-from ....types.api.sdk.context_list_response import ContextListResponse
+from .._base_client import make_request_options
+from ..types.get_context_response import GetContextResponse
+from ..types.get_contexts_response import GetContextsResponse
+from ..types.create_context_response import CreateContextResponse
+from ..types.delete_context_response import DeleteContextResponse
 
-__all__ = ["ContextResource", "AsyncContextResource"]
+__all__ = ["ContextsResource", "AsyncContextsResource"]
 
 
-class ContextResource(SyncAPIResource):
+class ContextsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ContextResourceWithRawResponse:
-        return ContextResourceWithRawResponse(self)
+    def with_raw_response(self) -> ContextsResourceWithRawResponse:
+        return ContextsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ContextResourceWithStreamingResponse:
-        return ContextResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> ContextsResourceWithStreamingResponse:
+        return ContextsResourceWithStreamingResponse(self)
 
     def create(
         self,
@@ -46,9 +46,13 @@ class ContextResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> CreateContextResponse:
         """
+        Create a new browser context with specified settings
+
         Args:
+          proxy: Proxy settings for the context
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -58,12 +62,12 @@ class ContextResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v1/sdk/context/",
+            "/v1/context",
             body=maybe_transform({"proxy": proxy}, context_create_params.ContextCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=CreateContextResponse,
         )
 
     def retrieve(
@@ -76,8 +80,10 @@ class ContextResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> GetContextResponse:
         """
+        Retrieve details of a specific saved browser context
+
         Args:
           extra_headers: Send extra headers
 
@@ -90,44 +96,11 @@ class ContextResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sdk/context/{id}/",
+            f"/v1/context/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
-        )
-
-    def update(
-        self,
-        id: str,
-        *,
-        proxy: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
-        """
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._patch(
-            f"/v1/sdk/context/{id}/",
-            body=maybe_transform({"proxy": proxy}, context_update_params.ContextUpdateParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Context,
+            cast_to=GetContextResponse,
         )
 
     def list(
@@ -139,13 +112,14 @@ class ContextResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextListResponse:
+    ) -> GetContextsResponse:
+        """Retrieve a list of all saved browser contexts"""
         return self._get(
-            "/v1/sdk/context/",
+            "/v1/context",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextListResponse,
+            cast_to=GetContextsResponse,
         )
 
     def delete(
@@ -158,8 +132,10 @@ class ContextResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> DeleteContextResponse:
         """
+        Delete a specific saved browser context
+
         Args:
           extra_headers: Send extra headers
 
@@ -171,24 +147,23 @@ class ContextResource(SyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return self._delete(
-            f"/v1/sdk/context/{id}/",
+            f"/v1/context/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=DeleteContextResponse,
         )
 
 
-class AsyncContextResource(AsyncAPIResource):
+class AsyncContextsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncContextResourceWithRawResponse:
-        return AsyncContextResourceWithRawResponse(self)
+    def with_raw_response(self) -> AsyncContextsResourceWithRawResponse:
+        return AsyncContextsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncContextResourceWithStreamingResponse:
-        return AsyncContextResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> AsyncContextsResourceWithStreamingResponse:
+        return AsyncContextsResourceWithStreamingResponse(self)
 
     async def create(
         self,
@@ -200,9 +175,13 @@ class AsyncContextResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> CreateContextResponse:
         """
+        Create a new browser context with specified settings
+
         Args:
+          proxy: Proxy settings for the context
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -212,12 +191,12 @@ class AsyncContextResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v1/sdk/context/",
+            "/v1/context",
             body=await async_maybe_transform({"proxy": proxy}, context_create_params.ContextCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=CreateContextResponse,
         )
 
     async def retrieve(
@@ -230,8 +209,10 @@ class AsyncContextResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> GetContextResponse:
         """
+        Retrieve details of a specific saved browser context
+
         Args:
           extra_headers: Send extra headers
 
@@ -244,44 +225,11 @@ class AsyncContextResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sdk/context/{id}/",
+            f"/v1/context/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
-        )
-
-    async def update(
-        self,
-        id: str,
-        *,
-        proxy: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
-        """
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._patch(
-            f"/v1/sdk/context/{id}/",
-            body=await async_maybe_transform({"proxy": proxy}, context_update_params.ContextUpdateParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Context,
+            cast_to=GetContextResponse,
         )
 
     async def list(
@@ -293,13 +241,14 @@ class AsyncContextResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextListResponse:
+    ) -> GetContextsResponse:
+        """Retrieve a list of all saved browser contexts"""
         return await self._get(
-            "/v1/sdk/context/",
+            "/v1/context",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextListResponse,
+            cast_to=GetContextsResponse,
         )
 
     async def delete(
@@ -312,8 +261,10 @@ class AsyncContextResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> DeleteContextResponse:
         """
+        Delete a specific saved browser context
+
         Args:
           extra_headers: Send extra headers
 
@@ -325,95 +276,82 @@ class AsyncContextResource(AsyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
         return await self._delete(
-            f"/v1/sdk/context/{id}/",
+            f"/v1/context/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=DeleteContextResponse,
         )
 
 
-class ContextResourceWithRawResponse:
-    def __init__(self, context: ContextResource) -> None:
-        self._context = context
+class ContextsResourceWithRawResponse:
+    def __init__(self, contexts: ContextsResource) -> None:
+        self._contexts = contexts
 
         self.create = to_raw_response_wrapper(
-            context.create,
+            contexts.create,
         )
         self.retrieve = to_raw_response_wrapper(
-            context.retrieve,
-        )
-        self.update = to_raw_response_wrapper(
-            context.update,
+            contexts.retrieve,
         )
         self.list = to_raw_response_wrapper(
-            context.list,
+            contexts.list,
         )
         self.delete = to_raw_response_wrapper(
-            context.delete,
+            contexts.delete,
         )
 
 
-class AsyncContextResourceWithRawResponse:
-    def __init__(self, context: AsyncContextResource) -> None:
-        self._context = context
+class AsyncContextsResourceWithRawResponse:
+    def __init__(self, contexts: AsyncContextsResource) -> None:
+        self._contexts = contexts
 
         self.create = async_to_raw_response_wrapper(
-            context.create,
+            contexts.create,
         )
         self.retrieve = async_to_raw_response_wrapper(
-            context.retrieve,
-        )
-        self.update = async_to_raw_response_wrapper(
-            context.update,
+            contexts.retrieve,
         )
         self.list = async_to_raw_response_wrapper(
-            context.list,
+            contexts.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            context.delete,
+            contexts.delete,
         )
 
 
-class ContextResourceWithStreamingResponse:
-    def __init__(self, context: ContextResource) -> None:
-        self._context = context
+class ContextsResourceWithStreamingResponse:
+    def __init__(self, contexts: ContextsResource) -> None:
+        self._contexts = contexts
 
         self.create = to_streamed_response_wrapper(
-            context.create,
+            contexts.create,
         )
         self.retrieve = to_streamed_response_wrapper(
-            context.retrieve,
-        )
-        self.update = to_streamed_response_wrapper(
-            context.update,
+            contexts.retrieve,
         )
         self.list = to_streamed_response_wrapper(
-            context.list,
+            contexts.list,
         )
         self.delete = to_streamed_response_wrapper(
-            context.delete,
+            contexts.delete,
         )
 
 
-class AsyncContextResourceWithStreamingResponse:
-    def __init__(self, context: AsyncContextResource) -> None:
-        self._context = context
+class AsyncContextsResourceWithStreamingResponse:
+    def __init__(self, contexts: AsyncContextsResource) -> None:
+        self._contexts = contexts
 
         self.create = async_to_streamed_response_wrapper(
-            context.create,
+            contexts.create,
         )
         self.retrieve = async_to_streamed_response_wrapper(
-            context.retrieve,
-        )
-        self.update = async_to_streamed_response_wrapper(
-            context.update,
+            contexts.retrieve,
         )
         self.list = async_to_streamed_response_wrapper(
-            context.list,
+            contexts.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            context.delete,
+            contexts.delete,
         )

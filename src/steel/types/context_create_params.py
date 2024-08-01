@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import TypedDict
 
-__all__ = ["ContextUpdateParams"]
+__all__ = ["ContextCreateParams"]
 
 
-class ContextUpdateParams(TypedDict, total=False):
-    proxy: Optional[str]
+class ContextCreateParams(TypedDict, total=False):
+    proxy: str
+    """Proxy settings for the context"""

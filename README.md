@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.steel.com](https://docs.steel.com). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.steel.dev](https://docs.steel.dev). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -31,8 +31,17 @@ from steel import Steel
 
 client = Steel()
 
-schema_retrieve_response = client.api.schema.retrieve()
+session_response = client.sessions.create(
+    org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+)
+print(session_response.id)
 ```
+
+While you can provide a `bearer_token` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `STEEL_BEARER_TOKEN="My Bearer Token"` to your `.env` file
+so that your Bearer Token is not stored in source control.
 
 ## Async usage
 
@@ -46,7 +55,11 @@ client = AsyncSteel()
 
 
 async def main() -> None:
-    schema_retrieve_response = await client.api.schema.retrieve()
+    session_response = await client.sessions.create(
+        org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    )
+    print(session_response.id)
 
 
 asyncio.run(main())
@@ -79,7 +92,10 @@ from steel import Steel
 client = Steel()
 
 try:
-    client.api.schema.retrieve()
+    client.sessions.create(
+        org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    )
 except steel.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -122,7 +138,10 @@ client = Steel(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).api.schema.retrieve()
+client.with_options(max_retries=5).sessions.create(
+    org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+)
 ```
 
 ### Timeouts
@@ -145,7 +164,10 @@ client = Steel(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).api.schema.retrieve()
+client.with_options(timeout=5.0).sessions.create(
+    org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -184,11 +206,14 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from steel import Steel
 
 client = Steel()
-response = client.api.schema.with_raw_response.retrieve()
+response = client.sessions.with_raw_response.create(
+    org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+)
 print(response.headers.get('X-My-Header'))
 
-schema = response.parse()  # get the object that `api.schema.retrieve()` would have returned
-print(schema)
+session = response.parse()  # get the object that `sessions.create()` would have returned
+print(session.id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/steel-python/tree/main/src/steel/_response.py) object.
@@ -202,7 +227,10 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.api.schema.with_streaming_response.retrieve() as response:
+with client.sessions.with_streaming_response.create(
+    org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+    orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():

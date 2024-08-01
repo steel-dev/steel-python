@@ -1,83 +1,47 @@
-# API
-
-## Schema
+# Steel
 
 Types:
 
 ```python
-from steel.types.api import SchemaRetrieveResponse
+from steel.types import ScrapeResponse
 ```
 
 Methods:
 
-- <code title="get /api/schema/">client.api.schema.<a href="./src/steel/resources/api/schema.py">retrieve</a>(\*\*<a href="src/steel/types/api/schema_retrieve_params.py">params</a>) -> <a href="./src/steel/types/api/schema_retrieve_response.py">SchemaRetrieveResponse</a></code>
+- <code title="post /v1/pdf">client.<a href="./src/steel/_client.py">pdf</a>(\*\*<a href="src/steel/types/top_level_pdf_params.py">params</a>) -> BinaryAPIResponse</code>
+- <code title="post /v1/scrape">client.<a href="./src/steel/_client.py">scrape</a>(\*\*<a href="src/steel/types/top_level_scrape_params.py">params</a>) -> <a href="./src/steel/types/scrape_response.py">ScrapeResponse</a></code>
+- <code title="post /v1/screenshot">client.<a href="./src/steel/_client.py">screenshot</a>(\*\*<a href="src/steel/types/top_level_screenshot_params.py">params</a>) -> BinaryAPIResponse</code>
 
-## SDK
-
-### Context
+# Sessions
 
 Types:
 
 ```python
-from steel.types.api.sdk import Context, ContextListResponse
+from steel.types import DeleteSessionResponse, SessionResponse, SessionsResponse
 ```
 
 Methods:
 
-- <code title="post /v1/sdk/context/">client.api.sdk.context.<a href="./src/steel/resources/api/sdk/context.py">create</a>(\*\*<a href="src/steel/types/api/sdk/context_create_params.py">params</a>) -> <a href="./src/steel/types/api/sdk/context.py">Context</a></code>
-- <code title="get /v1/sdk/context/{id}/">client.api.sdk.context.<a href="./src/steel/resources/api/sdk/context.py">retrieve</a>(id) -> <a href="./src/steel/types/api/sdk/context.py">Context</a></code>
-- <code title="patch /v1/sdk/context/{id}/">client.api.sdk.context.<a href="./src/steel/resources/api/sdk/context.py">update</a>(id, \*\*<a href="src/steel/types/api/sdk/context_update_params.py">params</a>) -> <a href="./src/steel/types/api/sdk/context.py">Context</a></code>
-- <code title="get /v1/sdk/context/">client.api.sdk.context.<a href="./src/steel/resources/api/sdk/context.py">list</a>() -> <a href="./src/steel/types/api/sdk/context_list_response.py">ContextListResponse</a></code>
-- <code title="delete /v1/sdk/context/{id}/">client.api.sdk.context.<a href="./src/steel/resources/api/sdk/context.py">delete</a>(id) -> None</code>
+- <code title="post /v1/sessions">client.sessions.<a href="./src/steel/resources/sessions.py">create</a>(\*\*<a href="src/steel/types/session_create_params.py">params</a>) -> <a href="./src/steel/types/session_response.py">SessionResponse</a></code>
+- <code title="get /v1/sessions">client.sessions.<a href="./src/steel/resources/sessions.py">list</a>() -> <a href="./src/steel/types/sessions_response.py">SessionsResponse</a></code>
+- <code title="delete /v1/sessions/{id}">client.sessions.<a href="./src/steel/resources/sessions.py">delete</a>(id) -> <a href="./src/steel/types/delete_session_response.py">DeleteSessionResponse</a></code>
 
-### Pdf
+# Contexts
 
 Types:
 
 ```python
-from steel.types.api.sdk import PdfCreateResponse
+from steel.types import (
+    CreateContextResponse,
+    DeleteContextResponse,
+    GetContextResponse,
+    GetContextsResponse,
+)
 ```
 
 Methods:
 
-- <code title="post /v1/sdk/pdf/">client.api.sdk.pdf.<a href="./src/steel/resources/api/sdk/pdf.py">create</a>(\*\*<a href="src/steel/types/api/sdk/pdf_create_params.py">params</a>) -> <a href="./src/steel/types/api/sdk/pdf_create_response.py">object</a></code>
-
-### Scrape
-
-Types:
-
-```python
-from steel.types.api.sdk import ScrapeCreateResponse
-```
-
-Methods:
-
-- <code title="post /v1/sdk/scrape/">client.api.sdk.scrape.<a href="./src/steel/resources/api/sdk/scrape.py">create</a>(\*\*<a href="src/steel/types/api/sdk/scrape_create_params.py">params</a>) -> <a href="./src/steel/types/api/sdk/scrape_create_response.py">object</a></code>
-
-### Screenshot
-
-Types:
-
-```python
-from steel.types.api.sdk import ScreenshotCreateResponse
-```
-
-Methods:
-
-- <code title="post /v1/sdk/screenshot/">client.api.sdk.screenshot.<a href="./src/steel/resources/api/sdk/screenshot.py">create</a>(\*\*<a href="src/steel/types/api/sdk/screenshot_create_params.py">params</a>) -> <a href="./src/steel/types/api/sdk/screenshot_create_response.py">object</a></code>
-
-### Sessions
-
-Types:
-
-```python
-from steel.types.api.sdk import Session, SessionListResponse
-```
-
-Methods:
-
-- <code title="post /v1/sdk/sessions/">client.api.sdk.sessions.<a href="./src/steel/resources/api/sdk/sessions.py">create</a>(\*\*<a href="src/steel/types/api/sdk/session_create_params.py">params</a>) -> <a href="./src/steel/types/api/sdk/session.py">Session</a></code>
-- <code title="get /v1/sdk/sessions/{id}/">client.api.sdk.sessions.<a href="./src/steel/resources/api/sdk/sessions.py">retrieve</a>(id) -> <a href="./src/steel/types/api/sdk/session.py">Session</a></code>
-- <code title="patch /v1/sdk/sessions/{id}/">client.api.sdk.sessions.<a href="./src/steel/resources/api/sdk/sessions.py">update</a>(id, \*\*<a href="src/steel/types/api/sdk/session_update_params.py">params</a>) -> <a href="./src/steel/types/api/sdk/session.py">Session</a></code>
-- <code title="get /v1/sdk/sessions/">client.api.sdk.sessions.<a href="./src/steel/resources/api/sdk/sessions.py">list</a>() -> <a href="./src/steel/types/api/sdk/session_list_response.py">SessionListResponse</a></code>
-- <code title="delete /v1/sdk/sessions/{id}/">client.api.sdk.sessions.<a href="./src/steel/resources/api/sdk/sessions.py">delete</a>(id) -> None</code>
+- <code title="post /v1/context">client.contexts.<a href="./src/steel/resources/contexts.py">create</a>(\*\*<a href="src/steel/types/context_create_params.py">params</a>) -> <a href="./src/steel/types/create_context_response.py">CreateContextResponse</a></code>
+- <code title="get /v1/context/{id}">client.contexts.<a href="./src/steel/resources/contexts.py">retrieve</a>(id) -> <a href="./src/steel/types/get_context_response.py">GetContextResponse</a></code>
+- <code title="get /v1/context">client.contexts.<a href="./src/steel/resources/contexts.py">list</a>() -> <a href="./src/steel/types/get_contexts_response.py">GetContextsResponse</a></code>
+- <code title="delete /v1/context/{id}">client.contexts.<a href="./src/steel/resources/contexts.py">delete</a>(id) -> <a href="./src/steel/types/delete_context_response.py">DeleteContextResponse</a></code>

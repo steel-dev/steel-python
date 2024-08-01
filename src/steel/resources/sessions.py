@@ -2,27 +2,26 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import httpx
 
-from ...._types import NOT_GIVEN, Body, Query, Headers, NoneType, NotGiven
-from ...._utils import (
+from ..types import session_create_params
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import (
     maybe_transform,
     async_maybe_transform,
 )
-from ...._compat import cached_property
-from ...._resource import SyncAPIResource, AsyncAPIResource
-from ...._response import (
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...._base_client import make_request_options
-from ....types.api.sdk import session_create_params, session_update_params
-from ....types.api.sdk.session import Session
-from ....types.api.sdk.session_list_response import SessionListResponse
+from .._base_client import make_request_options
+from ..types.session_response import SessionResponse
+from ..types.sessions_response import SessionsResponse
+from ..types.delete_session_response import DeleteSessionResponse
 
 __all__ = ["SessionsResource", "AsyncSessionsResource"]
 
@@ -40,15 +39,20 @@ class SessionsResource(SyncAPIResource):
         self,
         *,
         org_id: str,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> SessionResponse:
         """
+        Start a new browser session for the organization
+
         Args:
+          org_id: Unique identifier for the organization creating the session
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -57,109 +61,63 @@ class SessionsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
         return self._post(
-            "/v1/sdk/sessions/",
+            "/v1/sessions",
             body=maybe_transform({"org_id": org_id}, session_create_params.SessionCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
-        )
-
-    def retrieve(
-        self,
-        id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
-        """
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._get(
-            f"/v1/sdk/sessions/{id}/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Session,
-        )
-
-    def update(
-        self,
-        id: str,
-        *,
-        websocket_url: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
-        """
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._patch(
-            f"/v1/sdk/sessions/{id}/",
-            body=maybe_transform({"websocket_url": websocket_url}, session_update_params.SessionUpdateParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Session,
+            cast_to=SessionResponse,
         )
 
     def list(
         self,
         *,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionListResponse:
+    ) -> SessionsResponse:
+        """
+        Get a list of all active browser sessions for the organization
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
         return self._get(
-            "/v1/sdk/sessions/",
+            "/v1/sessions",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SessionListResponse,
+            cast_to=SessionsResponse,
         )
 
     def delete(
         self,
         id: str,
         *,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> DeleteSessionResponse:
         """
+        Release and delete a browser session using its ID
+
         Args:
           extra_headers: Send extra headers
 
@@ -171,13 +129,13 @@ class SessionsResource(SyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
         return self._delete(
-            f"/v1/sdk/sessions/{id}/",
+            f"/v1/sessions/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=DeleteSessionResponse,
         )
 
 
@@ -194,15 +152,20 @@ class AsyncSessionsResource(AsyncAPIResource):
         self,
         *,
         org_id: str,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> SessionResponse:
         """
+        Start a new browser session for the organization
+
         Args:
+          org_id: Unique identifier for the organization creating the session
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -211,111 +174,63 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
         return await self._post(
-            "/v1/sdk/sessions/",
+            "/v1/sessions",
             body=await async_maybe_transform({"org_id": org_id}, session_create_params.SessionCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
-        )
-
-    async def retrieve(
-        self,
-        id: str,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
-        """
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._get(
-            f"/v1/sdk/sessions/{id}/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Session,
-        )
-
-    async def update(
-        self,
-        id: str,
-        *,
-        websocket_url: Optional[str] | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
-        """
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._patch(
-            f"/v1/sdk/sessions/{id}/",
-            body=await async_maybe_transform(
-                {"websocket_url": websocket_url}, session_update_params.SessionUpdateParams
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Session,
+            cast_to=SessionResponse,
         )
 
     async def list(
         self,
         *,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionListResponse:
+    ) -> SessionsResponse:
+        """
+        Get a list of all active browser sessions for the organization
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
         return await self._get(
-            "/v1/sdk/sessions/",
+            "/v1/sessions",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SessionListResponse,
+            cast_to=SessionsResponse,
         )
 
     async def delete(
         self,
         id: str,
         *,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> None:
+    ) -> DeleteSessionResponse:
         """
+        Release and delete a browser session using its ID
+
         Args:
           extra_headers: Send extra headers
 
@@ -327,13 +242,13 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        extra_headers = {"Accept": "*/*", **(extra_headers or {})}
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
         return await self._delete(
-            f"/v1/sdk/sessions/{id}/",
+            f"/v1/sessions/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=NoneType,
+            cast_to=DeleteSessionResponse,
         )
 
 
@@ -343,12 +258,6 @@ class SessionsResourceWithRawResponse:
 
         self.create = to_raw_response_wrapper(
             sessions.create,
-        )
-        self.retrieve = to_raw_response_wrapper(
-            sessions.retrieve,
-        )
-        self.update = to_raw_response_wrapper(
-            sessions.update,
         )
         self.list = to_raw_response_wrapper(
             sessions.list,
@@ -365,12 +274,6 @@ class AsyncSessionsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             sessions.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            sessions.retrieve,
-        )
-        self.update = async_to_raw_response_wrapper(
-            sessions.update,
-        )
         self.list = async_to_raw_response_wrapper(
             sessions.list,
         )
@@ -386,12 +289,6 @@ class SessionsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             sessions.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            sessions.retrieve,
-        )
-        self.update = to_streamed_response_wrapper(
-            sessions.update,
-        )
         self.list = to_streamed_response_wrapper(
             sessions.list,
         )
@@ -406,12 +303,6 @@ class AsyncSessionsResourceWithStreamingResponse:
 
         self.create = async_to_streamed_response_wrapper(
             sessions.create,
-        )
-        self.retrieve = async_to_streamed_response_wrapper(
-            sessions.retrieve,
-        )
-        self.update = async_to_streamed_response_wrapper(
-            sessions.update,
         )
         self.list = async_to_streamed_response_wrapper(
             sessions.list,

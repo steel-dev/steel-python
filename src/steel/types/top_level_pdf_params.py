@@ -4,8 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["SessionCreateParams"]
+__all__ = ["TopLevelPdfParams"]
 
 
-class SessionCreateParams(TypedDict, total=False):
-    org_id: Required[str]
+class TopLevelPdfParams(TypedDict, total=False):
+    url: Required[str]
+    """The URL of the webpage to convert to PDF"""
