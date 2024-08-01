@@ -10,7 +10,11 @@ import pytest
 from respx import MockRouter
 
 from steel import Steel, AsyncSteel
-from steel.types import ScrapeResponse
+from steel.types import (
+    ScrapeResponse,
+    SessionResponse,
+    SessionsResponse,
+)
 from tests.utils import assert_matches_type
 from steel._response import (
     BinaryAPIResponse,
@@ -24,6 +28,71 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 class TestTopLevel:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    def test_method_create_session(self, client: Steel) -> None:
+        top_level = client.create_session(
+            org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(SessionResponse, top_level, path=["response"])
+
+    @parametrize
+    def test_raw_response_create_session(self, client: Steel) -> None:
+        response = client.with_raw_response.create_session(
+            org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        top_level = response.parse()
+        assert_matches_type(SessionResponse, top_level, path=["response"])
+
+    @parametrize
+    def test_streaming_response_create_session(self, client: Steel) -> None:
+        with client.with_streaming_response.create_session(
+            org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            top_level = response.parse()
+            assert_matches_type(SessionResponse, top_level, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_get_sessions(self, client: Steel) -> None:
+        top_level = client.get_sessions(
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(SessionsResponse, top_level, path=["response"])
+
+    @parametrize
+    def test_raw_response_get_sessions(self, client: Steel) -> None:
+        response = client.with_raw_response.get_sessions(
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        top_level = response.parse()
+        assert_matches_type(SessionsResponse, top_level, path=["response"])
+
+    @parametrize
+    def test_streaming_response_get_sessions(self, client: Steel) -> None:
+        with client.with_streaming_response.get_sessions(
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            top_level = response.parse()
+            assert_matches_type(SessionsResponse, top_level, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
@@ -158,6 +227,71 @@ class TestTopLevel:
 
 class TestAsyncTopLevel:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    async def test_method_create_session(self, async_client: AsyncSteel) -> None:
+        top_level = await async_client.create_session(
+            org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(SessionResponse, top_level, path=["response"])
+
+    @parametrize
+    async def test_raw_response_create_session(self, async_client: AsyncSteel) -> None:
+        response = await async_client.with_raw_response.create_session(
+            org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        top_level = await response.parse()
+        assert_matches_type(SessionResponse, top_level, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_create_session(self, async_client: AsyncSteel) -> None:
+        async with async_client.with_streaming_response.create_session(
+            org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            top_level = await response.parse()
+            assert_matches_type(SessionResponse, top_level, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_get_sessions(self, async_client: AsyncSteel) -> None:
+        top_level = await async_client.get_sessions(
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(SessionsResponse, top_level, path=["response"])
+
+    @parametrize
+    async def test_raw_response_get_sessions(self, async_client: AsyncSteel) -> None:
+        response = await async_client.with_raw_response.get_sessions(
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        top_level = await response.parse()
+        assert_matches_type(SessionsResponse, top_level, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_get_sessions(self, async_client: AsyncSteel) -> None:
+        async with async_client.with_streaming_response.get_sessions(
+            orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            top_level = await response.parse()
+            assert_matches_type(SessionsResponse, top_level, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)

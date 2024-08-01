@@ -6,10 +6,10 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["SessionCreateParams"]
+__all__ = ["TopLevelCreateSessionParams"]
 
 
-class SessionCreateParams(TypedDict, total=False):
+class TopLevelCreateSessionParams(TypedDict, total=False):
     org_id: Required[Annotated[str, PropertyInfo(alias="orgId")]]
     """Unique identifier for the organization creating the session"""
 
