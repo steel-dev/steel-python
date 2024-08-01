@@ -3,15 +3,16 @@
 from __future__ import annotations
 
 from .scrape_response import ScrapeResponse as ScrapeResponse
-from .session_response import SessionResponse as SessionResponse
 from .sessions_response import SessionsResponse as SessionsResponse
 from .get_context_response import GetContextResponse as GetContextResponse
 from .top_level_pdf_params import TopLevelPdfParams as TopLevelPdfParams
 from .context_create_params import ContextCreateParams as ContextCreateParams
 from .get_contexts_response import GetContextsResponse as GetContextsResponse
+from .session_create_params import SessionCreateParams as SessionCreateParams
+from .context_delete_response import ContextDeleteResponse as ContextDeleteResponse
 from .create_context_response import CreateContextResponse as CreateContextResponse
-from .delete_context_response import DeleteContextResponse as DeleteContextResponse
-from .delete_session_response import DeleteSessionResponse as DeleteSessionResponse
+from .session_create_response import SessionCreateResponse as SessionCreateResponse
+from .session_delete_response import SessionDeleteResponse as SessionDeleteResponse
 from .top_level_scrape_params import TopLevelScrapeParams as TopLevelScrapeParams
+from .session_retrieve_response import SessionRetrieveResponse as SessionRetrieveResponse
 from .top_level_screenshot_params import TopLevelScreenshotParams as TopLevelScreenshotParams
-from .top_level_create_session_params import TopLevelCreateSessionParams as TopLevelCreateSessionParams

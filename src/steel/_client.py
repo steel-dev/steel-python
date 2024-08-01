@@ -10,12 +10,7 @@ import httpx
 
 from . import resources, _exceptions
 from ._qs import Querystring
-from .types import (
-    top_level_pdf_params,
-    top_level_scrape_params,
-    top_level_screenshot_params,
-    top_level_create_session_params,
-)
+from .types import top_level_pdf_params, top_level_scrape_params, top_level_screenshot_params
 from ._types import (
     NOT_GIVEN,
     Body,
@@ -50,7 +45,7 @@ from ._response import (
     async_to_custom_streamed_response_wrapper,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import SteelError, APIStatusError
+from ._exceptions import APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -58,8 +53,6 @@ from ._base_client import (
     make_request_options,
 )
 from .types.scrape_response import ScrapeResponse
-from .types.session_response import SessionResponse
-from .types.sessions_response import SessionsResponse
 
 __all__ = [
     "Timeout",
@@ -75,18 +68,16 @@ __all__ = [
 
 
 class Steel(SyncAPIClient):
-    session: resources.SessionResource
+    sessions: resources.SessionsResource
     contexts: resources.ContextsResource
     with_raw_response: SteelWithRawResponse
     with_streaming_response: SteelWithStreamedResponse
 
     # client options
-    bearer_token: str
 
     def __init__(
         self,
         *,
-        bearer_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -106,18 +97,7 @@ class Steel(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous steel client instance.
-
-        This automatically infers the `bearer_token` argument from the `STEEL_BEARER_TOKEN` environment variable if it is not provided.
-        """
-        if bearer_token is None:
-            bearer_token = os.environ.get("STEEL_BEARER_TOKEN")
-        if bearer_token is None:
-            raise SteelError(
-                "The bearer_token client option must be set either by passing bearer_token to the client or by setting the STEEL_BEARER_TOKEN environment variable"
-            )
-        self.bearer_token = bearer_token
-
+        """Construct a new synchronous steel client instance."""
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
@@ -134,7 +114,7 @@ class Steel(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.session = resources.SessionResource(self)
+        self.sessions = resources.SessionsResource(self)
         self.contexts = resources.ContextsResource(self)
         self.with_raw_response = SteelWithRawResponse(self)
         self.with_streaming_response = SteelWithStreamedResponse(self)
@@ -143,12 +123,6 @@ class Steel(SyncAPIClient):
     @override
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
-
-    @property
-    @override
-    def auth_headers(self) -> dict[str, str]:
-        bearer_token = self.bearer_token
-        return {"Authorization": f"Bearer {bearer_token}"}
 
     @property
     @override
@@ -162,7 +136,6 @@ class Steel(SyncAPIClient):
     def copy(
         self,
         *,
-        bearer_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -196,7 +169,6 @@ class Steel(SyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            bearer_token=bearer_token or self.bearer_token,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -209,74 +181,6 @@ class Steel(SyncAPIClient):
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
-
-    def create_session(
-        self,
-        *,
-        org_id: str,
-        orgid: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionResponse:
-        """
-        Start a new browser session for the organization
-
-        Args:
-          org_id: Unique identifier for the organization creating the session
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"orgid": orgid, **(extra_headers or {})}
-        return self.post(
-            "/v1/sessions",
-            body=maybe_transform({"org_id": org_id}, top_level_create_session_params.TopLevelCreateSessionParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=SessionResponse,
-        )
-
-    def get_sessions(
-        self,
-        *,
-        orgid: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionsResponse:
-        """
-        Get a list of all active browser sessions for the organization
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"orgid": orgid, **(extra_headers or {})}
-        return self.get(
-            "/v1/sessions",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=SessionsResponse,
-        )
 
     def pdf(
         self,
@@ -437,18 +341,16 @@ class Steel(SyncAPIClient):
 
 
 class AsyncSteel(AsyncAPIClient):
-    session: resources.AsyncSessionResource
+    sessions: resources.AsyncSessionsResource
     contexts: resources.AsyncContextsResource
     with_raw_response: AsyncSteelWithRawResponse
     with_streaming_response: AsyncSteelWithStreamedResponse
 
     # client options
-    bearer_token: str
 
     def __init__(
         self,
         *,
-        bearer_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -468,18 +370,7 @@ class AsyncSteel(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async steel client instance.
-
-        This automatically infers the `bearer_token` argument from the `STEEL_BEARER_TOKEN` environment variable if it is not provided.
-        """
-        if bearer_token is None:
-            bearer_token = os.environ.get("STEEL_BEARER_TOKEN")
-        if bearer_token is None:
-            raise SteelError(
-                "The bearer_token client option must be set either by passing bearer_token to the client or by setting the STEEL_BEARER_TOKEN environment variable"
-            )
-        self.bearer_token = bearer_token
-
+        """Construct a new async steel client instance."""
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
@@ -496,7 +387,7 @@ class AsyncSteel(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.session = resources.AsyncSessionResource(self)
+        self.sessions = resources.AsyncSessionsResource(self)
         self.contexts = resources.AsyncContextsResource(self)
         self.with_raw_response = AsyncSteelWithRawResponse(self)
         self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
@@ -505,12 +396,6 @@ class AsyncSteel(AsyncAPIClient):
     @override
     def qs(self) -> Querystring:
         return Querystring(array_format="comma")
-
-    @property
-    @override
-    def auth_headers(self) -> dict[str, str]:
-        bearer_token = self.bearer_token
-        return {"Authorization": f"Bearer {bearer_token}"}
 
     @property
     @override
@@ -524,7 +409,6 @@ class AsyncSteel(AsyncAPIClient):
     def copy(
         self,
         *,
-        bearer_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -558,7 +442,6 @@ class AsyncSteel(AsyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            bearer_token=bearer_token or self.bearer_token,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -571,76 +454,6 @@ class AsyncSteel(AsyncAPIClient):
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
-
-    async def create_session(
-        self,
-        *,
-        org_id: str,
-        orgid: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionResponse:
-        """
-        Start a new browser session for the organization
-
-        Args:
-          org_id: Unique identifier for the organization creating the session
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"orgid": orgid, **(extra_headers or {})}
-        return await self.post(
-            "/v1/sessions",
-            body=await async_maybe_transform(
-                {"org_id": org_id}, top_level_create_session_params.TopLevelCreateSessionParams
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=SessionResponse,
-        )
-
-    async def get_sessions(
-        self,
-        *,
-        orgid: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionsResponse:
-        """
-        Get a list of all active browser sessions for the organization
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        extra_headers = {"orgid": orgid, **(extra_headers or {})}
-        return await self.get(
-            "/v1/sessions",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=SessionsResponse,
-        )
 
     async def pdf(
         self,
@@ -802,15 +615,9 @@ class AsyncSteel(AsyncAPIClient):
 
 class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
-        self.session = resources.SessionResourceWithRawResponse(client.session)
+        self.sessions = resources.SessionsResourceWithRawResponse(client.sessions)
         self.contexts = resources.ContextsResourceWithRawResponse(client.contexts)
 
-        self.create_session = to_raw_response_wrapper(
-            client.create_session,
-        )
-        self.get_sessions = to_raw_response_wrapper(
-            client.get_sessions,
-        )
         self.pdf = to_custom_raw_response_wrapper(
             client.pdf,
             BinaryAPIResponse,
@@ -826,15 +633,9 @@ class SteelWithRawResponse:
 
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.session = resources.AsyncSessionResourceWithRawResponse(client.session)
+        self.sessions = resources.AsyncSessionsResourceWithRawResponse(client.sessions)
         self.contexts = resources.AsyncContextsResourceWithRawResponse(client.contexts)
 
-        self.create_session = async_to_raw_response_wrapper(
-            client.create_session,
-        )
-        self.get_sessions = async_to_raw_response_wrapper(
-            client.get_sessions,
-        )
         self.pdf = async_to_custom_raw_response_wrapper(
             client.pdf,
             AsyncBinaryAPIResponse,
@@ -850,15 +651,9 @@ class AsyncSteelWithRawResponse:
 
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
-        self.session = resources.SessionResourceWithStreamingResponse(client.session)
+        self.sessions = resources.SessionsResourceWithStreamingResponse(client.sessions)
         self.contexts = resources.ContextsResourceWithStreamingResponse(client.contexts)
 
-        self.create_session = to_streamed_response_wrapper(
-            client.create_session,
-        )
-        self.get_sessions = to_streamed_response_wrapper(
-            client.get_sessions,
-        )
         self.pdf = to_custom_streamed_response_wrapper(
             client.pdf,
             StreamedBinaryAPIResponse,
@@ -874,15 +669,9 @@ class SteelWithStreamedResponse:
 
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.session = resources.AsyncSessionResourceWithStreamingResponse(client.session)
+        self.sessions = resources.AsyncSessionsResourceWithStreamingResponse(client.sessions)
         self.contexts = resources.AsyncContextsResourceWithStreamingResponse(client.contexts)
 
-        self.create_session = async_to_streamed_response_wrapper(
-            client.create_session,
-        )
-        self.get_sessions = async_to_streamed_response_wrapper(
-            client.get_sessions,
-        )
         self.pdf = async_to_custom_streamed_response_wrapper(
             client.pdf,
             AsyncStreamedBinaryAPIResponse,

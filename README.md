@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.steel.dev](https://docs.steel.dev). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.steel.com](https://docs.steel.com). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -31,17 +31,12 @@ from steel import Steel
 
 client = Steel()
 
-session_response = client.create_session(
+session_create_response = client.sessions.create(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
-print(session_response.id)
+print(session_create_response.id)
 ```
-
-While you can provide a `bearer_token` keyword argument,
-we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `STEEL_BEARER_TOKEN="My Bearer Token"` to your `.env` file
-so that your Bearer Token is not stored in source control.
 
 ## Async usage
 
@@ -55,11 +50,11 @@ client = AsyncSteel()
 
 
 async def main() -> None:
-    session_response = await client.create_session(
+    session_create_response = await client.sessions.create(
         org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     )
-    print(session_response.id)
+    print(session_create_response.id)
 
 
 asyncio.run(main())
@@ -92,7 +87,7 @@ from steel import Steel
 client = Steel()
 
 try:
-    client.create_session(
+    client.sessions.create(
         org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     )
@@ -138,7 +133,7 @@ client = Steel(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).create_session(
+client.with_options(max_retries=5).sessions.create(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
@@ -164,7 +159,7 @@ client = Steel(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).create_session(
+client.with_options(timeout=5.0).sessions.create(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
@@ -206,14 +201,14 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from steel import Steel
 
 client = Steel()
-response = client.with_raw_response.create_session(
+response = client.sessions.with_raw_response.create(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
 print(response.headers.get('X-My-Header'))
 
-top_level = response.parse()  # get the object that `create_session()` would have returned
-print(top_level.id)
+session = response.parse()  # get the object that `sessions.create()` would have returned
+print(session.id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/steel-python/tree/main/src/steel/_response.py) object.
@@ -227,7 +222,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.with_streaming_response.create_session(
+with client.sessions.with_streaming_response.create(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 ) as response:
