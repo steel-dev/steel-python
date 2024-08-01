@@ -7,10 +7,10 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["SessionResponse"]
+__all__ = ["SessionCreateResponse"]
 
 
-class SessionResponse(BaseModel):
+class SessionCreateResponse(BaseModel):
     id: str
     """Unique identifier for the session"""
 

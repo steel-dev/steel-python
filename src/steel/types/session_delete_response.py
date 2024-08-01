@@ -4,9 +4,9 @@
 
 from .._models import BaseModel
 
-__all__ = ["DeleteSessionResponse"]
+__all__ = ["SessionDeleteResponse"]
 
 
-class DeleteSessionResponse(BaseModel):
+class SessionDeleteResponse(BaseModel):
     success: bool
     """Indicates whether the session was successfully deleted"""
