@@ -31,12 +31,17 @@ from steel import Steel
 
 client = Steel()
 
-session_create_response = client.sessions.create(
+session_response = client.sessions.create_new_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
-print(session_create_response.id)
+print(session_response.id)
 ```
+
+While you can provide a `bearer_token` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `STEEL_BEARER_TOKEN="My Bearer Token"` to your `.env` file
+so that your Bearer Token is not stored in source control.
 
 ## Async usage
 
@@ -50,11 +55,11 @@ client = AsyncSteel()
 
 
 async def main() -> None:
-    session_create_response = await client.sessions.create(
+    session_response = await client.sessions.create_new_session(
         org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     )
-    print(session_create_response.id)
+    print(session_response.id)
 
 
 asyncio.run(main())
@@ -87,7 +92,7 @@ from steel import Steel
 client = Steel()
 
 try:
-    client.sessions.create(
+    client.sessions.create_new_session(
         org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     )
@@ -133,7 +138,7 @@ client = Steel(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).sessions.create(
+client.with_options(max_retries=5).sessions.create_new_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
@@ -159,7 +164,7 @@ client = Steel(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).sessions.create(
+client.with_options(timeout=5.0).sessions.create_new_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
@@ -201,13 +206,13 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from steel import Steel
 
 client = Steel()
-response = client.sessions.with_raw_response.create(
+response = client.sessions.with_raw_response.create_new_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
 print(response.headers.get('X-My-Header'))
 
-session = response.parse()  # get the object that `sessions.create()` would have returned
+session = response.parse()  # get the object that `sessions.create_new_session()` would have returned
 print(session.id)
 ```
 
@@ -222,7 +227,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.sessions.with_streaming_response.create(
+with client.sessions.with_streaming_response.create_new_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 ) as response:
