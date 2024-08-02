@@ -21,8 +21,8 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.get_context_response import GetContextResponse
 from ..types.get_contexts_response import GetContextsResponse
-from ..types.context_delete_response import ContextDeleteResponse
 from ..types.create_context_response import CreateContextResponse
+from ..types.delete_context_response import DeleteContextResponse
 
 __all__ = ["ContextsResource", "AsyncContextsResource"]
 
@@ -132,7 +132,7 @@ class ContextsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextDeleteResponse:
+    ) -> DeleteContextResponse:
         """
         Delete a specific saved browser context
 
@@ -152,7 +152,7 @@ class ContextsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextDeleteResponse,
+            cast_to=DeleteContextResponse,
         )
 
 
@@ -261,7 +261,7 @@ class AsyncContextsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextDeleteResponse:
+    ) -> DeleteContextResponse:
         """
         Delete a specific saved browser context
 
@@ -281,7 +281,7 @@ class AsyncContextsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextDeleteResponse,
+            cast_to=DeleteContextResponse,
         )
 
 

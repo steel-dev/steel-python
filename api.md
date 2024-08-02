@@ -17,20 +17,15 @@ Methods:
 Types:
 
 ```python
-from steel.types import (
-    SessionsResponse,
-    SessionCreateResponse,
-    SessionRetrieveResponse,
-    SessionDeleteResponse,
-)
+from steel.types import ReleaseSessionResponse, SessionResponse, SessionsResponse
 ```
 
 Methods:
 
-- <code title="post /v1/sessions">client.sessions.<a href="./src/steel/resources/sessions.py">create</a>(\*\*<a href="src/steel/types/session_create_params.py">params</a>) -> <a href="./src/steel/types/session_create_response.py">SessionCreateResponse</a></code>
-- <code title="get /v1/sessions/{id}">client.sessions.<a href="./src/steel/resources/sessions.py">retrieve</a>(id) -> <a href="./src/steel/types/session_retrieve_response.py">SessionRetrieveResponse</a></code>
+- <code title="get /v1/sessions/{id}">client.sessions.<a href="./src/steel/resources/sessions.py">retrieve</a>(id) -> <a href="./src/steel/types/session_response.py">SessionResponse</a></code>
 - <code title="get /v1/sessions">client.sessions.<a href="./src/steel/resources/sessions.py">list</a>() -> <a href="./src/steel/types/sessions_response.py">SessionsResponse</a></code>
-- <code title="delete /v1/sessions/{id}">client.sessions.<a href="./src/steel/resources/sessions.py">delete</a>(id) -> <a href="./src/steel/types/session_delete_response.py">SessionDeleteResponse</a></code>
+- <code title="post /v1/sessions">client.sessions.<a href="./src/steel/resources/sessions.py">create_new_session</a>(\*\*<a href="src/steel/types/session_create_new_session_params.py">params</a>) -> <a href="./src/steel/types/session_response.py">SessionResponse</a></code>
+- <code title="get /v1/sessions/{id}/release">client.sessions.<a href="./src/steel/resources/sessions.py">release</a>(id) -> <a href="./src/steel/types/release_session_response.py">ReleaseSessionResponse</a></code>
 
 # Contexts
 
@@ -39,9 +34,9 @@ Types:
 ```python
 from steel.types import (
     CreateContextResponse,
+    DeleteContextResponse,
     GetContextResponse,
     GetContextsResponse,
-    ContextDeleteResponse,
 )
 ```
 
@@ -50,4 +45,4 @@ Methods:
 - <code title="post /v1/context">client.contexts.<a href="./src/steel/resources/contexts.py">create</a>(\*\*<a href="src/steel/types/context_create_params.py">params</a>) -> <a href="./src/steel/types/create_context_response.py">CreateContextResponse</a></code>
 - <code title="get /v1/context/{id}">client.contexts.<a href="./src/steel/resources/contexts.py">retrieve</a>(id) -> <a href="./src/steel/types/get_context_response.py">GetContextResponse</a></code>
 - <code title="get /v1/context">client.contexts.<a href="./src/steel/resources/contexts.py">list</a>() -> <a href="./src/steel/types/get_contexts_response.py">GetContextsResponse</a></code>
-- <code title="delete /v1/context/{id}">client.contexts.<a href="./src/steel/resources/contexts.py">delete</a>(id) -> <a href="./src/steel/types/context_delete_response.py">ContextDeleteResponse</a></code>
+- <code title="delete /v1/context/{id}">client.contexts.<a href="./src/steel/resources/contexts.py">delete</a>(id) -> <a href="./src/steel/types/delete_context_response.py">DeleteContextResponse</a></code>

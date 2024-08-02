@@ -11,8 +11,8 @@ from steel import Steel, AsyncSteel
 from steel.types import (
     GetContextResponse,
     GetContextsResponse,
-    ContextDeleteResponse,
     CreateContextResponse,
+    DeleteContextResponse,
 )
 from tests.utils import assert_matches_type
 
@@ -122,7 +122,7 @@ class TestContexts:
         context = client.contexts.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ContextDeleteResponse, context, path=["response"])
+        assert_matches_type(DeleteContextResponse, context, path=["response"])
 
     @parametrize
     def test_raw_response_delete(self, client: Steel) -> None:
@@ -133,7 +133,7 @@ class TestContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = response.parse()
-        assert_matches_type(ContextDeleteResponse, context, path=["response"])
+        assert_matches_type(DeleteContextResponse, context, path=["response"])
 
     @parametrize
     def test_streaming_response_delete(self, client: Steel) -> None:
@@ -144,7 +144,7 @@ class TestContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = response.parse()
-            assert_matches_type(ContextDeleteResponse, context, path=["response"])
+            assert_matches_type(DeleteContextResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -259,7 +259,7 @@ class TestAsyncContexts:
         context = await async_client.contexts.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ContextDeleteResponse, context, path=["response"])
+        assert_matches_type(DeleteContextResponse, context, path=["response"])
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncSteel) -> None:
@@ -270,7 +270,7 @@ class TestAsyncContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = await response.parse()
-        assert_matches_type(ContextDeleteResponse, context, path=["response"])
+        assert_matches_type(DeleteContextResponse, context, path=["response"])
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncSteel) -> None:
@@ -281,7 +281,7 @@ class TestAsyncContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = await response.parse()
-            assert_matches_type(ContextDeleteResponse, context, path=["response"])
+            assert_matches_type(DeleteContextResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

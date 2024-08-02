@@ -45,7 +45,7 @@ from ._response import (
     async_to_custom_streamed_response_wrapper,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError
+from ._exceptions import SteelError, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -74,10 +74,12 @@ class Steel(SyncAPIClient):
     with_streaming_response: SteelWithStreamedResponse
 
     # client options
+    bearer_token: str
 
     def __init__(
         self,
         *,
+        bearer_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -97,7 +99,18 @@ class Steel(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous steel client instance."""
+        """Construct a new synchronous steel client instance.
+
+        This automatically infers the `bearer_token` argument from the `STEEL_BEARER_TOKEN` environment variable if it is not provided.
+        """
+        if bearer_token is None:
+            bearer_token = os.environ.get("STEEL_BEARER_TOKEN")
+        if bearer_token is None:
+            raise SteelError(
+                "The bearer_token client option must be set either by passing bearer_token to the client or by setting the STEEL_BEARER_TOKEN environment variable"
+            )
+        self.bearer_token = bearer_token
+
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
@@ -126,6 +139,12 @@ class Steel(SyncAPIClient):
 
     @property
     @override
+    def auth_headers(self) -> dict[str, str]:
+        bearer_token = self.bearer_token
+        return {"Authorization": f"Bearer {bearer_token}"}
+
+    @property
+    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
@@ -136,6 +155,7 @@ class Steel(SyncAPIClient):
     def copy(
         self,
         *,
+        bearer_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -169,6 +189,7 @@ class Steel(SyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
+            bearer_token=bearer_token or self.bearer_token,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -347,10 +368,12 @@ class AsyncSteel(AsyncAPIClient):
     with_streaming_response: AsyncSteelWithStreamedResponse
 
     # client options
+    bearer_token: str
 
     def __init__(
         self,
         *,
+        bearer_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -370,7 +393,18 @@ class AsyncSteel(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async steel client instance."""
+        """Construct a new async steel client instance.
+
+        This automatically infers the `bearer_token` argument from the `STEEL_BEARER_TOKEN` environment variable if it is not provided.
+        """
+        if bearer_token is None:
+            bearer_token = os.environ.get("STEEL_BEARER_TOKEN")
+        if bearer_token is None:
+            raise SteelError(
+                "The bearer_token client option must be set either by passing bearer_token to the client or by setting the STEEL_BEARER_TOKEN environment variable"
+            )
+        self.bearer_token = bearer_token
+
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
@@ -399,6 +433,12 @@ class AsyncSteel(AsyncAPIClient):
 
     @property
     @override
+    def auth_headers(self) -> dict[str, str]:
+        bearer_token = self.bearer_token
+        return {"Authorization": f"Bearer {bearer_token}"}
+
+    @property
+    @override
     def default_headers(self) -> dict[str, str | Omit]:
         return {
             **super().default_headers,
@@ -409,6 +449,7 @@ class AsyncSteel(AsyncAPIClient):
     def copy(
         self,
         *,
+        bearer_token: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -442,6 +483,7 @@ class AsyncSteel(AsyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
+            bearer_token=bearer_token or self.bearer_token,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
