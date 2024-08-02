@@ -31,11 +31,11 @@ from steel import Steel
 
 client = Steel()
 
-session_response = client.sessions.create_new_session(
+session = client.steel_browser.create_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
-print(session_response.id)
+print(session.duration)
 ```
 
 While you can provide a `bearer_token` keyword argument,
@@ -55,11 +55,11 @@ client = AsyncSteel()
 
 
 async def main() -> None:
-    session_response = await client.sessions.create_new_session(
+    session = await client.steel_browser.create_session(
         org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     )
-    print(session_response.id)
+    print(session.duration)
 
 
 asyncio.run(main())
@@ -92,7 +92,7 @@ from steel import Steel
 client = Steel()
 
 try:
-    client.sessions.create_new_session(
+    client.steel_browser.create_session(
         org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     )
@@ -138,7 +138,7 @@ client = Steel(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).sessions.create_new_session(
+client.with_options(max_retries=5).steel_browser.create_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
@@ -164,7 +164,7 @@ client = Steel(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).sessions.create_new_session(
+client.with_options(timeout=5.0).steel_browser.create_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
@@ -206,14 +206,14 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from steel import Steel
 
 client = Steel()
-response = client.sessions.with_raw_response.create_new_session(
+response = client.steel_browser.with_raw_response.create_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 )
 print(response.headers.get('X-My-Header'))
 
-session = response.parse()  # get the object that `sessions.create_new_session()` would have returned
-print(session.id)
+steel_browser = response.parse()  # get the object that `steel_browser.create_session()` would have returned
+print(steel_browser.duration)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/steel-python/tree/main/src/steel/_response.py) object.
@@ -227,7 +227,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.sessions.with_streaming_response.create_new_session(
+with client.steel_browser.with_streaming_response.create_session(
     org_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
     orgid="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
 ) as response:

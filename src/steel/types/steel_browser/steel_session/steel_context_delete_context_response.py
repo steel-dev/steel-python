@@ -2,11 +2,11 @@
 
 
 
-from .._models import BaseModel
+from ...._models import BaseModel
 
-__all__ = ["DeleteContextResponse"]
+__all__ = ["SteelContextDeleteContextResponse"]
 
 
-class DeleteContextResponse(BaseModel):
+class SteelContextDeleteContextResponse(BaseModel):
     message: str
     """A message indicating the result of the delete operation"""

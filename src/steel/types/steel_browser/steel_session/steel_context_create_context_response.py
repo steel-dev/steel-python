@@ -2,11 +2,11 @@
 
 
 
-from .._models import BaseModel
+from ...._models import BaseModel
 
-__all__ = ["CreateContextResponse"]
+__all__ = ["SteelContextCreateContextResponse"]
 
 
-class CreateContextResponse(BaseModel):
+class SteelContextCreateContextResponse(BaseModel):
     id: str
     """Unique identifier for the created context"""
