@@ -3,16 +3,26 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Union, Mapping
-from typing_extensions import Self, override
+from typing import Any, List, Union, Mapping
+from typing_extensions import Self, Literal, override
 
 import httpx
 
 from . import resources, _exceptions
 from ._qs import Querystring
+from .types import (
+    top_level_pdf_params,
+    top_level_scrape_params,
+    top_level_screenshot_params,
+    top_level_list_sessions_params,
+    top_level_create_session_params,
+)
 from ._types import (
     NOT_GIVEN,
+    Body,
     Omit,
+    Query,
+    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -21,16 +31,36 @@ from ._types import (
 )
 from ._utils import (
     is_given,
+    maybe_transform,
     get_async_library,
+    async_maybe_transform,
 )
 from ._version import __version__
+from ._response import (
+    BinaryAPIResponse,
+    AsyncBinaryAPIResponse,
+    StreamedBinaryAPIResponse,
+    AsyncStreamedBinaryAPIResponse,
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    to_custom_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
+    to_custom_streamed_response_wrapper,
+    async_to_custom_raw_response_wrapper,
+    async_to_custom_streamed_response_wrapper,
+)
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import SteelError, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
+    make_request_options,
 )
+from .types.session import Session
+from .types.scrape_response import ScrapeResponse
+from .types.list_sessions_response import ListSessionsResponse
 
 __all__ = [
     "Timeout",
@@ -46,7 +76,8 @@ __all__ = [
 
 
 class Steel(SyncAPIClient):
-    steel_browser: resources.SteelBrowserResource
+    steel_session: resources.SteelSessionResource
+    steel_context: resources.SteelContextResource
     with_raw_response: SteelWithRawResponse
     with_streaming_response: SteelWithStreamedResponse
 
@@ -104,7 +135,8 @@ class Steel(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.steel_browser = resources.SteelBrowserResource(self)
+        self.steel_session = resources.SteelSessionResource(self)
+        self.steel_context = resources.SteelContextResource(self)
         self.with_raw_response = SteelWithRawResponse(self)
         self.with_streaming_response = SteelWithStreamedResponse(self)
 
@@ -179,6 +211,275 @@ class Steel(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
+    def create_session(
+        self,
+        *,
+        org_id: str,
+        orgid: str,
+        context_data: object | NotGiven = NOT_GIVEN,
+        proxy: str | NotGiven = NOT_GIVEN,
+        region: Literal["CA", "US", "FR"] | NotGiven = NOT_GIVEN,
+        solve_captcha: bool | NotGiven = NOT_GIVEN,
+        api_timeout: int | NotGiven = NOT_GIVEN,
+        user_agent: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Session:
+        """
+        Start a new browser session for the organization
+
+        Args:
+          org_id: Unique identifier for the organization creating the session
+
+          context_data: Custom user context data for the session
+
+          proxy: Proxy configuration for the browser session
+
+          region: Region for the browser session
+
+          solve_captcha: Flag to enable automatic captcha solving
+
+          api_timeout: How long after starting should the session timeout.
+
+          user_agent: Custom user agent string for the browser session
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return self.post(
+            "/v1/sessions",
+            body=maybe_transform(
+                {
+                    "org_id": org_id,
+                    "context_data": context_data,
+                    "proxy": proxy,
+                    "region": region,
+                    "solve_captcha": solve_captcha,
+                    "timeout": api_timeout,
+                    "user_agent": user_agent,
+                },
+                top_level_create_session_params.TopLevelCreateSessionParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Session,
+        )
+
+    def list_sessions(
+        self,
+        *,
+        orgid: str,
+        live_only: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ListSessionsResponse:
+        """
+        Get a list of browser sessions for the organization
+
+        Args:
+          live_only: Flag to retrieve only live sessions (default: true)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return self.get(
+            "/v1/sessions",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {"live_only": live_only}, top_level_list_sessions_params.TopLevelListSessionsParams
+                ),
+            ),
+            cast_to=ListSessionsResponse,
+        )
+
+    def pdf(
+        self,
+        *,
+        url: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> BinaryAPIResponse:
+        """Generate a PDF from the specified webpage.
+
+        This endpoint supports bulk
+        operations by passing an array of URLs.
+
+        Args:
+          url: The URL of the webpage to convert to PDF
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "application/pdf", **(extra_headers or {})}
+        return self.post(
+            "/v1/pdf",
+            body=maybe_transform({"url": url}, top_level_pdf_params.TopLevelPdfParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BinaryAPIResponse,
+        )
+
+    def retrieve_session(
+        self,
+        id: str,
+        *,
+        orgid: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Session:
+        """
+        Get detailed information about a specific browser session
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return self.get(
+            f"/v1/sessions/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Session,
+        )
+
+    def scrape(
+        self,
+        *,
+        url: str,
+        orgid: str,
+        format: List[Literal["html", "cleaned_html", "readability", "markdown"]] | NotGiven = NOT_GIVEN,
+        screenshot: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ScrapeResponse:
+        """Scrape content from a webpage.
+
+        This endpoint supports bulk operations by passing
+        an array of URLs. You can specify the desired return type(s) using the 'format'
+        parameter and request a screenshot using the 'screenshot' flag.
+
+        Args:
+          url: The URL of the webpage to scrape
+
+          format: The desired format(s) for the scraped content
+
+          screenshot: Flag to include a screenshot of the page in the response
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return self.post(
+            "/v1/scrape",
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "format": format,
+                    "screenshot": screenshot,
+                },
+                top_level_scrape_params.TopLevelScrapeParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ScrapeResponse,
+        )
+
+    def screenshot(
+        self,
+        *,
+        url: str,
+        orgid: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> BinaryAPIResponse:
+        """Capture a screenshot of the specified webpage.
+
+        This endpoint supports bulk
+        operations by passing an array of URLs.
+
+        Args:
+          url: The URL of the webpage to screenshot
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "image/png", **(extra_headers or {})}
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return self.post(
+            "/v1/screenshot",
+            body=maybe_transform({"url": url}, top_level_screenshot_params.TopLevelScreenshotParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=BinaryAPIResponse,
+        )
+
     @override
     def _make_status_error(
         self,
@@ -214,7 +515,8 @@ class Steel(SyncAPIClient):
 
 
 class AsyncSteel(AsyncAPIClient):
-    steel_browser: resources.AsyncSteelBrowserResource
+    steel_session: resources.AsyncSteelSessionResource
+    steel_context: resources.AsyncSteelContextResource
     with_raw_response: AsyncSteelWithRawResponse
     with_streaming_response: AsyncSteelWithStreamedResponse
 
@@ -272,7 +574,8 @@ class AsyncSteel(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.steel_browser = resources.AsyncSteelBrowserResource(self)
+        self.steel_session = resources.AsyncSteelSessionResource(self)
+        self.steel_context = resources.AsyncSteelContextResource(self)
         self.with_raw_response = AsyncSteelWithRawResponse(self)
         self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
 
@@ -347,6 +650,275 @@ class AsyncSteel(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
+    async def create_session(
+        self,
+        *,
+        org_id: str,
+        orgid: str,
+        context_data: object | NotGiven = NOT_GIVEN,
+        proxy: str | NotGiven = NOT_GIVEN,
+        region: Literal["CA", "US", "FR"] | NotGiven = NOT_GIVEN,
+        solve_captcha: bool | NotGiven = NOT_GIVEN,
+        api_timeout: int | NotGiven = NOT_GIVEN,
+        user_agent: str | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Session:
+        """
+        Start a new browser session for the organization
+
+        Args:
+          org_id: Unique identifier for the organization creating the session
+
+          context_data: Custom user context data for the session
+
+          proxy: Proxy configuration for the browser session
+
+          region: Region for the browser session
+
+          solve_captcha: Flag to enable automatic captcha solving
+
+          api_timeout: How long after starting should the session timeout.
+
+          user_agent: Custom user agent string for the browser session
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return await self.post(
+            "/v1/sessions",
+            body=await async_maybe_transform(
+                {
+                    "org_id": org_id,
+                    "context_data": context_data,
+                    "proxy": proxy,
+                    "region": region,
+                    "solve_captcha": solve_captcha,
+                    "timeout": api_timeout,
+                    "user_agent": user_agent,
+                },
+                top_level_create_session_params.TopLevelCreateSessionParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Session,
+        )
+
+    async def list_sessions(
+        self,
+        *,
+        orgid: str,
+        live_only: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ListSessionsResponse:
+        """
+        Get a list of browser sessions for the organization
+
+        Args:
+          live_only: Flag to retrieve only live sessions (default: true)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return await self.get(
+            "/v1/sessions",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"live_only": live_only}, top_level_list_sessions_params.TopLevelListSessionsParams
+                ),
+            ),
+            cast_to=ListSessionsResponse,
+        )
+
+    async def pdf(
+        self,
+        *,
+        url: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AsyncBinaryAPIResponse:
+        """Generate a PDF from the specified webpage.
+
+        This endpoint supports bulk
+        operations by passing an array of URLs.
+
+        Args:
+          url: The URL of the webpage to convert to PDF
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "application/pdf", **(extra_headers or {})}
+        return await self.post(
+            "/v1/pdf",
+            body=await async_maybe_transform({"url": url}, top_level_pdf_params.TopLevelPdfParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AsyncBinaryAPIResponse,
+        )
+
+    async def retrieve_session(
+        self,
+        id: str,
+        *,
+        orgid: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Session:
+        """
+        Get detailed information about a specific browser session
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return await self.get(
+            f"/v1/sessions/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Session,
+        )
+
+    async def scrape(
+        self,
+        *,
+        url: str,
+        orgid: str,
+        format: List[Literal["html", "cleaned_html", "readability", "markdown"]] | NotGiven = NOT_GIVEN,
+        screenshot: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ScrapeResponse:
+        """Scrape content from a webpage.
+
+        This endpoint supports bulk operations by passing
+        an array of URLs. You can specify the desired return type(s) using the 'format'
+        parameter and request a screenshot using the 'screenshot' flag.
+
+        Args:
+          url: The URL of the webpage to scrape
+
+          format: The desired format(s) for the scraped content
+
+          screenshot: Flag to include a screenshot of the page in the response
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return await self.post(
+            "/v1/scrape",
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "format": format,
+                    "screenshot": screenshot,
+                },
+                top_level_scrape_params.TopLevelScrapeParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ScrapeResponse,
+        )
+
+    async def screenshot(
+        self,
+        *,
+        url: str,
+        orgid: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AsyncBinaryAPIResponse:
+        """Capture a screenshot of the specified webpage.
+
+        This endpoint supports bulk
+        operations by passing an array of URLs.
+
+        Args:
+          url: The URL of the webpage to screenshot
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        extra_headers = {"Accept": "image/png", **(extra_headers or {})}
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return await self.post(
+            "/v1/screenshot",
+            body=await async_maybe_transform({"url": url}, top_level_screenshot_params.TopLevelScreenshotParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AsyncBinaryAPIResponse,
+        )
+
     @override
     def _make_status_error(
         self,
@@ -383,22 +955,110 @@ class AsyncSteel(AsyncAPIClient):
 
 class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
-        self.steel_browser = resources.SteelBrowserResourceWithRawResponse(client.steel_browser)
+        self.steel_session = resources.SteelSessionResourceWithRawResponse(client.steel_session)
+        self.steel_context = resources.SteelContextResourceWithRawResponse(client.steel_context)
+
+        self.create_session = to_raw_response_wrapper(
+            client.create_session,
+        )
+        self.list_sessions = to_raw_response_wrapper(
+            client.list_sessions,
+        )
+        self.pdf = to_custom_raw_response_wrapper(
+            client.pdf,
+            BinaryAPIResponse,
+        )
+        self.retrieve_session = to_raw_response_wrapper(
+            client.retrieve_session,
+        )
+        self.scrape = to_raw_response_wrapper(
+            client.scrape,
+        )
+        self.screenshot = to_custom_raw_response_wrapper(
+            client.screenshot,
+            BinaryAPIResponse,
+        )
 
 
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.steel_browser = resources.AsyncSteelBrowserResourceWithRawResponse(client.steel_browser)
+        self.steel_session = resources.AsyncSteelSessionResourceWithRawResponse(client.steel_session)
+        self.steel_context = resources.AsyncSteelContextResourceWithRawResponse(client.steel_context)
+
+        self.create_session = async_to_raw_response_wrapper(
+            client.create_session,
+        )
+        self.list_sessions = async_to_raw_response_wrapper(
+            client.list_sessions,
+        )
+        self.pdf = async_to_custom_raw_response_wrapper(
+            client.pdf,
+            AsyncBinaryAPIResponse,
+        )
+        self.retrieve_session = async_to_raw_response_wrapper(
+            client.retrieve_session,
+        )
+        self.scrape = async_to_raw_response_wrapper(
+            client.scrape,
+        )
+        self.screenshot = async_to_custom_raw_response_wrapper(
+            client.screenshot,
+            AsyncBinaryAPIResponse,
+        )
 
 
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
-        self.steel_browser = resources.SteelBrowserResourceWithStreamingResponse(client.steel_browser)
+        self.steel_session = resources.SteelSessionResourceWithStreamingResponse(client.steel_session)
+        self.steel_context = resources.SteelContextResourceWithStreamingResponse(client.steel_context)
+
+        self.create_session = to_streamed_response_wrapper(
+            client.create_session,
+        )
+        self.list_sessions = to_streamed_response_wrapper(
+            client.list_sessions,
+        )
+        self.pdf = to_custom_streamed_response_wrapper(
+            client.pdf,
+            StreamedBinaryAPIResponse,
+        )
+        self.retrieve_session = to_streamed_response_wrapper(
+            client.retrieve_session,
+        )
+        self.scrape = to_streamed_response_wrapper(
+            client.scrape,
+        )
+        self.screenshot = to_custom_streamed_response_wrapper(
+            client.screenshot,
+            StreamedBinaryAPIResponse,
+        )
 
 
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.steel_browser = resources.AsyncSteelBrowserResourceWithStreamingResponse(client.steel_browser)
+        self.steel_session = resources.AsyncSteelSessionResourceWithStreamingResponse(client.steel_session)
+        self.steel_context = resources.AsyncSteelContextResourceWithStreamingResponse(client.steel_context)
+
+        self.create_session = async_to_streamed_response_wrapper(
+            client.create_session,
+        )
+        self.list_sessions = async_to_streamed_response_wrapper(
+            client.list_sessions,
+        )
+        self.pdf = async_to_custom_streamed_response_wrapper(
+            client.pdf,
+            AsyncStreamedBinaryAPIResponse,
+        )
+        self.retrieve_session = async_to_streamed_response_wrapper(
+            client.retrieve_session,
+        )
+        self.scrape = async_to_streamed_response_wrapper(
+            client.scrape,
+        )
+        self.screenshot = async_to_custom_streamed_response_wrapper(
+            client.screenshot,
+            AsyncStreamedBinaryAPIResponse,
+        )
 
 
 Client = Steel

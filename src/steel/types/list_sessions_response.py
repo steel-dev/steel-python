@@ -7,7 +7,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["SteelBrowserListSessionsResponse", "Session"]
+__all__ = ["ListSessionsResponse", "Session"]
 
 
 class Session(BaseModel):
@@ -26,9 +26,12 @@ class Session(BaseModel):
     start_date: datetime = FieldInfo(alias="startDate")
     """Timestamp when the session was started"""
 
+    timeout: int
+    """When to timeout session in ms."""
+
     websocket_url: str = FieldInfo(alias="websocketUrl")
     """WebSocket URL for connecting to the session"""
 
 
-class SteelBrowserListSessionsResponse(BaseModel):
+class ListSessionsResponse(BaseModel):
     sessions: List[Session]

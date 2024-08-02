@@ -4,11 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["SteelBrowserScreenshotParams"]
+__all__ = ["TopLevelPdfParams"]
 
 
-class SteelBrowserScreenshotParams(TypedDict, total=False):
+class TopLevelPdfParams(TypedDict, total=False):
     url: Required[str]
-    """The URL of the webpage to screenshot"""
-
-    orgid: Required[str]
+    """The URL of the webpage to convert to PDF"""
