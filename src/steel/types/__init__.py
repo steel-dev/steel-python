@@ -2,22 +2,17 @@
 
 from __future__ import annotations
 
+from .scrape import Scrape as Scrape
 from .context import Context as Context
 from .session import Session as Session
-from .scrape_response import ScrapeResponse as ScrapeResponse
-from .top_level_pdf_params import TopLevelPdfParams as TopLevelPdfParams
-from .list_sessions_response import ListSessionsResponse as ListSessionsResponse
-from .top_level_scrape_params import TopLevelScrapeParams as TopLevelScrapeParams
-from .top_level_screenshot_params import TopLevelScreenshotParams as TopLevelScreenshotParams
-from .top_level_list_sessions_params import TopLevelListSessionsParams as TopLevelListSessionsParams
-from .top_level_create_session_params import TopLevelCreateSessionParams as TopLevelCreateSessionParams
-from .steel_context_create_context_params import SteelContextCreateContextParams as SteelContextCreateContextParams
-from .steel_context_create_context_response import (
-    SteelContextCreateContextResponse as SteelContextCreateContextResponse,
-)
-from .steel_context_delete_context_response import (
-    SteelContextDeleteContextResponse as SteelContextDeleteContextResponse,
-)
-from .steel_session_release_session_response import (
-    SteelSessionReleaseSessionResponse as SteelSessionReleaseSessionResponse,
-)
+from .session_list_params import SessionListParams as SessionListParams
+from .context_create_params import ContextCreateParams as ContextCreateParams
+from .context_list_response import ContextListResponse as ContextListResponse
+from .session_create_params import SessionCreateParams as SessionCreateParams
+from .session_list_response import SessionListResponse as SessionListResponse
+from .browser_tool_pdf_params import BrowserToolPdfParams as BrowserToolPdfParams
+from .context_create_response import ContextCreateResponse as ContextCreateResponse
+from .context_delete_response import ContextDeleteResponse as ContextDeleteResponse
+from .session_release_response import SessionReleaseResponse as SessionReleaseResponse
+from .browser_tool_scrape_params import BrowserToolScrapeParams as BrowserToolScrapeParams
+from .browser_tool_screenshot_params import BrowserToolScreenshotParams as BrowserToolScreenshotParams

@@ -4,10 +4,10 @@
 
 from .._models import BaseModel
 
-__all__ = ["SteelSessionReleaseSessionResponse"]
+__all__ = ["SessionReleaseResponse"]
 
 
-class SteelSessionReleaseSessionResponse(BaseModel):
+class SessionReleaseResponse(BaseModel):
     message: str
     """A message describing the result of the release operation"""
 

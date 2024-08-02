@@ -7,7 +7,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["ListSessionsResponse", "Session"]
+__all__ = ["SessionListResponse", "Session"]
 
 
 class Session(BaseModel):
@@ -33,5 +33,5 @@ class Session(BaseModel):
     """WebSocket URL for connecting to the session"""
 
 
-class ListSessionsResponse(BaseModel):
+class SessionListResponse(BaseModel):
     sessions: List[Session]

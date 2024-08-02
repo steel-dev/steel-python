@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing_extensions import TypedDict
 
-__all__ = ["TopLevelListSessionsParams"]
+__all__ = ["SessionListParams"]
 
 
-class TopLevelListSessionsParams(TypedDict, total=False):
-    orgid: Required[str]
-
+class SessionListParams(TypedDict, total=False):
     live_only: bool
     """Flag to retrieve only live sessions (default: true)"""
