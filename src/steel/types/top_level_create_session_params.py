@@ -6,10 +6,10 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["SteelBrowserCreateSessionParams"]
+__all__ = ["TopLevelCreateSessionParams"]
 
 
-class SteelBrowserCreateSessionParams(TypedDict, total=False):
+class TopLevelCreateSessionParams(TypedDict, total=False):
     org_id: Required[Annotated[str, PropertyInfo(alias="orgId")]]
     """Unique identifier for the organization creating the session"""
 
@@ -26,6 +26,9 @@ class SteelBrowserCreateSessionParams(TypedDict, total=False):
 
     solve_captcha: Annotated[bool, PropertyInfo(alias="solveCaptcha")]
     """Flag to enable automatic captcha solving"""
+
+    api_timeout: Annotated[int, PropertyInfo(alias="timeout")]
+    """How long after starting should the session timeout."""
 
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
     """Custom user agent string for the browser session"""

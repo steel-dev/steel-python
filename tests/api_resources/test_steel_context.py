@@ -8,12 +8,12 @@ from typing import Any, cast
 import pytest
 
 from steel import Steel, AsyncSteel
-from tests.utils import assert_matches_type
-from steel.types.steel_browser.steel_session import (
+from steel.types import (
     Context,
     SteelContextCreateContextResponse,
     SteelContextDeleteContextResponse,
 )
+from tests.utils import assert_matches_type
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -23,19 +23,19 @@ class TestSteelContext:
 
     @parametrize
     def test_method_create_context(self, client: Steel) -> None:
-        steel_context = client.steel_browser.steel_session.steel_context.create_context()
+        steel_context = client.steel_context.create_context()
         assert_matches_type(SteelContextCreateContextResponse, steel_context, path=["response"])
 
     @parametrize
     def test_method_create_context_with_all_params(self, client: Steel) -> None:
-        steel_context = client.steel_browser.steel_session.steel_context.create_context(
+        steel_context = client.steel_context.create_context(
             proxy="proxy",
         )
         assert_matches_type(SteelContextCreateContextResponse, steel_context, path=["response"])
 
     @parametrize
     def test_raw_response_create_context(self, client: Steel) -> None:
-        response = client.steel_browser.steel_session.steel_context.with_raw_response.create_context()
+        response = client.steel_context.with_raw_response.create_context()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -44,7 +44,7 @@ class TestSteelContext:
 
     @parametrize
     def test_streaming_response_create_context(self, client: Steel) -> None:
-        with client.steel_browser.steel_session.steel_context.with_streaming_response.create_context() as response:
+        with client.steel_context.with_streaming_response.create_context() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -55,14 +55,14 @@ class TestSteelContext:
 
     @parametrize
     def test_method_delete_context(self, client: Steel) -> None:
-        steel_context = client.steel_browser.steel_session.steel_context.delete_context(
+        steel_context = client.steel_context.delete_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(SteelContextDeleteContextResponse, steel_context, path=["response"])
 
     @parametrize
     def test_raw_response_delete_context(self, client: Steel) -> None:
-        response = client.steel_browser.steel_session.steel_context.with_raw_response.delete_context(
+        response = client.steel_context.with_raw_response.delete_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
@@ -73,7 +73,7 @@ class TestSteelContext:
 
     @parametrize
     def test_streaming_response_delete_context(self, client: Steel) -> None:
-        with client.steel_browser.steel_session.steel_context.with_streaming_response.delete_context(
+        with client.steel_context.with_streaming_response.delete_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
@@ -87,20 +87,20 @@ class TestSteelContext:
     @parametrize
     def test_path_params_delete_context(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.steel_browser.steel_session.steel_context.with_raw_response.delete_context(
+            client.steel_context.with_raw_response.delete_context(
                 "",
             )
 
     @parametrize
     def test_method_get_context_data(self, client: Steel) -> None:
-        steel_context = client.steel_browser.steel_session.steel_context.get_context_data(
+        steel_context = client.steel_context.get_context_data(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(Context, steel_context, path=["response"])
 
     @parametrize
     def test_raw_response_get_context_data(self, client: Steel) -> None:
-        response = client.steel_browser.steel_session.steel_context.with_raw_response.get_context_data(
+        response = client.steel_context.with_raw_response.get_context_data(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
@@ -111,7 +111,7 @@ class TestSteelContext:
 
     @parametrize
     def test_streaming_response_get_context_data(self, client: Steel) -> None:
-        with client.steel_browser.steel_session.steel_context.with_streaming_response.get_context_data(
+        with client.steel_context.with_streaming_response.get_context_data(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
@@ -125,7 +125,7 @@ class TestSteelContext:
     @parametrize
     def test_path_params_get_context_data(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.steel_browser.steel_session.steel_context.with_raw_response.get_context_data(
+            client.steel_context.with_raw_response.get_context_data(
                 "",
             )
 
@@ -135,19 +135,19 @@ class TestAsyncSteelContext:
 
     @parametrize
     async def test_method_create_context(self, async_client: AsyncSteel) -> None:
-        steel_context = await async_client.steel_browser.steel_session.steel_context.create_context()
+        steel_context = await async_client.steel_context.create_context()
         assert_matches_type(SteelContextCreateContextResponse, steel_context, path=["response"])
 
     @parametrize
     async def test_method_create_context_with_all_params(self, async_client: AsyncSteel) -> None:
-        steel_context = await async_client.steel_browser.steel_session.steel_context.create_context(
+        steel_context = await async_client.steel_context.create_context(
             proxy="proxy",
         )
         assert_matches_type(SteelContextCreateContextResponse, steel_context, path=["response"])
 
     @parametrize
     async def test_raw_response_create_context(self, async_client: AsyncSteel) -> None:
-        response = await async_client.steel_browser.steel_session.steel_context.with_raw_response.create_context()
+        response = await async_client.steel_context.with_raw_response.create_context()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -156,7 +156,7 @@ class TestAsyncSteelContext:
 
     @parametrize
     async def test_streaming_response_create_context(self, async_client: AsyncSteel) -> None:
-        async with async_client.steel_browser.steel_session.steel_context.with_streaming_response.create_context() as response:
+        async with async_client.steel_context.with_streaming_response.create_context() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -167,14 +167,14 @@ class TestAsyncSteelContext:
 
     @parametrize
     async def test_method_delete_context(self, async_client: AsyncSteel) -> None:
-        steel_context = await async_client.steel_browser.steel_session.steel_context.delete_context(
+        steel_context = await async_client.steel_context.delete_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(SteelContextDeleteContextResponse, steel_context, path=["response"])
 
     @parametrize
     async def test_raw_response_delete_context(self, async_client: AsyncSteel) -> None:
-        response = await async_client.steel_browser.steel_session.steel_context.with_raw_response.delete_context(
+        response = await async_client.steel_context.with_raw_response.delete_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
@@ -185,7 +185,7 @@ class TestAsyncSteelContext:
 
     @parametrize
     async def test_streaming_response_delete_context(self, async_client: AsyncSteel) -> None:
-        async with async_client.steel_browser.steel_session.steel_context.with_streaming_response.delete_context(
+        async with async_client.steel_context.with_streaming_response.delete_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
@@ -199,20 +199,20 @@ class TestAsyncSteelContext:
     @parametrize
     async def test_path_params_delete_context(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.steel_browser.steel_session.steel_context.with_raw_response.delete_context(
+            await async_client.steel_context.with_raw_response.delete_context(
                 "",
             )
 
     @parametrize
     async def test_method_get_context_data(self, async_client: AsyncSteel) -> None:
-        steel_context = await async_client.steel_browser.steel_session.steel_context.get_context_data(
+        steel_context = await async_client.steel_context.get_context_data(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(Context, steel_context, path=["response"])
 
     @parametrize
     async def test_raw_response_get_context_data(self, async_client: AsyncSteel) -> None:
-        response = await async_client.steel_browser.steel_session.steel_context.with_raw_response.get_context_data(
+        response = await async_client.steel_context.with_raw_response.get_context_data(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
@@ -223,7 +223,7 @@ class TestAsyncSteelContext:
 
     @parametrize
     async def test_streaming_response_get_context_data(self, async_client: AsyncSteel) -> None:
-        async with async_client.steel_browser.steel_session.steel_context.with_streaming_response.get_context_data(
+        async with async_client.steel_context.with_streaming_response.get_context_data(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
@@ -237,6 +237,6 @@ class TestAsyncSteelContext:
     @parametrize
     async def test_path_params_get_context_data(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.steel_browser.steel_session.steel_context.with_raw_response.get_context_data(
+            await async_client.steel_context.with_raw_response.get_context_data(
                 "",
             )

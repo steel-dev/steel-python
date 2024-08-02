@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["SteelBrowserListSessionsParams"]
+__all__ = ["TopLevelListSessionsParams"]
 
 
-class SteelBrowserListSessionsParams(TypedDict, total=False):
+class TopLevelListSessionsParams(TypedDict, total=False):
     orgid: Required[str]
 
     live_only: bool
