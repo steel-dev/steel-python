@@ -4,11 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["TopLevelScreenshotParams"]
+__all__ = ["BrowserToolScreenshotParams"]
 
 
-class TopLevelScreenshotParams(TypedDict, total=False):
+class BrowserToolScreenshotParams(TypedDict, total=False):
     url: Required[str]
     """The URL of the webpage to screenshot"""
-
-    orgid: Required[str]

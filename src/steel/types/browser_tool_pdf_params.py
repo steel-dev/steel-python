@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["TopLevelPdfParams"]
+__all__ = ["BrowserToolPdfParams"]
 
 
-class TopLevelPdfParams(TypedDict, total=False):
+class BrowserToolPdfParams(TypedDict, total=False):
     url: Required[str]
     """The URL of the webpage to convert to PDF"""

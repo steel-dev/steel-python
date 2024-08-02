@@ -2,19 +2,14 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing_extensions import Literal, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["TopLevelCreateSessionParams"]
+__all__ = ["SessionCreateParams"]
 
 
-class TopLevelCreateSessionParams(TypedDict, total=False):
-    org_id: Required[Annotated[str, PropertyInfo(alias="orgId")]]
-    """Unique identifier for the organization creating the session"""
-
-    orgid: Required[str]
-
+class SessionCreateParams(TypedDict, total=False):
     context_data: Annotated[object, PropertyInfo(alias="contextData")]
     """Custom user context data for the session"""
 
