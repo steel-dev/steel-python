@@ -4,73 +4,45 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import context_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .._utils import (
-    maybe_transform,
-    async_maybe_transform,
-)
-from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
+from ...._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ...._compat import cached_property
+from ...._resource import SyncAPIResource, AsyncAPIResource
+from ...._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
-from ..types.get_context_response import GetContextResponse
-from ..types.get_contexts_response import GetContextsResponse
-from ..types.create_context_response import CreateContextResponse
-from ..types.delete_context_response import DeleteContextResponse
+from .steel_context import (
+    SteelContextResource,
+    AsyncSteelContextResource,
+    SteelContextResourceWithRawResponse,
+    AsyncSteelContextResourceWithRawResponse,
+    SteelContextResourceWithStreamingResponse,
+    AsyncSteelContextResourceWithStreamingResponse,
+)
+from ...._base_client import make_request_options
+from ....types.steel_browser.session import Session
+from ....types.steel_browser.steel_session.context import Context
+from ....types.steel_browser.steel_session_release_session_response import SteelSessionReleaseSessionResponse
 
-__all__ = ["ContextsResource", "AsyncContextsResource"]
+__all__ = ["SteelSessionResource", "AsyncSteelSessionResource"]
 
 
-class ContextsResource(SyncAPIResource):
+class SteelSessionResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ContextsResourceWithRawResponse:
-        return ContextsResourceWithRawResponse(self)
+    def steel_context(self) -> SteelContextResource:
+        return SteelContextResource(self._client)
 
     @cached_property
-    def with_streaming_response(self) -> ContextsResourceWithStreamingResponse:
-        return ContextsResourceWithStreamingResponse(self)
+    def with_raw_response(self) -> SteelSessionResourceWithRawResponse:
+        return SteelSessionResourceWithRawResponse(self)
 
-    def create(
-        self,
-        *,
-        proxy: str | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreateContextResponse:
-        """
-        Create a new browser context with specified settings
+    @cached_property
+    def with_streaming_response(self) -> SteelSessionResourceWithStreamingResponse:
+        return SteelSessionResourceWithStreamingResponse(self)
 
-        Args:
-          proxy: Proxy settings for the context
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._post(
-            "/v1/context",
-            body=maybe_transform({"proxy": proxy}, context_create_params.ContextCreateParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=CreateContextResponse,
-        )
-
-    def retrieve(
+    def get_context(
         self,
         id: str,
         *,
@@ -80,7 +52,7 @@ class ContextsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetContextResponse:
+    ) -> Context:
         """
         Retrieve details of a specific saved browser context
 
@@ -100,41 +72,23 @@ class ContextsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetContextResponse,
+            cast_to=Context,
         )
 
-    def list(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetContextsResponse:
-        """Retrieve a list of all saved browser contexts"""
-        return self._get(
-            "/v1/context",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=GetContextsResponse,
-        )
-
-    def delete(
+    def get_session_data(
         self,
         id: str,
         *,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DeleteContextResponse:
+    ) -> Session:
         """
-        Delete a specific saved browser context
+        Get detailed information about a specific browser session
 
         Args:
           extra_headers: Send extra headers
@@ -147,41 +101,31 @@ class ContextsResource(SyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._delete(
-            f"/v1/context/{id}",
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return self._get(
+            f"/v1/sessions/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DeleteContextResponse,
+            cast_to=Session,
         )
 
-
-class AsyncContextsResource(AsyncAPIResource):
-    @cached_property
-    def with_raw_response(self) -> AsyncContextsResourceWithRawResponse:
-        return AsyncContextsResourceWithRawResponse(self)
-
-    @cached_property
-    def with_streaming_response(self) -> AsyncContextsResourceWithStreamingResponse:
-        return AsyncContextsResourceWithStreamingResponse(self)
-
-    async def create(
+    def release_session(
         self,
+        id: str,
         *,
-        proxy: str | NotGiven = NOT_GIVEN,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CreateContextResponse:
+    ) -> SteelSessionReleaseSessionResponse:
         """
-        Create a new browser context with specified settings
+        Release and terminate a browser session using its ID
 
         Args:
-          proxy: Proxy settings for the context
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -190,16 +134,32 @@ class AsyncContextsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
-            "/v1/context",
-            body=await async_maybe_transform({"proxy": proxy}, context_create_params.ContextCreateParams),
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return self._get(
+            f"/v1/sessions/{id}/release",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CreateContextResponse,
+            cast_to=SteelSessionReleaseSessionResponse,
         )
 
-    async def retrieve(
+
+class AsyncSteelSessionResource(AsyncAPIResource):
+    @cached_property
+    def steel_context(self) -> AsyncSteelContextResource:
+        return AsyncSteelContextResource(self._client)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncSteelSessionResourceWithRawResponse:
+        return AsyncSteelSessionResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncSteelSessionResourceWithStreamingResponse:
+        return AsyncSteelSessionResourceWithStreamingResponse(self)
+
+    async def get_context(
         self,
         id: str,
         *,
@@ -209,7 +169,7 @@ class AsyncContextsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetContextResponse:
+    ) -> Context:
         """
         Retrieve details of a specific saved browser context
 
@@ -229,41 +189,23 @@ class AsyncContextsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=GetContextResponse,
+            cast_to=Context,
         )
 
-    async def list(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> GetContextsResponse:
-        """Retrieve a list of all saved browser contexts"""
-        return await self._get(
-            "/v1/context",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=GetContextsResponse,
-        )
-
-    async def delete(
+    async def get_session_data(
         self,
         id: str,
         *,
+        orgid: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> DeleteContextResponse:
+    ) -> Session:
         """
-        Delete a specific saved browser context
+        Get detailed information about a specific browser session
 
         Args:
           extra_headers: Send extra headers
@@ -276,82 +218,122 @@ class AsyncContextsResource(AsyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._delete(
-            f"/v1/context/{id}",
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return await self._get(
+            f"/v1/sessions/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=DeleteContextResponse,
+            cast_to=Session,
+        )
+
+    async def release_session(
+        self,
+        id: str,
+        *,
+        orgid: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SteelSessionReleaseSessionResponse:
+        """
+        Release and terminate a browser session using its ID
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        extra_headers = {"orgid": orgid, **(extra_headers or {})}
+        return await self._get(
+            f"/v1/sessions/{id}/release",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SteelSessionReleaseSessionResponse,
         )
 
 
-class ContextsResourceWithRawResponse:
-    def __init__(self, contexts: ContextsResource) -> None:
-        self._contexts = contexts
+class SteelSessionResourceWithRawResponse:
+    def __init__(self, steel_session: SteelSessionResource) -> None:
+        self._steel_session = steel_session
 
-        self.create = to_raw_response_wrapper(
-            contexts.create,
+        self.get_context = to_raw_response_wrapper(
+            steel_session.get_context,
         )
-        self.retrieve = to_raw_response_wrapper(
-            contexts.retrieve,
+        self.get_session_data = to_raw_response_wrapper(
+            steel_session.get_session_data,
         )
-        self.list = to_raw_response_wrapper(
-            contexts.list,
-        )
-        self.delete = to_raw_response_wrapper(
-            contexts.delete,
+        self.release_session = to_raw_response_wrapper(
+            steel_session.release_session,
         )
 
-
-class AsyncContextsResourceWithRawResponse:
-    def __init__(self, contexts: AsyncContextsResource) -> None:
-        self._contexts = contexts
-
-        self.create = async_to_raw_response_wrapper(
-            contexts.create,
-        )
-        self.retrieve = async_to_raw_response_wrapper(
-            contexts.retrieve,
-        )
-        self.list = async_to_raw_response_wrapper(
-            contexts.list,
-        )
-        self.delete = async_to_raw_response_wrapper(
-            contexts.delete,
-        )
+    @cached_property
+    def steel_context(self) -> SteelContextResourceWithRawResponse:
+        return SteelContextResourceWithRawResponse(self._steel_session.steel_context)
 
 
-class ContextsResourceWithStreamingResponse:
-    def __init__(self, contexts: ContextsResource) -> None:
-        self._contexts = contexts
+class AsyncSteelSessionResourceWithRawResponse:
+    def __init__(self, steel_session: AsyncSteelSessionResource) -> None:
+        self._steel_session = steel_session
 
-        self.create = to_streamed_response_wrapper(
-            contexts.create,
+        self.get_context = async_to_raw_response_wrapper(
+            steel_session.get_context,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            contexts.retrieve,
+        self.get_session_data = async_to_raw_response_wrapper(
+            steel_session.get_session_data,
         )
-        self.list = to_streamed_response_wrapper(
-            contexts.list,
-        )
-        self.delete = to_streamed_response_wrapper(
-            contexts.delete,
+        self.release_session = async_to_raw_response_wrapper(
+            steel_session.release_session,
         )
 
+    @cached_property
+    def steel_context(self) -> AsyncSteelContextResourceWithRawResponse:
+        return AsyncSteelContextResourceWithRawResponse(self._steel_session.steel_context)
 
-class AsyncContextsResourceWithStreamingResponse:
-    def __init__(self, contexts: AsyncContextsResource) -> None:
-        self._contexts = contexts
 
-        self.create = async_to_streamed_response_wrapper(
-            contexts.create,
+class SteelSessionResourceWithStreamingResponse:
+    def __init__(self, steel_session: SteelSessionResource) -> None:
+        self._steel_session = steel_session
+
+        self.get_context = to_streamed_response_wrapper(
+            steel_session.get_context,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            contexts.retrieve,
+        self.get_session_data = to_streamed_response_wrapper(
+            steel_session.get_session_data,
         )
-        self.list = async_to_streamed_response_wrapper(
-            contexts.list,
+        self.release_session = to_streamed_response_wrapper(
+            steel_session.release_session,
         )
-        self.delete = async_to_streamed_response_wrapper(
-            contexts.delete,
+
+    @cached_property
+    def steel_context(self) -> SteelContextResourceWithStreamingResponse:
+        return SteelContextResourceWithStreamingResponse(self._steel_session.steel_context)
+
+
+class AsyncSteelSessionResourceWithStreamingResponse:
+    def __init__(self, steel_session: AsyncSteelSessionResource) -> None:
+        self._steel_session = steel_session
+
+        self.get_context = async_to_streamed_response_wrapper(
+            steel_session.get_context,
         )
+        self.get_session_data = async_to_streamed_response_wrapper(
+            steel_session.get_session_data,
+        )
+        self.release_session = async_to_streamed_response_wrapper(
+            steel_session.release_session,
+        )
+
+    @cached_property
+    def steel_context(self) -> AsyncSteelContextResourceWithStreamingResponse:
+        return AsyncSteelContextResourceWithStreamingResponse(self._steel_session.steel_context)

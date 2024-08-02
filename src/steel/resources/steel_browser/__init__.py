@@ -8,8 +8,22 @@ from .steel_browser import (
     SteelBrowserResourceWithStreamingResponse,
     AsyncSteelBrowserResourceWithStreamingResponse,
 )
+from .steel_session import (
+    SteelSessionResource,
+    AsyncSteelSessionResource,
+    SteelSessionResourceWithRawResponse,
+    AsyncSteelSessionResourceWithRawResponse,
+    SteelSessionResourceWithStreamingResponse,
+    AsyncSteelSessionResourceWithStreamingResponse,
+)
 
 __all__ = [
+    "SteelSessionResource",
+    "AsyncSteelSessionResource",
+    "SteelSessionResourceWithRawResponse",
+    "AsyncSteelSessionResourceWithRawResponse",
+    "SteelSessionResourceWithStreamingResponse",
+    "AsyncSteelSessionResourceWithStreamingResponse",
     "SteelBrowserResource",
     "AsyncSteelBrowserResource",
     "SteelBrowserResourceWithRawResponse",

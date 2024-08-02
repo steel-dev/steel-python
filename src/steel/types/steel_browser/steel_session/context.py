@@ -2,9 +2,9 @@
 
 from typing import Optional
 
-from .._models import BaseModel
+from ...._models import BaseModel
 
-__all__ = ["GetContextResponse", "Details"]
+__all__ = ["Context", "Details"]
 
 
 class Details(BaseModel):
@@ -12,7 +12,7 @@ class Details(BaseModel):
     """Proxy settings for the context"""
 
 
-class GetContextResponse(BaseModel):
+class Context(BaseModel):
     id: str
     """Unique identifier for the context"""
 

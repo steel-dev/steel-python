@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import TypedDict
 
-__all__ = ["ContextCreateParams"]
+__all__ = ["SteelContextCreateContextParams"]
 
 
-class ContextCreateParams(TypedDict, total=False):
+class SteelContextCreateContextParams(TypedDict, total=False):
     proxy: str
     """Proxy settings for the context"""

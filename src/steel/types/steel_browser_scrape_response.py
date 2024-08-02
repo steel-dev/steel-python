@@ -4,10 +4,10 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["ScrapeResponse"]
+__all__ = ["SteelBrowserScrapeResponse"]
 
 
-class ScrapeResponse(BaseModel):
+class SteelBrowserScrapeResponse(BaseModel):
     cleaned_html: Optional[str] = None
     """The cleaned HTML content of the scraped webpage"""
 
@@ -19,3 +19,6 @@ class ScrapeResponse(BaseModel):
 
     readability: Optional[object] = None
     """The readable content extracted from the webpage"""
+
+    screenshot: Optional[object] = None
+    """Base64 encoded screenshot of the webpage (if requested)"""
