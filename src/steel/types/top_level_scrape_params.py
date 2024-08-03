@@ -5,10 +5,10 @@ from __future__ import annotations
 from typing import List
 from typing_extensions import Literal, Required, TypedDict
 
-__all__ = ["BrowserToolScrapeParams"]
+__all__ = ["TopLevelScrapeParams"]
 
 
-class BrowserToolScrapeParams(TypedDict, total=False):
+class TopLevelScrapeParams(TypedDict, total=False):
     url: Required[str]
     """The URL of the webpage to scrape"""
 

@@ -43,8 +43,8 @@ class SessionsResource(SyncAPIResource):
         context_data: object | NotGiven = NOT_GIVEN,
         proxy: str | NotGiven = NOT_GIVEN,
         region: Literal["CA", "US", "FR"] | NotGiven = NOT_GIVEN,
+        session_timeout: int | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
-        api_timeout: int | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -63,9 +63,9 @@ class SessionsResource(SyncAPIResource):
 
           region: Region for the browser session
 
-          solve_captcha: Flag to enable automatic captcha solving
+          session_timeout: How long after starting should the session timeout (in milliseconds).
 
-          api_timeout: How long after starting should the session timeout.
+          solve_captcha: Flag to enable automatic captcha solving
 
           user_agent: Custom user agent string for the browser session
 
@@ -84,8 +84,8 @@ class SessionsResource(SyncAPIResource):
                     "context_data": context_data,
                     "proxy": proxy,
                     "region": region,
+                    "session_timeout": session_timeout,
                     "solve_captcha": solve_captcha,
-                    "timeout": api_timeout,
                     "user_agent": user_agent,
                 },
                 session_create_params.SessionCreateParams,
@@ -215,8 +215,8 @@ class AsyncSessionsResource(AsyncAPIResource):
         context_data: object | NotGiven = NOT_GIVEN,
         proxy: str | NotGiven = NOT_GIVEN,
         region: Literal["CA", "US", "FR"] | NotGiven = NOT_GIVEN,
+        session_timeout: int | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
-        api_timeout: int | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -235,9 +235,9 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           region: Region for the browser session
 
-          solve_captcha: Flag to enable automatic captcha solving
+          session_timeout: How long after starting should the session timeout (in milliseconds).
 
-          api_timeout: How long after starting should the session timeout.
+          solve_captcha: Flag to enable automatic captcha solving
 
           user_agent: Custom user agent string for the browser session
 
@@ -256,8 +256,8 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "context_data": context_data,
                     "proxy": proxy,
                     "region": region,
+                    "session_timeout": session_timeout,
                     "solve_captcha": solve_captcha,
-                    "timeout": api_timeout,
                     "user_agent": user_agent,
                 },
                 session_create_params.SessionCreateParams,

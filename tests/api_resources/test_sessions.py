@@ -28,8 +28,8 @@ class TestSessions:
             context_data={},
             proxy="proxy",
             region="CA",
+            session_timeout=0,
             solve_captcha=True,
-            api_timeout=0,
             user_agent="userAgent",
         )
         assert_matches_type(Session, session, path=["response"])
@@ -177,8 +177,8 @@ class TestAsyncSessions:
             context_data={},
             proxy="proxy",
             region="CA",
+            session_timeout=0,
             solve_captcha=True,
-            api_timeout=0,
             user_agent="userAgent",
         )
         assert_matches_type(Session, session, path=["response"])

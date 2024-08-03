@@ -22,11 +22,11 @@ class Session(BaseModel):
     session_id: str = FieldInfo(alias="sessionId")
     """Unique identifier for the session"""
 
+    session_timeout: int = FieldInfo(alias="sessionTimeout")
+    """When to timeout session in milliseconds."""
+
     start_date: datetime = FieldInfo(alias="startDate")
     """Timestamp when the session was started"""
-
-    timeout: int
-    """When to timeout session in ms."""
 
     websocket_url: str = FieldInfo(alias="websocketUrl")
     """WebSocket URL for connecting to the session"""
