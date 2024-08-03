@@ -19,11 +19,11 @@ class SessionCreateParams(TypedDict, total=False):
     region: Literal["CA", "US", "FR"]
     """Region for the browser session"""
 
+    session_timeout: Annotated[int, PropertyInfo(alias="sessionTimeout")]
+    """How long after starting should the session timeout (in milliseconds)."""
+
     solve_captcha: Annotated[bool, PropertyInfo(alias="solveCaptcha")]
     """Flag to enable automatic captcha solving"""
-
-    api_timeout: Annotated[int, PropertyInfo(alias="timeout")]
-    """How long after starting should the session timeout."""
 
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
     """Custom user agent string for the browser session"""
