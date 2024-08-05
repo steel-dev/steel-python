@@ -10,7 +10,9 @@ import pytest
 from respx import MockRouter
 
 from steel import Steel, AsyncSteel
-from steel.types import Scrape
+from steel.types import (
+    ScrapeResponse,
+)
 from tests.utils import assert_matches_type
 from steel._response import (
     BinaryAPIResponse,
@@ -22,88 +24,88 @@ from steel._response import (
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestTopLevel:
+class TestBrowserTools:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_method_pdf(self, client: Steel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/pdf").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        top_level = client.pdf(
+        browser_tool = client.browser_tools.pdf(
             url="url",
         )
-        assert top_level.is_closed
-        assert top_level.json() == {"foo": "bar"}
-        assert cast(Any, top_level.is_closed) is True
-        assert isinstance(top_level, BinaryAPIResponse)
+        assert browser_tool.is_closed
+        assert browser_tool.json() == {"foo": "bar"}
+        assert cast(Any, browser_tool.is_closed) is True
+        assert isinstance(browser_tool, BinaryAPIResponse)
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response_pdf(self, client: Steel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/pdf").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        top_level = client.with_raw_response.pdf(
+        browser_tool = client.browser_tools.with_raw_response.pdf(
             url="url",
         )
 
-        assert top_level.is_closed is True
-        assert top_level.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert top_level.json() == {"foo": "bar"}
-        assert isinstance(top_level, BinaryAPIResponse)
+        assert browser_tool.is_closed is True
+        assert browser_tool.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert browser_tool.json() == {"foo": "bar"}
+        assert isinstance(browser_tool, BinaryAPIResponse)
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_streaming_response_pdf(self, client: Steel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/pdf").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        with client.with_streaming_response.pdf(
+        with client.browser_tools.with_streaming_response.pdf(
             url="url",
-        ) as top_level:
-            assert not top_level.is_closed
-            assert top_level.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as browser_tool:
+            assert not browser_tool.is_closed
+            assert browser_tool.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert top_level.json() == {"foo": "bar"}
-            assert cast(Any, top_level.is_closed) is True
-            assert isinstance(top_level, StreamedBinaryAPIResponse)
+            assert browser_tool.json() == {"foo": "bar"}
+            assert cast(Any, browser_tool.is_closed) is True
+            assert isinstance(browser_tool, StreamedBinaryAPIResponse)
 
-        assert cast(Any, top_level.is_closed) is True
+        assert cast(Any, browser_tool.is_closed) is True
 
     @parametrize
     def test_method_scrape(self, client: Steel) -> None:
-        top_level = client.scrape(
+        browser_tool = client.browser_tools.scrape(
             url="url",
         )
-        assert_matches_type(Scrape, top_level, path=["response"])
+        assert_matches_type(ScrapeResponse, browser_tool, path=["response"])
 
     @parametrize
     def test_method_scrape_with_all_params(self, client: Steel) -> None:
-        top_level = client.scrape(
+        browser_tool = client.browser_tools.scrape(
             url="url",
             format=["html", "cleaned_html", "readability"],
             screenshot=True,
         )
-        assert_matches_type(Scrape, top_level, path=["response"])
+        assert_matches_type(ScrapeResponse, browser_tool, path=["response"])
 
     @parametrize
     def test_raw_response_scrape(self, client: Steel) -> None:
-        response = client.with_raw_response.scrape(
+        response = client.browser_tools.with_raw_response.scrape(
             url="url",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = response.parse()
-        assert_matches_type(Scrape, top_level, path=["response"])
+        browser_tool = response.parse()
+        assert_matches_type(ScrapeResponse, browser_tool, path=["response"])
 
     @parametrize
     def test_streaming_response_scrape(self, client: Steel) -> None:
-        with client.with_streaming_response.scrape(
+        with client.browser_tools.with_streaming_response.scrape(
             url="url",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            top_level = response.parse()
-            assert_matches_type(Scrape, top_level, path=["response"])
+            browser_tool = response.parse()
+            assert_matches_type(ScrapeResponse, browser_tool, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -111,127 +113,127 @@ class TestTopLevel:
     @pytest.mark.respx(base_url=base_url)
     def test_method_screenshot(self, client: Steel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/screenshot").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        top_level = client.screenshot(
+        browser_tool = client.browser_tools.screenshot(
             url="url",
         )
-        assert top_level.is_closed
-        assert top_level.json() == {"foo": "bar"}
-        assert cast(Any, top_level.is_closed) is True
-        assert isinstance(top_level, BinaryAPIResponse)
+        assert browser_tool.is_closed
+        assert browser_tool.json() == {"foo": "bar"}
+        assert cast(Any, browser_tool.is_closed) is True
+        assert isinstance(browser_tool, BinaryAPIResponse)
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response_screenshot(self, client: Steel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/screenshot").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        top_level = client.with_raw_response.screenshot(
+        browser_tool = client.browser_tools.with_raw_response.screenshot(
             url="url",
         )
 
-        assert top_level.is_closed is True
-        assert top_level.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert top_level.json() == {"foo": "bar"}
-        assert isinstance(top_level, BinaryAPIResponse)
+        assert browser_tool.is_closed is True
+        assert browser_tool.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert browser_tool.json() == {"foo": "bar"}
+        assert isinstance(browser_tool, BinaryAPIResponse)
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     def test_streaming_response_screenshot(self, client: Steel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/screenshot").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        with client.with_streaming_response.screenshot(
+        with client.browser_tools.with_streaming_response.screenshot(
             url="url",
-        ) as top_level:
-            assert not top_level.is_closed
-            assert top_level.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as browser_tool:
+            assert not browser_tool.is_closed
+            assert browser_tool.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert top_level.json() == {"foo": "bar"}
-            assert cast(Any, top_level.is_closed) is True
-            assert isinstance(top_level, StreamedBinaryAPIResponse)
+            assert browser_tool.json() == {"foo": "bar"}
+            assert cast(Any, browser_tool.is_closed) is True
+            assert isinstance(browser_tool, StreamedBinaryAPIResponse)
 
-        assert cast(Any, top_level.is_closed) is True
+        assert cast(Any, browser_tool.is_closed) is True
 
 
-class TestAsyncTopLevel:
+class TestAsyncBrowserTools:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_method_pdf(self, async_client: AsyncSteel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/pdf").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        top_level = await async_client.pdf(
+        browser_tool = await async_client.browser_tools.pdf(
             url="url",
         )
-        assert top_level.is_closed
-        assert await top_level.json() == {"foo": "bar"}
-        assert cast(Any, top_level.is_closed) is True
-        assert isinstance(top_level, AsyncBinaryAPIResponse)
+        assert browser_tool.is_closed
+        assert await browser_tool.json() == {"foo": "bar"}
+        assert cast(Any, browser_tool.is_closed) is True
+        assert isinstance(browser_tool, AsyncBinaryAPIResponse)
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_raw_response_pdf(self, async_client: AsyncSteel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/pdf").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        top_level = await async_client.with_raw_response.pdf(
+        browser_tool = await async_client.browser_tools.with_raw_response.pdf(
             url="url",
         )
 
-        assert top_level.is_closed is True
-        assert top_level.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert await top_level.json() == {"foo": "bar"}
-        assert isinstance(top_level, AsyncBinaryAPIResponse)
+        assert browser_tool.is_closed is True
+        assert browser_tool.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert await browser_tool.json() == {"foo": "bar"}
+        assert isinstance(browser_tool, AsyncBinaryAPIResponse)
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_pdf(self, async_client: AsyncSteel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/pdf").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        async with async_client.with_streaming_response.pdf(
+        async with async_client.browser_tools.with_streaming_response.pdf(
             url="url",
-        ) as top_level:
-            assert not top_level.is_closed
-            assert top_level.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as browser_tool:
+            assert not browser_tool.is_closed
+            assert browser_tool.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert await top_level.json() == {"foo": "bar"}
-            assert cast(Any, top_level.is_closed) is True
-            assert isinstance(top_level, AsyncStreamedBinaryAPIResponse)
+            assert await browser_tool.json() == {"foo": "bar"}
+            assert cast(Any, browser_tool.is_closed) is True
+            assert isinstance(browser_tool, AsyncStreamedBinaryAPIResponse)
 
-        assert cast(Any, top_level.is_closed) is True
+        assert cast(Any, browser_tool.is_closed) is True
 
     @parametrize
     async def test_method_scrape(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.scrape(
+        browser_tool = await async_client.browser_tools.scrape(
             url="url",
         )
-        assert_matches_type(Scrape, top_level, path=["response"])
+        assert_matches_type(ScrapeResponse, browser_tool, path=["response"])
 
     @parametrize
     async def test_method_scrape_with_all_params(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.scrape(
+        browser_tool = await async_client.browser_tools.scrape(
             url="url",
             format=["html", "cleaned_html", "readability"],
             screenshot=True,
         )
-        assert_matches_type(Scrape, top_level, path=["response"])
+        assert_matches_type(ScrapeResponse, browser_tool, path=["response"])
 
     @parametrize
     async def test_raw_response_scrape(self, async_client: AsyncSteel) -> None:
-        response = await async_client.with_raw_response.scrape(
+        response = await async_client.browser_tools.with_raw_response.scrape(
             url="url",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = await response.parse()
-        assert_matches_type(Scrape, top_level, path=["response"])
+        browser_tool = await response.parse()
+        assert_matches_type(ScrapeResponse, browser_tool, path=["response"])
 
     @parametrize
     async def test_streaming_response_scrape(self, async_client: AsyncSteel) -> None:
-        async with async_client.with_streaming_response.scrape(
+        async with async_client.browser_tools.with_streaming_response.scrape(
             url="url",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            top_level = await response.parse()
-            assert_matches_type(Scrape, top_level, path=["response"])
+            browser_tool = await response.parse()
+            assert_matches_type(ScrapeResponse, browser_tool, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -239,40 +241,40 @@ class TestAsyncTopLevel:
     @pytest.mark.respx(base_url=base_url)
     async def test_method_screenshot(self, async_client: AsyncSteel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/screenshot").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        top_level = await async_client.screenshot(
+        browser_tool = await async_client.browser_tools.screenshot(
             url="url",
         )
-        assert top_level.is_closed
-        assert await top_level.json() == {"foo": "bar"}
-        assert cast(Any, top_level.is_closed) is True
-        assert isinstance(top_level, AsyncBinaryAPIResponse)
+        assert browser_tool.is_closed
+        assert await browser_tool.json() == {"foo": "bar"}
+        assert cast(Any, browser_tool.is_closed) is True
+        assert isinstance(browser_tool, AsyncBinaryAPIResponse)
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_raw_response_screenshot(self, async_client: AsyncSteel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/screenshot").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        top_level = await async_client.with_raw_response.screenshot(
+        browser_tool = await async_client.browser_tools.with_raw_response.screenshot(
             url="url",
         )
 
-        assert top_level.is_closed is True
-        assert top_level.http_request.headers.get("X-Stainless-Lang") == "python"
-        assert await top_level.json() == {"foo": "bar"}
-        assert isinstance(top_level, AsyncBinaryAPIResponse)
+        assert browser_tool.is_closed is True
+        assert browser_tool.http_request.headers.get("X-Stainless-Lang") == "python"
+        assert await browser_tool.json() == {"foo": "bar"}
+        assert isinstance(browser_tool, AsyncBinaryAPIResponse)
 
     @parametrize
     @pytest.mark.respx(base_url=base_url)
     async def test_streaming_response_screenshot(self, async_client: AsyncSteel, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/screenshot").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
-        async with async_client.with_streaming_response.screenshot(
+        async with async_client.browser_tools.with_streaming_response.screenshot(
             url="url",
-        ) as top_level:
-            assert not top_level.is_closed
-            assert top_level.http_request.headers.get("X-Stainless-Lang") == "python"
+        ) as browser_tool:
+            assert not browser_tool.is_closed
+            assert browser_tool.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            assert await top_level.json() == {"foo": "bar"}
-            assert cast(Any, top_level.is_closed) is True
-            assert isinstance(top_level, AsyncStreamedBinaryAPIResponse)
+            assert await browser_tool.json() == {"foo": "bar"}
+            assert cast(Any, browser_tool.is_closed) is True
+            assert isinstance(browser_tool, AsyncStreamedBinaryAPIResponse)
 
-        assert cast(Any, top_level.is_closed) is True
+        assert cast(Any, browser_tool.is_closed) is True

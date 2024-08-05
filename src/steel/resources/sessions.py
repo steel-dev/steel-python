@@ -21,9 +21,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.session import Session
+from ..types.session_response import SessionResponse
 from ..types.session_list_response import SessionListResponse
-from ..types.session_release_response import SessionReleaseResponse
+from ..types.release_session_response import ReleaseSessionResponse
 
 __all__ = ["SessionsResource", "AsyncSessionsResource"]
 
@@ -52,7 +52,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> SessionResponse:
         """
         Start a new browser session
 
@@ -93,7 +93,7 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=SessionResponse,
         )
 
     def retrieve(
@@ -106,7 +106,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> SessionResponse:
         """
         Get detailed information about a specific browser session
 
@@ -126,12 +126,14 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=SessionResponse,
         )
 
     def list(
         self,
         *,
+        cursor: str | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
         live_only: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -140,10 +142,16 @@ class SessionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> SessionListResponse:
-        """
-        Get a list of browser sessions
+        """Get a paginated list of browser sessions.
+
+        Use the `next_cursor` from the
+        response to fetch the next page of results.
 
         Args:
+          cursor: Cursor for pagination, use the `next_cursor` from the previous response
+
+          limit: Number of sessions to return per request (default: 25, max: 100)
+
           live_only: Flag to retrieve only live sessions (default: true)
 
           extra_headers: Send extra headers
@@ -161,7 +169,14 @@ class SessionsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"live_only": live_only}, session_list_params.SessionListParams),
+                query=maybe_transform(
+                    {
+                        "cursor": cursor,
+                        "limit": limit,
+                        "live_only": live_only,
+                    },
+                    session_list_params.SessionListParams,
+                ),
             ),
             cast_to=SessionListResponse,
         )
@@ -176,7 +191,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionReleaseResponse:
+    ) -> ReleaseSessionResponse:
         """
         Release and terminate a browser session using its ID
 
@@ -196,7 +211,7 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SessionReleaseResponse,
+            cast_to=ReleaseSessionResponse,
         )
 
 
@@ -224,7 +239,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> SessionResponse:
         """
         Start a new browser session
 
@@ -265,7 +280,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=SessionResponse,
         )
 
     async def retrieve(
@@ -278,7 +293,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> SessionResponse:
         """
         Get detailed information about a specific browser session
 
@@ -298,12 +313,14 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=SessionResponse,
         )
 
     async def list(
         self,
         *,
+        cursor: str | NotGiven = NOT_GIVEN,
+        limit: int | NotGiven = NOT_GIVEN,
         live_only: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -312,10 +329,16 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> SessionListResponse:
-        """
-        Get a list of browser sessions
+        """Get a paginated list of browser sessions.
+
+        Use the `next_cursor` from the
+        response to fetch the next page of results.
 
         Args:
+          cursor: Cursor for pagination, use the `next_cursor` from the previous response
+
+          limit: Number of sessions to return per request (default: 25, max: 100)
+
           live_only: Flag to retrieve only live sessions (default: true)
 
           extra_headers: Send extra headers
@@ -333,7 +356,14 @@ class AsyncSessionsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"live_only": live_only}, session_list_params.SessionListParams),
+                query=await async_maybe_transform(
+                    {
+                        "cursor": cursor,
+                        "limit": limit,
+                        "live_only": live_only,
+                    },
+                    session_list_params.SessionListParams,
+                ),
             ),
             cast_to=SessionListResponse,
         )
@@ -348,7 +378,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionReleaseResponse:
+    ) -> ReleaseSessionResponse:
         """
         Release and terminate a browser session using its ID
 
@@ -368,7 +398,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SessionReleaseResponse,
+            cast_to=ReleaseSessionResponse,
         )
 
 

@@ -19,10 +19,10 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.context import Context
-from ..types.context_list_response import ContextListResponse
-from ..types.context_create_response import ContextCreateResponse
-from ..types.context_delete_response import ContextDeleteResponse
+from ..types.get_context_response import GetContextResponse
+from ..types.get_contexts_response import GetContextsResponse
+from ..types.create_context_response import CreateContextResponse
+from ..types.delete_context_response import DeleteContextResponse
 
 __all__ = ["ContextsResource", "AsyncContextsResource"]
 
@@ -46,7 +46,7 @@ class ContextsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextCreateResponse:
+    ) -> CreateContextResponse:
         """
         Create a new browser context with specified settings
 
@@ -67,7 +67,7 @@ class ContextsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextCreateResponse,
+            cast_to=CreateContextResponse,
         )
 
     def retrieve(
@@ -80,7 +80,7 @@ class ContextsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> GetContextResponse:
         """
         Retrieve details of a specific saved browser context
 
@@ -100,7 +100,7 @@ class ContextsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=GetContextResponse,
         )
 
     def list(
@@ -112,14 +112,14 @@ class ContextsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextListResponse:
+    ) -> GetContextsResponse:
         """Retrieve a list of all saved browser contexts"""
         return self._get(
             "/v1/context",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextListResponse,
+            cast_to=GetContextsResponse,
         )
 
     def delete(
@@ -132,7 +132,7 @@ class ContextsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextDeleteResponse:
+    ) -> DeleteContextResponse:
         """
         Delete a specific saved browser context
 
@@ -152,7 +152,7 @@ class ContextsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextDeleteResponse,
+            cast_to=DeleteContextResponse,
         )
 
 
@@ -175,7 +175,7 @@ class AsyncContextsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextCreateResponse:
+    ) -> CreateContextResponse:
         """
         Create a new browser context with specified settings
 
@@ -196,7 +196,7 @@ class AsyncContextsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextCreateResponse,
+            cast_to=CreateContextResponse,
         )
 
     async def retrieve(
@@ -209,7 +209,7 @@ class AsyncContextsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Context:
+    ) -> GetContextResponse:
         """
         Retrieve details of a specific saved browser context
 
@@ -229,7 +229,7 @@ class AsyncContextsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Context,
+            cast_to=GetContextResponse,
         )
 
     async def list(
@@ -241,14 +241,14 @@ class AsyncContextsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextListResponse:
+    ) -> GetContextsResponse:
         """Retrieve a list of all saved browser contexts"""
         return await self._get(
             "/v1/context",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextListResponse,
+            cast_to=GetContextsResponse,
         )
 
     async def delete(
@@ -261,7 +261,7 @@ class AsyncContextsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> ContextDeleteResponse:
+    ) -> DeleteContextResponse:
         """
         Delete a specific saved browser context
 
@@ -281,7 +281,7 @@ class AsyncContextsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=ContextDeleteResponse,
+            cast_to=DeleteContextResponse,
         )
 
 

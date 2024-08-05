@@ -4,10 +4,10 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["Scrape"]
+__all__ = ["ScrapeResponse"]
 
 
-class Scrape(BaseModel):
+class ScrapeResponse(BaseModel):
     cleaned_html: Optional[str] = None
     """The cleaned HTML content of the scraped webpage"""
 

@@ -4,9 +4,9 @@
 
 from .._models import BaseModel
 
-__all__ = ["ContextCreateResponse"]
+__all__ = ["CreateContextResponse"]
 
 
-class ContextCreateResponse(BaseModel):
+class CreateContextResponse(BaseModel):
     id: str
     """Unique identifier for the created context"""

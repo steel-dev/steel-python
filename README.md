@@ -31,8 +31,8 @@ from steel import Steel
 
 client = Steel()
 
-session = client.sessions.create()
-print(session.duration)
+session_response = client.sessions.create()
+print(session_response.duration)
 ```
 
 ## Async usage
@@ -47,8 +47,8 @@ client = AsyncSteel()
 
 
 async def main() -> None:
-    session = await client.sessions.create()
-    print(session.duration)
+    session_response = await client.sessions.create()
+    print(session_response.duration)
 
 
 asyncio.run(main())
