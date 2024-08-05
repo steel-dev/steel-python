@@ -6,10 +6,10 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Session"]
+__all__ = ["SessionResponse"]
 
 
-class Session(BaseModel):
+class SessionResponse(BaseModel):
     duration: int
     """Duration of the session in seconds"""
 

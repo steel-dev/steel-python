@@ -9,10 +9,10 @@ import pytest
 
 from steel import Steel, AsyncSteel
 from steel.types import (
-    Context,
-    ContextListResponse,
-    ContextCreateResponse,
-    ContextDeleteResponse,
+    GetContextResponse,
+    GetContextsResponse,
+    CreateContextResponse,
+    DeleteContextResponse,
 )
 from tests.utils import assert_matches_type
 
@@ -25,14 +25,14 @@ class TestContexts:
     @parametrize
     def test_method_create(self, client: Steel) -> None:
         context = client.contexts.create()
-        assert_matches_type(ContextCreateResponse, context, path=["response"])
+        assert_matches_type(CreateContextResponse, context, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Steel) -> None:
         context = client.contexts.create(
             proxy="proxy",
         )
-        assert_matches_type(ContextCreateResponse, context, path=["response"])
+        assert_matches_type(CreateContextResponse, context, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Steel) -> None:
@@ -41,7 +41,7 @@ class TestContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = response.parse()
-        assert_matches_type(ContextCreateResponse, context, path=["response"])
+        assert_matches_type(CreateContextResponse, context, path=["response"])
 
     @parametrize
     def test_streaming_response_create(self, client: Steel) -> None:
@@ -50,7 +50,7 @@ class TestContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = response.parse()
-            assert_matches_type(ContextCreateResponse, context, path=["response"])
+            assert_matches_type(CreateContextResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -59,7 +59,7 @@ class TestContexts:
         context = client.contexts.retrieve(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Context, context, path=["response"])
+        assert_matches_type(GetContextResponse, context, path=["response"])
 
     @parametrize
     def test_raw_response_retrieve(self, client: Steel) -> None:
@@ -70,7 +70,7 @@ class TestContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = response.parse()
-        assert_matches_type(Context, context, path=["response"])
+        assert_matches_type(GetContextResponse, context, path=["response"])
 
     @parametrize
     def test_streaming_response_retrieve(self, client: Steel) -> None:
@@ -81,7 +81,7 @@ class TestContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = response.parse()
-            assert_matches_type(Context, context, path=["response"])
+            assert_matches_type(GetContextResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -95,7 +95,7 @@ class TestContexts:
     @parametrize
     def test_method_list(self, client: Steel) -> None:
         context = client.contexts.list()
-        assert_matches_type(ContextListResponse, context, path=["response"])
+        assert_matches_type(GetContextsResponse, context, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Steel) -> None:
@@ -104,7 +104,7 @@ class TestContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = response.parse()
-        assert_matches_type(ContextListResponse, context, path=["response"])
+        assert_matches_type(GetContextsResponse, context, path=["response"])
 
     @parametrize
     def test_streaming_response_list(self, client: Steel) -> None:
@@ -113,7 +113,7 @@ class TestContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = response.parse()
-            assert_matches_type(ContextListResponse, context, path=["response"])
+            assert_matches_type(GetContextsResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -122,7 +122,7 @@ class TestContexts:
         context = client.contexts.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ContextDeleteResponse, context, path=["response"])
+        assert_matches_type(DeleteContextResponse, context, path=["response"])
 
     @parametrize
     def test_raw_response_delete(self, client: Steel) -> None:
@@ -133,7 +133,7 @@ class TestContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = response.parse()
-        assert_matches_type(ContextDeleteResponse, context, path=["response"])
+        assert_matches_type(DeleteContextResponse, context, path=["response"])
 
     @parametrize
     def test_streaming_response_delete(self, client: Steel) -> None:
@@ -144,7 +144,7 @@ class TestContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = response.parse()
-            assert_matches_type(ContextDeleteResponse, context, path=["response"])
+            assert_matches_type(DeleteContextResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -162,14 +162,14 @@ class TestAsyncContexts:
     @parametrize
     async def test_method_create(self, async_client: AsyncSteel) -> None:
         context = await async_client.contexts.create()
-        assert_matches_type(ContextCreateResponse, context, path=["response"])
+        assert_matches_type(CreateContextResponse, context, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         context = await async_client.contexts.create(
             proxy="proxy",
         )
-        assert_matches_type(ContextCreateResponse, context, path=["response"])
+        assert_matches_type(CreateContextResponse, context, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSteel) -> None:
@@ -178,7 +178,7 @@ class TestAsyncContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = await response.parse()
-        assert_matches_type(ContextCreateResponse, context, path=["response"])
+        assert_matches_type(CreateContextResponse, context, path=["response"])
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSteel) -> None:
@@ -187,7 +187,7 @@ class TestAsyncContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = await response.parse()
-            assert_matches_type(ContextCreateResponse, context, path=["response"])
+            assert_matches_type(CreateContextResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -196,7 +196,7 @@ class TestAsyncContexts:
         context = await async_client.contexts.retrieve(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(Context, context, path=["response"])
+        assert_matches_type(GetContextResponse, context, path=["response"])
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncSteel) -> None:
@@ -207,7 +207,7 @@ class TestAsyncContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = await response.parse()
-        assert_matches_type(Context, context, path=["response"])
+        assert_matches_type(GetContextResponse, context, path=["response"])
 
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncSteel) -> None:
@@ -218,7 +218,7 @@ class TestAsyncContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = await response.parse()
-            assert_matches_type(Context, context, path=["response"])
+            assert_matches_type(GetContextResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -232,7 +232,7 @@ class TestAsyncContexts:
     @parametrize
     async def test_method_list(self, async_client: AsyncSteel) -> None:
         context = await async_client.contexts.list()
-        assert_matches_type(ContextListResponse, context, path=["response"])
+        assert_matches_type(GetContextsResponse, context, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncSteel) -> None:
@@ -241,7 +241,7 @@ class TestAsyncContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = await response.parse()
-        assert_matches_type(ContextListResponse, context, path=["response"])
+        assert_matches_type(GetContextsResponse, context, path=["response"])
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncSteel) -> None:
@@ -250,7 +250,7 @@ class TestAsyncContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = await response.parse()
-            assert_matches_type(ContextListResponse, context, path=["response"])
+            assert_matches_type(GetContextsResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -259,7 +259,7 @@ class TestAsyncContexts:
         context = await async_client.contexts.delete(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(ContextDeleteResponse, context, path=["response"])
+        assert_matches_type(DeleteContextResponse, context, path=["response"])
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncSteel) -> None:
@@ -270,7 +270,7 @@ class TestAsyncContexts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         context = await response.parse()
-        assert_matches_type(ContextDeleteResponse, context, path=["response"])
+        assert_matches_type(DeleteContextResponse, context, path=["response"])
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncSteel) -> None:
@@ -281,7 +281,7 @@ class TestAsyncContexts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             context = await response.parse()
-            assert_matches_type(ContextDeleteResponse, context, path=["response"])
+            assert_matches_type(DeleteContextResponse, context, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

@@ -2,17 +2,17 @@
 
 from __future__ import annotations
 
-from .scrape import Scrape as Scrape
-from .context import Context as Context
-from .session import Session as Session
+from .scrape_response import ScrapeResponse as ScrapeResponse
+from .session_response import SessionResponse as SessionResponse
 from .session_list_params import SessionListParams as SessionListParams
-from .top_level_pdf_params import TopLevelPdfParams as TopLevelPdfParams
+from .get_context_response import GetContextResponse as GetContextResponse
 from .context_create_params import ContextCreateParams as ContextCreateParams
-from .context_list_response import ContextListResponse as ContextListResponse
+from .get_contexts_response import GetContextsResponse as GetContextsResponse
 from .session_create_params import SessionCreateParams as SessionCreateParams
 from .session_list_response import SessionListResponse as SessionListResponse
-from .context_create_response import ContextCreateResponse as ContextCreateResponse
-from .context_delete_response import ContextDeleteResponse as ContextDeleteResponse
-from .top_level_scrape_params import TopLevelScrapeParams as TopLevelScrapeParams
-from .session_release_response import SessionReleaseResponse as SessionReleaseResponse
-from .top_level_screenshot_params import TopLevelScreenshotParams as TopLevelScreenshotParams
+from .browser_tool_pdf_params import BrowserToolPdfParams as BrowserToolPdfParams
+from .create_context_response import CreateContextResponse as CreateContextResponse
+from .delete_context_response import DeleteContextResponse as DeleteContextResponse
+from .release_session_response import ReleaseSessionResponse as ReleaseSessionResponse
+from .browser_tool_scrape_params import BrowserToolScrapeParams as BrowserToolScrapeParams
+from .browser_tool_screenshot_params import BrowserToolScreenshotParams as BrowserToolScreenshotParams

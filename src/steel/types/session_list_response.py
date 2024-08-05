@@ -34,4 +34,10 @@ class Session(BaseModel):
 
 
 class SessionListResponse(BaseModel):
+    next_cursor: str
+    """Cursor to use for the next page of results. If null, there are no more results."""
+
     sessions: List[Session]
+
+    total_count: int
+    """Total number of sessions matching the query"""

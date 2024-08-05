@@ -4,9 +4,9 @@ from typing import List
 
 from .._models import BaseModel
 
-__all__ = ["ContextListResponse"]
+__all__ = ["GetContextsResponse"]
 
 
-class ContextListResponse(BaseModel):
+class GetContextsResponse(BaseModel):
     contexts: List[str]
     """List of available context IDs"""

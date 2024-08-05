@@ -8,5 +8,11 @@ __all__ = ["SessionListParams"]
 
 
 class SessionListParams(TypedDict, total=False):
+    cursor: str
+    """Cursor for pagination, use the `next_cursor` from the previous response"""
+
+    limit: int
+    """Number of sessions to return per request (default: 25, max: 100)"""
+
     live_only: bool
     """Flag to retrieve only live sessions (default: true)"""

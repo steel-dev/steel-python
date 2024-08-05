@@ -16,6 +16,14 @@ from .sessions import (
     SessionsResourceWithStreamingResponse,
     AsyncSessionsResourceWithStreamingResponse,
 )
+from .browser_tools import (
+    BrowserToolsResource,
+    AsyncBrowserToolsResource,
+    BrowserToolsResourceWithRawResponse,
+    AsyncBrowserToolsResourceWithRawResponse,
+    BrowserToolsResourceWithStreamingResponse,
+    AsyncBrowserToolsResourceWithStreamingResponse,
+)
 
 __all__ = [
     "SessionsResource",
@@ -24,6 +32,12 @@ __all__ = [
     "AsyncSessionsResourceWithRawResponse",
     "SessionsResourceWithStreamingResponse",
     "AsyncSessionsResourceWithStreamingResponse",
+    "BrowserToolsResource",
+    "AsyncBrowserToolsResource",
+    "BrowserToolsResourceWithRawResponse",
+    "AsyncBrowserToolsResourceWithRawResponse",
+    "BrowserToolsResourceWithStreamingResponse",
+    "AsyncBrowserToolsResourceWithStreamingResponse",
     "ContextsResource",
     "AsyncContextsResource",
     "ContextsResourceWithRawResponse",

@@ -4,7 +4,7 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["Context", "Details"]
+__all__ = ["GetContextResponse", "Details"]
 
 
 class Details(BaseModel):
@@ -12,7 +12,7 @@ class Details(BaseModel):
     """Proxy settings for the context"""
 
 
-class Context(BaseModel):
+class GetContextResponse(BaseModel):
     id: str
     """Unique identifier for the context"""
 
