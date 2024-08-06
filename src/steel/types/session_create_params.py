@@ -10,20 +10,23 @@ __all__ = ["SessionCreateParams"]
 
 
 class SessionCreateParams(TypedDict, total=False):
-    context_data: Annotated[object, PropertyInfo(alias="contextData")]
-    """Custom user context data for the session"""
-
     proxy: str
     """Proxy configuration for the browser session"""
 
     region: Literal["CA", "US", "FR"]
     """Region for the browser session"""
 
+    session_context: Annotated[object, PropertyInfo(alias="sessionContext")]
+    """Custom session context data to be used in the created sessio"""
+
     session_timeout: Annotated[int, PropertyInfo(alias="sessionTimeout")]
     """How long after starting should the session timeout (in milliseconds)."""
 
     solve_captcha: Annotated[bool, PropertyInfo(alias="solveCaptcha")]
     """Flag to enable automatic captcha solving"""
+
+    stealth_mode: Annotated[bool, PropertyInfo(alias="stealthMode")]
+    """Flag to enable stealth mode for the browser session (default: false)"""
 
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
     """Custom user agent string for the browser session"""

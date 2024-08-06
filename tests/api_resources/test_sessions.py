@@ -8,11 +8,7 @@ from typing import Any, cast
 import pytest
 
 from steel import Steel, AsyncSteel
-from steel.types import (
-    SessionResponse,
-    SessionListResponse,
-    ReleaseSessionResponse,
-)
+from steel.types import Session, ReleaseSessionResponse
 from tests.utils import assert_matches_type
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -24,19 +20,20 @@ class TestSessions:
     @parametrize
     def test_method_create(self, client: Steel) -> None:
         session = client.sessions.create()
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Steel) -> None:
         session = client.sessions.create(
-            context_data={},
             proxy="proxy",
             region="CA",
+            session_context={},
             session_timeout=0,
             solve_captcha=True,
+            stealth_mode=True,
             user_agent="userAgent",
         )
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Steel) -> None:
@@ -45,7 +42,7 @@ class TestSessions:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         session = response.parse()
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
     def test_streaming_response_create(self, client: Steel) -> None:
@@ -54,81 +51,85 @@ class TestSessions:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             session = response.parse()
-            assert_matches_type(SessionResponse, session, path=["response"])
+            assert_matches_type(Session, session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_retrieve(self, client: Steel) -> None:
-        session = client.sessions.retrieve(
+    def test_method_get_context(self, client: Steel) -> None:
+        session = client.sessions.get_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(object, session, path=["response"])
 
     @parametrize
-    def test_raw_response_retrieve(self, client: Steel) -> None:
-        response = client.sessions.with_raw_response.retrieve(
+    def test_raw_response_get_context(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.get_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         session = response.parse()
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(object, session, path=["response"])
 
     @parametrize
-    def test_streaming_response_retrieve(self, client: Steel) -> None:
-        with client.sessions.with_streaming_response.retrieve(
+    def test_streaming_response_get_context(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.get_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             session = response.parse()
-            assert_matches_type(SessionResponse, session, path=["response"])
+            assert_matches_type(object, session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_path_params_retrieve(self, client: Steel) -> None:
+    def test_path_params_get_context(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.sessions.with_raw_response.retrieve(
+            client.sessions.with_raw_response.get_context(
                 "",
             )
 
     @parametrize
-    def test_method_list(self, client: Steel) -> None:
-        session = client.sessions.list()
-        assert_matches_type(SessionListResponse, session, path=["response"])
-
-    @parametrize
-    def test_method_list_with_all_params(self, client: Steel) -> None:
-        session = client.sessions.list(
-            cursor="cursor",
-            limit=1,
-            live_only=True,
+    def test_method_get_data(self, client: Steel) -> None:
+        session = client.sessions.get_data(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SessionListResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
-    def test_raw_response_list(self, client: Steel) -> None:
-        response = client.sessions.with_raw_response.list()
+    def test_raw_response_get_data(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.get_data(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         session = response.parse()
-        assert_matches_type(SessionListResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
-    def test_streaming_response_list(self, client: Steel) -> None:
-        with client.sessions.with_streaming_response.list() as response:
+    def test_streaming_response_get_data(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.get_data(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             session = response.parse()
-            assert_matches_type(SessionListResponse, session, path=["response"])
+            assert_matches_type(Session, session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_get_data(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            client.sessions.with_raw_response.get_data(
+                "",
+            )
 
     @parametrize
     def test_method_release(self, client: Steel) -> None:
@@ -175,19 +176,20 @@ class TestAsyncSessions:
     @parametrize
     async def test_method_create(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.create()
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.create(
-            context_data={},
             proxy="proxy",
             region="CA",
+            session_context={},
             session_timeout=0,
             solve_captcha=True,
+            stealth_mode=True,
             user_agent="userAgent",
         )
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSteel) -> None:
@@ -196,7 +198,7 @@ class TestAsyncSessions:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         session = await response.parse()
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSteel) -> None:
@@ -205,81 +207,85 @@ class TestAsyncSessions:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             session = await response.parse()
-            assert_matches_type(SessionResponse, session, path=["response"])
+            assert_matches_type(Session, session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncSteel) -> None:
-        session = await async_client.sessions.retrieve(
+    async def test_method_get_context(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.get_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(object, session, path=["response"])
 
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncSteel) -> None:
-        response = await async_client.sessions.with_raw_response.retrieve(
+    async def test_raw_response_get_context(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.get_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         session = await response.parse()
-        assert_matches_type(SessionResponse, session, path=["response"])
+        assert_matches_type(object, session, path=["response"])
 
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncSteel) -> None:
-        async with async_client.sessions.with_streaming_response.retrieve(
+    async def test_streaming_response_get_context(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.get_context(
             "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             session = await response.parse()
-            assert_matches_type(SessionResponse, session, path=["response"])
+            assert_matches_type(object, session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncSteel) -> None:
+    async def test_path_params_get_context(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.sessions.with_raw_response.retrieve(
+            await async_client.sessions.with_raw_response.get_context(
                 "",
             )
 
     @parametrize
-    async def test_method_list(self, async_client: AsyncSteel) -> None:
-        session = await async_client.sessions.list()
-        assert_matches_type(SessionListResponse, session, path=["response"])
-
-    @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncSteel) -> None:
-        session = await async_client.sessions.list(
-            cursor="cursor",
-            limit=1,
-            live_only=True,
+    async def test_method_get_data(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.get_data(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
-        assert_matches_type(SessionListResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncSteel) -> None:
-        response = await async_client.sessions.with_raw_response.list()
+    async def test_raw_response_get_data(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.get_data(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         session = await response.parse()
-        assert_matches_type(SessionListResponse, session, path=["response"])
+        assert_matches_type(Session, session, path=["response"])
 
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncSteel) -> None:
-        async with async_client.sessions.with_streaming_response.list() as response:
+    async def test_streaming_response_get_data(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.get_data(
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             session = await response.parse()
-            assert_matches_type(SessionListResponse, session, path=["response"])
+            assert_matches_type(Session, session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_get_data(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            await async_client.sessions.with_raw_response.get_data(
+                "",
+            )
 
     @parametrize
     async def test_method_release(self, async_client: AsyncSteel) -> None:

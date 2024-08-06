@@ -20,7 +20,7 @@ or products provided by Steel please follow the respective company's security re
 
 ### Steel Terms and Policies
 
-Please contact dev-feedback@steel.com for any questions or concerns regarding security of our services.
+Please contact hello@steel.dev for any questions or concerns regarding security of our services.
 
 ---
 
