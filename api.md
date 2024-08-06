@@ -10,7 +10,6 @@ from steel.types import (
     ScrapeResponse,
     ScreenshotRequest,
     ScreenshotResponse,
-    Session,
 )
 ```
 
