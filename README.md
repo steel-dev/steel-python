@@ -99,7 +99,7 @@ client = Steel()
 
 all_top_levels = []
 # Automatically fetches more pages as needed.
-for top_level in client.list(
+for top_level in client.list_sessions(
     limit=50,
 ):
     # Do something with top_level here
@@ -119,7 +119,7 @@ client = AsyncSteel()
 async def main() -> None:
     all_top_levels = []
     # Iterate through items across all pages, issuing requests as needed.
-    async for top_level in client.list(
+    async for top_level in client.list_sessions(
         limit=50,
     ):
         all_top_levels.append(top_level)
@@ -132,7 +132,7 @@ asyncio.run(main())
 Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
 
 ```python
-first_page = await client.list(
+first_page = await client.list_sessions(
     limit=50,
 )
 if first_page.has_next_page():
@@ -146,7 +146,7 @@ if first_page.has_next_page():
 Or just work directly with the returned data:
 
 ```python
-first_page = await client.list(
+first_page = await client.list_sessions(
     limit=50,
 )
 

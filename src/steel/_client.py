@@ -11,10 +11,10 @@ import httpx
 from . import resources, _exceptions
 from ._qs import Querystring
 from .types import (
-    top_level_list_params,
     top_level_scrape_params,
     top_level_screenshot_params,
     top_level_generate_pdf_params,
+    top_level_list_sessions_params,
 )
 from ._types import (
     NOT_GIVEN,
@@ -203,7 +203,41 @@ class Steel(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    def list(
+    def generate_pdf(
+        self,
+        *,
+        url: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> PdfResponse:
+        """
+        Generate a PDF from the specified webpage.
+
+        Args:
+          url: The URL of the webpage to convert to PDF
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.post(
+            "/v1/pdf",
+            body=maybe_transform({"url": url}, top_level_generate_pdf_params.TopLevelGeneratePdfParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PdfResponse,
+        )
+
+    def list_sessions(
         self,
         *,
         cursor: str | NotGiven = NOT_GIVEN,
@@ -250,44 +284,10 @@ class Steel(SyncAPIClient):
                         "limit": limit,
                         "live_only": live_only,
                     },
-                    top_level_list_params.TopLevelListParams,
+                    top_level_list_sessions_params.TopLevelListSessionsParams,
                 ),
             ),
             model=Session,
-        )
-
-    def generate_pdf(
-        self,
-        *,
-        url: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> PdfResponse:
-        """
-        Generate a PDF from the specified webpage.
-
-        Args:
-          url: The URL of the webpage to convert to PDF
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self.post(
-            "/v1/pdf",
-            body=maybe_transform({"url": url}, top_level_generate_pdf_params.TopLevelGeneratePdfParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PdfResponse,
         )
 
     def scrape(
@@ -546,7 +546,41 @@ class AsyncSteel(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    def list(
+    async def generate_pdf(
+        self,
+        *,
+        url: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> PdfResponse:
+        """
+        Generate a PDF from the specified webpage.
+
+        Args:
+          url: The URL of the webpage to convert to PDF
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.post(
+            "/v1/pdf",
+            body=await async_maybe_transform({"url": url}, top_level_generate_pdf_params.TopLevelGeneratePdfParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PdfResponse,
+        )
+
+    def list_sessions(
         self,
         *,
         cursor: str | NotGiven = NOT_GIVEN,
@@ -593,44 +627,10 @@ class AsyncSteel(AsyncAPIClient):
                         "limit": limit,
                         "live_only": live_only,
                     },
-                    top_level_list_params.TopLevelListParams,
+                    top_level_list_sessions_params.TopLevelListSessionsParams,
                 ),
             ),
             model=Session,
-        )
-
-    async def generate_pdf(
-        self,
-        *,
-        url: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> PdfResponse:
-        """
-        Generate a PDF from the specified webpage.
-
-        Args:
-          url: The URL of the webpage to convert to PDF
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self.post(
-            "/v1/pdf",
-            body=await async_maybe_transform({"url": url}, top_level_generate_pdf_params.TopLevelGeneratePdfParams),
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=PdfResponse,
         )
 
     async def scrape(
@@ -759,11 +759,11 @@ class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
         self.sessions = resources.SessionsResourceWithRawResponse(client.sessions)
 
-        self.list = to_raw_response_wrapper(
-            client.list,
-        )
         self.generate_pdf = to_raw_response_wrapper(
             client.generate_pdf,
+        )
+        self.list_sessions = to_raw_response_wrapper(
+            client.list_sessions,
         )
         self.scrape = to_raw_response_wrapper(
             client.scrape,
@@ -777,11 +777,11 @@ class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
         self.sessions = resources.AsyncSessionsResourceWithRawResponse(client.sessions)
 
-        self.list = async_to_raw_response_wrapper(
-            client.list,
-        )
         self.generate_pdf = async_to_raw_response_wrapper(
             client.generate_pdf,
+        )
+        self.list_sessions = async_to_raw_response_wrapper(
+            client.list_sessions,
         )
         self.scrape = async_to_raw_response_wrapper(
             client.scrape,
@@ -795,11 +795,11 @@ class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
         self.sessions = resources.SessionsResourceWithStreamingResponse(client.sessions)
 
-        self.list = to_streamed_response_wrapper(
-            client.list,
-        )
         self.generate_pdf = to_streamed_response_wrapper(
             client.generate_pdf,
+        )
+        self.list_sessions = to_streamed_response_wrapper(
+            client.list_sessions,
         )
         self.scrape = to_streamed_response_wrapper(
             client.scrape,
@@ -813,11 +813,11 @@ class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
         self.sessions = resources.AsyncSessionsResourceWithStreamingResponse(client.sessions)
 
-        self.list = async_to_streamed_response_wrapper(
-            client.list,
-        )
         self.generate_pdf = async_to_streamed_response_wrapper(
             client.generate_pdf,
+        )
+        self.list_sessions = async_to_streamed_response_wrapper(
+            client.list_sessions,
         )
         self.scrape = async_to_streamed_response_wrapper(
             client.scrape,

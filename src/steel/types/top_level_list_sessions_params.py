@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from typing_extensions import TypedDict
 
-__all__ = ["TopLevelListParams"]
+__all__ = ["TopLevelListSessionsParams"]
 
 
-class TopLevelListParams(TypedDict, total=False):
+class TopLevelListSessionsParams(TypedDict, total=False):
     cursor: str
     """Cursor for pagination, use the `next_cursor` from the previous response"""
 
