@@ -173,9 +173,9 @@ from steel import Steel
 client = Steel()
 
 try:
-    client.sessions.create(
-        region="US",
+    client.session.create(
         solve_captcha=True,
+        stealth_mode=True,
         user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
     )
 except steel.APIConnectionError as e:
@@ -220,9 +220,9 @@ client = Steel(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).sessions.create(
-    region="US",
+client.with_options(max_retries=5).session.create(
     solve_captcha=True,
+    stealth_mode=True,
     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
 )
 ```
@@ -247,9 +247,9 @@ client = Steel(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).sessions.create(
-    region="US",
+client.with_options(timeout=5.0).session.create(
     solve_captcha=True,
+    stealth_mode=True,
     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
 )
 ```
@@ -290,14 +290,14 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from steel import Steel
 
 client = Steel()
-response = client.sessions.with_raw_response.create(
-    region="US",
+response = client.session.with_raw_response.create(
     solve_captcha=True,
+    stealth_mode=True,
     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
 )
 print(response.headers.get('X-My-Header'))
 
-session = response.parse()  # get the object that `sessions.create()` would have returned
+session = response.parse()  # get the object that `session.create()` would have returned
 print(session.duration)
 ```
 
@@ -312,9 +312,9 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.sessions.with_streaming_response.create(
-    region="US",
+with client.session.with_streaming_response.create(
     solve_captcha=True,
+    stealth_mode=True,
     user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
 ) as response:
     print(response.headers.get("X-My-Header"))

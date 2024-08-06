@@ -707,8 +707,8 @@ class TestSteel:
                 body=cast(
                     object,
                     dict(
-                        region="US",
                         solve_captcha=True,
+                        stealth_mode=True,
                         user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
                     ),
                 ),
@@ -729,8 +729,8 @@ class TestSteel:
                 body=cast(
                     object,
                     dict(
-                        region="US",
                         solve_captcha=True,
+                        stealth_mode=True,
                         user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
                     ),
                 ),
@@ -757,7 +757,7 @@ class TestSteel:
 
         respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
 
-        response = client.sessions.with_raw_response.create()
+        response = client.session.with_raw_response.create()
 
         assert response.retries_taken == failures_before_success
 
@@ -1438,8 +1438,8 @@ class TestAsyncSteel:
                 body=cast(
                     object,
                     dict(
-                        region="US",
                         solve_captcha=True,
+                        stealth_mode=True,
                         user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
                     ),
                 ),
@@ -1460,8 +1460,8 @@ class TestAsyncSteel:
                 body=cast(
                     object,
                     dict(
-                        region="US",
                         solve_captcha=True,
+                        stealth_mode=True,
                         user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
                     ),
                 ),
@@ -1491,6 +1491,6 @@ class TestAsyncSteel:
 
         respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
 
-        response = await client.sessions.with_raw_response.create()
+        response = await client.session.with_raw_response.create()
 
         assert response.retries_taken == failures_before_success

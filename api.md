@@ -20,7 +20,7 @@ Methods:
 - <code title="post /v1/scrape">client.<a href="./src/steel/_client.py">scrape</a>(\*\*<a href="src/steel/types/top_level_scrape_params.py">params</a>) -> <a href="./src/steel/types/scrape_response.py">ScrapeResponse</a></code>
 - <code title="post /v1/screenshot">client.<a href="./src/steel/_client.py">screenshot</a>(\*\*<a href="src/steel/types/top_level_screenshot_params.py">params</a>) -> <a href="./src/steel/types/screenshot_response.py">ScreenshotResponse</a></code>
 
-# Sessions
+# Session
 
 Types:
 
@@ -35,7 +35,7 @@ from steel.types import (
 
 Methods:
 
-- <code title="post /v1/sessions">client.sessions.<a href="./src/steel/resources/sessions.py">create</a>(\*\*<a href="src/steel/types/session_create_params.py">params</a>) -> <a href="./src/steel/types/session.py">Session</a></code>
-- <code title="get /v1/sessions/{id}/context">client.sessions.<a href="./src/steel/resources/sessions.py">get_context</a>(id) -> <a href="./src/steel/types/session_get_context_response.py">object</a></code>
-- <code title="get /v1/sessions/{id}">client.sessions.<a href="./src/steel/resources/sessions.py">get_data</a>(id) -> <a href="./src/steel/types/session.py">Session</a></code>
-- <code title="get /v1/sessions/{id}/release">client.sessions.<a href="./src/steel/resources/sessions.py">release</a>(id) -> <a href="./src/steel/types/release_session_response.py">ReleaseSessionResponse</a></code>
+- <code title="post /v1/sessions">client.session.<a href="./src/steel/resources/session.py">create</a>(\*\*<a href="src/steel/types/session_create_params.py">params</a>) -> <a href="./src/steel/types/session.py">Session</a></code>
+- <code title="get /v1/sessions/{id}/context">client.session.<a href="./src/steel/resources/session.py">get_context</a>(id) -> <a href="./src/steel/types/session_get_context_response.py">object</a></code>
+- <code title="get /v1/sessions/{id}">client.session.<a href="./src/steel/resources/session.py">get_data</a>(id) -> <a href="./src/steel/types/session.py">Session</a></code>
+- <code title="get /v1/sessions/{id}/release">client.session.<a href="./src/steel/resources/session.py">release</a>(id) -> <a href="./src/steel/types/release_session_response.py">ReleaseSessionResponse</a></code>

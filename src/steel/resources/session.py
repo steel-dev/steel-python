@@ -24,17 +24,17 @@ from .._base_client import make_request_options
 from ..types.session import Session
 from ..types.release_session_response import ReleaseSessionResponse
 
-__all__ = ["SessionsResource", "AsyncSessionsResource"]
+__all__ = ["SessionResource", "AsyncSessionResource"]
 
 
-class SessionsResource(SyncAPIResource):
+class SessionResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> SessionsResourceWithRawResponse:
-        return SessionsResourceWithRawResponse(self)
+    def with_raw_response(self) -> SessionResourceWithRawResponse:
+        return SessionResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> SessionsResourceWithStreamingResponse:
-        return SessionsResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> SessionResourceWithStreamingResponse:
+        return SessionResourceWithStreamingResponse(self)
 
     def create(
         self,
@@ -199,14 +199,14 @@ class SessionsResource(SyncAPIResource):
         )
 
 
-class AsyncSessionsResource(AsyncAPIResource):
+class AsyncSessionResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
-        return AsyncSessionsResourceWithRawResponse(self)
+    def with_raw_response(self) -> AsyncSessionResourceWithRawResponse:
+        return AsyncSessionResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncSessionsResourceWithStreamingResponse:
-        return AsyncSessionsResourceWithStreamingResponse(self)
+    def with_streaming_response(self) -> AsyncSessionResourceWithStreamingResponse:
+        return AsyncSessionResourceWithStreamingResponse(self)
 
     async def create(
         self,
@@ -371,73 +371,73 @@ class AsyncSessionsResource(AsyncAPIResource):
         )
 
 
-class SessionsResourceWithRawResponse:
-    def __init__(self, sessions: SessionsResource) -> None:
-        self._sessions = sessions
+class SessionResourceWithRawResponse:
+    def __init__(self, session: SessionResource) -> None:
+        self._session = session
 
         self.create = to_raw_response_wrapper(
-            sessions.create,
+            session.create,
         )
         self.get_context = to_raw_response_wrapper(
-            sessions.get_context,
+            session.get_context,
         )
         self.get_data = to_raw_response_wrapper(
-            sessions.get_data,
+            session.get_data,
         )
         self.release = to_raw_response_wrapper(
-            sessions.release,
+            session.release,
         )
 
 
-class AsyncSessionsResourceWithRawResponse:
-    def __init__(self, sessions: AsyncSessionsResource) -> None:
-        self._sessions = sessions
+class AsyncSessionResourceWithRawResponse:
+    def __init__(self, session: AsyncSessionResource) -> None:
+        self._session = session
 
         self.create = async_to_raw_response_wrapper(
-            sessions.create,
+            session.create,
         )
         self.get_context = async_to_raw_response_wrapper(
-            sessions.get_context,
+            session.get_context,
         )
         self.get_data = async_to_raw_response_wrapper(
-            sessions.get_data,
+            session.get_data,
         )
         self.release = async_to_raw_response_wrapper(
-            sessions.release,
+            session.release,
         )
 
 
-class SessionsResourceWithStreamingResponse:
-    def __init__(self, sessions: SessionsResource) -> None:
-        self._sessions = sessions
+class SessionResourceWithStreamingResponse:
+    def __init__(self, session: SessionResource) -> None:
+        self._session = session
 
         self.create = to_streamed_response_wrapper(
-            sessions.create,
+            session.create,
         )
         self.get_context = to_streamed_response_wrapper(
-            sessions.get_context,
+            session.get_context,
         )
         self.get_data = to_streamed_response_wrapper(
-            sessions.get_data,
+            session.get_data,
         )
         self.release = to_streamed_response_wrapper(
-            sessions.release,
+            session.release,
         )
 
 
-class AsyncSessionsResourceWithStreamingResponse:
-    def __init__(self, sessions: AsyncSessionsResource) -> None:
-        self._sessions = sessions
+class AsyncSessionResourceWithStreamingResponse:
+    def __init__(self, session: AsyncSessionResource) -> None:
+        self._session = session
 
         self.create = async_to_streamed_response_wrapper(
-            sessions.create,
+            session.create,
         )
         self.get_context = async_to_streamed_response_wrapper(
-            sessions.get_context,
+            session.get_context,
         )
         self.get_data = async_to_streamed_response_wrapper(
-            sessions.get_data,
+            session.get_data,
         )
         self.release = async_to_streamed_response_wrapper(
-            sessions.release,
+            session.release,
         )
