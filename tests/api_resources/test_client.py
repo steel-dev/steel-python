@@ -24,40 +24,6 @@ class TestTopLevel:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_list(self, client: Steel) -> None:
-        top_level = client.list()
-        assert_matches_type(SyncCursorPage[Session], top_level, path=["response"])
-
-    @parametrize
-    def test_method_list_with_all_params(self, client: Steel) -> None:
-        top_level = client.list(
-            cursor="cursor",
-            limit=1,
-            live_only=True,
-        )
-        assert_matches_type(SyncCursorPage[Session], top_level, path=["response"])
-
-    @parametrize
-    def test_raw_response_list(self, client: Steel) -> None:
-        response = client.with_raw_response.list()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = response.parse()
-        assert_matches_type(SyncCursorPage[Session], top_level, path=["response"])
-
-    @parametrize
-    def test_streaming_response_list(self, client: Steel) -> None:
-        with client.with_streaming_response.list() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            top_level = response.parse()
-            assert_matches_type(SyncCursorPage[Session], top_level, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
     def test_method_generate_pdf(self, client: Steel) -> None:
         top_level = client.generate_pdf(
             url="url",
@@ -85,6 +51,40 @@ class TestTopLevel:
 
             top_level = response.parse()
             assert_matches_type(PdfResponse, top_level, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_list_sessions(self, client: Steel) -> None:
+        top_level = client.list_sessions()
+        assert_matches_type(SyncCursorPage[Session], top_level, path=["response"])
+
+    @parametrize
+    def test_method_list_sessions_with_all_params(self, client: Steel) -> None:
+        top_level = client.list_sessions(
+            cursor="cursor",
+            limit=1,
+            live_only=True,
+        )
+        assert_matches_type(SyncCursorPage[Session], top_level, path=["response"])
+
+    @parametrize
+    def test_raw_response_list_sessions(self, client: Steel) -> None:
+        response = client.with_raw_response.list_sessions()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        top_level = response.parse()
+        assert_matches_type(SyncCursorPage[Session], top_level, path=["response"])
+
+    @parametrize
+    def test_streaming_response_list_sessions(self, client: Steel) -> None:
+        with client.with_streaming_response.list_sessions() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            top_level = response.parse()
+            assert_matches_type(SyncCursorPage[Session], top_level, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -165,40 +165,6 @@ class TestAsyncTopLevel:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_list(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.list()
-        assert_matches_type(AsyncCursorPage[Session], top_level, path=["response"])
-
-    @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.list(
-            cursor="cursor",
-            limit=1,
-            live_only=True,
-        )
-        assert_matches_type(AsyncCursorPage[Session], top_level, path=["response"])
-
-    @parametrize
-    async def test_raw_response_list(self, async_client: AsyncSteel) -> None:
-        response = await async_client.with_raw_response.list()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = await response.parse()
-        assert_matches_type(AsyncCursorPage[Session], top_level, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncSteel) -> None:
-        async with async_client.with_streaming_response.list() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            top_level = await response.parse()
-            assert_matches_type(AsyncCursorPage[Session], top_level, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @parametrize
     async def test_method_generate_pdf(self, async_client: AsyncSteel) -> None:
         top_level = await async_client.generate_pdf(
             url="url",
@@ -226,6 +192,40 @@ class TestAsyncTopLevel:
 
             top_level = await response.parse()
             assert_matches_type(PdfResponse, top_level, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_list_sessions(self, async_client: AsyncSteel) -> None:
+        top_level = await async_client.list_sessions()
+        assert_matches_type(AsyncCursorPage[Session], top_level, path=["response"])
+
+    @parametrize
+    async def test_method_list_sessions_with_all_params(self, async_client: AsyncSteel) -> None:
+        top_level = await async_client.list_sessions(
+            cursor="cursor",
+            limit=1,
+            live_only=True,
+        )
+        assert_matches_type(AsyncCursorPage[Session], top_level, path=["response"])
+
+    @parametrize
+    async def test_raw_response_list_sessions(self, async_client: AsyncSteel) -> None:
+        response = await async_client.with_raw_response.list_sessions()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        top_level = await response.parse()
+        assert_matches_type(AsyncCursorPage[Session], top_level, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_list_sessions(self, async_client: AsyncSteel) -> None:
+        async with async_client.with_streaming_response.list_sessions() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            top_level = await response.parse()
+            assert_matches_type(AsyncCursorPage[Session], top_level, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
