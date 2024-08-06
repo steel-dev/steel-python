@@ -6,7 +6,7 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import session_list_params, session_create_params
+from ..types import session_create_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -21,8 +21,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.session_response import SessionResponse
-from ..types.session_list_response import SessionListResponse
+from ..types.session import Session
 from ..types.release_session_response import ReleaseSessionResponse
 
 __all__ = ["SessionsResource", "AsyncSessionsResource"]
@@ -40,11 +39,12 @@ class SessionsResource(SyncAPIResource):
     def create(
         self,
         *,
-        context_data: object | NotGiven = NOT_GIVEN,
         proxy: str | NotGiven = NOT_GIVEN,
         region: Literal["CA", "US", "FR"] | NotGiven = NOT_GIVEN,
+        session_context: object | NotGiven = NOT_GIVEN,
         session_timeout: int | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
+        stealth_mode: bool | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -52,20 +52,22 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionResponse:
+    ) -> Session:
         """
         Start a new browser session
 
         Args:
-          context_data: Custom user context data for the session
-
           proxy: Proxy configuration for the browser session
 
           region: Region for the browser session
 
+          session_context: Custom session context data to be used in the created sessio
+
           session_timeout: How long after starting should the session timeout (in milliseconds).
 
           solve_captcha: Flag to enable automatic captcha solving
+
+          stealth_mode: Flag to enable stealth mode for the browser session (default: false)
 
           user_agent: Custom user agent string for the browser session
 
@@ -81,11 +83,12 @@ class SessionsResource(SyncAPIResource):
             "/v1/sessions",
             body=maybe_transform(
                 {
-                    "context_data": context_data,
                     "proxy": proxy,
                     "region": region,
+                    "session_context": session_context,
                     "session_timeout": session_timeout,
                     "solve_captcha": solve_captcha,
+                    "stealth_mode": stealth_mode,
                     "user_agent": user_agent,
                 },
                 session_create_params.SessionCreateParams,
@@ -93,10 +96,10 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SessionResponse,
+            cast_to=Session,
         )
 
-    def retrieve(
+    def get_context(
         self,
         id: str,
         *,
@@ -106,7 +109,40 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionResponse:
+    ) -> object:
+        """
+        Get the browser context for a specific session
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/v1/sessions/{id}/context",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
+    def get_data(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Session:
         """
         Get detailed information about a specific browser session
 
@@ -126,59 +162,7 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SessionResponse,
-        )
-
-    def list(
-        self,
-        *,
-        cursor: str | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        live_only: bool | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionListResponse:
-        """Get a paginated list of browser sessions.
-
-        Use the `next_cursor` from the
-        response to fetch the next page of results.
-
-        Args:
-          cursor: Cursor for pagination, use the `next_cursor` from the previous response
-
-          limit: Number of sessions to return per request (default: 25, max: 100)
-
-          live_only: Flag to retrieve only live sessions (default: true)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/v1/sessions",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "cursor": cursor,
-                        "limit": limit,
-                        "live_only": live_only,
-                    },
-                    session_list_params.SessionListParams,
-                ),
-            ),
-            cast_to=SessionListResponse,
+            cast_to=Session,
         )
 
     def release(
@@ -227,11 +211,12 @@ class AsyncSessionsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        context_data: object | NotGiven = NOT_GIVEN,
         proxy: str | NotGiven = NOT_GIVEN,
         region: Literal["CA", "US", "FR"] | NotGiven = NOT_GIVEN,
+        session_context: object | NotGiven = NOT_GIVEN,
         session_timeout: int | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
+        stealth_mode: bool | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -239,20 +224,22 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionResponse:
+    ) -> Session:
         """
         Start a new browser session
 
         Args:
-          context_data: Custom user context data for the session
-
           proxy: Proxy configuration for the browser session
 
           region: Region for the browser session
 
+          session_context: Custom session context data to be used in the created sessio
+
           session_timeout: How long after starting should the session timeout (in milliseconds).
 
           solve_captcha: Flag to enable automatic captcha solving
+
+          stealth_mode: Flag to enable stealth mode for the browser session (default: false)
 
           user_agent: Custom user agent string for the browser session
 
@@ -268,11 +255,12 @@ class AsyncSessionsResource(AsyncAPIResource):
             "/v1/sessions",
             body=await async_maybe_transform(
                 {
-                    "context_data": context_data,
                     "proxy": proxy,
                     "region": region,
+                    "session_context": session_context,
                     "session_timeout": session_timeout,
                     "solve_captcha": solve_captcha,
+                    "stealth_mode": stealth_mode,
                     "user_agent": user_agent,
                 },
                 session_create_params.SessionCreateParams,
@@ -280,10 +268,10 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SessionResponse,
+            cast_to=Session,
         )
 
-    async def retrieve(
+    async def get_context(
         self,
         id: str,
         *,
@@ -293,7 +281,40 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionResponse:
+    ) -> object:
+        """
+        Get the browser context for a specific session
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/v1/sessions/{id}/context",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
+    async def get_data(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> Session:
         """
         Get detailed information about a specific browser session
 
@@ -313,59 +334,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SessionResponse,
-        )
-
-    async def list(
-        self,
-        *,
-        cursor: str | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        live_only: bool | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionListResponse:
-        """Get a paginated list of browser sessions.
-
-        Use the `next_cursor` from the
-        response to fetch the next page of results.
-
-        Args:
-          cursor: Cursor for pagination, use the `next_cursor` from the previous response
-
-          limit: Number of sessions to return per request (default: 25, max: 100)
-
-          live_only: Flag to retrieve only live sessions (default: true)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/v1/sessions",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "cursor": cursor,
-                        "limit": limit,
-                        "live_only": live_only,
-                    },
-                    session_list_params.SessionListParams,
-                ),
-            ),
-            cast_to=SessionListResponse,
+            cast_to=Session,
         )
 
     async def release(
@@ -409,11 +378,11 @@ class SessionsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             sessions.create,
         )
-        self.retrieve = to_raw_response_wrapper(
-            sessions.retrieve,
+        self.get_context = to_raw_response_wrapper(
+            sessions.get_context,
         )
-        self.list = to_raw_response_wrapper(
-            sessions.list,
+        self.get_data = to_raw_response_wrapper(
+            sessions.get_data,
         )
         self.release = to_raw_response_wrapper(
             sessions.release,
@@ -427,11 +396,11 @@ class AsyncSessionsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             sessions.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            sessions.retrieve,
+        self.get_context = async_to_raw_response_wrapper(
+            sessions.get_context,
         )
-        self.list = async_to_raw_response_wrapper(
-            sessions.list,
+        self.get_data = async_to_raw_response_wrapper(
+            sessions.get_data,
         )
         self.release = async_to_raw_response_wrapper(
             sessions.release,
@@ -445,11 +414,11 @@ class SessionsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             sessions.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            sessions.retrieve,
+        self.get_context = to_streamed_response_wrapper(
+            sessions.get_context,
         )
-        self.list = to_streamed_response_wrapper(
-            sessions.list,
+        self.get_data = to_streamed_response_wrapper(
+            sessions.get_data,
         )
         self.release = to_streamed_response_wrapper(
             sessions.release,
@@ -463,11 +432,11 @@ class AsyncSessionsResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             sessions.create,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            sessions.retrieve,
+        self.get_context = async_to_streamed_response_wrapper(
+            sessions.get_context,
         )
-        self.list = async_to_streamed_response_wrapper(
-            sessions.list,
+        self.get_data = async_to_streamed_response_wrapper(
+            sessions.get_data,
         )
         self.release = async_to_streamed_response_wrapper(
             sessions.release,

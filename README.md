@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.steel.com](https://docs.steel.com). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.steel.dev](https://docs.steel.dev). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -27,28 +27,49 @@ pip install git+ssh://git@github.com/stainless-sdks/steel-python.git
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from steel import Steel
 
-client = Steel()
+client = Steel(
+    # This is the default and can be omitted
+    api_key=os.environ.get("STEEL_API_KEY"),
+)
 
-session_response = client.sessions.create()
-print(session_response.duration)
+scrape_response = client.scrape(
+    url="https://example.com",
+    format=["html", "markdown"],
+    screenshot=True,
+)
+print(scrape_response.content)
 ```
+
+While you can provide an `api_key` keyword argument,
+we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
+to add `STEEL_API_KEY="My API Key"` to your `.env` file
+so that your API Key is not stored in source control.
 
 ## Async usage
 
 Simply import `AsyncSteel` instead of `Steel` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from steel import AsyncSteel
 
-client = AsyncSteel()
+client = AsyncSteel(
+    # This is the default and can be omitted
+    api_key=os.environ.get("STEEL_API_KEY"),
+)
 
 
 async def main() -> None:
-    session_response = await client.sessions.create()
-    print(session_response.duration)
+    scrape_response = await client.scrape(
+        url="https://example.com",
+        format=["html", "markdown"],
+        screenshot=True,
+    )
+    print(scrape_response.content)
 
 
 asyncio.run(main())
@@ -64,6 +85,77 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
+
+## Pagination
+
+List methods in the Steel API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```python
+from steel import Steel
+
+client = Steel()
+
+all_top_levels = []
+# Automatically fetches more pages as needed.
+for top_level in client.list(
+    limit=50,
+):
+    # Do something with top_level here
+    all_top_levels.append(top_level)
+print(all_top_levels)
+```
+
+Or, asynchronously:
+
+```python
+import asyncio
+from steel import AsyncSteel
+
+client = AsyncSteel()
+
+
+async def main() -> None:
+    all_top_levels = []
+    # Iterate through items across all pages, issuing requests as needed.
+    async for top_level in client.list(
+        limit=50,
+    ):
+        all_top_levels.append(top_level)
+    print(all_top_levels)
+
+
+asyncio.run(main())
+```
+
+Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
+
+```python
+first_page = await client.list(
+    limit=50,
+)
+if first_page.has_next_page():
+    print(f"will fetch next page using these details: {first_page.next_page_info()}")
+    next_page = await first_page.get_next_page()
+    print(f"number of items we just fetched: {len(next_page.sessions)}")
+
+# Remove `await` for non-async usage.
+```
+
+Or just work directly with the returned data:
+
+```python
+first_page = await client.list(
+    limit=50,
+)
+
+print(f"next page cursor: {first_page.next_cursor}")  # => "next page cursor: ..."
+for top_level in first_page.sessions:
+    print(top_level.duration)
+
+# Remove `await` for non-async usage.
+```
 
 ## Handling errors
 
@@ -81,7 +173,11 @@ from steel import Steel
 client = Steel()
 
 try:
-    client.sessions.create()
+    client.sessions.create(
+        region="US",
+        solve_captcha=True,
+        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    )
 except steel.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -124,7 +220,11 @@ client = Steel(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).sessions.create()
+client.with_options(max_retries=5).sessions.create(
+    region="US",
+    solve_captcha=True,
+    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+)
 ```
 
 ### Timeouts
@@ -147,7 +247,11 @@ client = Steel(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).sessions.create()
+client.with_options(timeout=5.0).sessions.create(
+    region="US",
+    solve_captcha=True,
+    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -186,7 +290,11 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from steel import Steel
 
 client = Steel()
-response = client.sessions.with_raw_response.create()
+response = client.sessions.with_raw_response.create(
+    region="US",
+    solve_captcha=True,
+    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+)
 print(response.headers.get('X-My-Header'))
 
 session = response.parse()  # get the object that `sessions.create()` would have returned
@@ -204,7 +312,11 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.sessions.with_streaming_response.create() as response:
+with client.sessions.with_streaming_response.create(
+    region="US",
+    solve_captcha=True,
+    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():

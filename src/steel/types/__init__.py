@@ -2,17 +2,13 @@
 
 from __future__ import annotations
 
+from .session import Session as Session
+from .pdf_response import PdfResponse as PdfResponse
 from .scrape_response import ScrapeResponse as ScrapeResponse
-from .session_response import SessionResponse as SessionResponse
-from .session_list_params import SessionListParams as SessionListParams
-from .get_context_response import GetContextResponse as GetContextResponse
-from .context_create_params import ContextCreateParams as ContextCreateParams
-from .get_contexts_response import GetContextsResponse as GetContextsResponse
+from .screenshot_response import ScreenshotResponse as ScreenshotResponse
 from .session_create_params import SessionCreateParams as SessionCreateParams
-from .session_list_response import SessionListResponse as SessionListResponse
-from .browser_tool_pdf_params import BrowserToolPdfParams as BrowserToolPdfParams
-from .create_context_response import CreateContextResponse as CreateContextResponse
-from .delete_context_response import DeleteContextResponse as DeleteContextResponse
+from .top_level_list_params import TopLevelListParams as TopLevelListParams
+from .top_level_scrape_params import TopLevelScrapeParams as TopLevelScrapeParams
 from .release_session_response import ReleaseSessionResponse as ReleaseSessionResponse
-from .browser_tool_scrape_params import BrowserToolScrapeParams as BrowserToolScrapeParams
-from .browser_tool_screenshot_params import BrowserToolScreenshotParams as BrowserToolScreenshotParams
+from .top_level_screenshot_params import TopLevelScreenshotParams as TopLevelScreenshotParams
+from .top_level_generate_pdf_params import TopLevelGeneratePdfParams as TopLevelGeneratePdfParams
