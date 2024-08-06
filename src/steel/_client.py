@@ -70,7 +70,7 @@ __all__ = [
 
 
 class Steel(SyncAPIClient):
-    sessions: resources.SessionsResource
+    session: resources.SessionResource
     with_raw_response: SteelWithRawResponse
     with_streaming_response: SteelWithStreamedResponse
 
@@ -128,7 +128,7 @@ class Steel(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.sessions = resources.SessionsResource(self)
+        self.session = resources.SessionResource(self)
         self.with_raw_response = SteelWithRawResponse(self)
         self.with_streaming_response = SteelWithStreamedResponse(self)
 
@@ -413,7 +413,7 @@ class Steel(SyncAPIClient):
 
 
 class AsyncSteel(AsyncAPIClient):
-    sessions: resources.AsyncSessionsResource
+    session: resources.AsyncSessionResource
     with_raw_response: AsyncSteelWithRawResponse
     with_streaming_response: AsyncSteelWithStreamedResponse
 
@@ -471,7 +471,7 @@ class AsyncSteel(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.sessions = resources.AsyncSessionsResource(self)
+        self.session = resources.AsyncSessionResource(self)
         self.with_raw_response = AsyncSteelWithRawResponse(self)
         self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
 
@@ -757,7 +757,7 @@ class AsyncSteel(AsyncAPIClient):
 
 class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
-        self.sessions = resources.SessionsResourceWithRawResponse(client.sessions)
+        self.session = resources.SessionResourceWithRawResponse(client.session)
 
         self.generate_pdf = to_raw_response_wrapper(
             client.generate_pdf,
@@ -775,7 +775,7 @@ class SteelWithRawResponse:
 
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.sessions = resources.AsyncSessionsResourceWithRawResponse(client.sessions)
+        self.session = resources.AsyncSessionResourceWithRawResponse(client.session)
 
         self.generate_pdf = async_to_raw_response_wrapper(
             client.generate_pdf,
@@ -793,7 +793,7 @@ class AsyncSteelWithRawResponse:
 
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
-        self.sessions = resources.SessionsResourceWithStreamingResponse(client.sessions)
+        self.session = resources.SessionResourceWithStreamingResponse(client.session)
 
         self.generate_pdf = to_streamed_response_wrapper(
             client.generate_pdf,
@@ -811,7 +811,7 @@ class SteelWithStreamedResponse:
 
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.sessions = resources.AsyncSessionsResourceWithStreamingResponse(client.sessions)
+        self.session = resources.AsyncSessionResourceWithStreamingResponse(client.session)
 
         self.generate_pdf = async_to_streamed_response_wrapper(
             client.generate_pdf,
