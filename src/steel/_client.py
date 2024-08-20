@@ -115,7 +115,7 @@ class Steel(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
-            base_url = f"http://api.steel.dev"
+            base_url = f"http://steel-production.up.railway.app"
 
         super().__init__(
             version=__version__,
@@ -458,7 +458,7 @@ class AsyncSteel(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
-            base_url = f"http://api.steel.dev"
+            base_url = f"http://steel-production.up.railway.app"
 
         super().__init__(
             version=__version__,
