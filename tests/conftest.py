@@ -26,7 +26,7 @@ def event_loop() -> Iterator[asyncio.AbstractEventLoop]:
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
-api_key = "My API Key"
+steel_api_key = "My Steel API Key"
 
 
 @pytest.fixture(scope="session")
@@ -35,7 +35,7 @@ def client(request: FixtureRequest) -> Iterator[Steel]:
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with Steel(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
+    with Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=strict) as client:
         yield client
 
 
@@ -45,5 +45,5 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncSteel]:
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    async with AsyncSteel(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
+    async with AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=strict) as client:
         yield client

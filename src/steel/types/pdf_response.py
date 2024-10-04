@@ -9,4 +9,4 @@ __all__ = ["PdfResponse"]
 
 class PdfResponse(BaseModel):
     url: str
-    """URL where the generated PDF is hosted"""
+    """URL where the PDF is hosted"""

@@ -26,7 +26,7 @@ from steel._base_client import DEFAULT_TIMEOUT, HTTPX_DEFAULT_TIMEOUT, BaseClien
 from .utils import update_env
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
-api_key = "My API Key"
+steel_api_key = "My Steel API Key"
 
 
 def _get_params(client: BaseClient[Any, Any]) -> dict[str, str]:
@@ -48,7 +48,7 @@ def _get_open_connections(client: Steel | AsyncSteel) -> int:
 
 
 class TestSteel:
-    client = Steel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+    client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -74,9 +74,9 @@ class TestSteel:
         copied = self.client.copy()
         assert id(copied) != id(self.client)
 
-        copied = self.client.copy(api_key="another My API Key")
-        assert copied.api_key == "another My API Key"
-        assert self.client.api_key == "My API Key"
+        copied = self.client.copy(steel_api_key="another My Steel API Key")
+        assert copied.steel_api_key == "another My Steel API Key"
+        assert self.client.steel_api_key == "My Steel API Key"
 
     def test_copy_default_options(self) -> None:
         # options that have a default are overridden correctly
@@ -96,7 +96,10 @@ class TestSteel:
 
     def test_copy_default_headers(self) -> None:
         client = Steel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
+            base_url=base_url,
+            steel_api_key=steel_api_key,
+            _strict_response_validation=True,
+            default_headers={"X-Foo": "bar"},
         )
         assert client.default_headers["X-Foo"] == "bar"
 
@@ -130,7 +133,10 @@ class TestSteel:
 
     def test_copy_default_query(self) -> None:
         client = Steel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
+            base_url=base_url,
+            steel_api_key=steel_api_key,
+            _strict_response_validation=True,
+            default_query={"foo": "bar"},
         )
         assert _get_params(client)["foo"] == "bar"
 
@@ -254,7 +260,9 @@ class TestSteel:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = Steel(base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0))
+        client = Steel(
+            base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
+        )
 
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
@@ -264,7 +272,10 @@ class TestSteel:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
             client = Steel(
-                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
+                base_url=base_url,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+                http_client=http_client,
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -274,7 +285,10 @@ class TestSteel:
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
             client = Steel(
-                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
+                base_url=base_url,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+                http_client=http_client,
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -284,7 +298,10 @@ class TestSteel:
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = Steel(
-                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
+                base_url=base_url,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+                http_client=http_client,
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -296,14 +313,17 @@ class TestSteel:
             async with httpx.AsyncClient() as http_client:
                 Steel(
                     base_url=base_url,
-                    api_key=api_key,
+                    steel_api_key=steel_api_key,
                     _strict_response_validation=True,
                     http_client=cast(Any, http_client),
                 )
 
     def test_default_headers_option(self) -> None:
         client = Steel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
+            base_url=base_url,
+            steel_api_key=steel_api_key,
+            _strict_response_validation=True,
+            default_headers={"X-Foo": "bar"},
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
@@ -311,7 +331,7 @@ class TestSteel:
 
         client2 = Steel(
             base_url=base_url,
-            api_key=api_key,
+            steel_api_key=steel_api_key,
             _strict_response_validation=True,
             default_headers={
                 "X-Foo": "stainless",
@@ -323,18 +343,21 @@ class TestSteel:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = Steel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("steel-api-key") == api_key
+        assert request.headers.get("steel-api-key") == steel_api_key
 
         with pytest.raises(SteelError):
             with update_env(**{"STEEL_API_KEY": Omit()}):
-                client2 = Steel(base_url=base_url, api_key=None, _strict_response_validation=True)
+                client2 = Steel(base_url=base_url, steel_api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
         client = Steel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
+            base_url=base_url,
+            steel_api_key=steel_api_key,
+            _strict_response_validation=True,
+            default_query={"query_param": "bar"},
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         url = httpx.URL(request.url)
@@ -534,7 +557,9 @@ class TestSteel:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = Steel(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
+        client = Steel(
+            base_url="https://example.com/from_init", steel_api_key=steel_api_key, _strict_response_validation=True
+        )
         assert client.base_url == "https://example.com/from_init/"
 
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
@@ -543,16 +568,20 @@ class TestSteel:
 
     def test_base_url_env(self) -> None:
         with update_env(STEEL_BASE_URL="http://localhost:5000/from/env"):
-            client = Steel(api_key=api_key, _strict_response_validation=True)
+            client = Steel(steel_api_key=steel_api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
-            Steel(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
             Steel(
                 base_url="http://localhost:5000/custom/path/",
-                api_key=api_key,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+            ),
+            Steel(
+                base_url="http://localhost:5000/custom/path/",
+                steel_api_key=steel_api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -572,10 +601,14 @@ class TestSteel:
     @pytest.mark.parametrize(
         "client",
         [
-            Steel(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
             Steel(
                 base_url="http://localhost:5000/custom/path/",
-                api_key=api_key,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+            ),
+            Steel(
+                base_url="http://localhost:5000/custom/path/",
+                steel_api_key=steel_api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -595,10 +628,14 @@ class TestSteel:
     @pytest.mark.parametrize(
         "client",
         [
-            Steel(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
             Steel(
                 base_url="http://localhost:5000/custom/path/",
-                api_key=api_key,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+            ),
+            Steel(
+                base_url="http://localhost:5000/custom/path/",
+                steel_api_key=steel_api_key,
                 _strict_response_validation=True,
                 http_client=httpx.Client(),
             ),
@@ -616,7 +653,7 @@ class TestSteel:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = Steel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -627,7 +664,7 @@ class TestSteel:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = Steel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -648,7 +685,12 @@ class TestSteel:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            Steel(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
+            Steel(
+                base_url=base_url,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+                max_retries=cast(Any, None),
+            )
 
     @pytest.mark.respx(base_url=base_url)
     def test_received_text_for_expected_json(self, respx_mock: MockRouter) -> None:
@@ -657,12 +699,12 @@ class TestSteel:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = Steel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = Steel(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=False)
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -689,7 +731,7 @@ class TestSteel:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = Steel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -699,18 +741,14 @@ class TestSteel:
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/sessions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/scrape").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/v1/sessions",
+                "/v1/scrape",
                 body=cast(
                     object,
-                    dict(
-                        solve_captcha=True,
-                        stealth_mode=True,
-                        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                    ),
+                    dict(url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/", format=["markdown"]),
                 ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
@@ -721,18 +759,14 @@ class TestSteel:
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/sessions").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/scrape").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/v1/sessions",
+                "/v1/scrape",
                 body=cast(
                     object,
-                    dict(
-                        solve_captcha=True,
-                        stealth_mode=True,
-                        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                    ),
+                    dict(url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/", format=["markdown"]),
                 ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
@@ -755,15 +789,15 @@ class TestSteel:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
 
-        response = client.session.with_raw_response.create()
+        response = client.with_raw_response.scrape(url="url")
 
         assert response.retries_taken == failures_before_success
 
 
 class TestAsyncSteel:
-    client = AsyncSteel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+    client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -791,9 +825,9 @@ class TestAsyncSteel:
         copied = self.client.copy()
         assert id(copied) != id(self.client)
 
-        copied = self.client.copy(api_key="another My API Key")
-        assert copied.api_key == "another My API Key"
-        assert self.client.api_key == "My API Key"
+        copied = self.client.copy(steel_api_key="another My Steel API Key")
+        assert copied.steel_api_key == "another My Steel API Key"
+        assert self.client.steel_api_key == "My Steel API Key"
 
     def test_copy_default_options(self) -> None:
         # options that have a default are overridden correctly
@@ -813,7 +847,10 @@ class TestAsyncSteel:
 
     def test_copy_default_headers(self) -> None:
         client = AsyncSteel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
+            base_url=base_url,
+            steel_api_key=steel_api_key,
+            _strict_response_validation=True,
+            default_headers={"X-Foo": "bar"},
         )
         assert client.default_headers["X-Foo"] == "bar"
 
@@ -847,7 +884,10 @@ class TestAsyncSteel:
 
     def test_copy_default_query(self) -> None:
         client = AsyncSteel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
+            base_url=base_url,
+            steel_api_key=steel_api_key,
+            _strict_response_validation=True,
+            default_query={"foo": "bar"},
         )
         assert _get_params(client)["foo"] == "bar"
 
@@ -972,7 +1012,7 @@ class TestAsyncSteel:
 
     async def test_client_timeout_option(self) -> None:
         client = AsyncSteel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
+            base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -983,7 +1023,10 @@ class TestAsyncSteel:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
             client = AsyncSteel(
-                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
+                base_url=base_url,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+                http_client=http_client,
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -993,7 +1036,10 @@ class TestAsyncSteel:
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
             client = AsyncSteel(
-                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
+                base_url=base_url,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+                http_client=http_client,
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1003,7 +1049,10 @@ class TestAsyncSteel:
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = AsyncSteel(
-                base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
+                base_url=base_url,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+                http_client=http_client,
             )
 
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1015,14 +1064,17 @@ class TestAsyncSteel:
             with httpx.Client() as http_client:
                 AsyncSteel(
                     base_url=base_url,
-                    api_key=api_key,
+                    steel_api_key=steel_api_key,
                     _strict_response_validation=True,
                     http_client=cast(Any, http_client),
                 )
 
     def test_default_headers_option(self) -> None:
         client = AsyncSteel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
+            base_url=base_url,
+            steel_api_key=steel_api_key,
+            _strict_response_validation=True,
+            default_headers={"X-Foo": "bar"},
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
@@ -1030,7 +1082,7 @@ class TestAsyncSteel:
 
         client2 = AsyncSteel(
             base_url=base_url,
-            api_key=api_key,
+            steel_api_key=steel_api_key,
             _strict_response_validation=True,
             default_headers={
                 "X-Foo": "stainless",
@@ -1042,18 +1094,21 @@ class TestAsyncSteel:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = AsyncSteel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("steel-api-key") == api_key
+        assert request.headers.get("steel-api-key") == steel_api_key
 
         with pytest.raises(SteelError):
             with update_env(**{"STEEL_API_KEY": Omit()}):
-                client2 = AsyncSteel(base_url=base_url, api_key=None, _strict_response_validation=True)
+                client2 = AsyncSteel(base_url=base_url, steel_api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncSteel(
-            base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
+            base_url=base_url,
+            steel_api_key=steel_api_key,
+            _strict_response_validation=True,
+            default_query={"query_param": "bar"},
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         url = httpx.URL(request.url)
@@ -1253,7 +1308,9 @@ class TestAsyncSteel:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = AsyncSteel(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
+        client = AsyncSteel(
+            base_url="https://example.com/from_init", steel_api_key=steel_api_key, _strict_response_validation=True
+        )
         assert client.base_url == "https://example.com/from_init/"
 
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
@@ -1262,18 +1319,20 @@ class TestAsyncSteel:
 
     def test_base_url_env(self) -> None:
         with update_env(STEEL_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncSteel(api_key=api_key, _strict_response_validation=True)
+            client = AsyncSteel(steel_api_key=steel_api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
     @pytest.mark.parametrize(
         "client",
         [
             AsyncSteel(
-                base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
+                base_url="http://localhost:5000/custom/path/",
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
             ),
             AsyncSteel(
                 base_url="http://localhost:5000/custom/path/",
-                api_key=api_key,
+                steel_api_key=steel_api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1294,11 +1353,13 @@ class TestAsyncSteel:
         "client",
         [
             AsyncSteel(
-                base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
+                base_url="http://localhost:5000/custom/path/",
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
             ),
             AsyncSteel(
                 base_url="http://localhost:5000/custom/path/",
-                api_key=api_key,
+                steel_api_key=steel_api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1319,11 +1380,13 @@ class TestAsyncSteel:
         "client",
         [
             AsyncSteel(
-                base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
+                base_url="http://localhost:5000/custom/path/",
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
             ),
             AsyncSteel(
                 base_url="http://localhost:5000/custom/path/",
-                api_key=api_key,
+                steel_api_key=steel_api_key,
                 _strict_response_validation=True,
                 http_client=httpx.AsyncClient(),
             ),
@@ -1341,7 +1404,7 @@ class TestAsyncSteel:
         assert request.url == "https://myapi.com/foo"
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncSteel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -1353,7 +1416,7 @@ class TestAsyncSteel:
         assert not client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncSteel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
         async with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -1376,7 +1439,10 @@ class TestAsyncSteel:
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
             AsyncSteel(
-                base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
+                base_url=base_url,
+                steel_api_key=steel_api_key,
+                _strict_response_validation=True,
+                max_retries=cast(Any, None),
             )
 
     @pytest.mark.respx(base_url=base_url)
@@ -1387,12 +1453,12 @@ class TestAsyncSteel:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncSteel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncSteel(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=False)
 
         response = await client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -1420,7 +1486,7 @@ class TestAsyncSteel:
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncSteel(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
@@ -1430,18 +1496,14 @@ class TestAsyncSteel:
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/sessions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/scrape").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/v1/sessions",
+                "/v1/scrape",
                 body=cast(
                     object,
-                    dict(
-                        solve_captcha=True,
-                        stealth_mode=True,
-                        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                    ),
+                    dict(url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/", format=["markdown"]),
                 ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
@@ -1452,18 +1514,14 @@ class TestAsyncSteel:
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/sessions").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/scrape").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/v1/sessions",
+                "/v1/scrape",
                 body=cast(
                     object,
-                    dict(
-                        solve_captcha=True,
-                        stealth_mode=True,
-                        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-                    ),
+                    dict(url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/", format=["markdown"]),
                 ),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
@@ -1489,8 +1547,8 @@ class TestAsyncSteel:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
 
-        response = await client.session.with_raw_response.create()
+        response = await client.with_raw_response.scrape(url="url")
 
         assert response.retries_taken == failures_before_success

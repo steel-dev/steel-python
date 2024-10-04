@@ -3,20 +3,28 @@
 from __future__ import annotations
 
 from typing import List
-from typing_extensions import Literal, Required, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
+
+from .._utils import PropertyInfo
 
 __all__ = ["TopLevelScrapeParams"]
 
 
 class TopLevelScrapeParams(TypedDict, total=False):
     url: Required[str]
-    """The URL of the webpage to scrape"""
+    """URL of the webpage to scrape"""
 
-    format: List[Literal["html", "cleaned_html", "readability", "markdown"]]
-    """The desired format(s) for the scraped content"""
+    delay: float
+    """Delay before scraping (in milliseconds)"""
+
+    format: List[Literal["html", "readability", "cleaned_html", "markdown"]]
+    """Desired format(s) for the scraped content. Default is `html`."""
 
     pdf: bool
-    """Flag to include a PDF of the page in the response"""
+    """Include a PDF in the response"""
 
     screenshot: bool
-    """Flag to include a screenshot of the page in the response"""
+    """Include a screenshot in the response"""
+
+    use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
+    """Use a Steel-provided residential proxy for the scrape"""

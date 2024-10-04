@@ -10,7 +10,7 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Documentation
 
-The REST API documentation can be found on [docs.steel.dev](https://docs.steel.dev). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.steel.com](https://docs.steel.com). The full API of this library can be found in [api.md](api.md).
 
 ## Installation
 
@@ -32,21 +32,17 @@ from steel import Steel
 
 client = Steel(
     # This is the default and can be omitted
-    api_key=os.environ.get("STEEL_API_KEY"),
+    steel_api_key=os.environ.get("STEEL_API_KEY"),
 )
 
-scrape_response = client.scrape(
-    url="https://example.com",
-    format=["html", "markdown"],
-    screenshot=True,
-)
-print(scrape_response.content)
+session = client.sessions.create()
+print(session.id)
 ```
 
-While you can provide an `api_key` keyword argument,
+While you can provide a `steel_api_key` keyword argument,
 we recommend using [python-dotenv](https://pypi.org/project/python-dotenv/)
-to add `STEEL_API_KEY="My API Key"` to your `.env` file
-so that your API Key is not stored in source control.
+to add `STEEL_API_KEY="My Steel API Key"` to your `.env` file
+so that your Steel API Key is not stored in source control.
 
 ## Async usage
 
@@ -59,17 +55,13 @@ from steel import AsyncSteel
 
 client = AsyncSteel(
     # This is the default and can be omitted
-    api_key=os.environ.get("STEEL_API_KEY"),
+    steel_api_key=os.environ.get("STEEL_API_KEY"),
 )
 
 
 async def main() -> None:
-    scrape_response = await client.scrape(
-        url="https://example.com",
-        format=["html", "markdown"],
-        screenshot=True,
-    )
-    print(scrape_response.content)
+    session = await client.sessions.create()
+    print(session.id)
 
 
 asyncio.run(main())
@@ -97,14 +89,14 @@ from steel import Steel
 
 client = Steel()
 
-all_top_levels = []
+all_sessions = []
 # Automatically fetches more pages as needed.
-for top_level in client.list_sessions(
-    limit=50,
+for session in client.sessions.list(
+    status="live",
 ):
-    # Do something with top_level here
-    all_top_levels.append(top_level)
-print(all_top_levels)
+    # Do something with session here
+    all_sessions.append(session)
+print(all_sessions)
 ```
 
 Or, asynchronously:
@@ -117,13 +109,13 @@ client = AsyncSteel()
 
 
 async def main() -> None:
-    all_top_levels = []
+    all_sessions = []
     # Iterate through items across all pages, issuing requests as needed.
-    async for top_level in client.list_sessions(
-        limit=50,
+    async for session in client.sessions.list(
+        status="live",
     ):
-        all_top_levels.append(top_level)
-    print(all_top_levels)
+        all_sessions.append(session)
+    print(all_sessions)
 
 
 asyncio.run(main())
@@ -132,8 +124,8 @@ asyncio.run(main())
 Alternatively, you can use the `.has_next_page()`, `.next_page_info()`, or `.get_next_page()` methods for more granular control working with pages:
 
 ```python
-first_page = await client.list_sessions(
-    limit=50,
+first_page = await client.sessions.list(
+    status="live",
 )
 if first_page.has_next_page():
     print(f"will fetch next page using these details: {first_page.next_page_info()}")
@@ -146,13 +138,13 @@ if first_page.has_next_page():
 Or just work directly with the returned data:
 
 ```python
-first_page = await client.list_sessions(
-    limit=50,
+first_page = await client.sessions.list(
+    status="live",
 )
 
-print(f"next page cursor: {first_page.next_cursor}")  # => "next page cursor: ..."
-for top_level in first_page.sessions:
-    print(top_level.duration)
+print(f"next page cursor: {first_page.cursor_id}")  # => "next page cursor: ..."
+for session in first_page.sessions:
+    print(session.id)
 
 # Remove `await` for non-async usage.
 ```
@@ -173,10 +165,9 @@ from steel import Steel
 client = Steel()
 
 try:
-    client.session.create(
-        solve_captcha=True,
-        stealth_mode=True,
-        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    client.scrape(
+        url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+        format=["markdown"],
     )
 except steel.APIConnectionError as e:
     print("The server could not be reached")
@@ -220,10 +211,9 @@ client = Steel(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).session.create(
-    solve_captcha=True,
-    stealth_mode=True,
-    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+client.with_options(max_retries=5).scrape(
+    url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+    format=["markdown"],
 )
 ```
 
@@ -247,10 +237,9 @@ client = Steel(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).session.create(
-    solve_captcha=True,
-    stealth_mode=True,
-    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+client.with_options(timeout=5.0).scrape(
+    url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+    format=["markdown"],
 )
 ```
 
@@ -290,15 +279,14 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from steel import Steel
 
 client = Steel()
-response = client.session.with_raw_response.create(
-    solve_captcha=True,
-    stealth_mode=True,
-    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+response = client.with_raw_response.scrape(
+    url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+    format=["markdown"],
 )
 print(response.headers.get('X-My-Header'))
 
-session = response.parse()  # get the object that `session.create()` would have returned
-print(session.duration)
+top_level = response.parse()  # get the object that `scrape()` would have returned
+print(top_level.content)
 ```
 
 These methods return an [`APIResponse`](https://github.com/stainless-sdks/steel-python/tree/main/src/steel/_response.py) object.
@@ -312,10 +300,9 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.session.with_streaming_response.create(
-    solve_captcha=True,
-    stealth_mode=True,
-    user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+with client.with_streaming_response.scrape(
+    url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+    format=["markdown"],
 ) as response:
     print(response.headers.get("X-My-Header"))
 

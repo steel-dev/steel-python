@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 from datetime import datetime
 
 from pydantic import Field as FieldInfo
@@ -12,71 +12,74 @@ __all__ = ["ScrapeResponse", "Content", "Link", "Metadata", "Pdf", "Screenshot"]
 
 class Content(BaseModel):
     cleaned_html: Optional[str] = None
-    """The cleaned HTML content of the scraped webpage"""
+    """Cleaned HTML content of the webpage"""
 
     html: Optional[str] = None
-    """The raw HTML content of the scraped webpage"""
+    """Raw HTML content of the webpage"""
 
     markdown: Optional[str] = None
-    """The content of the webpage converted to Markdown format"""
+    """Webpage content converted to Markdown"""
+
+    readability: Optional[Dict[str, object]] = None
+    """Webpage content in Readability format"""
 
 
 class Link(BaseModel):
-    text: Optional[str] = None
-    """The text content of the link"""
+    text: str
+    """Text content of the link"""
 
-    url: Optional[str] = None
-    """The URL of the link"""
+    url: str
+    """URL of the link"""
 
 
 class Metadata(BaseModel):
+    status_code: int = FieldInfo(alias="statusCode")
+    """HTTP status code of the response"""
+
     description: Optional[str] = None
-    """The description of the webpage"""
+    """Description of the webpage"""
 
     language: Optional[str] = None
-    """The detected language of the webpage"""
+    """Detected language of the webpage"""
 
     og_description: Optional[str] = FieldInfo(alias="ogDescription", default=None)
-    """The Open Graph description"""
+    """Open Graph description"""
 
     og_image: Optional[str] = FieldInfo(alias="ogImage", default=None)
-    """The Open Graph image URL"""
+    """Open Graph image URL"""
 
     og_title: Optional[str] = FieldInfo(alias="ogTitle", default=None)
-    """The Open Graph title"""
+    """Open Graph title"""
 
     published_timestamp: Optional[datetime] = None
-    """The timestamp of when the content was published (if available)"""
-
-    status_code: Optional[int] = FieldInfo(alias="statusCode", default=None)
-    """The HTTP status code of the response"""
+    """Publication timestamp of the content (if available)"""
 
     timestamp: Optional[datetime] = None
-    """The timestamp of when the scrape was performed"""
+    """Timestamp when the scrape was performed"""
 
     title: Optional[str] = None
-    """The title of the webpage"""
+    """Title of the webpage"""
 
     url_source: Optional[str] = FieldInfo(alias="urlSource", default=None)
-    """The source URL of the scraped page"""
+    """Source URL of the scraped page"""
 
 
 class Pdf(BaseModel):
-    url: Optional[str] = None
-    """The URL of the generated PDF"""
+    url: str
+    """URL of the generated PDF"""
 
 
 class Screenshot(BaseModel):
-    url: Optional[str] = None
-    """The URL of the screenshot image"""
+    url: str
+    """URL of the screenshot image"""
 
 
 class ScrapeResponse(BaseModel):
-    content: Optional[Content] = None
+    content: Content
 
-    links: Optional[List[Link]] = None
+    links: List[Link]
 
-    metadata: Optional[Metadata] = None
+    metadata: Metadata
 
     pdf: Optional[Pdf] = None
 

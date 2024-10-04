@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Session"]
+__all__ = ["Sessions", "Session"]
 
 
 class Session(BaseModel):
@@ -56,3 +56,8 @@ class Session(BaseModel):
 
     user_agent: Optional[str] = FieldInfo(alias="userAgent", default=None)
     """User agent string used in the session"""
+
+
+class Sessions(BaseModel):
+    sessions: List[Session]
+    """List of browser sessions"""
