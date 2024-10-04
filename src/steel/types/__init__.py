@@ -7,12 +7,12 @@ from .sessions import Sessions as Sessions
 from .pdf_response import PdfResponse as PdfResponse
 from .scrape_response import ScrapeResponse as ScrapeResponse
 from .session_context import SessionContext as SessionContext
+from .client_pdf_params import ClientPdfParams as ClientPdfParams
 from .screenshot_response import ScreenshotResponse as ScreenshotResponse
 from .session_list_params import SessionListParams as SessionListParams
-from .top_level_pdf_params import TopLevelPdfParams as TopLevelPdfParams
+from .client_scrape_params import ClientScrapeParams as ClientScrapeParams
 from .session_create_params import SessionCreateParams as SessionCreateParams
 from .session_list_response import SessionListResponse as SessionListResponse
-from .top_level_scrape_params import TopLevelScrapeParams as TopLevelScrapeParams
+from .client_screenshot_params import ClientScreenshotParams as ClientScreenshotParams
 from .session_release_response import SessionReleaseResponse as SessionReleaseResponse
-from .top_level_screenshot_params import TopLevelScreenshotParams as TopLevelScreenshotParams
 from .session_release_all_response import SessionReleaseAllResponse as SessionReleaseAllResponse

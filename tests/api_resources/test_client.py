@@ -18,23 +18,23 @@ from tests.utils import assert_matches_type
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestTopLevel:
+class TestClient:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     def test_method_pdf(self, client: Steel) -> None:
-        top_level = client.pdf(
+        client_ = client.pdf(
             url="url",
         )
-        assert_matches_type(PdfResponse, top_level, path=["response"])
+        assert_matches_type(PdfResponse, client_, path=["response"])
 
     @parametrize
     def test_method_pdf_with_all_params(self, client: Steel) -> None:
-        top_level = client.pdf(
+        client_ = client.pdf(
             url="url",
             use_proxy=True,
         )
-        assert_matches_type(PdfResponse, top_level, path=["response"])
+        assert_matches_type(PdfResponse, client_, path=["response"])
 
     @parametrize
     def test_raw_response_pdf(self, client: Steel) -> None:
@@ -44,8 +44,8 @@ class TestTopLevel:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = response.parse()
-        assert_matches_type(PdfResponse, top_level, path=["response"])
+        client_ = response.parse()
+        assert_matches_type(PdfResponse, client_, path=["response"])
 
     @parametrize
     def test_streaming_response_pdf(self, client: Steel) -> None:
@@ -55,21 +55,21 @@ class TestTopLevel:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            top_level = response.parse()
-            assert_matches_type(PdfResponse, top_level, path=["response"])
+            client_ = response.parse()
+            assert_matches_type(PdfResponse, client_, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_method_scrape(self, client: Steel) -> None:
-        top_level = client.scrape(
+        client_ = client.scrape(
             url="url",
         )
-        assert_matches_type(ScrapeResponse, top_level, path=["response"])
+        assert_matches_type(ScrapeResponse, client_, path=["response"])
 
     @parametrize
     def test_method_scrape_with_all_params(self, client: Steel) -> None:
-        top_level = client.scrape(
+        client_ = client.scrape(
             url="url",
             delay=0,
             format=["html", "readability", "cleaned_html"],
@@ -77,7 +77,7 @@ class TestTopLevel:
             screenshot=True,
             use_proxy=True,
         )
-        assert_matches_type(ScrapeResponse, top_level, path=["response"])
+        assert_matches_type(ScrapeResponse, client_, path=["response"])
 
     @parametrize
     def test_raw_response_scrape(self, client: Steel) -> None:
@@ -87,8 +87,8 @@ class TestTopLevel:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = response.parse()
-        assert_matches_type(ScrapeResponse, top_level, path=["response"])
+        client_ = response.parse()
+        assert_matches_type(ScrapeResponse, client_, path=["response"])
 
     @parametrize
     def test_streaming_response_scrape(self, client: Steel) -> None:
@@ -98,25 +98,25 @@ class TestTopLevel:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            top_level = response.parse()
-            assert_matches_type(ScrapeResponse, top_level, path=["response"])
+            client_ = response.parse()
+            assert_matches_type(ScrapeResponse, client_, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_method_screenshot(self, client: Steel) -> None:
-        top_level = client.screenshot(
+        client_ = client.screenshot(
             url="url",
         )
-        assert_matches_type(ScreenshotResponse, top_level, path=["response"])
+        assert_matches_type(ScreenshotResponse, client_, path=["response"])
 
     @parametrize
     def test_method_screenshot_with_all_params(self, client: Steel) -> None:
-        top_level = client.screenshot(
+        client_ = client.screenshot(
             url="url",
             use_proxy=True,
         )
-        assert_matches_type(ScreenshotResponse, top_level, path=["response"])
+        assert_matches_type(ScreenshotResponse, client_, path=["response"])
 
     @parametrize
     def test_raw_response_screenshot(self, client: Steel) -> None:
@@ -126,8 +126,8 @@ class TestTopLevel:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = response.parse()
-        assert_matches_type(ScreenshotResponse, top_level, path=["response"])
+        client_ = response.parse()
+        assert_matches_type(ScreenshotResponse, client_, path=["response"])
 
     @parametrize
     def test_streaming_response_screenshot(self, client: Steel) -> None:
@@ -137,29 +137,29 @@ class TestTopLevel:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            top_level = response.parse()
-            assert_matches_type(ScreenshotResponse, top_level, path=["response"])
+            client_ = response.parse()
+            assert_matches_type(ScreenshotResponse, client_, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
 
-class TestAsyncTopLevel:
+class TestAsyncClient:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     async def test_method_pdf(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.pdf(
+        client = await async_client.pdf(
             url="url",
         )
-        assert_matches_type(PdfResponse, top_level, path=["response"])
+        assert_matches_type(PdfResponse, client, path=["response"])
 
     @parametrize
     async def test_method_pdf_with_all_params(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.pdf(
+        client = await async_client.pdf(
             url="url",
             use_proxy=True,
         )
-        assert_matches_type(PdfResponse, top_level, path=["response"])
+        assert_matches_type(PdfResponse, client, path=["response"])
 
     @parametrize
     async def test_raw_response_pdf(self, async_client: AsyncSteel) -> None:
@@ -169,8 +169,8 @@ class TestAsyncTopLevel:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = await response.parse()
-        assert_matches_type(PdfResponse, top_level, path=["response"])
+        client = await response.parse()
+        assert_matches_type(PdfResponse, client, path=["response"])
 
     @parametrize
     async def test_streaming_response_pdf(self, async_client: AsyncSteel) -> None:
@@ -180,21 +180,21 @@ class TestAsyncTopLevel:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            top_level = await response.parse()
-            assert_matches_type(PdfResponse, top_level, path=["response"])
+            client = await response.parse()
+            assert_matches_type(PdfResponse, client, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_method_scrape(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.scrape(
+        client = await async_client.scrape(
             url="url",
         )
-        assert_matches_type(ScrapeResponse, top_level, path=["response"])
+        assert_matches_type(ScrapeResponse, client, path=["response"])
 
     @parametrize
     async def test_method_scrape_with_all_params(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.scrape(
+        client = await async_client.scrape(
             url="url",
             delay=0,
             format=["html", "readability", "cleaned_html"],
@@ -202,7 +202,7 @@ class TestAsyncTopLevel:
             screenshot=True,
             use_proxy=True,
         )
-        assert_matches_type(ScrapeResponse, top_level, path=["response"])
+        assert_matches_type(ScrapeResponse, client, path=["response"])
 
     @parametrize
     async def test_raw_response_scrape(self, async_client: AsyncSteel) -> None:
@@ -212,8 +212,8 @@ class TestAsyncTopLevel:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = await response.parse()
-        assert_matches_type(ScrapeResponse, top_level, path=["response"])
+        client = await response.parse()
+        assert_matches_type(ScrapeResponse, client, path=["response"])
 
     @parametrize
     async def test_streaming_response_scrape(self, async_client: AsyncSteel) -> None:
@@ -223,25 +223,25 @@ class TestAsyncTopLevel:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            top_level = await response.parse()
-            assert_matches_type(ScrapeResponse, top_level, path=["response"])
+            client = await response.parse()
+            assert_matches_type(ScrapeResponse, client, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_method_screenshot(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.screenshot(
+        client = await async_client.screenshot(
             url="url",
         )
-        assert_matches_type(ScreenshotResponse, top_level, path=["response"])
+        assert_matches_type(ScreenshotResponse, client, path=["response"])
 
     @parametrize
     async def test_method_screenshot_with_all_params(self, async_client: AsyncSteel) -> None:
-        top_level = await async_client.screenshot(
+        client = await async_client.screenshot(
             url="url",
             use_proxy=True,
         )
-        assert_matches_type(ScreenshotResponse, top_level, path=["response"])
+        assert_matches_type(ScreenshotResponse, client, path=["response"])
 
     @parametrize
     async def test_raw_response_screenshot(self, async_client: AsyncSteel) -> None:
@@ -251,8 +251,8 @@ class TestAsyncTopLevel:
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        top_level = await response.parse()
-        assert_matches_type(ScreenshotResponse, top_level, path=["response"])
+        client = await response.parse()
+        assert_matches_type(ScreenshotResponse, client, path=["response"])
 
     @parametrize
     async def test_streaming_response_screenshot(self, async_client: AsyncSteel) -> None:
@@ -262,7 +262,7 @@ class TestAsyncTopLevel:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            top_level = await response.parse()
-            assert_matches_type(ScreenshotResponse, top_level, path=["response"])
+            client = await response.parse()
+            assert_matches_type(ScreenshotResponse, client, path=["response"])
 
         assert cast(Any, response.is_closed) is True

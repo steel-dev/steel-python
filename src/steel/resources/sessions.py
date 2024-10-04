@@ -34,10 +34,21 @@ __all__ = ["SessionsResource", "AsyncSessionsResource"]
 class SessionsResource(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> SessionsResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return the
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/stainless-sdks/steel-python#accessing-raw-response-data-eg-headers
+        """
         return SessionsResourceWithRawResponse(self)
 
     @cached_property
     def with_streaming_response(self) -> SessionsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/stainless-sdks/steel-python#with_streaming_response
+        """
         return SessionsResourceWithStreamingResponse(self)
 
     def create(
@@ -283,10 +294,21 @@ class SessionsResource(SyncAPIResource):
 class AsyncSessionsResource(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return the
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/stainless-sdks/steel-python#accessing-raw-response-data-eg-headers
+        """
         return AsyncSessionsResourceWithRawResponse(self)
 
     @cached_property
     def with_streaming_response(self) -> AsyncSessionsResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/stainless-sdks/steel-python#with_streaming_response
+        """
         return AsyncSessionsResourceWithStreamingResponse(self)
 
     async def create(
