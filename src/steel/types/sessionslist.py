@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Sessions", "Session"]
+__all__ = ["Sessionslist", "Session"]
 
 
 class Session(BaseModel):
@@ -58,6 +58,6 @@ class Session(BaseModel):
     """User agent string used in the session"""
 
 
-class Sessions(BaseModel):
+class Sessionslist(BaseModel):
     sessions: List[Session]
     """List of browser sessions"""

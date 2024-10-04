@@ -20,7 +20,7 @@ Types:
 from steel.types import (
     Session,
     SessionContext,
-    Sessions,
+    Sessionslist,
     SessionListResponse,
     SessionReleaseResponse,
     SessionReleaseAllResponse,

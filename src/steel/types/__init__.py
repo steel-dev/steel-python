@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from .session import Session as Session
-from .sessions import Sessions as Sessions
 from .pdf_response import PdfResponse as PdfResponse
+from .sessionslist import Sessionslist as Sessionslist
 from .scrape_response import ScrapeResponse as ScrapeResponse
 from .session_context import SessionContext as SessionContext
 from .client_pdf_params import ClientPdfParams as ClientPdfParams
