@@ -7,10 +7,10 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["TopLevelScrapeParams"]
+__all__ = ["ClientScrapeParams"]
 
 
-class TopLevelScrapeParams(TypedDict, total=False):
+class ClientScrapeParams(TypedDict, total=False):
     url: Required[str]
     """URL of the webpage to scrape"""
 

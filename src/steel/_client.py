@@ -10,7 +10,7 @@ import httpx
 
 from . import resources, _exceptions
 from ._qs import Querystring
-from .types import top_level_pdf_params, top_level_scrape_params, top_level_screenshot_params
+from .types import client_pdf_params, client_scrape_params, client_screenshot_params
 from ._types import (
     NOT_GIVEN,
     Body,
@@ -230,7 +230,7 @@ class Steel(SyncAPIClient):
                     "url": url,
                     "use_proxy": use_proxy,
                 },
-                top_level_pdf_params.TopLevelPdfParams,
+                client_pdf_params.ClientPdfParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -289,7 +289,7 @@ class Steel(SyncAPIClient):
                     "screenshot": screenshot,
                     "use_proxy": use_proxy,
                 },
-                top_level_scrape_params.TopLevelScrapeParams,
+                client_scrape_params.ClientScrapeParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -332,7 +332,7 @@ class Steel(SyncAPIClient):
                     "url": url,
                     "use_proxy": use_proxy,
                 },
-                top_level_screenshot_params.TopLevelScreenshotParams,
+                client_screenshot_params.ClientScreenshotParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -543,7 +543,7 @@ class AsyncSteel(AsyncAPIClient):
                     "url": url,
                     "use_proxy": use_proxy,
                 },
-                top_level_pdf_params.TopLevelPdfParams,
+                client_pdf_params.ClientPdfParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -602,7 +602,7 @@ class AsyncSteel(AsyncAPIClient):
                     "screenshot": screenshot,
                     "use_proxy": use_proxy,
                 },
-                top_level_scrape_params.TopLevelScrapeParams,
+                client_scrape_params.ClientScrapeParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -645,7 +645,7 @@ class AsyncSteel(AsyncAPIClient):
                     "url": url,
                     "use_proxy": use_proxy,
                 },
-                top_level_screenshot_params.TopLevelScreenshotParams,
+                client_screenshot_params.ClientScreenshotParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
