@@ -1,11 +1,11 @@
 [project]
 name = "steel"
 version = "0.0.1-alpha.0"
-description = "The official Python library for the Steel API"
+description = "The official Python library for the steel API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Steel", email = "hello@steel.dev" },
+{ name = "Steel", email = "team@steel.dev" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",

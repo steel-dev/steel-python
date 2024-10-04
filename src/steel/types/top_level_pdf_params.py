@@ -6,12 +6,12 @@ from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["TopLevelScreenshotParams"]
+__all__ = ["TopLevelPdfParams"]
 
 
-class TopLevelScreenshotParams(TypedDict, total=False):
+class TopLevelPdfParams(TypedDict, total=False):
     url: Required[str]
-    """URL of the webpage to capture"""
+    """URL of the webpage to convert to PDF"""
 
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
-    """Use a Steel-provided residential proxy for capturing the screenshot"""
+    """Use a Steel-provided residential proxy for generating the PDF"""

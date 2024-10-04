@@ -10,12 +10,7 @@ import httpx
 
 from . import resources, _exceptions
 from ._qs import Querystring
-from .types import (
-    top_level_scrape_params,
-    top_level_screenshot_params,
-    top_level_generate_pdf_params,
-    top_level_list_sessions_params,
-)
+from .types import top_level_pdf_params, top_level_scrape_params, top_level_screenshot_params
 from ._types import (
     NOT_GIVEN,
     Body,
@@ -42,16 +37,13 @@ from ._response import (
     async_to_streamed_response_wrapper,
 )
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from .pagination import SyncCursorPage, AsyncCursorPage
 from ._exceptions import SteelError, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
-    AsyncPaginator,
     make_request_options,
 )
-from .types.session import Session
 from .types.pdf_response import PdfResponse
 from .types.scrape_response import ScrapeResponse
 from .types.screenshot_response import ScreenshotResponse
@@ -70,17 +62,17 @@ __all__ = [
 
 
 class Steel(SyncAPIClient):
-    session: resources.SessionResource
+    sessions: resources.SessionsResource
     with_raw_response: SteelWithRawResponse
     with_streaming_response: SteelWithStreamedResponse
 
     # client options
-    api_key: str
+    steel_api_key: str
 
     def __init__(
         self,
         *,
-        api_key: str | None = None,
+        steel_api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -100,22 +92,22 @@ class Steel(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous Steel client instance.
+        """Construct a new synchronous steel client instance.
 
-        This automatically infers the `api_key` argument from the `STEEL_API_KEY` environment variable if it is not provided.
+        This automatically infers the `steel_api_key` argument from the `STEEL_API_KEY` environment variable if it is not provided.
         """
-        if api_key is None:
-            api_key = os.environ.get("STEEL_API_KEY")
-        if api_key is None:
+        if steel_api_key is None:
+            steel_api_key = os.environ.get("STEEL_API_KEY")
+        if steel_api_key is None:
             raise SteelError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the STEEL_API_KEY environment variable"
+                "The steel_api_key client option must be set either by passing steel_api_key to the client or by setting the STEEL_API_KEY environment variable"
             )
-        self.api_key = api_key
+        self.steel_api_key = steel_api_key
 
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
-            base_url = f"http://steel-production.up.railway.app"
+            base_url = f"https://steel-api-staging.fly.dev"
 
         super().__init__(
             version=__version__,
@@ -128,7 +120,7 @@ class Steel(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.session = resources.SessionResource(self)
+        self.sessions = resources.SessionsResource(self)
         self.with_raw_response = SteelWithRawResponse(self)
         self.with_streaming_response = SteelWithStreamedResponse(self)
 
@@ -140,8 +132,8 @@ class Steel(SyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        api_key = self.api_key
-        return {"steel-api-key": api_key}
+        steel_api_key = self.steel_api_key
+        return {"steel-api-key": steel_api_key}
 
     @property
     @override
@@ -155,7 +147,7 @@ class Steel(SyncAPIClient):
     def copy(
         self,
         *,
-        api_key: str | None = None,
+        steel_api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -189,7 +181,7 @@ class Steel(SyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            api_key=api_key or self.api_key,
+            steel_api_key=steel_api_key or self.steel_api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -203,10 +195,11 @@ class Steel(SyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    def generate_pdf(
+    def pdf(
         self,
         *,
         url: str,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -215,10 +208,12 @@ class Steel(SyncAPIClient):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> PdfResponse:
         """
-        Generate a PDF from the specified webpage.
+        Generates a PDF from a specified webpage.
 
         Args:
-          url: The URL of the webpage to convert to PDF
+          url: URL of the webpage to convert to PDF
+
+          use_proxy: Use a Steel-provided residential proxy for generating the PDF
 
           extra_headers: Send extra headers
 
@@ -230,73 +225,28 @@ class Steel(SyncAPIClient):
         """
         return self.post(
             "/v1/pdf",
-            body=maybe_transform({"url": url}, top_level_generate_pdf_params.TopLevelGeneratePdfParams),
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "use_proxy": use_proxy,
+                },
+                top_level_pdf_params.TopLevelPdfParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PdfResponse,
         )
 
-    def list_sessions(
-        self,
-        *,
-        cursor: str | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        live_only: bool | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncCursorPage[Session]:
-        """Get a paginated list of browser sessions.
-
-        Use the `next_cursor` from the
-        response to fetch the next page of results.
-
-        Args:
-          cursor: Cursor for pagination, use the `next_cursor` from the previous response
-
-          limit: Number of sessions to return per request (default: 25, max: 100)
-
-          live_only: Flag to retrieve only live sessions (default: true)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self.get_api_list(
-            "/v1/sessions",
-            page=SyncCursorPage[Session],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "cursor": cursor,
-                        "limit": limit,
-                        "live_only": live_only,
-                    },
-                    top_level_list_sessions_params.TopLevelListSessionsParams,
-                ),
-            ),
-            model=Session,
-        )
-
     def scrape(
         self,
         *,
         url: str,
-        format: List[Literal["html", "cleaned_html", "readability", "markdown"]] | NotGiven = NOT_GIVEN,
+        delay: float | NotGiven = NOT_GIVEN,
+        format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | NotGiven = NOT_GIVEN,
         pdf: bool | NotGiven = NOT_GIVEN,
         screenshot: bool | NotGiven = NOT_GIVEN,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -304,20 +254,21 @@ class Steel(SyncAPIClient):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ScrapeResponse:
-        """Scrape content from a webpage.
-
-        This endpoint supports specifying the desired
-        return type(s) using the 'format' parameter. You can also request a screenshot
-        and/or PDF using the 'screenshot' and 'pdf' flags.
+        """
+        Extracts content from a specified URL.
 
         Args:
-          url: The URL of the webpage to scrape
+          url: URL of the webpage to scrape
 
-          format: The desired format(s) for the scraped content
+          delay: Delay before scraping (in milliseconds)
 
-          pdf: Flag to include a PDF of the page in the response
+          format: Desired format(s) for the scraped content. Default is `html`.
 
-          screenshot: Flag to include a screenshot of the page in the response
+          pdf: Include a PDF in the response
+
+          screenshot: Include a screenshot in the response
+
+          use_proxy: Use a Steel-provided residential proxy for the scrape
 
           extra_headers: Send extra headers
 
@@ -332,9 +283,11 @@ class Steel(SyncAPIClient):
             body=maybe_transform(
                 {
                     "url": url,
+                    "delay": delay,
                     "format": format,
                     "pdf": pdf,
                     "screenshot": screenshot,
+                    "use_proxy": use_proxy,
                 },
                 top_level_scrape_params.TopLevelScrapeParams,
             ),
@@ -348,6 +301,7 @@ class Steel(SyncAPIClient):
         self,
         *,
         url: str,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -356,10 +310,12 @@ class Steel(SyncAPIClient):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ScreenshotResponse:
         """
-        Capture a screenshot of the specified webpage.
+        Captures a screenshot of a specified webpage.
 
         Args:
-          url: The URL of the webpage to screenshot
+          url: URL of the webpage to capture
+
+          use_proxy: Use a Steel-provided residential proxy for capturing the screenshot
 
           extra_headers: Send extra headers
 
@@ -371,7 +327,13 @@ class Steel(SyncAPIClient):
         """
         return self.post(
             "/v1/screenshot",
-            body=maybe_transform({"url": url}, top_level_screenshot_params.TopLevelScreenshotParams),
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "use_proxy": use_proxy,
+                },
+                top_level_screenshot_params.TopLevelScreenshotParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -413,17 +375,17 @@ class Steel(SyncAPIClient):
 
 
 class AsyncSteel(AsyncAPIClient):
-    session: resources.AsyncSessionResource
+    sessions: resources.AsyncSessionsResource
     with_raw_response: AsyncSteelWithRawResponse
     with_streaming_response: AsyncSteelWithStreamedResponse
 
     # client options
-    api_key: str
+    steel_api_key: str
 
     def __init__(
         self,
         *,
-        api_key: str | None = None,
+        steel_api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -443,22 +405,22 @@ class AsyncSteel(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async Steel client instance.
+        """Construct a new async steel client instance.
 
-        This automatically infers the `api_key` argument from the `STEEL_API_KEY` environment variable if it is not provided.
+        This automatically infers the `steel_api_key` argument from the `STEEL_API_KEY` environment variable if it is not provided.
         """
-        if api_key is None:
-            api_key = os.environ.get("STEEL_API_KEY")
-        if api_key is None:
+        if steel_api_key is None:
+            steel_api_key = os.environ.get("STEEL_API_KEY")
+        if steel_api_key is None:
             raise SteelError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the STEEL_API_KEY environment variable"
+                "The steel_api_key client option must be set either by passing steel_api_key to the client or by setting the STEEL_API_KEY environment variable"
             )
-        self.api_key = api_key
+        self.steel_api_key = steel_api_key
 
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
-            base_url = f"http://steel-production.up.railway.app"
+            base_url = f"https://steel-api-staging.fly.dev"
 
         super().__init__(
             version=__version__,
@@ -471,7 +433,7 @@ class AsyncSteel(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.session = resources.AsyncSessionResource(self)
+        self.sessions = resources.AsyncSessionsResource(self)
         self.with_raw_response = AsyncSteelWithRawResponse(self)
         self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
 
@@ -483,8 +445,8 @@ class AsyncSteel(AsyncAPIClient):
     @property
     @override
     def auth_headers(self) -> dict[str, str]:
-        api_key = self.api_key
-        return {"steel-api-key": api_key}
+        steel_api_key = self.steel_api_key
+        return {"steel-api-key": steel_api_key}
 
     @property
     @override
@@ -498,7 +460,7 @@ class AsyncSteel(AsyncAPIClient):
     def copy(
         self,
         *,
-        api_key: str | None = None,
+        steel_api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -532,7 +494,7 @@ class AsyncSteel(AsyncAPIClient):
 
         http_client = http_client or self._client
         return self.__class__(
-            api_key=api_key or self.api_key,
+            steel_api_key=steel_api_key or self.steel_api_key,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -546,10 +508,11 @@ class AsyncSteel(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    async def generate_pdf(
+    async def pdf(
         self,
         *,
         url: str,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -558,10 +521,12 @@ class AsyncSteel(AsyncAPIClient):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> PdfResponse:
         """
-        Generate a PDF from the specified webpage.
+        Generates a PDF from a specified webpage.
 
         Args:
-          url: The URL of the webpage to convert to PDF
+          url: URL of the webpage to convert to PDF
+
+          use_proxy: Use a Steel-provided residential proxy for generating the PDF
 
           extra_headers: Send extra headers
 
@@ -573,73 +538,28 @@ class AsyncSteel(AsyncAPIClient):
         """
         return await self.post(
             "/v1/pdf",
-            body=await async_maybe_transform({"url": url}, top_level_generate_pdf_params.TopLevelGeneratePdfParams),
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "use_proxy": use_proxy,
+                },
+                top_level_pdf_params.TopLevelPdfParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=PdfResponse,
         )
 
-    def list_sessions(
-        self,
-        *,
-        cursor: str | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        live_only: bool | NotGiven = NOT_GIVEN,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[Session, AsyncCursorPage[Session]]:
-        """Get a paginated list of browser sessions.
-
-        Use the `next_cursor` from the
-        response to fetch the next page of results.
-
-        Args:
-          cursor: Cursor for pagination, use the `next_cursor` from the previous response
-
-          limit: Number of sessions to return per request (default: 25, max: 100)
-
-          live_only: Flag to retrieve only live sessions (default: true)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self.get_api_list(
-            "/v1/sessions",
-            page=AsyncCursorPage[Session],
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "cursor": cursor,
-                        "limit": limit,
-                        "live_only": live_only,
-                    },
-                    top_level_list_sessions_params.TopLevelListSessionsParams,
-                ),
-            ),
-            model=Session,
-        )
-
     async def scrape(
         self,
         *,
         url: str,
-        format: List[Literal["html", "cleaned_html", "readability", "markdown"]] | NotGiven = NOT_GIVEN,
+        delay: float | NotGiven = NOT_GIVEN,
+        format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | NotGiven = NOT_GIVEN,
         pdf: bool | NotGiven = NOT_GIVEN,
         screenshot: bool | NotGiven = NOT_GIVEN,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -647,20 +567,21 @@ class AsyncSteel(AsyncAPIClient):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ScrapeResponse:
-        """Scrape content from a webpage.
-
-        This endpoint supports specifying the desired
-        return type(s) using the 'format' parameter. You can also request a screenshot
-        and/or PDF using the 'screenshot' and 'pdf' flags.
+        """
+        Extracts content from a specified URL.
 
         Args:
-          url: The URL of the webpage to scrape
+          url: URL of the webpage to scrape
 
-          format: The desired format(s) for the scraped content
+          delay: Delay before scraping (in milliseconds)
 
-          pdf: Flag to include a PDF of the page in the response
+          format: Desired format(s) for the scraped content. Default is `html`.
 
-          screenshot: Flag to include a screenshot of the page in the response
+          pdf: Include a PDF in the response
+
+          screenshot: Include a screenshot in the response
+
+          use_proxy: Use a Steel-provided residential proxy for the scrape
 
           extra_headers: Send extra headers
 
@@ -675,9 +596,11 @@ class AsyncSteel(AsyncAPIClient):
             body=await async_maybe_transform(
                 {
                     "url": url,
+                    "delay": delay,
                     "format": format,
                     "pdf": pdf,
                     "screenshot": screenshot,
+                    "use_proxy": use_proxy,
                 },
                 top_level_scrape_params.TopLevelScrapeParams,
             ),
@@ -691,6 +614,7 @@ class AsyncSteel(AsyncAPIClient):
         self,
         *,
         url: str,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -699,10 +623,12 @@ class AsyncSteel(AsyncAPIClient):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ScreenshotResponse:
         """
-        Capture a screenshot of the specified webpage.
+        Captures a screenshot of a specified webpage.
 
         Args:
-          url: The URL of the webpage to screenshot
+          url: URL of the webpage to capture
+
+          use_proxy: Use a Steel-provided residential proxy for capturing the screenshot
 
           extra_headers: Send extra headers
 
@@ -714,7 +640,13 @@ class AsyncSteel(AsyncAPIClient):
         """
         return await self.post(
             "/v1/screenshot",
-            body=await async_maybe_transform({"url": url}, top_level_screenshot_params.TopLevelScreenshotParams),
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "use_proxy": use_proxy,
+                },
+                top_level_screenshot_params.TopLevelScreenshotParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -757,13 +689,10 @@ class AsyncSteel(AsyncAPIClient):
 
 class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
-        self.session = resources.SessionResourceWithRawResponse(client.session)
+        self.sessions = resources.SessionsResourceWithRawResponse(client.sessions)
 
-        self.generate_pdf = to_raw_response_wrapper(
-            client.generate_pdf,
-        )
-        self.list_sessions = to_raw_response_wrapper(
-            client.list_sessions,
+        self.pdf = to_raw_response_wrapper(
+            client.pdf,
         )
         self.scrape = to_raw_response_wrapper(
             client.scrape,
@@ -775,13 +704,10 @@ class SteelWithRawResponse:
 
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.session = resources.AsyncSessionResourceWithRawResponse(client.session)
+        self.sessions = resources.AsyncSessionsResourceWithRawResponse(client.sessions)
 
-        self.generate_pdf = async_to_raw_response_wrapper(
-            client.generate_pdf,
-        )
-        self.list_sessions = async_to_raw_response_wrapper(
-            client.list_sessions,
+        self.pdf = async_to_raw_response_wrapper(
+            client.pdf,
         )
         self.scrape = async_to_raw_response_wrapper(
             client.scrape,
@@ -793,13 +719,10 @@ class AsyncSteelWithRawResponse:
 
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
-        self.session = resources.SessionResourceWithStreamingResponse(client.session)
+        self.sessions = resources.SessionsResourceWithStreamingResponse(client.sessions)
 
-        self.generate_pdf = to_streamed_response_wrapper(
-            client.generate_pdf,
-        )
-        self.list_sessions = to_streamed_response_wrapper(
-            client.list_sessions,
+        self.pdf = to_streamed_response_wrapper(
+            client.pdf,
         )
         self.scrape = to_streamed_response_wrapper(
             client.scrape,
@@ -811,13 +734,10 @@ class SteelWithStreamedResponse:
 
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.session = resources.AsyncSessionResourceWithStreamingResponse(client.session)
+        self.sessions = resources.AsyncSessionsResourceWithStreamingResponse(client.sessions)
 
-        self.generate_pdf = async_to_streamed_response_wrapper(
-            client.generate_pdf,
-        )
-        self.list_sessions = async_to_streamed_response_wrapper(
-            client.list_sessions,
+        self.pdf = async_to_streamed_response_wrapper(
+            client.pdf,
         )
         self.scrape = async_to_streamed_response_wrapper(
             client.scrape,
