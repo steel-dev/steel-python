@@ -166,7 +166,7 @@ client = Steel()
 
 try:
     client.scrape(
-        url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+        url="https://www.eff.org/cyberspace-independence",
         format=["markdown"],
     )
 except steel.APIConnectionError as e:
@@ -212,7 +212,7 @@ client = Steel(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).scrape(
-    url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+    url="https://www.eff.org/cyberspace-independence",
     format=["markdown"],
 )
 ```
@@ -238,7 +238,7 @@ client = Steel(
 
 # Override per-request:
 client.with_options(timeout=5.0).scrape(
-    url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+    url="https://www.eff.org/cyberspace-independence",
     format=["markdown"],
 )
 ```
@@ -280,7 +280,7 @@ from steel import Steel
 
 client = Steel()
 response = client.with_raw_response.scrape(
-    url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+    url="https://www.eff.org/cyberspace-independence",
     format=["markdown"],
 )
 print(response.headers.get('X-My-Header'))
@@ -301,7 +301,7 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.with_streaming_response.scrape(
-    url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/",
+    url="https://www.eff.org/cyberspace-independence",
     format=["markdown"],
 ) as response:
     print(response.headers.get("X-My-Header"))
