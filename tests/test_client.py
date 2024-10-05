@@ -746,10 +746,7 @@ class TestSteel:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/v1/scrape",
-                body=cast(
-                    object,
-                    dict(url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/", format=["markdown"]),
-                ),
+                body=cast(object, dict(url="https://www.eff.org/cyberspace-independence", format=["markdown"])),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -764,10 +761,7 @@ class TestSteel:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/v1/scrape",
-                body=cast(
-                    object,
-                    dict(url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/", format=["markdown"]),
-                ),
+                body=cast(object, dict(url="https://www.eff.org/cyberspace-independence", format=["markdown"])),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1546,10 +1540,7 @@ class TestAsyncSteel:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/v1/scrape",
-                body=cast(
-                    object,
-                    dict(url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/", format=["markdown"]),
-                ),
+                body=cast(object, dict(url="https://www.eff.org/cyberspace-independence", format=["markdown"])),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1564,10 +1555,7 @@ class TestAsyncSteel:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/v1/scrape",
-                body=cast(
-                    object,
-                    dict(url="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/", format=["markdown"]),
-                ),
+                body=cast(object, dict(url="https://www.eff.org/cyberspace-independence", format=["markdown"])),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
