@@ -107,7 +107,7 @@ class Steel(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
-            base_url = f"https://steel-api-staging.fly.dev"
+            base_url = f"https://api.steel.dev"
 
         super().__init__(
             version=__version__,
@@ -420,7 +420,7 @@ class AsyncSteel(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("STEEL_BASE_URL")
         if base_url is None:
-            base_url = f"https://steel-api-staging.fly.dev"
+            base_url = f"https://api.steel.dev"
 
         super().__init__(
             version=__version__,
