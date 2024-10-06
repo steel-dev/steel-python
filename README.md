@@ -1,6 +1,6 @@
 # Steel Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/steel.svg)](https://pypi.org/project/steel/)
+[![PyPI version](https://img.shields.io/pypi/v/steel-sdk.svg)](https://pypi.org/project/steel-sdk/)
 
 The Steel Python library provides convenient access to the Steel REST API from any Python 3.7+
 application. The library includes type definitions for all request params and response fields,
@@ -15,12 +15,9 @@ The REST API documentation can be found on [docs.steel.dev](https://docs.steel.d
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/0xnenlabs/steel-python.git
+# install from PyPI
+pip install --pre steel-sdk
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre steel`
 
 ## Usage
 
