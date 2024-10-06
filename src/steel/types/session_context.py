@@ -13,5 +13,5 @@ class SessionContext(BaseModel):
     cookies: List[Dict[str, object]]
     """List of cookies associated with the session"""
 
-    local_storage: List[Dict[str, object]] = FieldInfo(alias="localStorage")
+    local_storage: Dict[str, object] = FieldInfo(alias="localStorage")
     """Local storage data associated with the session"""

@@ -785,7 +785,7 @@ class TestSteel:
 
         respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.scrape(url="url")
+        response = client.with_raw_response.scrape(url="https://example.com")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -807,7 +807,9 @@ class TestSteel:
 
         respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.scrape(url="url", extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.with_raw_response.scrape(
+            url="https://example.com", extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -830,7 +832,9 @@ class TestSteel:
 
         respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.scrape(url="url", extra_headers={"x-stainless-retry-count": "42"})
+        response = client.with_raw_response.scrape(
+            url="https://example.com", extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1582,7 +1586,7 @@ class TestAsyncSteel:
 
         respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.scrape(url="url")
+        response = await client.with_raw_response.scrape(url="https://example.com")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1607,7 +1611,9 @@ class TestAsyncSteel:
 
         respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.scrape(url="url", extra_headers={"x-stainless-retry-count": Omit()})
+        response = await client.with_raw_response.scrape(
+            url="https://example.com", extra_headers={"x-stainless-retry-count": Omit()}
+        )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1631,6 +1637,8 @@ class TestAsyncSteel:
 
         respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.scrape(url="url", extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.with_raw_response.scrape(
+            url="https://example.com", extra_headers={"x-stainless-retry-count": "42"}
+        )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"

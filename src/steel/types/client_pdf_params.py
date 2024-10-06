@@ -13,5 +13,8 @@ class ClientPdfParams(TypedDict, total=False):
     url: Required[str]
     """URL of the webpage to convert to PDF"""
 
+    delay: float
+    """Delay before generating the PDF (in milliseconds)"""
+
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
     """Use a Steel-provided residential proxy for generating the PDF"""

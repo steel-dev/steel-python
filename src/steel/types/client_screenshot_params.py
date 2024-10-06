@@ -13,5 +13,8 @@ class ClientScreenshotParams(TypedDict, total=False):
     url: Required[str]
     """URL of the webpage to capture"""
 
+    delay: float
+    """Delay before capturing the screenshot (in milliseconds)"""
+
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
     """Use a Steel-provided residential proxy for capturing the screenshot"""
