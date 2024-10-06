@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2024-10-06)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/0xnenlabs/steel-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Features
+
+* **api:** update via SDK Studio ([#8](https://github.com/0xnenlabs/steel-python/issues/8)) ([0fdd07e](https://github.com/0xnenlabs/steel-python/commit/0fdd07e29f37234d714b07ce83ea8148ca9cffcb))
+
 ## 0.1.0-alpha.2 (2024-10-06)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/0xnenlabs/steel-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)

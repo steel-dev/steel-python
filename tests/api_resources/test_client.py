@@ -24,14 +24,15 @@ class TestClient:
     @parametrize
     def test_method_pdf(self, client: Steel) -> None:
         client_ = client.pdf(
-            url="url",
+            url="https://example.com",
         )
         assert_matches_type(PdfResponse, client_, path=["response"])
 
     @parametrize
     def test_method_pdf_with_all_params(self, client: Steel) -> None:
         client_ = client.pdf(
-            url="url",
+            url="https://example.com",
+            delay=0,
             use_proxy=True,
         )
         assert_matches_type(PdfResponse, client_, path=["response"])
@@ -39,7 +40,7 @@ class TestClient:
     @parametrize
     def test_raw_response_pdf(self, client: Steel) -> None:
         response = client.with_raw_response.pdf(
-            url="url",
+            url="https://example.com",
         )
 
         assert response.is_closed is True
@@ -50,7 +51,7 @@ class TestClient:
     @parametrize
     def test_streaming_response_pdf(self, client: Steel) -> None:
         with client.with_streaming_response.pdf(
-            url="url",
+            url="https://example.com",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -63,14 +64,14 @@ class TestClient:
     @parametrize
     def test_method_scrape(self, client: Steel) -> None:
         client_ = client.scrape(
-            url="url",
+            url="https://example.com",
         )
         assert_matches_type(ScrapeResponse, client_, path=["response"])
 
     @parametrize
     def test_method_scrape_with_all_params(self, client: Steel) -> None:
         client_ = client.scrape(
-            url="url",
+            url="https://example.com",
             delay=0,
             format=["html", "readability", "cleaned_html"],
             pdf=True,
@@ -82,7 +83,7 @@ class TestClient:
     @parametrize
     def test_raw_response_scrape(self, client: Steel) -> None:
         response = client.with_raw_response.scrape(
-            url="url",
+            url="https://example.com",
         )
 
         assert response.is_closed is True
@@ -93,7 +94,7 @@ class TestClient:
     @parametrize
     def test_streaming_response_scrape(self, client: Steel) -> None:
         with client.with_streaming_response.scrape(
-            url="url",
+            url="https://example.com",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -106,14 +107,15 @@ class TestClient:
     @parametrize
     def test_method_screenshot(self, client: Steel) -> None:
         client_ = client.screenshot(
-            url="url",
+            url="https://example.com",
         )
         assert_matches_type(ScreenshotResponse, client_, path=["response"])
 
     @parametrize
     def test_method_screenshot_with_all_params(self, client: Steel) -> None:
         client_ = client.screenshot(
-            url="url",
+            url="https://example.com",
+            delay=0,
             use_proxy=True,
         )
         assert_matches_type(ScreenshotResponse, client_, path=["response"])
@@ -121,7 +123,7 @@ class TestClient:
     @parametrize
     def test_raw_response_screenshot(self, client: Steel) -> None:
         response = client.with_raw_response.screenshot(
-            url="url",
+            url="https://example.com",
         )
 
         assert response.is_closed is True
@@ -132,7 +134,7 @@ class TestClient:
     @parametrize
     def test_streaming_response_screenshot(self, client: Steel) -> None:
         with client.with_streaming_response.screenshot(
-            url="url",
+            url="https://example.com",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -149,14 +151,15 @@ class TestAsyncClient:
     @parametrize
     async def test_method_pdf(self, async_client: AsyncSteel) -> None:
         client = await async_client.pdf(
-            url="url",
+            url="https://example.com",
         )
         assert_matches_type(PdfResponse, client, path=["response"])
 
     @parametrize
     async def test_method_pdf_with_all_params(self, async_client: AsyncSteel) -> None:
         client = await async_client.pdf(
-            url="url",
+            url="https://example.com",
+            delay=0,
             use_proxy=True,
         )
         assert_matches_type(PdfResponse, client, path=["response"])
@@ -164,7 +167,7 @@ class TestAsyncClient:
     @parametrize
     async def test_raw_response_pdf(self, async_client: AsyncSteel) -> None:
         response = await async_client.with_raw_response.pdf(
-            url="url",
+            url="https://example.com",
         )
 
         assert response.is_closed is True
@@ -175,7 +178,7 @@ class TestAsyncClient:
     @parametrize
     async def test_streaming_response_pdf(self, async_client: AsyncSteel) -> None:
         async with async_client.with_streaming_response.pdf(
-            url="url",
+            url="https://example.com",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -188,14 +191,14 @@ class TestAsyncClient:
     @parametrize
     async def test_method_scrape(self, async_client: AsyncSteel) -> None:
         client = await async_client.scrape(
-            url="url",
+            url="https://example.com",
         )
         assert_matches_type(ScrapeResponse, client, path=["response"])
 
     @parametrize
     async def test_method_scrape_with_all_params(self, async_client: AsyncSteel) -> None:
         client = await async_client.scrape(
-            url="url",
+            url="https://example.com",
             delay=0,
             format=["html", "readability", "cleaned_html"],
             pdf=True,
@@ -207,7 +210,7 @@ class TestAsyncClient:
     @parametrize
     async def test_raw_response_scrape(self, async_client: AsyncSteel) -> None:
         response = await async_client.with_raw_response.scrape(
-            url="url",
+            url="https://example.com",
         )
 
         assert response.is_closed is True
@@ -218,7 +221,7 @@ class TestAsyncClient:
     @parametrize
     async def test_streaming_response_scrape(self, async_client: AsyncSteel) -> None:
         async with async_client.with_streaming_response.scrape(
-            url="url",
+            url="https://example.com",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -231,14 +234,15 @@ class TestAsyncClient:
     @parametrize
     async def test_method_screenshot(self, async_client: AsyncSteel) -> None:
         client = await async_client.screenshot(
-            url="url",
+            url="https://example.com",
         )
         assert_matches_type(ScreenshotResponse, client, path=["response"])
 
     @parametrize
     async def test_method_screenshot_with_all_params(self, async_client: AsyncSteel) -> None:
         client = await async_client.screenshot(
-            url="url",
+            url="https://example.com",
+            delay=0,
             use_proxy=True,
         )
         assert_matches_type(ScreenshotResponse, client, path=["response"])
@@ -246,7 +250,7 @@ class TestAsyncClient:
     @parametrize
     async def test_raw_response_screenshot(self, async_client: AsyncSteel) -> None:
         response = await async_client.with_raw_response.screenshot(
-            url="url",
+            url="https://example.com",
         )
 
         assert response.is_closed is True
@@ -257,7 +261,7 @@ class TestAsyncClient:
     @parametrize
     async def test_streaming_response_screenshot(self, async_client: AsyncSteel) -> None:
         async with async_client.with_streaming_response.screenshot(
-            url="url",
+            url="https://example.com",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

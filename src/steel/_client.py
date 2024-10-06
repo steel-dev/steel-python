@@ -199,6 +199,7 @@ class Steel(SyncAPIClient):
         self,
         *,
         url: str,
+        delay: float | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -212,6 +213,8 @@ class Steel(SyncAPIClient):
 
         Args:
           url: URL of the webpage to convert to PDF
+
+          delay: Delay before generating the PDF (in milliseconds)
 
           use_proxy: Use a Steel-provided residential proxy for generating the PDF
 
@@ -228,6 +231,7 @@ class Steel(SyncAPIClient):
             body=maybe_transform(
                 {
                     "url": url,
+                    "delay": delay,
                     "use_proxy": use_proxy,
                 },
                 client_pdf_params.ClientPdfParams,
@@ -301,6 +305,7 @@ class Steel(SyncAPIClient):
         self,
         *,
         url: str,
+        delay: float | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -314,6 +319,8 @@ class Steel(SyncAPIClient):
 
         Args:
           url: URL of the webpage to capture
+
+          delay: Delay before capturing the screenshot (in milliseconds)
 
           use_proxy: Use a Steel-provided residential proxy for capturing the screenshot
 
@@ -330,6 +337,7 @@ class Steel(SyncAPIClient):
             body=maybe_transform(
                 {
                     "url": url,
+                    "delay": delay,
                     "use_proxy": use_proxy,
                 },
                 client_screenshot_params.ClientScreenshotParams,
@@ -512,6 +520,7 @@ class AsyncSteel(AsyncAPIClient):
         self,
         *,
         url: str,
+        delay: float | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -525,6 +534,8 @@ class AsyncSteel(AsyncAPIClient):
 
         Args:
           url: URL of the webpage to convert to PDF
+
+          delay: Delay before generating the PDF (in milliseconds)
 
           use_proxy: Use a Steel-provided residential proxy for generating the PDF
 
@@ -541,6 +552,7 @@ class AsyncSteel(AsyncAPIClient):
             body=await async_maybe_transform(
                 {
                     "url": url,
+                    "delay": delay,
                     "use_proxy": use_proxy,
                 },
                 client_pdf_params.ClientPdfParams,
@@ -614,6 +626,7 @@ class AsyncSteel(AsyncAPIClient):
         self,
         *,
         url: str,
+        delay: float | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -627,6 +640,8 @@ class AsyncSteel(AsyncAPIClient):
 
         Args:
           url: URL of the webpage to capture
+
+          delay: Delay before capturing the screenshot (in milliseconds)
 
           use_proxy: Use a Steel-provided residential proxy for capturing the screenshot
 
@@ -643,6 +658,7 @@ class AsyncSteel(AsyncAPIClient):
             body=await async_maybe_transform(
                 {
                     "url": url,
+                    "delay": delay,
                     "use_proxy": use_proxy,
                 },
                 client_screenshot_params.ClientScreenshotParams,
