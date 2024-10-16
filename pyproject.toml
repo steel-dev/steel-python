@@ -1,6 +1,6 @@
 [project]
 name = "steel-sdk"
-version = "0.1.0-alpha.3"
+version = "0.1.0-alpha.4"
 description = "The official Python library for the steel API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -36,8 +36,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/0xnenlabs/steel-python"
-Repository = "https://github.com/0xnenlabs/steel-python"
+Homepage = "https://github.com/steel-dev/steel-python"
+Repository = "https://github.com/steel-dev/steel-python"
 
 
 
@@ -123,7 +123,7 @@ path = "README.md"
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 # replace relative links with absolute links
 pattern = '\[(.+?)\]\(((?!https?://)\S+?)\)'
-replacement = '[\1](https://github.com/0xnenlabs/steel-python/tree/main/\g<2>)'
+replacement = '[\1](https://github.com/steel-dev/steel-python/tree/main/\g<2>)'
 
 [tool.black]
 line-length = 120
