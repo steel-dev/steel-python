@@ -177,6 +177,12 @@ class SessionsResource(SyncAPIResource):
         Fetches all active sessions for the current organization.
 
         Args:
+          cursor_id: Cursor ID for pagination
+
+          limit: Number of sessions to return. Default is 50.
+
+          status: Filter sessions by current status
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -437,6 +443,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         Fetches all active sessions for the current organization.
 
         Args:
+          cursor_id: Cursor ID for pagination
+
+          limit: Number of sessions to return. Default is 50.
+
+          status: Filter sessions by current status
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
