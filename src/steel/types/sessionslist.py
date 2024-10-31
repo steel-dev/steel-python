@@ -30,14 +30,14 @@ class Session(BaseModel):
     event_count: int = FieldInfo(alias="eventCount")
     """Number of events processed in the session"""
 
-    session_timeout: int = FieldInfo(alias="sessionTimeout")
-    """Session timeout duration in milliseconds"""
-
     session_viewer_url: str = FieldInfo(alias="sessionViewerUrl")
     """URL to view session details"""
 
     status: Literal["live", "released", "failed"]
     """Status of the session"""
+
+    timeout: int
+    """Session timeout duration in milliseconds"""
 
     websocket_url: str = FieldInfo(alias="websocketUrl")
     """URL for the session's WebSocket connection"""
