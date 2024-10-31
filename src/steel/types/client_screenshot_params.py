@@ -16,5 +16,8 @@ class ClientScreenshotParams(TypedDict, total=False):
     delay: float
     """Delay before capturing the screenshot (in milliseconds)"""
 
+    full_page: Annotated[bool, PropertyInfo(alias="fullPage")]
+    """Capture the full page screenshot. Default is `false`."""
+
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
     """Use a Steel-provided residential proxy for capturing the screenshot"""

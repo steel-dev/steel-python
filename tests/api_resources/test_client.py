@@ -116,6 +116,7 @@ class TestClient:
         client_ = client.screenshot(
             url="https://example.com",
             delay=0,
+            full_page=True,
             use_proxy=True,
         )
         assert_matches_type(ScreenshotResponse, client_, path=["response"])
@@ -243,6 +244,7 @@ class TestAsyncClient:
         client = await async_client.screenshot(
             url="https://example.com",
             delay=0,
+            full_page=True,
             use_proxy=True,
         )
         assert_matches_type(ScreenshotResponse, client, path=["response"])
