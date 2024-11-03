@@ -743,12 +743,12 @@ class TestSteel:
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/scrape").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/sessions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             self.client.post(
-                "/v1/scrape",
-                body=cast(object, dict(url="https://www.eff.org/cyberspace-independence", format=["markdown"])),
+                "/v1/sessions",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -758,12 +758,12 @@ class TestSteel:
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/scrape").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/sessions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             self.client.post(
-                "/v1/scrape",
-                body=cast(object, dict(url="https://www.eff.org/cyberspace-independence", format=["markdown"])),
+                "/v1/sessions",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -794,9 +794,9 @@ class TestSteel:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.scrape(url="https://example.com")
+        response = client.sessions.with_raw_response.create()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -816,11 +816,9 @@ class TestSteel:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.scrape(
-            url="https://example.com", extra_headers={"x-stainless-retry-count": Omit()}
-        )
+        response = client.sessions.with_raw_response.create(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -841,11 +839,9 @@ class TestSteel:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
 
-        response = client.with_raw_response.scrape(
-            url="https://example.com", extra_headers={"x-stainless-retry-count": "42"}
-        )
+        response = client.sessions.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1551,12 +1547,12 @@ class TestAsyncSteel:
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/scrape").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/sessions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.post(
-                "/v1/scrape",
-                body=cast(object, dict(url="https://www.eff.org/cyberspace-independence", format=["markdown"])),
+                "/v1/sessions",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1566,12 +1562,12 @@ class TestAsyncSteel:
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.post("/v1/scrape").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/sessions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.post(
-                "/v1/scrape",
-                body=cast(object, dict(url="https://www.eff.org/cyberspace-independence", format=["markdown"])),
+                "/v1/sessions",
+                body=cast(object, dict()),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1603,9 +1599,9 @@ class TestAsyncSteel:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.scrape(url="https://example.com")
+        response = await client.sessions.with_raw_response.create()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1628,11 +1624,9 @@ class TestAsyncSteel:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.scrape(
-            url="https://example.com", extra_headers={"x-stainless-retry-count": Omit()}
-        )
+        response = await client.sessions.with_raw_response.create(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1654,10 +1648,8 @@ class TestAsyncSteel:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v1/scrape").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/sessions").mock(side_effect=retry_handler)
 
-        response = await client.with_raw_response.scrape(
-            url="https://example.com", extra_headers={"x-stainless-retry-count": "42"}
-        )
+        response = await client.sessions.with_raw_response.create(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
