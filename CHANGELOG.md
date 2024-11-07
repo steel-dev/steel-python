@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-beta.1 (2024-11-07)
+
+Full Changelog: [v0.0.1-beta.5...v0.1.0-beta.1](https://github.com/steel-dev/steel-python/compare/v0.0.1-beta.5...v0.1.0-beta.1)
+
+### Features
+
+* **api:** api update ([#9](https://github.com/steel-dev/steel-python/issues/9)) ([55ecf2f](https://github.com/steel-dev/steel-python/commit/55ecf2f6dea0fa2985c83dd9c73dcf3a85a9312f))
+
 ## 0.0.1-beta.5 (2024-11-07)
 
 Full Changelog: [v0.1.0-alpha.4...v0.0.1-beta.5](https://github.com/steel-dev/steel-python/compare/v0.1.0-alpha.4...v0.0.1-beta.5)
