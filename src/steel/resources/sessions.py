@@ -59,8 +59,8 @@ class SessionsResource(SyncAPIResource):
         proxy_url: str | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
-        session_timeout: int | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
+        api_timeout: int | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -88,9 +88,9 @@ class SessionsResource(SyncAPIResource):
 
           session_id: Optional custom UUID for the session
 
-          session_timeout: Session timeout duration in milliseconds. Default is 900000 (15 minutes).
-
           solve_captcha: Enable automatic captcha solving. Default is false.
+
+          api_timeout: Session timeout duration in milliseconds. Default is 900000 (15 minutes).
 
           use_proxy: Enable Steel-provided residential proxy usage for the browser session. Default
               is false, which routes requests through datacenter proxies.
@@ -114,8 +114,8 @@ class SessionsResource(SyncAPIResource):
                     "proxy_url": proxy_url,
                     "session_context": session_context,
                     "session_id": session_id,
-                    "session_timeout": session_timeout,
                     "solve_captcha": solve_captcha,
+                    "timeout": api_timeout,
                     "use_proxy": use_proxy,
                     "user_agent": user_agent,
                 },
@@ -177,6 +177,12 @@ class SessionsResource(SyncAPIResource):
         Fetches all active sessions for the current organization.
 
         Args:
+          cursor_id: Cursor ID for pagination
+
+          limit: Number of sessions to return. Default is 50.
+
+          status: Filter sessions by current status
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -319,8 +325,8 @@ class AsyncSessionsResource(AsyncAPIResource):
         proxy_url: str | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
-        session_timeout: int | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
+        api_timeout: int | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -348,9 +354,9 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           session_id: Optional custom UUID for the session
 
-          session_timeout: Session timeout duration in milliseconds. Default is 900000 (15 minutes).
-
           solve_captcha: Enable automatic captcha solving. Default is false.
+
+          api_timeout: Session timeout duration in milliseconds. Default is 900000 (15 minutes).
 
           use_proxy: Enable Steel-provided residential proxy usage for the browser session. Default
               is false, which routes requests through datacenter proxies.
@@ -374,8 +380,8 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "proxy_url": proxy_url,
                     "session_context": session_context,
                     "session_id": session_id,
-                    "session_timeout": session_timeout,
                     "solve_captcha": solve_captcha,
+                    "timeout": api_timeout,
                     "use_proxy": use_proxy,
                     "user_agent": user_agent,
                 },
@@ -437,6 +443,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         Fetches all active sessions for the current organization.
 
         Args:
+          cursor_id: Cursor ID for pagination
+
+          limit: Number of sessions to return. Default is 50.
+
+          status: Filter sessions by current status
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request

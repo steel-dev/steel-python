@@ -2,7 +2,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/steel-sdk.svg)](https://pypi.org/project/steel-sdk/)
 
-The Steel Python library provides convenient access to the Steel REST API from any Python 3.7+
+The Steel Python library provides convenient access to the Steel REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -162,10 +162,7 @@ from steel import Steel
 client = Steel()
 
 try:
-    client.scrape(
-        url="https://www.eff.org/cyberspace-independence",
-        format=["markdown"],
-    )
+    client.sessions.create()
 except steel.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -208,10 +205,7 @@ client = Steel(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).scrape(
-    url="https://www.eff.org/cyberspace-independence",
-    format=["markdown"],
-)
+client.with_options(max_retries=5).sessions.create()
 ```
 
 ### Timeouts
@@ -234,10 +228,7 @@ client = Steel(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).scrape(
-    url="https://www.eff.org/cyberspace-independence",
-    format=["markdown"],
-)
+client.with_options(timeout=5.0).sessions.create()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -276,14 +267,11 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from steel import Steel
 
 client = Steel()
-response = client.with_raw_response.scrape(
-    url="https://www.eff.org/cyberspace-independence",
-    format=["markdown"],
-)
+response = client.sessions.with_raw_response.create()
 print(response.headers.get('X-My-Header'))
 
-client = response.parse()  # get the object that `scrape()` would have returned
-print(client.content)
+session = response.parse()  # get the object that `sessions.create()` would have returned
+print(session.id)
 ```
 
 These methods return an [`APIResponse`](https://github.com/steel-dev/steel-python/tree/main/src/steel/_response.py) object.
@@ -297,10 +285,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.with_streaming_response.scrape(
-    url="https://www.eff.org/cyberspace-independence",
-    format=["markdown"],
-) as response:
+with client.sessions.with_streaming_response.create() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
@@ -400,7 +385,7 @@ print(steel.__version__)
 
 ## Requirements
 
-Python 3.7 or higher.
+Python 3.8 or higher.
 
 ## Contributing
 

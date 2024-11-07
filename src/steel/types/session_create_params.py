@@ -36,11 +36,11 @@ class SessionCreateParams(TypedDict, total=False):
     session_id: Annotated[str, PropertyInfo(alias="sessionId")]
     """Optional custom UUID for the session"""
 
-    session_timeout: Annotated[int, PropertyInfo(alias="sessionTimeout")]
-    """Session timeout duration in milliseconds. Default is 900000 (15 minutes)."""
-
     solve_captcha: Annotated[bool, PropertyInfo(alias="solveCaptcha")]
     """Enable automatic captcha solving. Default is false."""
+
+    api_timeout: Annotated[int, PropertyInfo(alias="timeout")]
+    """Session timeout duration in milliseconds. Default is 900000 (15 minutes)."""
 
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
     """Enable Steel-provided residential proxy usage for the browser session.

@@ -40,8 +40,8 @@ class TestSessions:
                 "local_storage": [{"foo": "bar"}, {"foo": "bar"}, {"foo": "bar"}],
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            session_timeout=0,
             solve_captcha=True,
+            api_timeout=0,
             use_proxy=True,
             user_agent="userAgent",
         )
@@ -260,8 +260,8 @@ class TestAsyncSessions:
                 "local_storage": [{"foo": "bar"}, {"foo": "bar"}, {"foo": "bar"}],
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            session_timeout=0,
             solve_captcha=True,
+            api_timeout=0,
             use_proxy=True,
             user_agent="userAgent",
         )
