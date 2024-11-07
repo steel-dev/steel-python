@@ -32,7 +32,10 @@ client = Steel(
     steel_api_key=os.environ.get("STEEL_API_KEY"),
 )
 
-session = client.sessions.create()
+session = client.sessions.create(
+    api_timeout=20000,
+    use_proxy=True,
+)
 print(session.id)
 ```
 
@@ -57,7 +60,10 @@ client = AsyncSteel(
 
 
 async def main() -> None:
-    session = await client.sessions.create()
+    session = await client.sessions.create(
+        api_timeout=20000,
+        use_proxy=True,
+    )
     print(session.id)
 
 
