@@ -28,8 +28,7 @@ import os
 from steel import Steel
 
 client = Steel(
-    # This is the default and can be omitted
-    steel_api_key=os.environ.get("STEEL_API_KEY"),
+    steel_api_key=os.environ.get("STEEL_API_KEY"),  # This is the default and can be omitted
 )
 
 session = client.sessions.create(
@@ -54,8 +53,7 @@ import asyncio
 from steel import AsyncSteel
 
 client = AsyncSteel(
-    # This is the default and can be omitted
-    steel_api_key=os.environ.get("STEEL_API_KEY"),
+    steel_api_key=os.environ.get("STEEL_API_KEY"),  # This is the default and can be omitted
 )
 
 
