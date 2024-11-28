@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.0-beta.2 (2024-11-28)
+
+Full Changelog: [v0.1.0-beta.1...v0.1.0-beta.2](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.1...v0.1.0-beta.2)
+
+### Bug Fixes
+
+* **client:** compat with new httpx 0.28.0 release ([#21](https://github.com/steel-dev/steel-python/issues/21)) ([91f80cc](https://github.com/steel-dev/steel-python/commit/91f80cc77f003c87b89e521ba56d96dc795fa072))
+
+
+### Chores
+
+* **internal:** codegen related update ([#18](https://github.com/steel-dev/steel-python/issues/18)) ([264d442](https://github.com/steel-dev/steel-python/commit/264d4425bf0171dcc492cc33a8fdc99d5d380c74))
+* **internal:** exclude mypy from running on tests ([#20](https://github.com/steel-dev/steel-python/issues/20)) ([2d4a38d](https://github.com/steel-dev/steel-python/commit/2d4a38d2616354f58237d78e667eb20a907a85b5))
+* rebuild project due to codegen change ([#12](https://github.com/steel-dev/steel-python/issues/12)) ([c49b406](https://github.com/steel-dev/steel-python/commit/c49b406ba78c6fb4b17b015f5d294963608e6313))
+* rebuild project due to codegen change ([#14](https://github.com/steel-dev/steel-python/issues/14)) ([1ab28ec](https://github.com/steel-dev/steel-python/commit/1ab28ec28acc64043324e900af87b6b5ee558f64))
+* rebuild project due to codegen change ([#15](https://github.com/steel-dev/steel-python/issues/15)) ([60da75c](https://github.com/steel-dev/steel-python/commit/60da75c9b364810fe905a63de28b6259e3e767bd))
+* rebuild project due to codegen change ([#16](https://github.com/steel-dev/steel-python/issues/16)) ([f0f9386](https://github.com/steel-dev/steel-python/commit/f0f9386b4f2e0611a976b89abdc039beae7c96e5))
+* rebuild project due to codegen change ([#17](https://github.com/steel-dev/steel-python/issues/17)) ([dcfc0ea](https://github.com/steel-dev/steel-python/commit/dcfc0eaa856de36448880ff079bf24a73ce12637))
+* remove now unused `cached-property` dep ([#19](https://github.com/steel-dev/steel-python/issues/19)) ([c65914b](https://github.com/steel-dev/steel-python/commit/c65914babf7987c2cc2ba6e809f70f70163b3f26))
+
 ## 0.1.0-beta.1 (2024-11-07)
 
 Full Changelog: [v0.0.1-beta.5...v0.1.0-beta.1](https://github.com/steel-dev/steel-python/compare/v0.0.1-beta.5...v0.1.0-beta.1)
