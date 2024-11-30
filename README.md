@@ -28,8 +28,7 @@ import os
 from steel import Steel
 
 client = Steel(
-    # This is the default and can be omitted
-    steel_api_key=os.environ.get("STEEL_API_KEY"),
+    steel_api_key=os.environ.get("STEEL_API_KEY"),  # This is the default and can be omitted
 )
 
 session = client.sessions.create(
@@ -54,8 +53,7 @@ import asyncio
 from steel import AsyncSteel
 
 client = AsyncSteel(
-    # This is the default and can be omitted
-    steel_api_key=os.environ.get("STEEL_API_KEY"),
+    steel_api_key=os.environ.get("STEEL_API_KEY"),  # This is the default and can be omitted
 )
 
 
@@ -247,11 +245,13 @@ Note that requests that time out are [retried twice by default](#retries).
 
 We use the standard library [`logging`](https://docs.python.org/3/library/logging.html) module.
 
-You can enable logging by setting the environment variable `STEEL_LOG` to `debug`.
+You can enable logging by setting the environment variable `STEEL_LOG` to `info`.
 
 ```shell
-$ export STEEL_LOG=debug
+$ export STEEL_LOG=info
 ```
+
+Or to `debug` for more verbose logging.
 
 ### How to tell whether `None` means `null` or missing
 
