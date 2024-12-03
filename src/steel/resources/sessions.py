@@ -90,7 +90,7 @@ class SessionsResource(SyncAPIResource):
 
           solve_captcha: Enable automatic captcha solving. Default is false.
 
-          api_timeout: Session timeout duration in milliseconds. Default is 900000 (15 minutes).
+          api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
           use_proxy: Enable Steel-provided residential proxy usage for the browser session. Default
               is false, which routes requests through datacenter proxies.
@@ -356,7 +356,7 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           solve_captcha: Enable automatic captcha solving. Default is false.
 
-          api_timeout: Session timeout duration in milliseconds. Default is 900000 (15 minutes).
+          api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
           use_proxy: Enable Steel-provided residential proxy usage for the browser session. Default
               is false, which routes requests through datacenter proxies.
