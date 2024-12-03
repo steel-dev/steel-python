@@ -40,7 +40,7 @@ class SessionCreateParams(TypedDict, total=False):
     """Enable automatic captcha solving. Default is false."""
 
     api_timeout: Annotated[int, PropertyInfo(alias="timeout")]
-    """Session timeout duration in milliseconds. Default is 900000 (15 minutes)."""
+    """Session timeout duration in milliseconds. Default is 300000 (5 minutes)."""
 
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
     """Enable Steel-provided residential proxy usage for the browser session.

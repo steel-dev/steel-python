@@ -24,7 +24,7 @@ from steel import Steel, AsyncSteel, APIResponseValidationError
 from steel._types import Omit
 from steel._models import BaseModel, FinalRequestOptions
 from steel._constants import RAW_RESPONSE_HEADER
-from steel._exceptions import SteelError, APIStatusError, APITimeoutError, APIResponseValidationError
+from steel._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
 from steel._base_client import DEFAULT_TIMEOUT, HTTPX_DEFAULT_TIMEOUT, BaseClient, make_request_options
 
 from .utils import update_env
@@ -348,13 +348,6 @@ class TestSteel:
 
     def test_validate_headers(self) -> None:
         client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("steel-api-key") == steel_api_key
-
-        with pytest.raises(SteelError):
-            with update_env(**{"STEEL_API_KEY": Omit()}):
-                client2 = Steel(base_url=base_url, steel_api_key=None, _strict_response_validation=True)
-            _ = client2
 
     def test_default_query_option(self) -> None:
         client = Steel(
@@ -1148,13 +1141,6 @@ class TestAsyncSteel:
 
     def test_validate_headers(self) -> None:
         client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
-        assert request.headers.get("steel-api-key") == steel_api_key
-
-        with pytest.raises(SteelError):
-            with update_env(**{"STEEL_API_KEY": Omit()}):
-                client2 = AsyncSteel(base_url=base_url, steel_api_key=None, _strict_response_validation=True)
-            _ = client2
 
     def test_default_query_option(self) -> None:
         client = AsyncSteel(

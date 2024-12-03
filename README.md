@@ -24,12 +24,9 @@ pip install --pre steel-sdk
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from steel import Steel
 
-client = Steel(
-    steel_api_key=os.environ.get("STEEL_API_KEY"),  # This is the default and can be omitted
-)
+client = Steel()
 
 session = client.sessions.create(
     api_timeout=20000,
@@ -48,13 +45,10 @@ so that your Steel API Key is not stored in source control.
 Simply import `AsyncSteel` instead of `Steel` and use `await` with each API call:
 
 ```python
-import os
 import asyncio
 from steel import AsyncSteel
 
-client = AsyncSteel(
-    steel_api_key=os.environ.get("STEEL_API_KEY"),  # This is the default and can be omitted
-)
+client = AsyncSteel()
 
 
 async def main() -> None:
