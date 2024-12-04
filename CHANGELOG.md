@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-beta.3 (2024-12-04)
+
+Full Changelog: [v0.1.0-beta.2...v0.1.0-beta.3](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.2...v0.1.0-beta.3)
+
+### Features
+
+* **api:** api update ([#25](https://github.com/steel-dev/steel-python/issues/25)) ([afaacf2](https://github.com/steel-dev/steel-python/commit/afaacf24ab9cea5ff19cef2f06e2c568d8635455))
+
+
+### Chores
+
+* **internal:** bump pyright ([#23](https://github.com/steel-dev/steel-python/issues/23)) ([d14f731](https://github.com/steel-dev/steel-python/commit/d14f731923c36e9b1323cff63d3f90a9e1ccba3a))
+* make the `Omit` type public ([#26](https://github.com/steel-dev/steel-python/issues/26)) ([2901611](https://github.com/steel-dev/steel-python/commit/29016116dd220d227f907865023f6c5e4be499f6))
+
 ## 0.1.0-beta.2 (2024-11-28)
 
 Full Changelog: [v0.1.0-beta.1...v0.1.0-beta.2](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.1...v0.1.0-beta.2)
