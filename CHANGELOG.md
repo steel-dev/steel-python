@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-beta.4 (2024-12-10)
+
+Full Changelog: [v0.1.0-beta.3...v0.1.0-beta.4](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.3...v0.1.0-beta.4)
+
+### Chores
+
+* **internal:** bump pydantic dependency ([#28](https://github.com/steel-dev/steel-python/issues/28)) ([ccc5a69](https://github.com/steel-dev/steel-python/commit/ccc5a694dfe0bf763f2e6b0a965c503fb86bea73))
+
+
+### Documentation
+
+* **readme:** fix http client proxies example ([#30](https://github.com/steel-dev/steel-python/issues/30)) ([2dc1f98](https://github.com/steel-dev/steel-python/commit/2dc1f9867dc2403b227d264782dee8286501b1d1))
+
 ## 0.1.0-beta.3 (2024-12-04)
 
 Full Changelog: [v0.1.0-beta.2...v0.1.0-beta.3](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.2...v0.1.0-beta.3)
