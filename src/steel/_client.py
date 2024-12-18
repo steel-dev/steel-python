@@ -8,7 +8,7 @@ from typing_extensions import Self, override
 
 import httpx
 
-from . import resources, _exceptions
+from . import _exceptions
 from ._qs import Querystring
 from ._types import (
     NOT_GIVEN,
@@ -24,6 +24,7 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
+from .resources import sessions
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import SteelError, APIStatusError
 from ._base_client import (
@@ -32,21 +33,11 @@ from ._base_client import (
     AsyncAPIClient,
 )
 
-__all__ = [
-    "Timeout",
-    "Transport",
-    "ProxiesTypes",
-    "RequestOptions",
-    "resources",
-    "Steel",
-    "AsyncSteel",
-    "Client",
-    "AsyncClient",
-]
+__all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Steel", "AsyncSteel", "Client", "AsyncClient"]
 
 
 class Steel(SyncAPIClient):
-    sessions: resources.SessionsResource
+    sessions: sessions.SessionsResource
     with_raw_response: SteelWithRawResponse
     with_streaming_response: SteelWithStreamedResponse
 
@@ -104,7 +95,7 @@ class Steel(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.sessions = resources.SessionsResource(self)
+        self.sessions = sessions.SessionsResource(self)
         self.with_raw_response = SteelWithRawResponse(self)
         self.with_streaming_response = SteelWithStreamedResponse(self)
 
@@ -214,7 +205,7 @@ class Steel(SyncAPIClient):
 
 
 class AsyncSteel(AsyncAPIClient):
-    sessions: resources.AsyncSessionsResource
+    sessions: sessions.AsyncSessionsResource
     with_raw_response: AsyncSteelWithRawResponse
     with_streaming_response: AsyncSteelWithStreamedResponse
 
@@ -272,7 +263,7 @@ class AsyncSteel(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.sessions = resources.AsyncSessionsResource(self)
+        self.sessions = sessions.AsyncSessionsResource(self)
         self.with_raw_response = AsyncSteelWithRawResponse(self)
         self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
 
@@ -383,22 +374,22 @@ class AsyncSteel(AsyncAPIClient):
 
 class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
-        self.sessions = resources.SessionsResourceWithRawResponse(client.sessions)
+        self.sessions = sessions.SessionsResourceWithRawResponse(client.sessions)
 
 
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.sessions = resources.AsyncSessionsResourceWithRawResponse(client.sessions)
+        self.sessions = sessions.AsyncSessionsResourceWithRawResponse(client.sessions)
 
 
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
-        self.sessions = resources.SessionsResourceWithStreamingResponse(client.sessions)
+        self.sessions = sessions.SessionsResourceWithStreamingResponse(client.sessions)
 
 
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.sessions = resources.AsyncSessionsResourceWithStreamingResponse(client.sessions)
+        self.sessions = sessions.AsyncSessionsResourceWithStreamingResponse(client.sessions)
 
 
 Client = Steel
