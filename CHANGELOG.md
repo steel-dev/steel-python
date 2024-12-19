@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.1.0-beta.4 (2024-12-19)
+
+Full Changelog: [v0.1.0-beta.3...v0.1.0-beta.4](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.3...v0.1.0-beta.4)
+
+### Features
+
+* **api:** api update ([#46](https://github.com/steel-dev/steel-python/issues/46)) ([e36aed3](https://github.com/steel-dev/steel-python/commit/e36aed39e8538501b8c7c6c2d731823fd6c48558))
+
+
+### Chores
+
+* **internal:** add support for TypeAliasType ([#32](https://github.com/steel-dev/steel-python/issues/32)) ([0539c09](https://github.com/steel-dev/steel-python/commit/0539c0913eeda12377ec8ba018327a2c7c445cd2))
+* **internal:** bump pydantic dependency ([#28](https://github.com/steel-dev/steel-python/issues/28)) ([ccc5a69](https://github.com/steel-dev/steel-python/commit/ccc5a694dfe0bf763f2e6b0a965c503fb86bea73))
+* **internal:** bump pyright ([#31](https://github.com/steel-dev/steel-python/issues/31)) ([bb33e00](https://github.com/steel-dev/steel-python/commit/bb33e006c3144c118ce015e7aa19d406d8092da0))
+* **internal:** codegen related update ([#33](https://github.com/steel-dev/steel-python/issues/33)) ([2e62e96](https://github.com/steel-dev/steel-python/commit/2e62e966b61141087ee977c448a9663977eb3e9d))
+* **internal:** codegen related update ([#34](https://github.com/steel-dev/steel-python/issues/34)) ([f2ebab8](https://github.com/steel-dev/steel-python/commit/f2ebab8c24a9c7c79ba5faf66521c4ef2ff38bd1))
+* **internal:** codegen related update ([#35](https://github.com/steel-dev/steel-python/issues/35)) ([3aa860b](https://github.com/steel-dev/steel-python/commit/3aa860b7b0ca13ec2c04fbad7cd413a901fb2f8b))
+* **internal:** codegen related update ([#36](https://github.com/steel-dev/steel-python/issues/36)) ([f6aecb1](https://github.com/steel-dev/steel-python/commit/f6aecb11f7857316ca05a9244b4af5b298350d47))
+* **internal:** codegen related update ([#37](https://github.com/steel-dev/steel-python/issues/37)) ([5b3c70d](https://github.com/steel-dev/steel-python/commit/5b3c70d501afee44ed2517ef6aceb8bc1f09e67f))
+* **internal:** codegen related update ([#40](https://github.com/steel-dev/steel-python/issues/40)) ([8aa7cf3](https://github.com/steel-dev/steel-python/commit/8aa7cf3139172874c1979d808be6c74602d29c32))
+* **internal:** codegen related update ([#41](https://github.com/steel-dev/steel-python/issues/41)) ([d41eef3](https://github.com/steel-dev/steel-python/commit/d41eef330fd65097723ea61bdeaaca3078f63f8f))
+* **internal:** codegen related update ([#42](https://github.com/steel-dev/steel-python/issues/42)) ([6407dff](https://github.com/steel-dev/steel-python/commit/6407dffb70c2004231e34cbb37857883175af534))
+* **internal:** codegen related update ([#43](https://github.com/steel-dev/steel-python/issues/43)) ([e0fe5f3](https://github.com/steel-dev/steel-python/commit/e0fe5f387d73c6ec7d3cacccd2df7a6304831802))
+* **internal:** codegen related update ([#44](https://github.com/steel-dev/steel-python/issues/44)) ([fd3e1f0](https://github.com/steel-dev/steel-python/commit/fd3e1f0081e43f8a9ff886b2e0c3a62e9ef81e39))
+* **internal:** codegen related update ([#45](https://github.com/steel-dev/steel-python/issues/45)) ([2e0dd7a](https://github.com/steel-dev/steel-python/commit/2e0dd7aaa142ac56b31a428d9b6105fe4965dd8e))
+* **internal:** fix some typos ([#39](https://github.com/steel-dev/steel-python/issues/39)) ([94af0f4](https://github.com/steel-dev/steel-python/commit/94af0f4f10fb0e3c76a8b54098c9f6f0735b1ae1))
+
+
+### Documentation
+
+* **readme:** example snippet for client context manager ([#38](https://github.com/steel-dev/steel-python/issues/38)) ([56a0b13](https://github.com/steel-dev/steel-python/commit/56a0b1338df0f04de9eb39e0f3d94e6a69893eb9))
+* **readme:** fix http client proxies example ([#30](https://github.com/steel-dev/steel-python/issues/30)) ([2dc1f98](https://github.com/steel-dev/steel-python/commit/2dc1f9867dc2403b227d264782dee8286501b1d1))
+
 ## 0.1.0-beta.3 (2024-12-04)
 
 Full Changelog: [v0.1.0-beta.2...v0.1.0-beta.3](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.2...v0.1.0-beta.3)
