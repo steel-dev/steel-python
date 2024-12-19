@@ -3,16 +3,20 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Union, Mapping
-from typing_extensions import Self, override
+from typing import Any, List, Union, Mapping
+from typing_extensions import Self, Literal, override
 
 import httpx
 
 from . import _exceptions
 from ._qs import Querystring
+from .types import client_pdf_params, client_scrape_params, client_screenshot_params
 from ._types import (
     NOT_GIVEN,
+    Body,
     Omit,
+    Query,
+    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -21,9 +25,17 @@ from ._types import (
 )
 from ._utils import (
     is_given,
+    maybe_transform,
     get_async_library,
+    async_maybe_transform,
 )
 from ._version import __version__
+from ._response import (
+    to_raw_response_wrapper,
+    to_streamed_response_wrapper,
+    async_to_raw_response_wrapper,
+    async_to_streamed_response_wrapper,
+)
 from .resources import sessions
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import SteelError, APIStatusError
@@ -31,7 +43,11 @@ from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
+    make_request_options,
 )
+from .types.pdf_response import PdfResponse
+from .types.scrape_response import ScrapeResponse
+from .types.screenshot_response import ScreenshotResponse
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Steel", "AsyncSteel", "Client", "AsyncClient"]
 
@@ -169,6 +185,163 @@ class Steel(SyncAPIClient):
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
+
+    def pdf(
+        self,
+        *,
+        url: str,
+        delay: float | NotGiven = NOT_GIVEN,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> PdfResponse:
+        """
+        Generates a PDF from a specified webpage.
+
+        Args:
+          url: URL of the webpage to convert to PDF
+
+          delay: Delay before generating the PDF (in milliseconds)
+
+          use_proxy: Use a Steel-provided residential proxy for generating the PDF
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.post(
+            "/v1/pdf",
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "delay": delay,
+                    "use_proxy": use_proxy,
+                },
+                client_pdf_params.ClientPdfParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PdfResponse,
+        )
+
+    def scrape(
+        self,
+        *,
+        url: str,
+        delay: float | NotGiven = NOT_GIVEN,
+        format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | NotGiven = NOT_GIVEN,
+        pdf: bool | NotGiven = NOT_GIVEN,
+        screenshot: bool | NotGiven = NOT_GIVEN,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ScrapeResponse:
+        """
+        Extracts content from a specified URL.
+
+        Args:
+          url: URL of the webpage to scrape
+
+          delay: Delay before scraping (in milliseconds)
+
+          format: Desired format(s) for the scraped content. Default is `html`.
+
+          pdf: Include a PDF in the response
+
+          screenshot: Include a screenshot in the response
+
+          use_proxy: Use a Steel-provided residential proxy for the scrape
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.post(
+            "/v1/scrape",
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "delay": delay,
+                    "format": format,
+                    "pdf": pdf,
+                    "screenshot": screenshot,
+                    "use_proxy": use_proxy,
+                },
+                client_scrape_params.ClientScrapeParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ScrapeResponse,
+        )
+
+    def screenshot(
+        self,
+        *,
+        url: str,
+        delay: float | NotGiven = NOT_GIVEN,
+        full_page: bool | NotGiven = NOT_GIVEN,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ScreenshotResponse:
+        """
+        Captures a screenshot of a specified webpage.
+
+        Args:
+          url: URL of the webpage to capture
+
+          delay: Delay before capturing the screenshot (in milliseconds)
+
+          full_page: Capture the full page screenshot. Default is `false`.
+
+          use_proxy: Use a Steel-provided residential proxy for capturing the screenshot
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.post(
+            "/v1/screenshot",
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "delay": delay,
+                    "full_page": full_page,
+                    "use_proxy": use_proxy,
+                },
+                client_screenshot_params.ClientScreenshotParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ScreenshotResponse,
+        )
 
     @override
     def _make_status_error(
@@ -338,6 +511,163 @@ class AsyncSteel(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
+    async def pdf(
+        self,
+        *,
+        url: str,
+        delay: float | NotGiven = NOT_GIVEN,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> PdfResponse:
+        """
+        Generates a PDF from a specified webpage.
+
+        Args:
+          url: URL of the webpage to convert to PDF
+
+          delay: Delay before generating the PDF (in milliseconds)
+
+          use_proxy: Use a Steel-provided residential proxy for generating the PDF
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.post(
+            "/v1/pdf",
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "delay": delay,
+                    "use_proxy": use_proxy,
+                },
+                client_pdf_params.ClientPdfParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=PdfResponse,
+        )
+
+    async def scrape(
+        self,
+        *,
+        url: str,
+        delay: float | NotGiven = NOT_GIVEN,
+        format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | NotGiven = NOT_GIVEN,
+        pdf: bool | NotGiven = NOT_GIVEN,
+        screenshot: bool | NotGiven = NOT_GIVEN,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ScrapeResponse:
+        """
+        Extracts content from a specified URL.
+
+        Args:
+          url: URL of the webpage to scrape
+
+          delay: Delay before scraping (in milliseconds)
+
+          format: Desired format(s) for the scraped content. Default is `html`.
+
+          pdf: Include a PDF in the response
+
+          screenshot: Include a screenshot in the response
+
+          use_proxy: Use a Steel-provided residential proxy for the scrape
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.post(
+            "/v1/scrape",
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "delay": delay,
+                    "format": format,
+                    "pdf": pdf,
+                    "screenshot": screenshot,
+                    "use_proxy": use_proxy,
+                },
+                client_scrape_params.ClientScrapeParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ScrapeResponse,
+        )
+
+    async def screenshot(
+        self,
+        *,
+        url: str,
+        delay: float | NotGiven = NOT_GIVEN,
+        full_page: bool | NotGiven = NOT_GIVEN,
+        use_proxy: bool | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ScreenshotResponse:
+        """
+        Captures a screenshot of a specified webpage.
+
+        Args:
+          url: URL of the webpage to capture
+
+          delay: Delay before capturing the screenshot (in milliseconds)
+
+          full_page: Capture the full page screenshot. Default is `false`.
+
+          use_proxy: Use a Steel-provided residential proxy for capturing the screenshot
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.post(
+            "/v1/screenshot",
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "delay": delay,
+                    "full_page": full_page,
+                    "use_proxy": use_proxy,
+                },
+                client_screenshot_params.ClientScreenshotParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ScreenshotResponse,
+        )
+
     @override
     def _make_status_error(
         self,
@@ -376,20 +706,60 @@ class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
         self.sessions = sessions.SessionsResourceWithRawResponse(client.sessions)
 
+        self.pdf = to_raw_response_wrapper(
+            client.pdf,
+        )
+        self.scrape = to_raw_response_wrapper(
+            client.scrape,
+        )
+        self.screenshot = to_raw_response_wrapper(
+            client.screenshot,
+        )
+
 
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
         self.sessions = sessions.AsyncSessionsResourceWithRawResponse(client.sessions)
+
+        self.pdf = async_to_raw_response_wrapper(
+            client.pdf,
+        )
+        self.scrape = async_to_raw_response_wrapper(
+            client.scrape,
+        )
+        self.screenshot = async_to_raw_response_wrapper(
+            client.screenshot,
+        )
 
 
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
         self.sessions = sessions.SessionsResourceWithStreamingResponse(client.sessions)
 
+        self.pdf = to_streamed_response_wrapper(
+            client.pdf,
+        )
+        self.scrape = to_streamed_response_wrapper(
+            client.scrape,
+        )
+        self.screenshot = to_streamed_response_wrapper(
+            client.screenshot,
+        )
+
 
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
         self.sessions = sessions.AsyncSessionsResourceWithStreamingResponse(client.sessions)
+
+        self.pdf = async_to_streamed_response_wrapper(
+            client.pdf,
+        )
+        self.scrape = async_to_streamed_response_wrapper(
+            client.scrape,
+        )
+        self.screenshot = async_to_streamed_response_wrapper(
+            client.screenshot,
+        )
 
 
 Client = Steel
