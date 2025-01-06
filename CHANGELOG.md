@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-beta.5 (2025-01-02)
+
+Full Changelog: [v0.1.0-beta.4...v0.1.0-beta.5](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.4...v0.1.0-beta.5)
+
+### Chores
+
+* **internal:** codegen related update ([#48](https://github.com/steel-dev/steel-python/issues/48)) ([9b03c90](https://github.com/steel-dev/steel-python/commit/9b03c902d371b3109220a3097a0f01bc27084cce))
+
 ## 0.1.0-beta.4 (2024-12-19)
 
 Full Changelog: [v0.1.0-beta.3...v0.1.0-beta.4](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.3...v0.1.0-beta.4)
