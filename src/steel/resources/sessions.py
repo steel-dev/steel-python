@@ -54,6 +54,7 @@ class SessionsResource(SyncAPIResource):
     def create(
         self,
         *,
+        block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
@@ -74,6 +75,8 @@ class SessionsResource(SyncAPIResource):
         Creates a new session with the provided configuration.
 
         Args:
+          block_ads: Block ads in the browser session. Default is false.
+
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
@@ -109,6 +112,7 @@ class SessionsResource(SyncAPIResource):
             "/v1/sessions",
             body=maybe_transform(
                 {
+                    "block_ads": block_ads,
                     "concurrency": concurrency,
                     "is_selenium": is_selenium,
                     "proxy_url": proxy_url,
@@ -320,6 +324,7 @@ class AsyncSessionsResource(AsyncAPIResource):
     async def create(
         self,
         *,
+        block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
@@ -340,6 +345,8 @@ class AsyncSessionsResource(AsyncAPIResource):
         Creates a new session with the provided configuration.
 
         Args:
+          block_ads: Block ads in the browser session. Default is false.
+
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
@@ -375,6 +382,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             "/v1/sessions",
             body=await async_maybe_transform(
                 {
+                    "block_ads": block_ads,
                     "concurrency": concurrency,
                     "is_selenium": is_selenium,
                     "proxy_url": proxy_url,

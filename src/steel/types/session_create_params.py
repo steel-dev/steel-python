@@ -11,6 +11,9 @@ __all__ = ["SessionCreateParams", "SessionContext"]
 
 
 class SessionCreateParams(TypedDict, total=False):
+    block_ads: Annotated[bool, PropertyInfo(alias="blockAds")]
+    """Block ads in the browser session. Default is false."""
+
     concurrency: int
     """Number of sessions to create concurrently (check your plan limit)"""
 
