@@ -1,6 +1,6 @@
 [project]
 name = "steel-sdk"
-version = "0.1.0-beta.5"
+version = "0.1.0-beta.6"
 description = "The official Python library for the steel API"
 dynamic = ["readme"]
 license = "Apache-2.0"
@@ -54,7 +54,7 @@ dev-dependencies = [
     "dirty-equals>=0.6.0",
     "importlib-metadata>=6.7.0",
     "rich>=13.7.1",
-    "nest_asyncio==1.6.0"
+    "nest_asyncio==1.6.0",
 ]
 
 [tool.rye.scripts]

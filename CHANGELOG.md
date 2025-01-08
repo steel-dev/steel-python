@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0-beta.6 (2025-01-08)
+
+Full Changelog: [v0.1.0-beta.5...v0.1.0-beta.6](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.5...v0.1.0-beta.6)
+
+### Features
+
+* **api:** api update ([#54](https://github.com/steel-dev/steel-python/issues/54)) ([d45a589](https://github.com/steel-dev/steel-python/commit/d45a589c7000321ec776180e1ce8840189f2ee19))
+
+
+### Bug Fixes
+
+* **client:** only call .close() when needed ([#55](https://github.com/steel-dev/steel-python/issues/55)) ([559ee7a](https://github.com/steel-dev/steel-python/commit/559ee7a0f6271a75a69cec9920d0afa7a30cd62e))
+
+
+### Chores
+
+* add missing isclass check ([#51](https://github.com/steel-dev/steel-python/issues/51)) ([5728f87](https://github.com/steel-dev/steel-python/commit/5728f875a9f595a0dbfe9f2f1dbc946d25c2534d))
+* **internal:** bump httpx dependency ([#53](https://github.com/steel-dev/steel-python/issues/53)) ([861d09c](https://github.com/steel-dev/steel-python/commit/861d09cf6c9ceadf198020f53c971e951863f14b))
+
 ## 0.1.0-beta.5 (2025-01-02)
 
 Full Changelog: [v0.1.0-beta.4...v0.1.0-beta.5](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.4...v0.1.0-beta.5)
