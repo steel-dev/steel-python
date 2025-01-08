@@ -32,6 +32,7 @@ class TestSessions:
     @parametrize
     def test_method_create_with_all_params(self, client: Steel) -> None:
         session = client.sessions.create(
+            block_ads=True,
             concurrency=0,
             is_selenium=True,
             proxy_url="proxyUrl",
@@ -252,6 +253,7 @@ class TestAsyncSessions:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.create(
+            block_ads=True,
             concurrency=0,
             is_selenium=True,
             proxy_url="proxyUrl",
