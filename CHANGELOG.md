@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-beta.7 (2025-01-10)
+
+Full Changelog: [v0.1.0-beta.6...v0.1.0-beta.7](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.6...v0.1.0-beta.7)
+
+### Bug Fixes
+
+* correctly handle deserialising `cls` fields ([#60](https://github.com/steel-dev/steel-python/issues/60)) ([cd8bb56](https://github.com/steel-dev/steel-python/commit/cd8bb56b3490f4fd7d819b7c8e4770e65aee75f5))
+
+
+### Chores
+
+* **internal:** codegen related update ([#59](https://github.com/steel-dev/steel-python/issues/59)) ([ea787f7](https://github.com/steel-dev/steel-python/commit/ea787f7e4e9c074f185ed2f76cf7e95de5a80a91))
+
+
+### Documentation
+
+* fix typos ([#57](https://github.com/steel-dev/steel-python/issues/57)) ([c51f862](https://github.com/steel-dev/steel-python/commit/c51f86264ecdfb8f006a1b3bcc4c7c0ae47eb8f6))
+
 ## 0.1.0-beta.6 (2025-01-08)
 
 Full Changelog: [v0.1.0-beta.5...v0.1.0-beta.6](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.5...v0.1.0-beta.6)
