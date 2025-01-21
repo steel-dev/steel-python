@@ -22,9 +22,9 @@ from .._response import (
 )
 from ..pagination import SyncSessionsCursor, AsyncSessionsCursor
 from .._base_client import AsyncPaginator, make_request_options
-from ..types.session import Session
+from ..types.session import Session as TypesSession
+from ..types.sessionslist import Session as SessionslistSession
 from ..types.session_context import SessionContext
-from ..types.session_list_response import SessionListResponse
 from ..types.session_release_response import SessionReleaseResponse
 from ..types.session_release_all_response import SessionReleaseAllResponse
 
@@ -70,7 +70,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> TypesSession:
         """
         Creates a new session with the provided configuration.
 
@@ -128,7 +128,7 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=TypesSession,
         )
 
     def retrieve(
@@ -141,7 +141,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> TypesSession:
         """
         Retrieves details of a specific session by ID.
 
@@ -161,7 +161,7 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=TypesSession,
         )
 
     def list(
@@ -176,7 +176,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncSessionsCursor[SessionListResponse]:
+    ) -> SyncSessionsCursor[SessionslistSession]:
         """
         Fetches all active sessions for the current organization.
 
@@ -197,7 +197,7 @@ class SessionsResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/sessions",
-            page=SyncSessionsCursor[SessionListResponse],
+            page=SyncSessionsCursor[SessionslistSession],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -212,7 +212,7 @@ class SessionsResource(SyncAPIResource):
                     session_list_params.SessionListParams,
                 ),
             ),
-            model=SessionListResponse,
+            model=SessionslistSession,
         )
 
     def context(
@@ -340,7 +340,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> TypesSession:
         """
         Creates a new session with the provided configuration.
 
@@ -398,7 +398,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=TypesSession,
         )
 
     async def retrieve(
@@ -411,7 +411,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> TypesSession:
         """
         Retrieves details of a specific session by ID.
 
@@ -431,7 +431,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=TypesSession,
         )
 
     def list(
@@ -446,7 +446,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[SessionListResponse, AsyncSessionsCursor[SessionListResponse]]:
+    ) -> AsyncPaginator[SessionslistSession, AsyncSessionsCursor[SessionslistSession]]:
         """
         Fetches all active sessions for the current organization.
 
@@ -467,7 +467,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/sessions",
-            page=AsyncSessionsCursor[SessionListResponse],
+            page=AsyncSessionsCursor[SessionslistSession],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -482,7 +482,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     session_list_params.SessionListParams,
                 ),
             ),
-            model=SessionListResponse,
+            model=SessionslistSession,
         )
 
     async def context(
