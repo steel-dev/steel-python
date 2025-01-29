@@ -56,6 +56,7 @@ class SessionsResource(SyncAPIResource):
         *,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
+        dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
@@ -78,6 +79,8 @@ class SessionsResource(SyncAPIResource):
           block_ads: Block ads in the browser session. Default is false.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
+
+          dimensions: Viewport and browser window dimensions for the session
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -114,6 +117,7 @@ class SessionsResource(SyncAPIResource):
                 {
                     "block_ads": block_ads,
                     "concurrency": concurrency,
+                    "dimensions": dimensions,
                     "is_selenium": is_selenium,
                     "proxy_url": proxy_url,
                     "session_context": session_context,
@@ -326,6 +330,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         *,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
+        dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
@@ -348,6 +353,8 @@ class AsyncSessionsResource(AsyncAPIResource):
           block_ads: Block ads in the browser session. Default is false.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
+
+          dimensions: Viewport and browser window dimensions for the session
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -384,6 +391,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                 {
                     "block_ads": block_ads,
                     "concurrency": concurrency,
+                    "dimensions": dimensions,
                     "is_selenium": is_selenium,
                     "proxy_url": proxy_url,
                     "session_context": session_context,

@@ -34,6 +34,10 @@ class TestSessions:
         session = client.sessions.create(
             block_ads=True,
             concurrency=0,
+            dimensions={
+                "height": 0,
+                "width": 0,
+            },
             is_selenium=True,
             proxy_url="proxyUrl",
             session_context={
@@ -255,6 +259,10 @@ class TestAsyncSessions:
         session = await async_client.sessions.create(
             block_ads=True,
             concurrency=0,
+            dimensions={
+                "height": 0,
+                "width": 0,
+            },
             is_selenium=True,
             proxy_url="proxyUrl",
             session_context={

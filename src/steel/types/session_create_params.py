@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from typing import Dict, Iterable
-from typing_extensions import Annotated, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["SessionCreateParams", "SessionContext"]
+__all__ = ["SessionCreateParams", "Dimensions", "SessionContext"]
 
 
 class SessionCreateParams(TypedDict, total=False):
@@ -16,6 +16,9 @@ class SessionCreateParams(TypedDict, total=False):
 
     concurrency: int
     """Number of sessions to create concurrently (check your plan limit)"""
+
+    dimensions: Dimensions
+    """Viewport and browser window dimensions for the session"""
 
     is_selenium: Annotated[bool, PropertyInfo(alias="isSelenium")]
     """Enable Selenium mode for the browser session (default is false).
@@ -53,6 +56,14 @@ class SessionCreateParams(TypedDict, total=False):
 
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
     """Custom user agent string for the browser session"""
+
+
+class Dimensions(TypedDict, total=False):
+    height: Required[int]
+    """Height of the session"""
+
+    width: Required[int]
+    """Width of the session"""
 
 
 class SessionContext(TypedDict, total=False):
