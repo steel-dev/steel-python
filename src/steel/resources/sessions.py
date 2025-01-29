@@ -22,9 +22,9 @@ from .._response import (
 )
 from ..pagination import SyncSessionsCursor, AsyncSessionsCursor
 from .._base_client import AsyncPaginator, make_request_options
-from ..types.session import Session
+from ..types.session import Session as TypesSession
+from ..types.sessionslist import Session as SessionslistSession
 from ..types.session_context import SessionContext
-from ..types.session_list_response import SessionListResponse
 from ..types.session_release_response import SessionReleaseResponse
 from ..types.session_release_all_response import SessionReleaseAllResponse
 
@@ -35,7 +35,7 @@ class SessionsResource(SyncAPIResource):
     @cached_property
     def with_raw_response(self) -> SessionsResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/steel-dev/steel-python#accessing-raw-response-data-eg-headers
@@ -56,6 +56,7 @@ class SessionsResource(SyncAPIResource):
         *,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
+        dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
@@ -70,7 +71,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> TypesSession:
         """
         Creates a new session with the provided configuration.
 
@@ -78,6 +79,8 @@ class SessionsResource(SyncAPIResource):
           block_ads: Block ads in the browser session. Default is false.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
+
+          dimensions: Viewport and browser window dimensions for the session
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -114,6 +117,7 @@ class SessionsResource(SyncAPIResource):
                 {
                     "block_ads": block_ads,
                     "concurrency": concurrency,
+                    "dimensions": dimensions,
                     "is_selenium": is_selenium,
                     "proxy_url": proxy_url,
                     "session_context": session_context,
@@ -128,7 +132,7 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=TypesSession,
         )
 
     def retrieve(
@@ -141,7 +145,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> TypesSession:
         """
         Retrieves details of a specific session by ID.
 
@@ -161,7 +165,7 @@ class SessionsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=TypesSession,
         )
 
     def list(
@@ -176,7 +180,7 @@ class SessionsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SyncSessionsCursor[SessionListResponse]:
+    ) -> SyncSessionsCursor[SessionslistSession]:
         """
         Fetches all active sessions for the current organization.
 
@@ -197,7 +201,7 @@ class SessionsResource(SyncAPIResource):
         """
         return self._get_api_list(
             "/v1/sessions",
-            page=SyncSessionsCursor[SessionListResponse],
+            page=SyncSessionsCursor[SessionslistSession],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -212,7 +216,7 @@ class SessionsResource(SyncAPIResource):
                     session_list_params.SessionListParams,
                 ),
             ),
-            model=SessionListResponse,
+            model=SessionslistSession,
         )
 
     def context(
@@ -305,7 +309,7 @@ class AsyncSessionsResource(AsyncAPIResource):
     @cached_property
     def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
         """
-        This property can be used as a prefix for any HTTP method call to return the
+        This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/steel-dev/steel-python#accessing-raw-response-data-eg-headers
@@ -326,6 +330,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         *,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
+        dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
@@ -340,7 +345,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> TypesSession:
         """
         Creates a new session with the provided configuration.
 
@@ -348,6 +353,8 @@ class AsyncSessionsResource(AsyncAPIResource):
           block_ads: Block ads in the browser session. Default is false.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
+
+          dimensions: Viewport and browser window dimensions for the session
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -384,6 +391,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                 {
                     "block_ads": block_ads,
                     "concurrency": concurrency,
+                    "dimensions": dimensions,
                     "is_selenium": is_selenium,
                     "proxy_url": proxy_url,
                     "session_context": session_context,
@@ -398,7 +406,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=TypesSession,
         )
 
     async def retrieve(
@@ -411,7 +419,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> Session:
+    ) -> TypesSession:
         """
         Retrieves details of a specific session by ID.
 
@@ -431,7 +439,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Session,
+            cast_to=TypesSession,
         )
 
     def list(
@@ -446,7 +454,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AsyncPaginator[SessionListResponse, AsyncSessionsCursor[SessionListResponse]]:
+    ) -> AsyncPaginator[SessionslistSession, AsyncSessionsCursor[SessionslistSession]]:
         """
         Fetches all active sessions for the current organization.
 
@@ -467,7 +475,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         """
         return self._get_api_list(
             "/v1/sessions",
-            page=AsyncSessionsCursor[SessionListResponse],
+            page=AsyncSessionsCursor[SessionslistSession],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -482,7 +490,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     session_list_params.SessionListParams,
                 ),
             ),
-            model=SessionListResponse,
+            model=SessionslistSession,
         )
 
     async def context(

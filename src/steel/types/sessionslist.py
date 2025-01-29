@@ -8,7 +8,15 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Sessionslist", "Session"]
+__all__ = ["Sessionslist", "Session", "SessionDimensions"]
+
+
+class SessionDimensions(BaseModel):
+    height: int
+    """Height of the browser window"""
+
+    width: int
+    """Width of the browser window"""
 
 
 class Session(BaseModel):
@@ -24,11 +32,17 @@ class Session(BaseModel):
     debug_url: str = FieldInfo(alias="debugUrl")
     """URL for debugging the session"""
 
+    dimensions: SessionDimensions
+    """Viewport and browser window dimensions for the session"""
+
     duration: int
     """Duration of the session in milliseconds"""
 
     event_count: int = FieldInfo(alias="eventCount")
     """Number of events processed in the session"""
+
+    proxy_bytes_used: int = FieldInfo(alias="proxyBytesUsed")
+    """Amount of data transmitted through the proxy"""
 
     session_viewer_url: str = FieldInfo(alias="sessionViewerUrl")
     """URL to view session details"""
