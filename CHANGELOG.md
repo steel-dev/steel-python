@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.1.0-beta.8 (2025-01-29)
+
+Full Changelog: [v0.1.0-beta.7...v0.1.0-beta.8](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.7...v0.1.0-beta.8)
+
+### Features
+
+* **api:** api update ([#70](https://github.com/steel-dev/steel-python/issues/70)) ([b95dc6a](https://github.com/steel-dev/steel-python/commit/b95dc6a091dfc7c87f37cc1f2e082a8e19e2647e))
+
+
+### Bug Fixes
+
+* reuse model in pagination items type ([#67](https://github.com/steel-dev/steel-python/issues/67)) ([705b3a1](https://github.com/steel-dev/steel-python/commit/705b3a19e770d925255becbe2df22794851d88dd))
+* **tests:** make test_get_platform less flaky ([#65](https://github.com/steel-dev/steel-python/issues/65)) ([2e1099d](https://github.com/steel-dev/steel-python/commit/2e1099d1a5cddc55c77ebef8b75a2c4c2d32ba09))
+
+
+### Chores
+
+* **internal:** avoid pytest-asyncio deprecation warning ([#66](https://github.com/steel-dev/steel-python/issues/66)) ([243f123](https://github.com/steel-dev/steel-python/commit/243f123be684a3fd9860fdd675cd74c6c45e16b5))
+* **internal:** codegen related update ([#62](https://github.com/steel-dev/steel-python/issues/62)) ([c6f2f2e](https://github.com/steel-dev/steel-python/commit/c6f2f2e647a6e1d47470ef1938b55da38ac4717c))
+* **internal:** codegen related update ([#68](https://github.com/steel-dev/steel-python/issues/68)) ([c9074c4](https://github.com/steel-dev/steel-python/commit/c9074c407d9212a178140fd256736d8d5e73adcb))
+* **internal:** minor formatting changes ([#69](https://github.com/steel-dev/steel-python/issues/69)) ([a97c037](https://github.com/steel-dev/steel-python/commit/a97c037f172d5f891885af844584f36d05dcf0fd))
+
+
+### Documentation
+
+* **raw responses:** fix duplicate `the` ([#64](https://github.com/steel-dev/steel-python/issues/64)) ([7b30e86](https://github.com/steel-dev/steel-python/commit/7b30e86bb645190be2c2a01b80ccad4203944f79))
+
 ## 0.1.0-beta.7 (2025-01-10)
 
 Full Changelog: [v0.1.0-beta.6...v0.1.0-beta.7](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.6...v0.1.0-beta.7)
