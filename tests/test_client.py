@@ -23,10 +23,12 @@ from pydantic import ValidationError
 
 from steel import Steel, AsyncSteel, APIResponseValidationError
 from steel._types import Omit
+from steel._utils import maybe_transform
 from steel._models import BaseModel, FinalRequestOptions
 from steel._constants import RAW_RESPONSE_HEADER
 from steel._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
 from steel._base_client import DEFAULT_TIMEOUT, HTTPX_DEFAULT_TIMEOUT, BaseClient, make_request_options
+from steel.types.session_create_params import SessionCreateParams
 
 from .utils import update_env
 
@@ -745,7 +747,7 @@ class TestSteel:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/v1/sessions",
-                body=cast(object, dict()),
+                body=cast(object, maybe_transform(dict(), SessionCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -760,7 +762,7 @@ class TestSteel:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/v1/sessions",
-                body=cast(object, dict()),
+                body=cast(object, maybe_transform(dict(), SessionCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1542,7 +1544,7 @@ class TestAsyncSteel:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/v1/sessions",
-                body=cast(object, dict()),
+                body=cast(object, maybe_transform(dict(), SessionCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1557,7 +1559,7 @@ class TestAsyncSteel:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/v1/sessions",
-                body=cast(object, dict()),
+                body=cast(object, maybe_transform(dict(), SessionCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
