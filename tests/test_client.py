@@ -747,7 +747,7 @@ class TestSteel:
         with pytest.raises(APITimeoutError):
             self.client.post(
                 "/v1/sessions",
-                body=cast(object, maybe_transform(dict(), SessionCreateParams)),
+                body=cast(object, maybe_transform({}, SessionCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -762,7 +762,7 @@ class TestSteel:
         with pytest.raises(APIStatusError):
             self.client.post(
                 "/v1/sessions",
-                body=cast(object, maybe_transform(dict(), SessionCreateParams)),
+                body=cast(object, maybe_transform({}, SessionCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1544,7 +1544,7 @@ class TestAsyncSteel:
         with pytest.raises(APITimeoutError):
             await self.client.post(
                 "/v1/sessions",
-                body=cast(object, maybe_transform(dict(), SessionCreateParams)),
+                body=cast(object, maybe_transform({}, SessionCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
@@ -1559,7 +1559,7 @@ class TestAsyncSteel:
         with pytest.raises(APIStatusError):
             await self.client.post(
                 "/v1/sessions",
-                body=cast(object, maybe_transform(dict(), SessionCreateParams)),
+                body=cast(object, maybe_transform({}, SessionCreateParams)),
                 cast_to=httpx.Response,
                 options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
             )
