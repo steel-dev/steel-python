@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.1.0-beta.9 (2025-02-21)
+
+Full Changelog: [v0.1.0-beta.8...v0.1.0-beta.9](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.8...v0.1.0-beta.9)
+
+### Features
+
+* **api:** api update ([#82](https://github.com/steel-dev/steel-python/issues/82)) ([c2b468e](https://github.com/steel-dev/steel-python/commit/c2b468ea3fbdd36633d3539fda857164b4407d32))
+* **client:** allow passing `NotGiven` for body ([#81](https://github.com/steel-dev/steel-python/issues/81)) ([5634d78](https://github.com/steel-dev/steel-python/commit/5634d78a94c580216e7c2a96a5de34b308320f65))
+* **client:** send `X-Stainless-Read-Timeout` header ([#75](https://github.com/steel-dev/steel-python/issues/75)) ([9c82e52](https://github.com/steel-dev/steel-python/commit/9c82e52cac086b4dfef6f4c531990887c0d06cd6))
+
+
+### Bug Fixes
+
+* asyncify on non-asyncio runtimes ([#79](https://github.com/steel-dev/steel-python/issues/79)) ([5dc2c1e](https://github.com/steel-dev/steel-python/commit/5dc2c1eb47698bce547a4d65899b4723f299b1be))
+* **client:** mark some request bodies as optional ([5634d78](https://github.com/steel-dev/steel-python/commit/5634d78a94c580216e7c2a96a5de34b308320f65))
+
+
+### Chores
+
+* **internal:** bummp ruff dependency ([#73](https://github.com/steel-dev/steel-python/issues/73)) ([549e327](https://github.com/steel-dev/steel-python/commit/549e32725828a1549827a774334e9d5b6efdfc33))
+* **internal:** change default timeout to an int ([#72](https://github.com/steel-dev/steel-python/issues/72)) ([571a926](https://github.com/steel-dev/steel-python/commit/571a92692803a75b4a34b80ec76ecd1d75dea899))
+* **internal:** fix type traversing dictionary params ([#76](https://github.com/steel-dev/steel-python/issues/76)) ([f116d3d](https://github.com/steel-dev/steel-python/commit/f116d3dba8ae1ca3f576f7f533d2aeb62693b14d))
+* **internal:** minor type handling changes ([#77](https://github.com/steel-dev/steel-python/issues/77)) ([f5a1ec4](https://github.com/steel-dev/steel-python/commit/f5a1ec481228186b388cf86b75f0d14c067ad818))
+* **internal:** update client tests ([#78](https://github.com/steel-dev/steel-python/issues/78)) ([03074e5](https://github.com/steel-dev/steel-python/commit/03074e5bf7f08e50debff7d7c7ecf78149d8cd8d))
+* **internal:** update client tests ([#80](https://github.com/steel-dev/steel-python/issues/80)) ([e076ecf](https://github.com/steel-dev/steel-python/commit/e076ecfa88045ead462069385b8dc07408d85911))
+
 ## 0.1.0-beta.8 (2025-01-29)
 
 Full Changelog: [v0.1.0-beta.7...v0.1.0-beta.8](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.7...v0.1.0-beta.8)
