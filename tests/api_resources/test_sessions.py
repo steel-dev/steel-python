@@ -41,8 +41,19 @@ class TestSessions:
             is_selenium=True,
             proxy_url="proxyUrl",
             session_context={
-                "cookies": [{"foo": "bar"}],
-                "local_storage": [{"foo": "bar"}],
+                "cookies": [
+                    {
+                        "domain": "domain",
+                        "name": "name",
+                        "value": "value",
+                        "expires": 0,
+                        "http_only": True,
+                        "path": "path",
+                        "same_site": "Strict",
+                        "secure": True,
+                    }
+                ],
+                "local_storage": {"foo": {"foo": "bar"}},
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
@@ -266,8 +277,19 @@ class TestAsyncSessions:
             is_selenium=True,
             proxy_url="proxyUrl",
             session_context={
-                "cookies": [{"foo": "bar"}],
-                "local_storage": [{"foo": "bar"}],
+                "cookies": [
+                    {
+                        "domain": "domain",
+                        "name": "name",
+                        "value": "value",
+                        "expires": 0,
+                        "http_only": True,
+                        "path": "path",
+                        "same_site": "Strict",
+                        "secure": True,
+                    }
+                ],
+                "local_storage": {"foo": {"foo": "bar"}},
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,

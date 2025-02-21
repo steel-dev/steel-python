@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from typing import Dict, Iterable
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["SessionCreateParams", "Dimensions", "SessionContext"]
+__all__ = ["SessionCreateParams", "Dimensions", "SessionContext", "SessionContextCookie"]
 
 
 class SessionCreateParams(TypedDict, total=False):
@@ -66,9 +66,35 @@ class Dimensions(TypedDict, total=False):
     """Width of the session"""
 
 
+class SessionContextCookie(TypedDict, total=False):
+    domain: Required[str]
+    """Domain the cookie belongs to"""
+
+    name: Required[str]
+    """Name of the cookie"""
+
+    value: Required[str]
+    """Value of the cookie"""
+
+    expires: float
+    """Unix timestamp when the cookie expires"""
+
+    http_only: Annotated[bool, PropertyInfo(alias="httpOnly")]
+    """Whether the cookie is HTTP only"""
+
+    path: str
+    """Path the cookie is valid for"""
+
+    same_site: Annotated[Literal["Strict", "Lax", "None"], PropertyInfo(alias="sameSite")]
+    """SameSite attribute of the cookie"""
+
+    secure: bool
+    """Whether the cookie requires HTTPS"""
+
+
 class SessionContext(TypedDict, total=False):
-    cookies: Iterable[Dict[str, object]]
+    cookies: Iterable[SessionContextCookie]
     """Cookies to initialize in the session"""
 
-    local_storage: Annotated[Iterable[Dict[str, object]], PropertyInfo(alias="localStorage")]
-    """Local storage items to initialize in the session"""
+    local_storage: Annotated[Dict[str, Dict[str, object]], PropertyInfo(alias="localStorage")]
+    """Domain-specific localStorage items to initialize in the session"""
