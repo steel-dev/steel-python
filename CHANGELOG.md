@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-beta.10 (2025-02-24)
+
+Full Changelog: [v0.1.0-beta.9...v0.1.0-beta.10](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.9...v0.1.0-beta.10)
+
+### Features
+
+* **api:** api update ([#86](https://github.com/steel-dev/steel-python/issues/86)) ([f59bdb3](https://github.com/steel-dev/steel-python/commit/f59bdb3f91a45e416a8390ff5940c710558c8d5e))
+
+
+### Chores
+
+* **internal:** fix devcontainers setup ([#84](https://github.com/steel-dev/steel-python/issues/84)) ([c616d73](https://github.com/steel-dev/steel-python/commit/c616d733f470e2b34e3677f18f2fdb7934f3abc8))
+
 ## 0.1.0-beta.9 (2025-02-21)
 
 Full Changelog: [v0.1.0-beta.8...v0.1.0-beta.9](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.8...v0.1.0-beta.9)
