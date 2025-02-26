@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-beta.11 (2025-02-26)
+
+Full Changelog: [v0.1.0-beta.10...v0.1.0-beta.11](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.10...v0.1.0-beta.11)
+
+### Features
+
+* **api:** api update ([#88](https://github.com/steel-dev/steel-python/issues/88)) ([6f17c90](https://github.com/steel-dev/steel-python/commit/6f17c90951089a396c38ff4cbd3922dbd3334635))
+* **api:** api update ([#90](https://github.com/steel-dev/steel-python/issues/90)) ([51b3f30](https://github.com/steel-dev/steel-python/commit/51b3f30024583c14ad495f7ec9f12caff70930aa))
+
+
+### Chores
+
+* **internal:** properly set __pydantic_private__ ([#91](https://github.com/steel-dev/steel-python/issues/91)) ([ae9843e](https://github.com/steel-dev/steel-python/commit/ae9843ee79b44edf5e36a393bc310f09a4d36b7c))
+
 ## 0.1.0-beta.10 (2025-02-24)
 
 Full Changelog: [v0.1.0-beta.9...v0.1.0-beta.10](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.9...v0.1.0-beta.10)
