@@ -83,7 +83,7 @@ class Steel(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous steel client instance.
+        """Construct a new synchronous Steel client instance.
 
         This automatically infers the `steel_api_key` argument from the `STEEL_API_KEY` environment variable if it is not provided.
         """
@@ -408,7 +408,7 @@ class AsyncSteel(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async steel client instance.
+        """Construct a new async AsyncSteel client instance.
 
         This automatically infers the `steel_api_key` argument from the `STEEL_API_KEY` environment variable if it is not provided.
         """
