@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.1.0-beta.11 (2025-03-11)
+
+Full Changelog: [v0.1.0-beta.10...v0.1.0-beta.11](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.10...v0.1.0-beta.11)
+
+### Features
+
+* **api:** api update ([#88](https://github.com/steel-dev/steel-python/issues/88)) ([6f17c90](https://github.com/steel-dev/steel-python/commit/6f17c90951089a396c38ff4cbd3922dbd3334635))
+* **api:** api update ([#90](https://github.com/steel-dev/steel-python/issues/90)) ([51b3f30](https://github.com/steel-dev/steel-python/commit/51b3f30024583c14ad495f7ec9f12caff70930aa))
+
+
+### Chores
+
+* **docs:** update client docstring ([#93](https://github.com/steel-dev/steel-python/issues/93)) ([3c539d6](https://github.com/steel-dev/steel-python/commit/3c539d64a4e023d216c5a094e8383112c2d7eb98))
+* **internal:** properly set __pydantic_private__ ([#91](https://github.com/steel-dev/steel-python/issues/91)) ([ae9843e](https://github.com/steel-dev/steel-python/commit/ae9843ee79b44edf5e36a393bc310f09a4d36b7c))
+* **internal:** remove unused http client options forwarding ([#94](https://github.com/steel-dev/steel-python/issues/94)) ([5f788da](https://github.com/steel-dev/steel-python/commit/5f788da8c132da81757eca0dc3ebd95f97f3ae19))
+
+
+### Documentation
+
+* revise readme docs about nested params ([#95](https://github.com/steel-dev/steel-python/issues/95)) ([3d889f3](https://github.com/steel-dev/steel-python/commit/3d889f3845419f8c2b53cb217b1acd45f78a1d5f))
+* update URLs from stainlessapi.com to stainless.com ([#92](https://github.com/steel-dev/steel-python/issues/92)) ([1c5b479](https://github.com/steel-dev/steel-python/commit/1c5b479568cc888996144b3872f688a6699299bd))
+
 ## 0.1.0-beta.10 (2025-02-24)
 
 Full Changelog: [v0.1.0-beta.9...v0.1.0-beta.10](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.9...v0.1.0-beta.10)
