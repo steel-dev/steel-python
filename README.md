@@ -144,6 +144,24 @@ for session in first_page.sessions:
 # Remove `await` for non-async usage.
 ```
 
+## Nested params
+
+Nested parameters are dictionaries, typed using `TypedDict`, for example:
+
+```python
+from steel import Steel
+
+client = Steel()
+
+session = client.sessions.create(
+    dimensions={
+        "height": 0,
+        "width": 0,
+    },
+)
+print(session.dimensions)
+```
+
 ## Handling errors
 
 When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `steel.APIConnectionError` is raised.
