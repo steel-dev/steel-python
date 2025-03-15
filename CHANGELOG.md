@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0-beta.12 (2025-03-15)
+
+Full Changelog: [v0.1.0-beta.11...v0.1.0-beta.12](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.11...v0.1.0-beta.12)
+
+### Bug Fixes
+
+* **types:** handle more discriminated union shapes ([#102](https://github.com/steel-dev/steel-python/issues/102)) ([abe344f](https://github.com/steel-dev/steel-python/commit/abe344f8bb0d9aa9653338697256238c348738b6))
+
+
+### Chores
+
+* **internal:** bump rye to 0.44.0 ([#101](https://github.com/steel-dev/steel-python/issues/101)) ([1e457b2](https://github.com/steel-dev/steel-python/commit/1e457b2194838e0b4ee65e649e6ff70e8c483b60))
+* **internal:** codegen related update ([#100](https://github.com/steel-dev/steel-python/issues/100)) ([5e997a0](https://github.com/steel-dev/steel-python/commit/5e997a03abbdc56aecd0b91a84944b0f489600f3))
+* **internal:** remove extra empty newlines ([#98](https://github.com/steel-dev/steel-python/issues/98)) ([6038058](https://github.com/steel-dev/steel-python/commit/60380587613a26ba0908f32312ce3f2eb7d6a63d))
+
 ## 0.1.0-beta.11 (2025-03-11)
 
 Full Changelog: [v0.1.0-beta.10...v0.1.0-beta.11](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.10...v0.1.0-beta.11)
