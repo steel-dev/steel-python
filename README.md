@@ -16,7 +16,7 @@ The REST API documentation can be found on [docs.steel.dev](https://docs.steel.d
 
 ```sh
 # install from PyPI
-pip install --pre steel-sdk
+pip install steel-sdk
 ```
 
 ## Usage
