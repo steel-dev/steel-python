@@ -25,8 +25,10 @@ from .._base_client import AsyncPaginator, make_request_options
 from ..types.session import Session as TypesSession
 from ..types.sessionslist import Session as SessionslistSession
 from ..types.session_context import SessionContext
+from ..types.session_events_response import SessionEventsResponse
 from ..types.session_release_response import SessionReleaseResponse
 from ..types.session_release_all_response import SessionReleaseAllResponse
+from ..types.session_live_details_response import SessionLiveDetailsResponse
 
 __all__ = ["SessionsResource", "AsyncSessionsResource"]
 
@@ -250,6 +252,72 @@ class SessionsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=SessionContext,
+        )
+
+    def events(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SessionEventsResponse:
+        """
+        This endpoint allows you to get the recorded session events in the RRWeb format
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/v1/sessions/{id}/events",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SessionEventsResponse,
+        )
+
+    def live_details(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SessionLiveDetailsResponse:
+        """
+        Returns the live state of the session, including pages, tabs, and browser state
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/v1/sessions/{id}/live-details",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SessionLiveDetailsResponse,
         )
 
     def release(
@@ -526,6 +594,72 @@ class AsyncSessionsResource(AsyncAPIResource):
             cast_to=SessionContext,
         )
 
+    async def events(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SessionEventsResponse:
+        """
+        This endpoint allows you to get the recorded session events in the RRWeb format
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/v1/sessions/{id}/events",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SessionEventsResponse,
+        )
+
+    async def live_details(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SessionLiveDetailsResponse:
+        """
+        Returns the live state of the session, including pages, tabs, and browser state
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/v1/sessions/{id}/live-details",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SessionLiveDetailsResponse,
+        )
+
     async def release(
         self,
         id: str,
@@ -595,6 +729,12 @@ class SessionsResourceWithRawResponse:
         self.context = to_raw_response_wrapper(
             sessions.context,
         )
+        self.events = to_raw_response_wrapper(
+            sessions.events,
+        )
+        self.live_details = to_raw_response_wrapper(
+            sessions.live_details,
+        )
         self.release = to_raw_response_wrapper(
             sessions.release,
         )
@@ -618,6 +758,12 @@ class AsyncSessionsResourceWithRawResponse:
         )
         self.context = async_to_raw_response_wrapper(
             sessions.context,
+        )
+        self.events = async_to_raw_response_wrapper(
+            sessions.events,
+        )
+        self.live_details = async_to_raw_response_wrapper(
+            sessions.live_details,
         )
         self.release = async_to_raw_response_wrapper(
             sessions.release,
@@ -643,6 +789,12 @@ class SessionsResourceWithStreamingResponse:
         self.context = to_streamed_response_wrapper(
             sessions.context,
         )
+        self.events = to_streamed_response_wrapper(
+            sessions.events,
+        )
+        self.live_details = to_streamed_response_wrapper(
+            sessions.live_details,
+        )
         self.release = to_streamed_response_wrapper(
             sessions.release,
         )
@@ -666,6 +818,12 @@ class AsyncSessionsResourceWithStreamingResponse:
         )
         self.context = async_to_streamed_response_wrapper(
             sessions.context,
+        )
+        self.events = async_to_streamed_response_wrapper(
+            sessions.events,
+        )
+        self.live_details = async_to_streamed_response_wrapper(
+            sessions.live_details,
         )
         self.release = async_to_streamed_response_wrapper(
             sessions.release,
