@@ -12,6 +12,8 @@ from .screenshot_response import ScreenshotResponse as ScreenshotResponse
 from .session_list_params import SessionListParams as SessionListParams
 from .client_scrape_params import ClientScrapeParams as ClientScrapeParams
 from .session_create_params import SessionCreateParams as SessionCreateParams
+from .session_events_response import SessionEventsResponse as SessionEventsResponse
 from .client_screenshot_params import ClientScreenshotParams as ClientScreenshotParams
 from .session_release_response import SessionReleaseResponse as SessionReleaseResponse
 from .session_release_all_response import SessionReleaseAllResponse as SessionReleaseAllResponse
+from .session_live_details_response import SessionLiveDetailsResponse as SessionLiveDetailsResponse
