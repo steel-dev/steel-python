@@ -36,7 +36,6 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import sessions
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import SteelError, APIStatusError
 from ._base_client import (
@@ -45,6 +44,7 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
+from .resources.sessions import sessions
 from .types.pdf_response import PdfResponse
 from .types.scrape_response import ScrapeResponse
 from .types.screenshot_response import ScreenshotResponse
