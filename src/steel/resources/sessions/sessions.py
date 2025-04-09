@@ -6,34 +6,46 @@ from typing_extensions import Literal
 
 import httpx
 
-from ..types import session_list_params, session_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from .._utils import (
+from .files import (
+    FilesResource,
+    AsyncFilesResource,
+    FilesResourceWithRawResponse,
+    AsyncFilesResourceWithRawResponse,
+    FilesResourceWithStreamingResponse,
+    AsyncFilesResourceWithStreamingResponse,
+)
+from ...types import session_list_params, session_create_params
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._utils import (
     maybe_transform,
     async_maybe_transform,
 )
-from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncSessionsCursor, AsyncSessionsCursor
-from .._base_client import AsyncPaginator, make_request_options
-from ..types.session import Session as TypesSession
-from ..types.sessionslist import Session as SessionslistSession
-from ..types.session_context import SessionContext
-from ..types.session_events_response import SessionEventsResponse
-from ..types.session_release_response import SessionReleaseResponse
-from ..types.session_release_all_response import SessionReleaseAllResponse
-from ..types.session_live_details_response import SessionLiveDetailsResponse
+from ...pagination import SyncSessionsCursor, AsyncSessionsCursor
+from ..._base_client import AsyncPaginator, make_request_options
+from ...types.session import Session as TypesSession
+from ...types.sessionslist import Session as SessionslistSession
+from ...types.session_context import SessionContext
+from ...types.session_events_response import SessionEventsResponse
+from ...types.session_release_response import SessionReleaseResponse
+from ...types.session_release_all_response import SessionReleaseAllResponse
+from ...types.session_live_details_response import SessionLiveDetailsResponse
 
 __all__ = ["SessionsResource", "AsyncSessionsResource"]
 
 
 class SessionsResource(SyncAPIResource):
+    @cached_property
+    def files(self) -> FilesResource:
+        return FilesResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> SessionsResourceWithRawResponse:
         """
@@ -374,6 +386,10 @@ class SessionsResource(SyncAPIResource):
 
 
 class AsyncSessionsResource(AsyncAPIResource):
+    @cached_property
+    def files(self) -> AsyncFilesResource:
+        return AsyncFilesResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
         """
@@ -742,6 +758,10 @@ class SessionsResourceWithRawResponse:
             sessions.release_all,
         )
 
+    @cached_property
+    def files(self) -> FilesResourceWithRawResponse:
+        return FilesResourceWithRawResponse(self._sessions.files)
+
 
 class AsyncSessionsResourceWithRawResponse:
     def __init__(self, sessions: AsyncSessionsResource) -> None:
@@ -771,6 +791,10 @@ class AsyncSessionsResourceWithRawResponse:
         self.release_all = async_to_raw_response_wrapper(
             sessions.release_all,
         )
+
+    @cached_property
+    def files(self) -> AsyncFilesResourceWithRawResponse:
+        return AsyncFilesResourceWithRawResponse(self._sessions.files)
 
 
 class SessionsResourceWithStreamingResponse:
@@ -802,6 +826,10 @@ class SessionsResourceWithStreamingResponse:
             sessions.release_all,
         )
 
+    @cached_property
+    def files(self) -> FilesResourceWithStreamingResponse:
+        return FilesResourceWithStreamingResponse(self._sessions.files)
+
 
 class AsyncSessionsResourceWithStreamingResponse:
     def __init__(self, sessions: AsyncSessionsResource) -> None:
@@ -831,3 +859,7 @@ class AsyncSessionsResourceWithStreamingResponse:
         self.release_all = async_to_streamed_response_wrapper(
             sessions.release_all,
         )
+
+    @cached_property
+    def files(self) -> AsyncFilesResourceWithStreamingResponse:
+        return AsyncFilesResourceWithStreamingResponse(self._sessions.files)
