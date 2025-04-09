@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0 (2025-04-09)
+
+Full Changelog: [v0.0.1...v0.1.0](https://github.com/steel-dev/steel-python/compare/v0.0.1...v0.1.0)
+
+### Features
+
+* **api:** api update ([#111](https://github.com/steel-dev/steel-python/issues/111)) ([d45bfd1](https://github.com/steel-dev/steel-python/commit/d45bfd199cb99612197ea59b05ea9aba15a6a76d))
+
+
+### Chores
+
+* fix typos ([#107](https://github.com/steel-dev/steel-python/issues/107)) ([dabc9fe](https://github.com/steel-dev/steel-python/commit/dabc9fe147283ed3bfe85076fdf0267b9b87faef))
+* **internal:** remove test without asserts ([#109](https://github.com/steel-dev/steel-python/issues/109)) ([89fd178](https://github.com/steel-dev/steel-python/commit/89fd17829645dcc4aed95e6f78e731eba66e0bfb))
+* **internal:** slight transform perf improvement ([#110](https://github.com/steel-dev/steel-python/issues/110)) ([85f6c31](https://github.com/steel-dev/steel-python/commit/85f6c313d9b230d5f38065c0e7ef05c51ed288a7))
+
 ## 0.0.1 (2025-03-19)
 
 Full Changelog: [v0.1.0-beta.11...v0.0.1](https://github.com/steel-dev/steel-python/compare/v0.1.0-beta.11...v0.0.1)

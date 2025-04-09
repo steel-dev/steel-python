@@ -349,9 +349,6 @@ class TestSteel:
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
-    def test_validate_headers(self) -> None:
-        client = Steel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
-
     def test_default_query_option(self) -> None:
         client = Steel(
             base_url=base_url,
@@ -1142,9 +1139,6 @@ class TestAsyncSteel:
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
-    def test_validate_headers(self) -> None:
-        client = AsyncSteel(base_url=base_url, steel_api_key=steel_api_key, _strict_response_validation=True)
-
     def test_default_query_option(self) -> None:
         client = AsyncSteel(
             base_url=base_url,
@@ -1658,7 +1652,7 @@ class TestAsyncSteel:
         import threading
 
         from steel._utils import asyncify
-        from steel._base_client import get_platform 
+        from steel._base_client import get_platform
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()
