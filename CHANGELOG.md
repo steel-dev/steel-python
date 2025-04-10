@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1 (2025-04-10)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/steel-dev/steel-python/compare/v0.1.0...v0.1.1)
+
+### Chores
+
+* **internal:** expand CI branch coverage ([6bbf5f1](https://github.com/steel-dev/steel-python/commit/6bbf5f154ffc5f22e5d6c3217f52937152496fd2))
+* **internal:** reduce CI branch coverage ([1f82860](https://github.com/steel-dev/steel-python/commit/1f82860b86f11d32190c56888a72f236fde32409))
+
 ## 0.1.0 (2025-04-09)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/steel-dev/steel-python/compare/v0.0.1...v0.1.0)
