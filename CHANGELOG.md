@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.1 (2025-04-19)
+
+Full Changelog: [v0.1.0...v0.1.1](https://github.com/steel-dev/steel-python/compare/v0.1.0...v0.1.1)
+
+### Bug Fixes
+
+* **perf:** optimize some hot paths ([ba59e30](https://github.com/steel-dev/steel-python/commit/ba59e3019648f08568a9bb12053b4a5eb9ded30c))
+* **perf:** skip traversing types for NotGiven values ([f8f5c80](https://github.com/steel-dev/steel-python/commit/f8f5c8029f1db992a52d62c14e51478467457796))
+
+
+### Chores
+
+* **client:** minor internal fixes ([e00651a](https://github.com/steel-dev/steel-python/commit/e00651abf449f04eae08a670c4df90afefc6047a))
+* **internal:** base client updates ([6a1038d](https://github.com/steel-dev/steel-python/commit/6a1038db1f49a8b232614452dbdeda94ee920c28))
+* **internal:** bump pyright version ([e851175](https://github.com/steel-dev/steel-python/commit/e851175e65f28d0213b220fed1dee1223e7b98aa))
+* **internal:** expand CI branch coverage ([6bbf5f1](https://github.com/steel-dev/steel-python/commit/6bbf5f154ffc5f22e5d6c3217f52937152496fd2))
+* **internal:** reduce CI branch coverage ([1f82860](https://github.com/steel-dev/steel-python/commit/1f82860b86f11d32190c56888a72f236fde32409))
+* **internal:** update models test ([2ea55a4](https://github.com/steel-dev/steel-python/commit/2ea55a4676fbac3339928f098080794648f15240))
+* **internal:** update pyright settings ([8805d95](https://github.com/steel-dev/steel-python/commit/8805d955fd7c4e20c3dd28df8e21d9077144b963))
+
 ## 0.1.0 (2025-04-09)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/steel-dev/steel-python/compare/v0.0.1...v0.1.0)
