@@ -11,34 +11,64 @@ __all__ = ["SessionContext", "Cookie"]
 
 
 class Cookie(BaseModel):
-    domain: str
-    """Domain the cookie belongs to"""
-
     name: str
-    """Name of the cookie"""
+    """The name of the cookie"""
 
     value: str
-    """Value of the cookie"""
+    """The value of the cookie"""
+
+    domain: Optional[str] = None
+    """The domain of the cookie"""
 
     expires: Optional[float] = None
-    """Unix timestamp when the cookie expires"""
+    """The expiration date of the cookie"""
 
     http_only: Optional[bool] = FieldInfo(alias="httpOnly", default=None)
     """Whether the cookie is HTTP only"""
 
+    partition_key: Optional[str] = FieldInfo(alias="partitionKey", default=None)
+    """The partition key of the cookie"""
+
     path: Optional[str] = None
-    """Path the cookie is valid for"""
+    """The path of the cookie"""
+
+    priority: Optional[Literal["Low", "Medium", "High"]] = None
+    """The priority of the cookie"""
+
+    same_party: Optional[bool] = FieldInfo(alias="sameParty", default=None)
+    """Whether the cookie is a same party cookie"""
 
     same_site: Optional[Literal["Strict", "Lax", "None"]] = FieldInfo(alias="sameSite", default=None)
-    """SameSite attribute of the cookie"""
+    """The same site attribute of the cookie"""
 
     secure: Optional[bool] = None
-    """Whether the cookie requires HTTPS"""
+    """Whether the cookie is secure"""
+
+    session: Optional[bool] = None
+    """Whether the cookie is a session cookie"""
+
+    size: Optional[float] = None
+    """The size of the cookie"""
+
+    source_port: Optional[float] = FieldInfo(alias="sourcePort", default=None)
+    """The source port of the cookie"""
+
+    source_scheme: Optional[Literal["Unset", "NonSecure", "Secure"]] = FieldInfo(alias="sourceScheme", default=None)
+    """The source scheme of the cookie"""
+
+    url: Optional[str] = None
+    """The URL of the cookie"""
 
 
 class SessionContext(BaseModel):
     cookies: Optional[List[Cookie]] = None
-    """Cookies from the session"""
+    """Cookies to initialize in the session"""
+
+    indexed_db: Optional[Dict[str, List[Dict[str, object]]]] = FieldInfo(alias="indexedDB", default=None)
+    """Domain-specific indexedDB items to initialize in the session"""
 
     local_storage: Optional[Dict[str, Dict[str, object]]] = FieldInfo(alias="localStorage", default=None)
-    """Local storage items from the session"""
+    """Domain-specific localStorage items to initialize in the session"""
+
+    session_storage: Optional[Dict[str, Dict[str, object]]] = FieldInfo(alias="sessionStorage", default=None)
+    """Domain-specific sessionStorage items to initialize in the session"""
