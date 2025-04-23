@@ -67,34 +67,64 @@ class Dimensions(TypedDict, total=False):
 
 
 class SessionContextCookie(TypedDict, total=False):
-    domain: Required[str]
-    """Domain the cookie belongs to"""
-
     name: Required[str]
-    """Name of the cookie"""
+    """The name of the cookie"""
 
     value: Required[str]
-    """Value of the cookie"""
+    """The value of the cookie"""
+
+    domain: str
+    """The domain of the cookie"""
 
     expires: float
-    """Unix timestamp when the cookie expires"""
+    """The expiration date of the cookie"""
 
     http_only: Annotated[bool, PropertyInfo(alias="httpOnly")]
     """Whether the cookie is HTTP only"""
 
+    partition_key: Annotated[str, PropertyInfo(alias="partitionKey")]
+    """The partition key of the cookie"""
+
     path: str
-    """Path the cookie is valid for"""
+    """The path of the cookie"""
+
+    priority: Literal["Low", "Medium", "High"]
+    """The priority of the cookie"""
+
+    same_party: Annotated[bool, PropertyInfo(alias="sameParty")]
+    """Whether the cookie is a same party cookie"""
 
     same_site: Annotated[Literal["Strict", "Lax", "None"], PropertyInfo(alias="sameSite")]
-    """SameSite attribute of the cookie"""
+    """The same site attribute of the cookie"""
 
     secure: bool
-    """Whether the cookie requires HTTPS"""
+    """Whether the cookie is secure"""
+
+    session: bool
+    """Whether the cookie is a session cookie"""
+
+    size: float
+    """The size of the cookie"""
+
+    source_port: Annotated[float, PropertyInfo(alias="sourcePort")]
+    """The source port of the cookie"""
+
+    source_scheme: Annotated[Literal["Unset", "NonSecure", "Secure"], PropertyInfo(alias="sourceScheme")]
+    """The source scheme of the cookie"""
+
+    url: str
+    """The URL of the cookie"""
 
 
 class SessionContext(TypedDict, total=False):
     cookies: Iterable[SessionContextCookie]
     """Cookies to initialize in the session"""
 
+    indexed_db: Annotated[Dict[str, Iterable[Dict[str, object]]], PropertyInfo(alias="indexedDB")]
+    """Domain-specific indexedDB items to initialize in the session"""
+
     local_storage: Annotated[Dict[str, Dict[str, object]], PropertyInfo(alias="localStorage")]
     """Domain-specific localStorage items to initialize in the session"""
+
+    session_storage: Annotated[Dict[str, Dict[str, object]], PropertyInfo(alias="sessionStorage")]
+    """Domain-specific sessionStorage items to initialize in the session"""
