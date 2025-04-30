@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.2.0 (2025-04-24)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/steel-dev/steel-python/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** api update ([48e74c7](https://github.com/steel-dev/steel-python/commit/48e74c72ffbc4b3fa291f817ebd6a846a7c85624))
+
+
+### Bug Fixes
+
+* **perf:** optimize some hot paths ([ba59e30](https://github.com/steel-dev/steel-python/commit/ba59e3019648f08568a9bb12053b4a5eb9ded30c))
+* **perf:** skip traversing types for NotGiven values ([f8f5c80](https://github.com/steel-dev/steel-python/commit/f8f5c8029f1db992a52d62c14e51478467457796))
+* **pydantic v1:** more robust ModelField.annotation check ([c96c43b](https://github.com/steel-dev/steel-python/commit/c96c43bb09412aaf8033ae9697c65c0142130d16))
+
+
+### Chores
+
+* broadly detect json family of content-type headers ([6b4eda4](https://github.com/steel-dev/steel-python/commit/6b4eda4ff26b75e94e067bd278fa47551ddee962))
+* **ci:** add timeout thresholds for CI jobs ([253270e](https://github.com/steel-dev/steel-python/commit/253270eebeaf387959a590a53c8de53a8f2efc5d))
+* **ci:** only use depot for staging repos ([01c88a5](https://github.com/steel-dev/steel-python/commit/01c88a56c6c1690bab8805a19aae7cd70c5c5a4a))
+* **client:** minor internal fixes ([e00651a](https://github.com/steel-dev/steel-python/commit/e00651abf449f04eae08a670c4df90afefc6047a))
+* **internal:** base client updates ([6a1038d](https://github.com/steel-dev/steel-python/commit/6a1038db1f49a8b232614452dbdeda94ee920c28))
+* **internal:** bump pyright version ([e851175](https://github.com/steel-dev/steel-python/commit/e851175e65f28d0213b220fed1dee1223e7b98aa))
+* **internal:** codegen related update ([f9a063f](https://github.com/steel-dev/steel-python/commit/f9a063f90bdfe70af335ea73e20b86201fd7020d))
+* **internal:** expand CI branch coverage ([6bbf5f1](https://github.com/steel-dev/steel-python/commit/6bbf5f154ffc5f22e5d6c3217f52937152496fd2))
+* **internal:** fix list file params ([f3e1d8c](https://github.com/steel-dev/steel-python/commit/f3e1d8c0cc3f8954444569bf15230860db265ccf))
+* **internal:** import reformatting ([176a86e](https://github.com/steel-dev/steel-python/commit/176a86e0ec58118429fcad1814aaf4e7413e7b18))
+* **internal:** minor formatting changes ([ca3dd6a](https://github.com/steel-dev/steel-python/commit/ca3dd6a6647618e16525f759d9757e9823fa924b))
+* **internal:** reduce CI branch coverage ([1f82860](https://github.com/steel-dev/steel-python/commit/1f82860b86f11d32190c56888a72f236fde32409))
+* **internal:** refactor retries to not use recursion ([df55de6](https://github.com/steel-dev/steel-python/commit/df55de6b59ca3c94a598327b6e787a3e47011d7c))
+* **internal:** update models test ([2ea55a4](https://github.com/steel-dev/steel-python/commit/2ea55a4676fbac3339928f098080794648f15240))
+* **internal:** update pyright settings ([8805d95](https://github.com/steel-dev/steel-python/commit/8805d955fd7c4e20c3dd28df8e21d9077144b963))
+
 ## 0.1.0 (2025-04-09)
 
 Full Changelog: [v0.0.1...v0.1.0](https://github.com/steel-dev/steel-python/compare/v0.0.1...v0.1.0)
