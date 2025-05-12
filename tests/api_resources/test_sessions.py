@@ -17,6 +17,7 @@ from steel.types import (
     SessionLiveDetailsResponse,
 )
 from tests.utils import assert_matches_type
+from steel._utils import parse_datetime
 from steel.pagination import SyncSessionsCursor, AsyncSessionsCursor
 from steel.types.sessionslist import Session as SessionslistSession
 
@@ -41,7 +42,7 @@ class TestSessions:
                 "width": 0,
             },
             is_selenium=True,
-            proxy_url="proxyUrl",
+            proxy_url="https://example.com",
             session_context={
                 "cookies": [
                     {
@@ -50,7 +51,10 @@ class TestSessions:
                         "domain": "domain",
                         "expires": 0,
                         "http_only": True,
-                        "partition_key": "partitionKey",
+                        "partition_key": {
+                            "has_cross_site_ancestor": True,
+                            "top_level_site": "topLevelSite",
+                        },
                         "path": "path",
                         "priority": "Low",
                         "same_party": True,
@@ -63,9 +67,38 @@ class TestSessions:
                         "url": "url",
                     }
                 ],
-                "indexed_db": {"foo": [{"foo": "bar"}]},
-                "local_storage": {"foo": {"foo": "bar"}},
-                "session_storage": {"foo": {"foo": "bar"}},
+                "indexed_db": {
+                    "foo": [
+                        {
+                            "id": 0,
+                            "data": [
+                                {
+                                    "id": 0,
+                                    "name": "name",
+                                    "records": [
+                                        {
+                                            "blob_files": [
+                                                {
+                                                    "blob_number": 0,
+                                                    "mime_type": "mimeType",
+                                                    "size": 0,
+                                                    "filename": "filename",
+                                                    "last_modified": parse_datetime("2019-12-27T18:11:19.117Z"),
+                                                    "path": "path",
+                                                }
+                                            ],
+                                            "key": {},
+                                            "value": {},
+                                        }
+                                    ],
+                                }
+                            ],
+                            "name": "name",
+                        }
+                    ]
+                },
+                "local_storage": {"foo": {"foo": "string"}},
+                "session_storage": {"foo": {"foo": "string"}},
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
@@ -363,7 +396,7 @@ class TestAsyncSessions:
                 "width": 0,
             },
             is_selenium=True,
-            proxy_url="proxyUrl",
+            proxy_url="https://example.com",
             session_context={
                 "cookies": [
                     {
@@ -372,7 +405,10 @@ class TestAsyncSessions:
                         "domain": "domain",
                         "expires": 0,
                         "http_only": True,
-                        "partition_key": "partitionKey",
+                        "partition_key": {
+                            "has_cross_site_ancestor": True,
+                            "top_level_site": "topLevelSite",
+                        },
                         "path": "path",
                         "priority": "Low",
                         "same_party": True,
@@ -385,9 +421,38 @@ class TestAsyncSessions:
                         "url": "url",
                     }
                 ],
-                "indexed_db": {"foo": [{"foo": "bar"}]},
-                "local_storage": {"foo": {"foo": "bar"}},
-                "session_storage": {"foo": {"foo": "bar"}},
+                "indexed_db": {
+                    "foo": [
+                        {
+                            "id": 0,
+                            "data": [
+                                {
+                                    "id": 0,
+                                    "name": "name",
+                                    "records": [
+                                        {
+                                            "blob_files": [
+                                                {
+                                                    "blob_number": 0,
+                                                    "mime_type": "mimeType",
+                                                    "size": 0,
+                                                    "filename": "filename",
+                                                    "last_modified": parse_datetime("2019-12-27T18:11:19.117Z"),
+                                                    "path": "path",
+                                                }
+                                            ],
+                                            "key": {},
+                                            "value": {},
+                                        }
+                                    ],
+                                }
+                            ],
+                            "name": "name",
+                        }
+                    ]
+                },
+                "local_storage": {"foo": {"foo": "string"}},
+                "session_storage": {"foo": {"foo": "string"}},
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
