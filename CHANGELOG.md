@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.0 (2025-05-12)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/steel-dev/steel-python/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([de03f2d](https://github.com/steel-dev/steel-python/commit/de03f2d18de91dd52b45652466a6bc9c2772a00a))
+
+
+### Bug Fixes
+
+* **package:** support direct resource imports ([6bcebb1](https://github.com/steel-dev/steel-python/commit/6bcebb13d5af14d8e6415d0d0256b22431f78e76))
+
+
+### Chores
+
+* **internal:** avoid errors for isinstance checks on proxies ([5517961](https://github.com/steel-dev/steel-python/commit/5517961f8463167e35f6e0befea81caf4d4fbfd4))
+
 ## 0.2.0 (2025-04-24)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/steel-dev/steel-python/compare/v0.1.0...v0.2.0)
