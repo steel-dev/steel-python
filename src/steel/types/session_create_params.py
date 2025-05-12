@@ -2,12 +2,23 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable
+from typing import Dict, Union, Iterable
+from datetime import datetime
 from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["SessionCreateParams", "Dimensions", "SessionContext", "SessionContextCookie"]
+__all__ = [
+    "SessionCreateParams",
+    "Dimensions",
+    "SessionContext",
+    "SessionContextCookie",
+    "SessionContextCookiePartitionKey",
+    "SessionContextIndexedDB",
+    "SessionContextIndexedDBData",
+    "SessionContextIndexedDBDataRecord",
+    "SessionContextIndexedDBDataRecordBlobFile",
+]
 
 
 class SessionCreateParams(TypedDict, total=False):
@@ -66,6 +77,20 @@ class Dimensions(TypedDict, total=False):
     """Width of the session"""
 
 
+class SessionContextCookiePartitionKey(TypedDict, total=False):
+    has_cross_site_ancestor: Required[Annotated[bool, PropertyInfo(alias="hasCrossSiteAncestor")]]
+    """
+    Indicates if the cookie has any ancestors that are cross-site to the
+    topLevelSite.
+    """
+
+    top_level_site: Required[Annotated[str, PropertyInfo(alias="topLevelSite")]]
+    """
+    The site of the top-level URL the browser was visiting at the start of the
+    request to the endpoint that set the cookie.
+    """
+
+
 class SessionContextCookie(TypedDict, total=False):
     name: Required[str]
     """The name of the cookie"""
@@ -82,7 +107,7 @@ class SessionContextCookie(TypedDict, total=False):
     http_only: Annotated[bool, PropertyInfo(alias="httpOnly")]
     """Whether the cookie is HTTP only"""
 
-    partition_key: Annotated[str, PropertyInfo(alias="partitionKey")]
+    partition_key: Annotated[SessionContextCookiePartitionKey, PropertyInfo(alias="partitionKey")]
     """The partition key of the cookie"""
 
     path: str
@@ -116,15 +141,53 @@ class SessionContextCookie(TypedDict, total=False):
     """The URL of the cookie"""
 
 
+class SessionContextIndexedDBDataRecordBlobFile(TypedDict, total=False):
+    blob_number: Required[Annotated[float, PropertyInfo(alias="blobNumber")]]
+
+    mime_type: Required[Annotated[str, PropertyInfo(alias="mimeType")]]
+
+    size: Required[float]
+
+    filename: str
+
+    last_modified: Annotated[Union[str, datetime], PropertyInfo(alias="lastModified", format="iso8601")]
+
+    path: str
+
+
+class SessionContextIndexedDBDataRecord(TypedDict, total=False):
+    blob_files: Annotated[Iterable[SessionContextIndexedDBDataRecordBlobFile], PropertyInfo(alias="blobFiles")]
+
+    key: object
+
+    value: object
+
+
+class SessionContextIndexedDBData(TypedDict, total=False):
+    id: Required[float]
+
+    name: Required[str]
+
+    records: Required[Iterable[SessionContextIndexedDBDataRecord]]
+
+
+class SessionContextIndexedDB(TypedDict, total=False):
+    id: Required[float]
+
+    data: Required[Iterable[SessionContextIndexedDBData]]
+
+    name: Required[str]
+
+
 class SessionContext(TypedDict, total=False):
     cookies: Iterable[SessionContextCookie]
     """Cookies to initialize in the session"""
 
-    indexed_db: Annotated[Dict[str, Iterable[Dict[str, object]]], PropertyInfo(alias="indexedDB")]
+    indexed_db: Annotated[Dict[str, Iterable[SessionContextIndexedDB]], PropertyInfo(alias="indexedDB")]
     """Domain-specific indexedDB items to initialize in the session"""
 
-    local_storage: Annotated[Dict[str, Dict[str, object]], PropertyInfo(alias="localStorage")]
+    local_storage: Annotated[Dict[str, Dict[str, str]], PropertyInfo(alias="localStorage")]
     """Domain-specific localStorage items to initialize in the session"""
 
-    session_storage: Annotated[Dict[str, Dict[str, object]], PropertyInfo(alias="sessionStorage")]
+    session_storage: Annotated[Dict[str, Dict[str, str]], PropertyInfo(alias="sessionStorage")]
     """Domain-specific sessionStorage items to initialize in the session"""
