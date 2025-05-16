@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.1 (2025-05-16)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/steel-dev/steel-python/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* **ci:** fix installation instructions ([a3534f2](https://github.com/steel-dev/steel-python/commit/a3534f2d4583d06243fbf349acc647551ad1a509))
+* **ci:** upload sdks to package manager ([f6b95a9](https://github.com/steel-dev/steel-python/commit/f6b95a9c33d887c2547acc14b151c314536196dc))
+
 ## 0.3.0 (2025-05-12)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/steel-dev/steel-python/compare/v0.2.0...v0.3.0)
