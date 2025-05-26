@@ -13,7 +13,6 @@ from steel.types import (
     SessionContext,
     SessionEventsResponse,
     SessionReleaseResponse,
-    SessionReleaseAllResponse,
     SessionLiveDetailsResponse,
 )
 from tests.utils import assert_matches_type
@@ -37,11 +36,17 @@ class TestSessions:
         session = client.sessions.create(
             block_ads=True,
             concurrency=0,
+            credentials={
+                "auto_submit": True,
+                "blur_fields": True,
+                "exact_origin": True,
+            },
             dimensions={
                 "height": 0,
                 "width": 0,
             },
             is_selenium=True,
+            namespace="namespace",
             proxy_url="https://example.com",
             session_context={
                 "cookies": [
@@ -352,31 +357,6 @@ class TestSessions:
                 "",
             )
 
-    @parametrize
-    def test_method_release_all(self, client: Steel) -> None:
-        session = client.sessions.release_all()
-        assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
-
-    @parametrize
-    def test_raw_response_release_all(self, client: Steel) -> None:
-        response = client.sessions.with_raw_response.release_all()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        session = response.parse()
-        assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
-
-    @parametrize
-    def test_streaming_response_release_all(self, client: Steel) -> None:
-        with client.sessions.with_streaming_response.release_all() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            session = response.parse()
-            assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
 
 class TestAsyncSessions:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
@@ -391,11 +371,17 @@ class TestAsyncSessions:
         session = await async_client.sessions.create(
             block_ads=True,
             concurrency=0,
+            credentials={
+                "auto_submit": True,
+                "blur_fields": True,
+                "exact_origin": True,
+            },
             dimensions={
                 "height": 0,
                 "width": 0,
             },
             is_selenium=True,
+            namespace="namespace",
             proxy_url="https://example.com",
             session_context={
                 "cookies": [
@@ -705,28 +691,3 @@ class TestAsyncSessions:
             await async_client.sessions.with_raw_response.release(
                 "",
             )
-
-    @parametrize
-    async def test_method_release_all(self, async_client: AsyncSteel) -> None:
-        session = await async_client.sessions.release_all()
-        assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
-
-    @parametrize
-    async def test_raw_response_release_all(self, async_client: AsyncSteel) -> None:
-        response = await async_client.sessions.with_raw_response.release_all()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        session = await response.parse()
-        assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
-
-    @parametrize
-    async def test_streaming_response_release_all(self, async_client: AsyncSteel) -> None:
-        async with async_client.sessions.with_streaming_response.release_all() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            session = await response.parse()
-            assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
