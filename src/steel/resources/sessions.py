@@ -6,43 +6,30 @@ from typing_extensions import Literal
 
 import httpx
 
-from .files import (
-    FilesResource,
-    AsyncFilesResource,
-    FilesResourceWithRawResponse,
-    AsyncFilesResourceWithRawResponse,
-    FilesResourceWithStreamingResponse,
-    AsyncFilesResourceWithStreamingResponse,
-)
-from ...types import session_list_params, session_create_params
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from ..types import session_list_params, session_create_params
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import maybe_transform, async_maybe_transform
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ...pagination import SyncSessionsCursor, AsyncSessionsCursor
-from ..._base_client import AsyncPaginator, make_request_options
-from ...types.session import Session as TypesSession
-from ...types.sessionslist import Session as SessionslistSession
-from ...types.session_context import SessionContext
-from ...types.session_events_response import SessionEventsResponse
-from ...types.session_release_response import SessionReleaseResponse
-from ...types.session_release_all_response import SessionReleaseAllResponse
-from ...types.session_live_details_response import SessionLiveDetailsResponse
+from ..pagination import SyncSessionsCursor, AsyncSessionsCursor
+from .._base_client import AsyncPaginator, make_request_options
+from ..types.session import Session as TypesSession
+from ..types.sessionslist import Session as SessionslistSession
+from ..types.session_context import SessionContext
+from ..types.session_events_response import SessionEventsResponse
+from ..types.session_release_response import SessionReleaseResponse
+from ..types.session_live_details_response import SessionLiveDetailsResponse
 
 __all__ = ["SessionsResource", "AsyncSessionsResource"]
 
 
 class SessionsResource(SyncAPIResource):
-    @cached_property
-    def files(self) -> FilesResource:
-        return FilesResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> SessionsResourceWithRawResponse:
         """
@@ -67,8 +54,10 @@ class SessionsResource(SyncAPIResource):
         *,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
+        credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
         dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
+        namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
@@ -91,10 +80,14 @@ class SessionsResource(SyncAPIResource):
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
+          credentials: Configuration for session credentials
+
           dimensions: Viewport and browser window dimensions for the session
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
+
+          namespace: The namespace the session should be created against. Defaults to "default".
 
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
@@ -128,8 +121,10 @@ class SessionsResource(SyncAPIResource):
                 {
                     "block_ads": block_ads,
                     "concurrency": concurrency,
+                    "credentials": credentials,
                     "dimensions": dimensions,
                     "is_selenium": is_selenium,
+                    "namespace": namespace,
                     "proxy_url": proxy_url,
                     "session_context": session_context,
                     "session_id": session_id,
@@ -362,31 +357,8 @@ class SessionsResource(SyncAPIResource):
             cast_to=SessionReleaseResponse,
         )
 
-    def release_all(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionReleaseAllResponse:
-        """Releases all active sessions for the current organization."""
-        return self._post(
-            "/v1/sessions/release",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=SessionReleaseAllResponse,
-        )
-
 
 class AsyncSessionsResource(AsyncAPIResource):
-    @cached_property
-    def files(self) -> AsyncFilesResource:
-        return AsyncFilesResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
         """
@@ -411,8 +383,10 @@ class AsyncSessionsResource(AsyncAPIResource):
         *,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
+        credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
         dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
+        namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
@@ -435,10 +409,14 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
+          credentials: Configuration for session credentials
+
           dimensions: Viewport and browser window dimensions for the session
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
+
+          namespace: The namespace the session should be created against. Defaults to "default".
 
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
@@ -472,8 +450,10 @@ class AsyncSessionsResource(AsyncAPIResource):
                 {
                     "block_ads": block_ads,
                     "concurrency": concurrency,
+                    "credentials": credentials,
                     "dimensions": dimensions,
                     "is_selenium": is_selenium,
+                    "namespace": namespace,
                     "proxy_url": proxy_url,
                     "session_context": session_context,
                     "session_id": session_id,
@@ -706,25 +686,6 @@ class AsyncSessionsResource(AsyncAPIResource):
             cast_to=SessionReleaseResponse,
         )
 
-    async def release_all(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> SessionReleaseAllResponse:
-        """Releases all active sessions for the current organization."""
-        return await self._post(
-            "/v1/sessions/release",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=SessionReleaseAllResponse,
-        )
-
 
 class SessionsResourceWithRawResponse:
     def __init__(self, sessions: SessionsResource) -> None:
@@ -751,13 +712,6 @@ class SessionsResourceWithRawResponse:
         self.release = to_raw_response_wrapper(
             sessions.release,
         )
-        self.release_all = to_raw_response_wrapper(
-            sessions.release_all,
-        )
-
-    @cached_property
-    def files(self) -> FilesResourceWithRawResponse:
-        return FilesResourceWithRawResponse(self._sessions.files)
 
 
 class AsyncSessionsResourceWithRawResponse:
@@ -785,13 +739,6 @@ class AsyncSessionsResourceWithRawResponse:
         self.release = async_to_raw_response_wrapper(
             sessions.release,
         )
-        self.release_all = async_to_raw_response_wrapper(
-            sessions.release_all,
-        )
-
-    @cached_property
-    def files(self) -> AsyncFilesResourceWithRawResponse:
-        return AsyncFilesResourceWithRawResponse(self._sessions.files)
 
 
 class SessionsResourceWithStreamingResponse:
@@ -819,13 +766,6 @@ class SessionsResourceWithStreamingResponse:
         self.release = to_streamed_response_wrapper(
             sessions.release,
         )
-        self.release_all = to_streamed_response_wrapper(
-            sessions.release_all,
-        )
-
-    @cached_property
-    def files(self) -> FilesResourceWithStreamingResponse:
-        return FilesResourceWithStreamingResponse(self._sessions.files)
 
 
 class AsyncSessionsResourceWithStreamingResponse:
@@ -853,10 +793,3 @@ class AsyncSessionsResourceWithStreamingResponse:
         self.release = async_to_streamed_response_wrapper(
             sessions.release,
         )
-        self.release_all = async_to_streamed_response_wrapper(
-            sessions.release_all,
-        )
-
-    @cached_property
-    def files(self) -> AsyncFilesResourceWithStreamingResponse:
-        return AsyncFilesResourceWithStreamingResponse(self._sessions.files)

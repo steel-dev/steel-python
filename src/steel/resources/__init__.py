@@ -8,6 +8,14 @@ from .sessions import (
     SessionsResourceWithStreamingResponse,
     AsyncSessionsResourceWithStreamingResponse,
 )
+from .credentials import (
+    CredentialsResource,
+    AsyncCredentialsResource,
+    CredentialsResourceWithRawResponse,
+    AsyncCredentialsResourceWithRawResponse,
+    CredentialsResourceWithStreamingResponse,
+    AsyncCredentialsResourceWithStreamingResponse,
+)
 
 __all__ = [
     "SessionsResource",
@@ -16,4 +24,10 @@ __all__ = [
     "AsyncSessionsResourceWithRawResponse",
     "SessionsResourceWithStreamingResponse",
     "AsyncSessionsResourceWithStreamingResponse",
+    "CredentialsResource",
+    "AsyncCredentialsResource",
+    "CredentialsResourceWithRawResponse",
+    "AsyncCredentialsResourceWithRawResponse",
+    "CredentialsResourceWithStreamingResponse",
+    "AsyncCredentialsResourceWithStreamingResponse",
 ]

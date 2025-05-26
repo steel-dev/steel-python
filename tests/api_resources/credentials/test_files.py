@@ -17,7 +17,7 @@ from steel._response import (
     StreamedBinaryAPIResponse,
     AsyncStreamedBinaryAPIResponse,
 )
-from steel.types.sessions import File, Fileslist, FileDeleteResponse, FileDeleteAllResponse
+from steel.types.credentials import File, Fileslist, FileDeleteResponse, FileDeleteAllResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -27,7 +27,7 @@ class TestFiles:
 
     @parametrize
     def test_method_retrieve(self, client: Steel) -> None:
-        file = client.sessions.files.retrieve(
+        file = client.credentials.files.retrieve(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -35,7 +35,7 @@ class TestFiles:
 
     @parametrize
     def test_raw_response_retrieve(self, client: Steel) -> None:
-        response = client.sessions.files.with_raw_response.retrieve(
+        response = client.credentials.files.with_raw_response.retrieve(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -47,7 +47,7 @@ class TestFiles:
 
     @parametrize
     def test_streaming_response_retrieve(self, client: Steel) -> None:
-        with client.sessions.files.with_streaming_response.retrieve(
+        with client.credentials.files.with_streaming_response.retrieve(
             file_id="fileId",
             session_id="sessionId",
         ) as response:
@@ -62,27 +62,27 @@ class TestFiles:
     @parametrize
     def test_path_params_retrieve(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            client.sessions.files.with_raw_response.retrieve(
+            client.credentials.files.with_raw_response.retrieve(
                 file_id="fileId",
                 session_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
-            client.sessions.files.with_raw_response.retrieve(
+            client.credentials.files.with_raw_response.retrieve(
                 file_id="",
                 session_id="sessionId",
             )
 
     @parametrize
     def test_method_list(self, client: Steel) -> None:
-        file = client.sessions.files.list(
+        file = client.credentials.files.list(
             "sessionId",
         )
         assert_matches_type(Fileslist, file, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Steel) -> None:
-        response = client.sessions.files.with_raw_response.list(
+        response = client.credentials.files.with_raw_response.list(
             "sessionId",
         )
 
@@ -93,7 +93,7 @@ class TestFiles:
 
     @parametrize
     def test_streaming_response_list(self, client: Steel) -> None:
-        with client.sessions.files.with_streaming_response.list(
+        with client.credentials.files.with_streaming_response.list(
             "sessionId",
         ) as response:
             assert not response.is_closed
@@ -107,13 +107,13 @@ class TestFiles:
     @parametrize
     def test_path_params_list(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            client.sessions.files.with_raw_response.list(
+            client.credentials.files.with_raw_response.list(
                 "",
             )
 
     @parametrize
     def test_method_delete(self, client: Steel) -> None:
-        file = client.sessions.files.delete(
+        file = client.credentials.files.delete(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -121,7 +121,7 @@ class TestFiles:
 
     @parametrize
     def test_raw_response_delete(self, client: Steel) -> None:
-        response = client.sessions.files.with_raw_response.delete(
+        response = client.credentials.files.with_raw_response.delete(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -133,7 +133,7 @@ class TestFiles:
 
     @parametrize
     def test_streaming_response_delete(self, client: Steel) -> None:
-        with client.sessions.files.with_streaming_response.delete(
+        with client.credentials.files.with_streaming_response.delete(
             file_id="fileId",
             session_id="sessionId",
         ) as response:
@@ -148,27 +148,27 @@ class TestFiles:
     @parametrize
     def test_path_params_delete(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            client.sessions.files.with_raw_response.delete(
+            client.credentials.files.with_raw_response.delete(
                 file_id="fileId",
                 session_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
-            client.sessions.files.with_raw_response.delete(
+            client.credentials.files.with_raw_response.delete(
                 file_id="",
                 session_id="sessionId",
             )
 
     @parametrize
     def test_method_delete_all(self, client: Steel) -> None:
-        file = client.sessions.files.delete_all(
+        file = client.credentials.files.delete_all(
             "sessionId",
         )
         assert_matches_type(FileDeleteAllResponse, file, path=["response"])
 
     @parametrize
     def test_raw_response_delete_all(self, client: Steel) -> None:
-        response = client.sessions.files.with_raw_response.delete_all(
+        response = client.credentials.files.with_raw_response.delete_all(
             "sessionId",
         )
 
@@ -179,7 +179,7 @@ class TestFiles:
 
     @parametrize
     def test_streaming_response_delete_all(self, client: Steel) -> None:
-        with client.sessions.files.with_streaming_response.delete_all(
+        with client.credentials.files.with_streaming_response.delete_all(
             "sessionId",
         ) as response:
             assert not response.is_closed
@@ -193,7 +193,7 @@ class TestFiles:
     @parametrize
     def test_path_params_delete_all(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            client.sessions.files.with_raw_response.delete_all(
+            client.credentials.files.with_raw_response.delete_all(
                 "",
             )
 
@@ -203,7 +203,7 @@ class TestFiles:
         respx_mock.get("/v1/sessions/sessionId/files/fileId/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
-        file = client.sessions.files.download(
+        file = client.credentials.files.download(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -219,7 +219,7 @@ class TestFiles:
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
 
-        file = client.sessions.files.with_raw_response.download(
+        file = client.credentials.files.with_raw_response.download(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -235,7 +235,7 @@ class TestFiles:
         respx_mock.get("/v1/sessions/sessionId/files/fileId/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
-        with client.sessions.files.with_streaming_response.download(
+        with client.credentials.files.with_streaming_response.download(
             file_id="fileId",
             session_id="sessionId",
         ) as file:
@@ -252,27 +252,27 @@ class TestFiles:
     @pytest.mark.respx(base_url=base_url)
     def test_path_params_download(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            client.sessions.files.with_raw_response.download(
+            client.credentials.files.with_raw_response.download(
                 file_id="fileId",
                 session_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
-            client.sessions.files.with_raw_response.download(
+            client.credentials.files.with_raw_response.download(
                 file_id="",
                 session_id="sessionId",
             )
 
     @parametrize
     def test_method_upload(self, client: Steel) -> None:
-        file = client.sessions.files.upload(
+        file = client.credentials.files.upload(
             session_id="sessionId",
         )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     def test_method_upload_with_all_params(self, client: Steel) -> None:
-        file = client.sessions.files.upload(
+        file = client.credentials.files.upload(
             session_id="sessionId",
             file={},
             file_url="https://example.com",
@@ -283,7 +283,7 @@ class TestFiles:
 
     @parametrize
     def test_raw_response_upload(self, client: Steel) -> None:
-        response = client.sessions.files.with_raw_response.upload(
+        response = client.credentials.files.with_raw_response.upload(
             session_id="sessionId",
         )
 
@@ -294,7 +294,7 @@ class TestFiles:
 
     @parametrize
     def test_streaming_response_upload(self, client: Steel) -> None:
-        with client.sessions.files.with_streaming_response.upload(
+        with client.credentials.files.with_streaming_response.upload(
             session_id="sessionId",
         ) as response:
             assert not response.is_closed
@@ -308,7 +308,7 @@ class TestFiles:
     @parametrize
     def test_path_params_upload(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            client.sessions.files.with_raw_response.upload(
+            client.credentials.files.with_raw_response.upload(
                 session_id="",
             )
 
@@ -318,7 +318,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncSteel) -> None:
-        file = await async_client.sessions.files.retrieve(
+        file = await async_client.credentials.files.retrieve(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -326,7 +326,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncSteel) -> None:
-        response = await async_client.sessions.files.with_raw_response.retrieve(
+        response = await async_client.credentials.files.with_raw_response.retrieve(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -338,7 +338,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncSteel) -> None:
-        async with async_client.sessions.files.with_streaming_response.retrieve(
+        async with async_client.credentials.files.with_streaming_response.retrieve(
             file_id="fileId",
             session_id="sessionId",
         ) as response:
@@ -353,27 +353,27 @@ class TestAsyncFiles:
     @parametrize
     async def test_path_params_retrieve(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.retrieve(
+            await async_client.credentials.files.with_raw_response.retrieve(
                 file_id="fileId",
                 session_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.retrieve(
+            await async_client.credentials.files.with_raw_response.retrieve(
                 file_id="",
                 session_id="sessionId",
             )
 
     @parametrize
     async def test_method_list(self, async_client: AsyncSteel) -> None:
-        file = await async_client.sessions.files.list(
+        file = await async_client.credentials.files.list(
             "sessionId",
         )
         assert_matches_type(Fileslist, file, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncSteel) -> None:
-        response = await async_client.sessions.files.with_raw_response.list(
+        response = await async_client.credentials.files.with_raw_response.list(
             "sessionId",
         )
 
@@ -384,7 +384,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncSteel) -> None:
-        async with async_client.sessions.files.with_streaming_response.list(
+        async with async_client.credentials.files.with_streaming_response.list(
             "sessionId",
         ) as response:
             assert not response.is_closed
@@ -398,13 +398,13 @@ class TestAsyncFiles:
     @parametrize
     async def test_path_params_list(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.list(
+            await async_client.credentials.files.with_raw_response.list(
                 "",
             )
 
     @parametrize
     async def test_method_delete(self, async_client: AsyncSteel) -> None:
-        file = await async_client.sessions.files.delete(
+        file = await async_client.credentials.files.delete(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -412,7 +412,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncSteel) -> None:
-        response = await async_client.sessions.files.with_raw_response.delete(
+        response = await async_client.credentials.files.with_raw_response.delete(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -424,7 +424,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncSteel) -> None:
-        async with async_client.sessions.files.with_streaming_response.delete(
+        async with async_client.credentials.files.with_streaming_response.delete(
             file_id="fileId",
             session_id="sessionId",
         ) as response:
@@ -439,27 +439,27 @@ class TestAsyncFiles:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.delete(
+            await async_client.credentials.files.with_raw_response.delete(
                 file_id="fileId",
                 session_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.delete(
+            await async_client.credentials.files.with_raw_response.delete(
                 file_id="",
                 session_id="sessionId",
             )
 
     @parametrize
     async def test_method_delete_all(self, async_client: AsyncSteel) -> None:
-        file = await async_client.sessions.files.delete_all(
+        file = await async_client.credentials.files.delete_all(
             "sessionId",
         )
         assert_matches_type(FileDeleteAllResponse, file, path=["response"])
 
     @parametrize
     async def test_raw_response_delete_all(self, async_client: AsyncSteel) -> None:
-        response = await async_client.sessions.files.with_raw_response.delete_all(
+        response = await async_client.credentials.files.with_raw_response.delete_all(
             "sessionId",
         )
 
@@ -470,7 +470,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_streaming_response_delete_all(self, async_client: AsyncSteel) -> None:
-        async with async_client.sessions.files.with_streaming_response.delete_all(
+        async with async_client.credentials.files.with_streaming_response.delete_all(
             "sessionId",
         ) as response:
             assert not response.is_closed
@@ -484,7 +484,7 @@ class TestAsyncFiles:
     @parametrize
     async def test_path_params_delete_all(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.delete_all(
+            await async_client.credentials.files.with_raw_response.delete_all(
                 "",
             )
 
@@ -494,7 +494,7 @@ class TestAsyncFiles:
         respx_mock.get("/v1/sessions/sessionId/files/fileId/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
-        file = await async_client.sessions.files.download(
+        file = await async_client.credentials.files.download(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -510,7 +510,7 @@ class TestAsyncFiles:
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
 
-        file = await async_client.sessions.files.with_raw_response.download(
+        file = await async_client.credentials.files.with_raw_response.download(
             file_id="fileId",
             session_id="sessionId",
         )
@@ -526,7 +526,7 @@ class TestAsyncFiles:
         respx_mock.get("/v1/sessions/sessionId/files/fileId/download").mock(
             return_value=httpx.Response(200, json={"foo": "bar"})
         )
-        async with async_client.sessions.files.with_streaming_response.download(
+        async with async_client.credentials.files.with_streaming_response.download(
             file_id="fileId",
             session_id="sessionId",
         ) as file:
@@ -543,27 +543,27 @@ class TestAsyncFiles:
     @pytest.mark.respx(base_url=base_url)
     async def test_path_params_download(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.download(
+            await async_client.credentials.files.with_raw_response.download(
                 file_id="fileId",
                 session_id="",
             )
 
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `file_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.download(
+            await async_client.credentials.files.with_raw_response.download(
                 file_id="",
                 session_id="sessionId",
             )
 
     @parametrize
     async def test_method_upload(self, async_client: AsyncSteel) -> None:
-        file = await async_client.sessions.files.upload(
+        file = await async_client.credentials.files.upload(
             session_id="sessionId",
         )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     async def test_method_upload_with_all_params(self, async_client: AsyncSteel) -> None:
-        file = await async_client.sessions.files.upload(
+        file = await async_client.credentials.files.upload(
             session_id="sessionId",
             file={},
             file_url="https://example.com",
@@ -574,7 +574,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_raw_response_upload(self, async_client: AsyncSteel) -> None:
-        response = await async_client.sessions.files.with_raw_response.upload(
+        response = await async_client.credentials.files.with_raw_response.upload(
             session_id="sessionId",
         )
 
@@ -585,7 +585,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_streaming_response_upload(self, async_client: AsyncSteel) -> None:
-        async with async_client.sessions.files.with_streaming_response.upload(
+        async with async_client.credentials.files.with_streaming_response.upload(
             session_id="sessionId",
         ) as response:
             assert not response.is_closed
@@ -599,6 +599,6 @@ class TestAsyncFiles:
     @parametrize
     async def test_path_params_upload(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
-            await async_client.sessions.files.with_raw_response.upload(
+            await async_client.credentials.files.with_raw_response.upload(
                 session_id="",
             )

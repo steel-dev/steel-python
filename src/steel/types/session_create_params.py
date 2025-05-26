@@ -10,6 +10,7 @@ from .._utils import PropertyInfo
 
 __all__ = [
     "SessionCreateParams",
+    "Credentials",
     "Dimensions",
     "SessionContext",
     "SessionContextCookie",
@@ -28,6 +29,9 @@ class SessionCreateParams(TypedDict, total=False):
     concurrency: int
     """Number of sessions to create concurrently (check your plan limit)"""
 
+    credentials: Credentials
+    """Configuration for session credentials"""
+
     dimensions: Dimensions
     """Viewport and browser window dimensions for the session"""
 
@@ -36,6 +40,9 @@ class SessionCreateParams(TypedDict, total=False):
 
     Use this when you plan to connect to the browser session via Selenium.
     """
+
+    namespace: str
+    """The namespace the session should be created against. Defaults to "default"."""
 
     proxy_url: Annotated[str, PropertyInfo(alias="proxyUrl")]
     """Custom proxy URL for the browser session.
@@ -67,6 +74,14 @@ class SessionCreateParams(TypedDict, total=False):
 
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
     """Custom user agent string for the browser session"""
+
+
+class Credentials(TypedDict, total=False):
+    auto_submit: Annotated[bool, PropertyInfo(alias="autoSubmit")]
+
+    blur_fields: Annotated[bool, PropertyInfo(alias="blurFields")]
+
+    exact_origin: Annotated[bool, PropertyInfo(alias="exactOrigin")]
 
 
 class Dimensions(TypedDict, total=False):
