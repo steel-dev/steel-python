@@ -18,16 +18,16 @@ from .credentials import (
 )
 
 __all__ = [
-    "SessionsResource",
-    "AsyncSessionsResource",
-    "SessionsResourceWithRawResponse",
-    "AsyncSessionsResourceWithRawResponse",
-    "SessionsResourceWithStreamingResponse",
-    "AsyncSessionsResourceWithStreamingResponse",
     "CredentialsResource",
     "AsyncCredentialsResource",
     "CredentialsResourceWithRawResponse",
     "AsyncCredentialsResourceWithRawResponse",
     "CredentialsResourceWithStreamingResponse",
     "AsyncCredentialsResourceWithStreamingResponse",
+    "SessionsResource",
+    "AsyncSessionsResource",
+    "SessionsResourceWithRawResponse",
+    "AsyncSessionsResourceWithRawResponse",
+    "SessionsResourceWithStreamingResponse",
+    "AsyncSessionsResourceWithStreamingResponse",
 ]

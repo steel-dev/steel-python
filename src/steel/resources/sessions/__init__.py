@@ -8,13 +8,13 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from .credentials import (
-    CredentialsResource,
-    AsyncCredentialsResource,
-    CredentialsResourceWithRawResponse,
-    AsyncCredentialsResourceWithRawResponse,
-    CredentialsResourceWithStreamingResponse,
-    AsyncCredentialsResourceWithStreamingResponse,
+from .sessions import (
+    SessionsResource,
+    AsyncSessionsResource,
+    SessionsResourceWithRawResponse,
+    AsyncSessionsResourceWithRawResponse,
+    SessionsResourceWithStreamingResponse,
+    AsyncSessionsResourceWithStreamingResponse,
 )
 
 __all__ = [
@@ -24,10 +24,10 @@ __all__ = [
     "AsyncFilesResourceWithRawResponse",
     "FilesResourceWithStreamingResponse",
     "AsyncFilesResourceWithStreamingResponse",
-    "CredentialsResource",
-    "AsyncCredentialsResource",
-    "CredentialsResourceWithRawResponse",
-    "AsyncCredentialsResourceWithRawResponse",
-    "CredentialsResourceWithStreamingResponse",
-    "AsyncCredentialsResourceWithStreamingResponse",
+    "SessionsResource",
+    "AsyncSessionsResource",
+    "SessionsResourceWithRawResponse",
+    "AsyncSessionsResourceWithRawResponse",
+    "SessionsResourceWithStreamingResponse",
+    "AsyncSessionsResourceWithStreamingResponse",
 ]
