@@ -6,44 +6,27 @@ from typing import Dict
 
 import httpx
 
-from .files import (
-    FilesResource,
-    AsyncFilesResource,
-    FilesResourceWithRawResponse,
-    AsyncFilesResourceWithRawResponse,
-    FilesResourceWithStreamingResponse,
-    AsyncFilesResourceWithStreamingResponse,
-)
-from ...types import (
-    credential_list_params,
-    credential_create_params,
-    credential_delete_params,
-    credential_update_params,
-)
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
-from ..._utils import maybe_transform, async_maybe_transform
-from ..._compat import cached_property
-from ..._resource import SyncAPIResource, AsyncAPIResource
-from ..._response import (
+from ..types import credential_list_params, credential_create_params, credential_delete_params, credential_update_params
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import maybe_transform, async_maybe_transform
+from .._compat import cached_property
+from .._resource import SyncAPIResource, AsyncAPIResource
+from .._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..._base_client import make_request_options
-from ...types.credential_list_response import CredentialListResponse
-from ...types.credential_create_response import CredentialCreateResponse
-from ...types.credential_delete_response import CredentialDeleteResponse
-from ...types.credential_update_response import CredentialUpdateResponse
+from .._base_client import make_request_options
+from ..types.credential_list_response import CredentialListResponse
+from ..types.credential_create_response import CredentialCreateResponse
+from ..types.credential_delete_response import CredentialDeleteResponse
+from ..types.credential_update_response import CredentialUpdateResponse
 
 __all__ = ["CredentialsResource", "AsyncCredentialsResource"]
 
 
 class CredentialsResource(SyncAPIResource):
-    @cached_property
-    def files(self) -> FilesResource:
-        return FilesResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> CredentialsResourceWithRawResponse:
         """
@@ -256,10 +239,6 @@ class CredentialsResource(SyncAPIResource):
 
 
 class AsyncCredentialsResource(AsyncAPIResource):
-    @cached_property
-    def files(self) -> AsyncFilesResource:
-        return AsyncFilesResource(self._client)
-
     @cached_property
     def with_raw_response(self) -> AsyncCredentialsResourceWithRawResponse:
         """
@@ -488,10 +467,6 @@ class CredentialsResourceWithRawResponse:
             credentials.delete,
         )
 
-    @cached_property
-    def files(self) -> FilesResourceWithRawResponse:
-        return FilesResourceWithRawResponse(self._credentials.files)
-
 
 class AsyncCredentialsResourceWithRawResponse:
     def __init__(self, credentials: AsyncCredentialsResource) -> None:
@@ -509,10 +484,6 @@ class AsyncCredentialsResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             credentials.delete,
         )
-
-    @cached_property
-    def files(self) -> AsyncFilesResourceWithRawResponse:
-        return AsyncFilesResourceWithRawResponse(self._credentials.files)
 
 
 class CredentialsResourceWithStreamingResponse:
@@ -532,10 +503,6 @@ class CredentialsResourceWithStreamingResponse:
             credentials.delete,
         )
 
-    @cached_property
-    def files(self) -> FilesResourceWithStreamingResponse:
-        return FilesResourceWithStreamingResponse(self._credentials.files)
-
 
 class AsyncCredentialsResourceWithStreamingResponse:
     def __init__(self, credentials: AsyncCredentialsResource) -> None:
@@ -553,7 +520,3 @@ class AsyncCredentialsResourceWithStreamingResponse:
         self.delete = async_to_streamed_response_wrapper(
             credentials.delete,
         )
-
-    @cached_property
-    def files(self) -> AsyncFilesResourceWithStreamingResponse:
-        return AsyncFilesResourceWithStreamingResponse(self._credentials.files)

@@ -25,11 +25,11 @@ from ..._response import (
     async_to_custom_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.credentials import file_upload_params
-from ...types.credentials.file import File
-from ...types.credentials.fileslist import Fileslist
-from ...types.credentials.file_delete_response import FileDeleteResponse
-from ...types.credentials.file_delete_all_response import FileDeleteAllResponse
+from ...types.sessions import file_upload_params
+from ...types.sessions.file import File
+from ...types.sessions.fileslist import Fileslist
+from ...types.sessions.file_delete_response import FileDeleteResponse
+from ...types.sessions.file_delete_all_response import FileDeleteAllResponse
 
 __all__ = ["FilesResource", "AsyncFilesResource"]
 

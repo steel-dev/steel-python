@@ -36,7 +36,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import sessions
+from .resources import credentials
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import SteelError, APIStatusError
 from ._base_client import (
@@ -45,8 +45,8 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
+from .resources.sessions import sessions
 from .types.pdf_response import PdfResponse
-from .resources.credentials import credentials
 from .types.scrape_response import ScrapeResponse
 from .types.screenshot_response import ScreenshotResponse
 
@@ -54,8 +54,8 @@ __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Steel", "A
 
 
 class Steel(SyncAPIClient):
-    sessions: sessions.SessionsResource
     credentials: credentials.CredentialsResource
+    sessions: sessions.SessionsResource
     with_raw_response: SteelWithRawResponse
     with_streaming_response: SteelWithStreamedResponse
 
@@ -113,8 +113,8 @@ class Steel(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.sessions = sessions.SessionsResource(self)
         self.credentials = credentials.CredentialsResource(self)
+        self.sessions = sessions.SessionsResource(self)
         self.with_raw_response = SteelWithRawResponse(self)
         self.with_streaming_response = SteelWithStreamedResponse(self)
 
@@ -381,8 +381,8 @@ class Steel(SyncAPIClient):
 
 
 class AsyncSteel(AsyncAPIClient):
-    sessions: sessions.AsyncSessionsResource
     credentials: credentials.AsyncCredentialsResource
+    sessions: sessions.AsyncSessionsResource
     with_raw_response: AsyncSteelWithRawResponse
     with_streaming_response: AsyncSteelWithStreamedResponse
 
@@ -440,8 +440,8 @@ class AsyncSteel(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.sessions = sessions.AsyncSessionsResource(self)
         self.credentials = credentials.AsyncCredentialsResource(self)
+        self.sessions = sessions.AsyncSessionsResource(self)
         self.with_raw_response = AsyncSteelWithRawResponse(self)
         self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
 
@@ -709,8 +709,8 @@ class AsyncSteel(AsyncAPIClient):
 
 class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
-        self.sessions = sessions.SessionsResourceWithRawResponse(client.sessions)
         self.credentials = credentials.CredentialsResourceWithRawResponse(client.credentials)
+        self.sessions = sessions.SessionsResourceWithRawResponse(client.sessions)
 
         self.pdf = to_raw_response_wrapper(
             client.pdf,
@@ -725,8 +725,8 @@ class SteelWithRawResponse:
 
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.sessions = sessions.AsyncSessionsResourceWithRawResponse(client.sessions)
         self.credentials = credentials.AsyncCredentialsResourceWithRawResponse(client.credentials)
+        self.sessions = sessions.AsyncSessionsResourceWithRawResponse(client.sessions)
 
         self.pdf = async_to_raw_response_wrapper(
             client.pdf,
@@ -741,8 +741,8 @@ class AsyncSteelWithRawResponse:
 
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
-        self.sessions = sessions.SessionsResourceWithStreamingResponse(client.sessions)
         self.credentials = credentials.CredentialsResourceWithStreamingResponse(client.credentials)
+        self.sessions = sessions.SessionsResourceWithStreamingResponse(client.sessions)
 
         self.pdf = to_streamed_response_wrapper(
             client.pdf,
@@ -757,8 +757,8 @@ class SteelWithStreamedResponse:
 
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
-        self.sessions = sessions.AsyncSessionsResourceWithStreamingResponse(client.sessions)
         self.credentials = credentials.AsyncCredentialsResourceWithStreamingResponse(client.credentials)
+        self.sessions = sessions.AsyncSessionsResourceWithStreamingResponse(client.sessions)
 
         self.pdf = async_to_streamed_response_wrapper(
             client.pdf,
