@@ -32,6 +32,7 @@ from ...types.sessionslist import Session as SessionslistSession
 from ...types.session_context import SessionContext
 from ...types.session_events_response import SessionEventsResponse
 from ...types.session_release_response import SessionReleaseResponse
+from ...types.session_release_all_response import SessionReleaseAllResponse
 from ...types.session_live_details_response import SessionLiveDetailsResponse
 
 __all__ = ["SessionsResource", "AsyncSessionsResource"]
@@ -71,6 +72,7 @@ class SessionsResource(SyncAPIResource):
         is_selenium: bool | NotGiven = NOT_GIVEN,
         namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
@@ -105,6 +107,8 @@ class SessionsResource(SyncAPIResource):
               Steel-provided proxies in favor of your specified proxy. Format:
               http(s)://username:password@hostname:port
 
+          region: The desired region for the session to be started in
+
           session_context: Session context data to be used in the created session. Sessions will start with
               an empty context by default.
 
@@ -138,6 +142,7 @@ class SessionsResource(SyncAPIResource):
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "proxy_url": proxy_url,
+                    "region": region,
                     "session_context": session_context,
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,
@@ -369,6 +374,25 @@ class SessionsResource(SyncAPIResource):
             cast_to=SessionReleaseResponse,
         )
 
+    def release_all(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SessionReleaseAllResponse:
+        """Releases all active sessions for the current organization."""
+        return self._post(
+            "/v1/sessions/release",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SessionReleaseAllResponse,
+        )
+
 
 class AsyncSessionsResource(AsyncAPIResource):
     @cached_property
@@ -404,6 +428,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         is_selenium: bool | NotGiven = NOT_GIVEN,
         namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
@@ -438,6 +463,8 @@ class AsyncSessionsResource(AsyncAPIResource):
               Steel-provided proxies in favor of your specified proxy. Format:
               http(s)://username:password@hostname:port
 
+          region: The desired region for the session to be started in
+
           session_context: Session context data to be used in the created session. Sessions will start with
               an empty context by default.
 
@@ -471,6 +498,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "proxy_url": proxy_url,
+                    "region": region,
                     "session_context": session_context,
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,
@@ -702,6 +730,25 @@ class AsyncSessionsResource(AsyncAPIResource):
             cast_to=SessionReleaseResponse,
         )
 
+    async def release_all(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SessionReleaseAllResponse:
+        """Releases all active sessions for the current organization."""
+        return await self._post(
+            "/v1/sessions/release",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SessionReleaseAllResponse,
+        )
+
 
 class SessionsResourceWithRawResponse:
     def __init__(self, sessions: SessionsResource) -> None:
@@ -727,6 +774,9 @@ class SessionsResourceWithRawResponse:
         )
         self.release = to_raw_response_wrapper(
             sessions.release,
+        )
+        self.release_all = to_raw_response_wrapper(
+            sessions.release_all,
         )
 
     @cached_property
@@ -759,6 +809,9 @@ class AsyncSessionsResourceWithRawResponse:
         self.release = async_to_raw_response_wrapper(
             sessions.release,
         )
+        self.release_all = async_to_raw_response_wrapper(
+            sessions.release_all,
+        )
 
     @cached_property
     def files(self) -> AsyncFilesResourceWithRawResponse:
@@ -790,6 +843,9 @@ class SessionsResourceWithStreamingResponse:
         self.release = to_streamed_response_wrapper(
             sessions.release,
         )
+        self.release_all = to_streamed_response_wrapper(
+            sessions.release_all,
+        )
 
     @cached_property
     def files(self) -> FilesResourceWithStreamingResponse:
@@ -820,6 +876,9 @@ class AsyncSessionsResourceWithStreamingResponse:
         )
         self.release = async_to_streamed_response_wrapper(
             sessions.release,
+        )
+        self.release_all = async_to_streamed_response_wrapper(
+            sessions.release_all,
         )
 
     @cached_property

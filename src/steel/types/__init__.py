@@ -23,4 +23,5 @@ from .session_release_response import SessionReleaseResponse as SessionReleaseRe
 from .credential_create_response import CredentialCreateResponse as CredentialCreateResponse
 from .credential_delete_response import CredentialDeleteResponse as CredentialDeleteResponse
 from .credential_update_response import CredentialUpdateResponse as CredentialUpdateResponse
+from .session_release_all_response import SessionReleaseAllResponse as SessionReleaseAllResponse
 from .session_live_details_response import SessionLiveDetailsResponse as SessionLiveDetailsResponse
