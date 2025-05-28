@@ -63,7 +63,7 @@ class Session(BaseModel):
     """Proxy server used for the session"""
 
     region: Optional[Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]] = None
-    """The desired region for the session to be started in"""
+    """The region where the session was created"""
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
     """Indicates if captcha solving is enabled"""
