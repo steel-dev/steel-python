@@ -44,6 +44,7 @@ from steel.types import (
     SessionEventsResponse,
     SessionLiveDetailsResponse,
     SessionReleaseResponse,
+    SessionReleaseAllResponse,
 )
 ```
 
@@ -56,6 +57,7 @@ Methods:
 - <code title="get /v1/sessions/{id}/events">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">events</a>(id) -> <a href="./src/steel/types/session_events_response.py">SessionEventsResponse</a></code>
 - <code title="get /v1/sessions/{id}/live-details">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">live_details</a>(id) -> <a href="./src/steel/types/session_live_details_response.py">SessionLiveDetailsResponse</a></code>
 - <code title="post /v1/sessions/{id}/release">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">release</a>(id) -> <a href="./src/steel/types/session_release_response.py">SessionReleaseResponse</a></code>
+- <code title="post /v1/sessions/release">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">release_all</a>() -> <a href="./src/steel/types/session_release_all_response.py">SessionReleaseAllResponse</a></code>
 
 ## Files
 

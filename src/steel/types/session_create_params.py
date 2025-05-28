@@ -51,6 +51,9 @@ class SessionCreateParams(TypedDict, total=False):
     proxy. Format: http(s)://username:password@hostname:port
     """
 
+    region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]
+    """The desired region for the session to be started in"""
+
     session_context: Annotated[SessionContext, PropertyInfo(alias="sessionContext")]
     """Session context data to be used in the created session.
 
