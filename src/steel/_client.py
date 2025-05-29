@@ -36,7 +36,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import credentials
+from .resources import files, credentials
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import SteelError, APIStatusError
 from ._base_client import (
@@ -55,6 +55,7 @@ __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Steel", "A
 
 class Steel(SyncAPIClient):
     credentials: credentials.CredentialsResource
+    files: files.FilesResource
     sessions: sessions.SessionsResource
     with_raw_response: SteelWithRawResponse
     with_streaming_response: SteelWithStreamedResponse
@@ -114,6 +115,7 @@ class Steel(SyncAPIClient):
         )
 
         self.credentials = credentials.CredentialsResource(self)
+        self.files = files.FilesResource(self)
         self.sessions = sessions.SessionsResource(self)
         self.with_raw_response = SteelWithRawResponse(self)
         self.with_streaming_response = SteelWithStreamedResponse(self)
@@ -382,6 +384,7 @@ class Steel(SyncAPIClient):
 
 class AsyncSteel(AsyncAPIClient):
     credentials: credentials.AsyncCredentialsResource
+    files: files.AsyncFilesResource
     sessions: sessions.AsyncSessionsResource
     with_raw_response: AsyncSteelWithRawResponse
     with_streaming_response: AsyncSteelWithStreamedResponse
@@ -441,6 +444,7 @@ class AsyncSteel(AsyncAPIClient):
         )
 
         self.credentials = credentials.AsyncCredentialsResource(self)
+        self.files = files.AsyncFilesResource(self)
         self.sessions = sessions.AsyncSessionsResource(self)
         self.with_raw_response = AsyncSteelWithRawResponse(self)
         self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
@@ -710,6 +714,7 @@ class AsyncSteel(AsyncAPIClient):
 class SteelWithRawResponse:
     def __init__(self, client: Steel) -> None:
         self.credentials = credentials.CredentialsResourceWithRawResponse(client.credentials)
+        self.files = files.FilesResourceWithRawResponse(client.files)
         self.sessions = sessions.SessionsResourceWithRawResponse(client.sessions)
 
         self.pdf = to_raw_response_wrapper(
@@ -726,6 +731,7 @@ class SteelWithRawResponse:
 class AsyncSteelWithRawResponse:
     def __init__(self, client: AsyncSteel) -> None:
         self.credentials = credentials.AsyncCredentialsResourceWithRawResponse(client.credentials)
+        self.files = files.AsyncFilesResourceWithRawResponse(client.files)
         self.sessions = sessions.AsyncSessionsResourceWithRawResponse(client.sessions)
 
         self.pdf = async_to_raw_response_wrapper(
@@ -742,6 +748,7 @@ class AsyncSteelWithRawResponse:
 class SteelWithStreamedResponse:
     def __init__(self, client: Steel) -> None:
         self.credentials = credentials.CredentialsResourceWithStreamingResponse(client.credentials)
+        self.files = files.FilesResourceWithStreamingResponse(client.files)
         self.sessions = sessions.SessionsResourceWithStreamingResponse(client.sessions)
 
         self.pdf = to_streamed_response_wrapper(
@@ -758,6 +765,7 @@ class SteelWithStreamedResponse:
 class AsyncSteelWithStreamedResponse:
     def __init__(self, client: AsyncSteel) -> None:
         self.credentials = credentials.AsyncCredentialsResourceWithStreamingResponse(client.credentials)
+        self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
         self.sessions = sessions.AsyncSessionsResourceWithStreamingResponse(client.sessions)
 
         self.pdf = async_to_streamed_response_wrapper(
