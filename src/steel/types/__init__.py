@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+from .file import File as File
 from .session import Session as Session
+from .fileslist import Fileslist as Fileslist
 from .pdf_response import PdfResponse as PdfResponse
 from .sessionslist import Sessionslist as Sessionslist
 from .scrape_response import ScrapeResponse as ScrapeResponse
 from .session_context import SessionContext as SessionContext
 from .client_pdf_params import ClientPdfParams as ClientPdfParams
+from .file_upload_params import FileUploadParams as FileUploadParams
 from .screenshot_response import ScreenshotResponse as ScreenshotResponse
 from .session_list_params import SessionListParams as SessionListParams
 from .client_scrape_params import ClientScrapeParams as ClientScrapeParams
