@@ -37,12 +37,19 @@ class TestSessions:
         session = client.sessions.create(
             block_ads=True,
             concurrency=0,
+            credentials={
+                "auto_submit": True,
+                "blur_fields": True,
+                "exact_origin": True,
+            },
             dimensions={
                 "height": 0,
                 "width": 0,
             },
             is_selenium=True,
+            namespace="namespace",
             proxy_url="https://example.com",
+            region="lax",
             session_context={
                 "cookies": [
                     {
@@ -391,12 +398,19 @@ class TestAsyncSessions:
         session = await async_client.sessions.create(
             block_ads=True,
             concurrency=0,
+            credentials={
+                "auto_submit": True,
+                "blur_fields": True,
+                "exact_origin": True,
+            },
             dimensions={
                 "height": 0,
                 "width": 0,
             },
             is_selenium=True,
+            namespace="namespace",
             proxy_url="https://example.com",
+            region="lax",
             session_context={
                 "cookies": [
                     {
