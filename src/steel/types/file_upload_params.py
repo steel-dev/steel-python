@@ -10,3 +10,6 @@ __all__ = ["FileUploadParams"]
 class FileUploadParams(TypedDict, total=False):
     file: object
     """The file to upload (binary) or URL string to download from"""
+
+    path: str
+    """Path to the file in the storage system"""

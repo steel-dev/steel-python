@@ -140,24 +140,20 @@ class TestFiles:
 
     @parametrize
     def test_method_upload(self, client: Steel) -> None:
-        file = client.files.upload(
-            path="path",
-        )
+        file = client.files.upload()
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     def test_method_upload_with_all_params(self, client: Steel) -> None:
         file = client.files.upload(
-            path="path",
             file={},
+            path="path",
         )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     def test_raw_response_upload(self, client: Steel) -> None:
-        response = client.files.with_raw_response.upload(
-            path="path",
-        )
+        response = client.files.with_raw_response.upload()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -166,9 +162,7 @@ class TestFiles:
 
     @parametrize
     def test_streaming_response_upload(self, client: Steel) -> None:
-        with client.files.with_streaming_response.upload(
-            path="path",
-        ) as response:
+        with client.files.with_streaming_response.upload() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -176,13 +170,6 @@ class TestFiles:
             assert_matches_type(File, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    def test_path_params_upload(self, client: Steel) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path` but received ''"):
-            client.files.with_raw_response.upload(
-                path="",
-            )
 
 
 class TestAsyncFiles:
@@ -303,24 +290,20 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_method_upload(self, async_client: AsyncSteel) -> None:
-        file = await async_client.files.upload(
-            path="path",
-        )
+        file = await async_client.files.upload()
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     async def test_method_upload_with_all_params(self, async_client: AsyncSteel) -> None:
         file = await async_client.files.upload(
-            path="path",
             file={},
+            path="path",
         )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     async def test_raw_response_upload(self, async_client: AsyncSteel) -> None:
-        response = await async_client.files.with_raw_response.upload(
-            path="path",
-        )
+        response = await async_client.files.with_raw_response.upload()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -329,9 +312,7 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_streaming_response_upload(self, async_client: AsyncSteel) -> None:
-        async with async_client.files.with_streaming_response.upload(
-            path="path",
-        ) as response:
+        async with async_client.files.with_streaming_response.upload() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -339,10 +320,3 @@ class TestAsyncFiles:
             assert_matches_type(File, file, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @parametrize
-    async def test_path_params_upload(self, async_client: AsyncSteel) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path` but received ''"):
-            await async_client.files.with_raw_response.upload(
-                path="",
-            )

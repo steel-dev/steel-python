@@ -45,7 +45,7 @@ Methods:
 - <code title="get /v1/files">client.files.<a href="./src/steel/resources/files.py">list</a>() -> <a href="./src/steel/types/fileslist.py">Fileslist</a></code>
 - <code title="delete /v1/files/{path}">client.files.<a href="./src/steel/resources/files.py">delete</a>(path) -> None</code>
 - <code title="get /v1/files/{path}">client.files.<a href="./src/steel/resources/files.py">download</a>(path) -> BinaryAPIResponse</code>
-- <code title="post /v1/files/{path}">client.files.<a href="./src/steel/resources/files.py">upload</a>(path, \*\*<a href="src/steel/types/file_upload_params.py">params</a>) -> <a href="./src/steel/types/file.py">File</a></code>
+- <code title="post /v1/files">client.files.<a href="./src/steel/resources/files.py">upload</a>(\*\*<a href="src/steel/types/file_upload_params.py">params</a>) -> <a href="./src/steel/types/file.py">File</a></code>
 
 # Sessions
 
@@ -83,4 +83,4 @@ Methods:
 - <code title="delete /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">delete_all</a>(session_id) -> None</code>
 - <code title="get /v1/sessions/{sessionId}/files/{path}">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">download</a>(path, \*, session_id) -> BinaryAPIResponse</code>
 - <code title="get /v1/sessions/{sessionId}/files.zip">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">download_archive</a>(session_id) -> BinaryAPIResponse</code>
-- <code title="post /v1/sessions/{sessionId}/files/{path}">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">upload</a>(path, \*, session_id, \*\*<a href="src/steel/types/sessions/file_upload_params.py">params</a>) -> <a href="./src/steel/types/file.py">File</a></code>
+- <code title="post /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">upload</a>(session_id, \*\*<a href="src/steel/types/sessions/file_upload_params.py">params</a>) -> <a href="./src/steel/types/file.py">File</a></code>

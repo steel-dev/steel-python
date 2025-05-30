@@ -139,9 +139,9 @@ class FilesResource(SyncAPIResource):
 
     def upload(
         self,
-        path: str,
         *,
         file: object | NotGiven = NOT_GIVEN,
+        path: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -151,10 +151,13 @@ class FilesResource(SyncAPIResource):
     ) -> File:
         """
         Uploads a file to global storage via `multipart/form-data` with a `file` field
-        that accepts either binary data or a URL string to download from.
+        that accepts either binary data or a URL string to download from, and an
+        optional `path` field for the file storage path.
 
         Args:
           file: The file to upload (binary) or URL string to download from
+
+          path: Path to the file in the storage system
 
           extra_headers: Send extra headers
 
@@ -164,15 +167,19 @@ class FilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not path:
-            raise ValueError(f"Expected a non-empty value for `path` but received {path!r}")
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
-            f"/v1/files/{path}",
-            body=maybe_transform({"file": file}, file_upload_params.FileUploadParams),
+            "/v1/files",
+            body=maybe_transform(
+                {
+                    "file": file,
+                    "path": path,
+                },
+                file_upload_params.FileUploadParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -289,9 +296,9 @@ class AsyncFilesResource(AsyncAPIResource):
 
     async def upload(
         self,
-        path: str,
         *,
         file: object | NotGiven = NOT_GIVEN,
+        path: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -301,10 +308,13 @@ class AsyncFilesResource(AsyncAPIResource):
     ) -> File:
         """
         Uploads a file to global storage via `multipart/form-data` with a `file` field
-        that accepts either binary data or a URL string to download from.
+        that accepts either binary data or a URL string to download from, and an
+        optional `path` field for the file storage path.
 
         Args:
           file: The file to upload (binary) or URL string to download from
+
+          path: Path to the file in the storage system
 
           extra_headers: Send extra headers
 
@@ -314,15 +324,19 @@ class AsyncFilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not path:
-            raise ValueError(f"Expected a non-empty value for `path` but received {path!r}")
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
-            f"/v1/files/{path}",
-            body=await async_maybe_transform({"file": file}, file_upload_params.FileUploadParams),
+            "/v1/files",
+            body=await async_maybe_transform(
+                {
+                    "file": file,
+                    "path": path,
+                },
+                file_upload_params.FileUploadParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
