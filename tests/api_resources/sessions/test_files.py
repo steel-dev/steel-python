@@ -262,7 +262,6 @@ class TestFiles:
     @parametrize
     def test_method_upload(self, client: Steel) -> None:
         file = client.sessions.files.upload(
-            path="path",
             session_id="sessionId",
         )
         assert_matches_type(File, file, path=["response"])
@@ -270,16 +269,15 @@ class TestFiles:
     @parametrize
     def test_method_upload_with_all_params(self, client: Steel) -> None:
         file = client.sessions.files.upload(
-            path="path",
             session_id="sessionId",
             file={},
+            path="path",
         )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     def test_raw_response_upload(self, client: Steel) -> None:
         response = client.sessions.files.with_raw_response.upload(
-            path="path",
             session_id="sessionId",
         )
 
@@ -291,7 +289,6 @@ class TestFiles:
     @parametrize
     def test_streaming_response_upload(self, client: Steel) -> None:
         with client.sessions.files.with_streaming_response.upload(
-            path="path",
             session_id="sessionId",
         ) as response:
             assert not response.is_closed
@@ -306,14 +303,7 @@ class TestFiles:
     def test_path_params_upload(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
             client.sessions.files.with_raw_response.upload(
-                path="path",
                 session_id="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path` but received ''"):
-            client.sessions.files.with_raw_response.upload(
-                path="",
-                session_id="sessionId",
             )
 
 
@@ -557,7 +547,6 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_upload(self, async_client: AsyncSteel) -> None:
         file = await async_client.sessions.files.upload(
-            path="path",
             session_id="sessionId",
         )
         assert_matches_type(File, file, path=["response"])
@@ -565,16 +554,15 @@ class TestAsyncFiles:
     @parametrize
     async def test_method_upload_with_all_params(self, async_client: AsyncSteel) -> None:
         file = await async_client.sessions.files.upload(
-            path="path",
             session_id="sessionId",
             file={},
+            path="path",
         )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     async def test_raw_response_upload(self, async_client: AsyncSteel) -> None:
         response = await async_client.sessions.files.with_raw_response.upload(
-            path="path",
             session_id="sessionId",
         )
 
@@ -586,7 +574,6 @@ class TestAsyncFiles:
     @parametrize
     async def test_streaming_response_upload(self, async_client: AsyncSteel) -> None:
         async with async_client.sessions.files.with_streaming_response.upload(
-            path="path",
             session_id="sessionId",
         ) as response:
             assert not response.is_closed
@@ -601,12 +588,5 @@ class TestAsyncFiles:
     async def test_path_params_upload(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
             await async_client.sessions.files.with_raw_response.upload(
-                path="path",
                 session_id="",
-            )
-
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `path` but received ''"):
-            await async_client.sessions.files.with_raw_response.upload(
-                path="",
-                session_id="sessionId",
             )
