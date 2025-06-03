@@ -154,11 +154,7 @@ from steel import Steel
 client = Steel()
 
 session = client.sessions.create(
-    credentials={
-        "auto_submit": True,
-        "blur_fields": True,
-        "exact_origin": True,
-    },
+    credentials={},
 )
 print(session.credentials)
 ```
