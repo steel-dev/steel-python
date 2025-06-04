@@ -12,6 +12,41 @@ Methods:
 - <code title="post /v1/scrape">client.<a href="./src/steel/_client.py">scrape</a>(\*\*<a href="src/steel/types/client_scrape_params.py">params</a>) -> <a href="./src/steel/types/scrape_response.py">ScrapeResponse</a></code>
 - <code title="post /v1/screenshot">client.<a href="./src/steel/_client.py">screenshot</a>(\*\*<a href="src/steel/types/client_screenshot_params.py">params</a>) -> <a href="./src/steel/types/screenshot_response.py">ScreenshotResponse</a></code>
 
+# Credentials
+
+Types:
+
+```python
+from steel.types import (
+    CredentialCreateResponse,
+    CredentialUpdateResponse,
+    CredentialListResponse,
+    CredentialDeleteResponse,
+)
+```
+
+Methods:
+
+- <code title="post /v1/credentials">client.credentials.<a href="./src/steel/resources/credentials.py">create</a>(\*\*<a href="src/steel/types/credential_create_params.py">params</a>) -> <a href="./src/steel/types/credential_create_response.py">CredentialCreateResponse</a></code>
+- <code title="put /v1/credentials">client.credentials.<a href="./src/steel/resources/credentials.py">update</a>(\*\*<a href="src/steel/types/credential_update_params.py">params</a>) -> <a href="./src/steel/types/credential_update_response.py">CredentialUpdateResponse</a></code>
+- <code title="get /v1/credentials">client.credentials.<a href="./src/steel/resources/credentials.py">list</a>(\*\*<a href="src/steel/types/credential_list_params.py">params</a>) -> <a href="./src/steel/types/credential_list_response.py">CredentialListResponse</a></code>
+- <code title="delete /v1/credentials">client.credentials.<a href="./src/steel/resources/credentials.py">delete</a>(\*\*<a href="src/steel/types/credential_delete_params.py">params</a>) -> <a href="./src/steel/types/credential_delete_response.py">CredentialDeleteResponse</a></code>
+
+# Files
+
+Types:
+
+```python
+from steel.types import File, Fileslist
+```
+
+Methods:
+
+- <code title="get /v1/files">client.files.<a href="./src/steel/resources/files.py">list</a>() -> <a href="./src/steel/types/fileslist.py">Fileslist</a></code>
+- <code title="delete /v1/files/{path}">client.files.<a href="./src/steel/resources/files.py">delete</a>(path) -> None</code>
+- <code title="get /v1/files/{path}">client.files.<a href="./src/steel/resources/files.py">download</a>(path) -> BinaryAPIResponse</code>
+- <code title="post /v1/files">client.files.<a href="./src/steel/resources/files.py">upload</a>(\*\*<a href="src/steel/types/file_upload_params.py">params</a>) -> <a href="./src/steel/types/file.py">File</a></code>
+
 # Sessions
 
 Types:
@@ -41,17 +76,11 @@ Methods:
 
 ## Files
 
-Types:
-
-```python
-from steel.types.sessions import File, Fileslist, FileDeleteResponse, FileDeleteAllResponse
-```
-
 Methods:
 
-- <code title="get /v1/sessions/{sessionId}/files/{fileId}">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">retrieve</a>(file_id, \*, session_id) -> <a href="./src/steel/types/sessions/file.py">File</a></code>
-- <code title="get /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">list</a>(session_id) -> <a href="./src/steel/types/sessions/fileslist.py">Fileslist</a></code>
-- <code title="delete /v1/sessions/{sessionId}/files/{fileId}">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">delete</a>(file_id, \*, session_id) -> <a href="./src/steel/types/sessions/file_delete_response.py">FileDeleteResponse</a></code>
-- <code title="delete /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">delete_all</a>(session_id) -> <a href="./src/steel/types/sessions/file_delete_all_response.py">FileDeleteAllResponse</a></code>
-- <code title="get /v1/sessions/{sessionId}/files/{fileId}/download">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">download</a>(file_id, \*, session_id) -> BinaryAPIResponse</code>
-- <code title="post /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">upload</a>(session_id, \*\*<a href="src/steel/types/sessions/file_upload_params.py">params</a>) -> <a href="./src/steel/types/sessions/file.py">File</a></code>
+- <code title="get /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">list</a>(session_id) -> <a href="./src/steel/types/fileslist.py">Fileslist</a></code>
+- <code title="delete /v1/sessions/{sessionId}/files/{path}">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">delete</a>(path, \*, session_id) -> None</code>
+- <code title="delete /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">delete_all</a>(session_id) -> None</code>
+- <code title="get /v1/sessions/{sessionId}/files/{path}">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">download</a>(path, \*, session_id) -> BinaryAPIResponse</code>
+- <code title="get /v1/sessions/{sessionId}/files.zip">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">download_archive</a>(session_id) -> BinaryAPIResponse</code>
+- <code title="post /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">upload</a>(session_id, \*\*<a href="src/steel/types/sessions/file_upload_params.py">params</a>) -> <a href="./src/steel/types/file.py">File</a></code>

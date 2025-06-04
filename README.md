@@ -154,12 +154,9 @@ from steel import Steel
 client = Steel()
 
 session = client.sessions.create(
-    dimensions={
-        "height": 0,
-        "width": 0,
-    },
+    credentials={},
 )
-print(session.dimensions)
+print(session.credentials)
 ```
 
 ## Handling errors

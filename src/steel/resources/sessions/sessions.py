@@ -67,9 +67,12 @@ class SessionsResource(SyncAPIResource):
         *,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
+        credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
         dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
+        namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
@@ -91,14 +94,20 @@ class SessionsResource(SyncAPIResource):
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
+          credentials: Configuration for session credentials
+
           dimensions: Viewport and browser window dimensions for the session
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
 
+          namespace: The namespace the session should be created against. Defaults to "default".
+
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
               http(s)://username:password@hostname:port
+
+          region: The desired region for the session to be started in
 
           session_context: Session context data to be used in the created session. Sessions will start with
               an empty context by default.
@@ -128,9 +137,12 @@ class SessionsResource(SyncAPIResource):
                 {
                     "block_ads": block_ads,
                     "concurrency": concurrency,
+                    "credentials": credentials,
                     "dimensions": dimensions,
                     "is_selenium": is_selenium,
+                    "namespace": namespace,
                     "proxy_url": proxy_url,
+                    "region": region,
                     "session_context": session_context,
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,
@@ -411,9 +423,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         *,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
+        credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
         dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
+        namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
@@ -435,14 +450,20 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
+          credentials: Configuration for session credentials
+
           dimensions: Viewport and browser window dimensions for the session
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
 
+          namespace: The namespace the session should be created against. Defaults to "default".
+
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
               http(s)://username:password@hostname:port
+
+          region: The desired region for the session to be started in
 
           session_context: Session context data to be used in the created session. Sessions will start with
               an empty context by default.
@@ -472,9 +493,12 @@ class AsyncSessionsResource(AsyncAPIResource):
                 {
                     "block_ads": block_ads,
                     "concurrency": concurrency,
+                    "credentials": credentials,
                     "dimensions": dimensions,
                     "is_selenium": is_selenium,
+                    "namespace": namespace,
                     "proxy_url": proxy_url,
+                    "region": region,
                     "session_context": session_context,
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,

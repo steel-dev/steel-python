@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.4.0 (2025-06-03)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/steel-dev/steel-python/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** api update ([0ffa501](https://github.com/steel-dev/steel-python/commit/0ffa501e86332e522114a0934c8840945e55b1b7))
+* **api:** api update ([c0d3b97](https://github.com/steel-dev/steel-python/commit/c0d3b97d38153ed9068b0ab45f1d6fa795928b8d))
+* **api:** api update ([09c0202](https://github.com/steel-dev/steel-python/commit/09c0202155db5916bbc008feb4d351e739232906))
+* **api:** api update ([f93403a](https://github.com/steel-dev/steel-python/commit/f93403a897e6738e03a59186923e30a4b0637c00))
+* **api:** api update ([b4fae02](https://github.com/steel-dev/steel-python/commit/b4fae02408d585062ddc5aa26b8c95bd07354e28))
+* **api:** api update ([c1b2314](https://github.com/steel-dev/steel-python/commit/c1b2314f0a42fdbf6ea060d81f10a3c16eca15bd))
+* **client:** add follow_redirects request option ([fc3c2fd](https://github.com/steel-dev/steel-python/commit/fc3c2fd93f8db4487a645af64353d56a91477b50))
+
+
+### Chores
+
+* **ci:** fix installation instructions ([a3534f2](https://github.com/steel-dev/steel-python/commit/a3534f2d4583d06243fbf349acc647551ad1a509))
+* **ci:** upload sdks to package manager ([f6b95a9](https://github.com/steel-dev/steel-python/commit/f6b95a9c33d887c2547acc14b151c314536196dc))
+* **docs:** grammar improvements ([88fd0c8](https://github.com/steel-dev/steel-python/commit/88fd0c82136215824403d5c552b78d54dd54f6f8))
+* **docs:** remove reference to rye shell ([4cf3d51](https://github.com/steel-dev/steel-python/commit/4cf3d5125de62210958ef4fafbb8ffb9f63c8c48))
+* **docs:** remove unnecessary param examples ([36c3756](https://github.com/steel-dev/steel-python/commit/36c37562ffe33e61e4b093a8901f20fe3a78fe84))
+
 ## 0.3.0 (2025-05-12)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/steel-dev/steel-python/compare/v0.2.0...v0.3.0)

@@ -2,18 +2,29 @@
 
 from __future__ import annotations
 
+from .file import File as File
 from .session import Session as Session
+from .fileslist import Fileslist as Fileslist
 from .pdf_response import PdfResponse as PdfResponse
 from .sessionslist import Sessionslist as Sessionslist
 from .scrape_response import ScrapeResponse as ScrapeResponse
 from .session_context import SessionContext as SessionContext
 from .client_pdf_params import ClientPdfParams as ClientPdfParams
+from .file_upload_params import FileUploadParams as FileUploadParams
 from .screenshot_response import ScreenshotResponse as ScreenshotResponse
 from .session_list_params import SessionListParams as SessionListParams
 from .client_scrape_params import ClientScrapeParams as ClientScrapeParams
 from .session_create_params import SessionCreateParams as SessionCreateParams
+from .credential_list_params import CredentialListParams as CredentialListParams
 from .session_events_response import SessionEventsResponse as SessionEventsResponse
 from .client_screenshot_params import ClientScreenshotParams as ClientScreenshotParams
+from .credential_create_params import CredentialCreateParams as CredentialCreateParams
+from .credential_delete_params import CredentialDeleteParams as CredentialDeleteParams
+from .credential_list_response import CredentialListResponse as CredentialListResponse
+from .credential_update_params import CredentialUpdateParams as CredentialUpdateParams
 from .session_release_response import SessionReleaseResponse as SessionReleaseResponse
+from .credential_create_response import CredentialCreateResponse as CredentialCreateResponse
+from .credential_delete_response import CredentialDeleteResponse as CredentialDeleteResponse
+from .credential_update_response import CredentialUpdateResponse as CredentialUpdateResponse
 from .session_release_all_response import SessionReleaseAllResponse as SessionReleaseAllResponse
 from .session_live_details_response import SessionLiveDetailsResponse as SessionLiveDetailsResponse
