@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.1 (2025-06-13)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/steel-dev/steel-python/compare/v0.4.0...v0.4.1)
+
+### Bug Fixes
+
+* **client:** correctly parse binary response | stream ([96bc0a5](https://github.com/steel-dev/steel-python/commit/96bc0a57989271ac57a5e916a9678798e8bc7123))
+
+
+### Chores
+
+* **tests:** run tests in parallel ([825c97f](https://github.com/steel-dev/steel-python/commit/825c97fc4b37a582267bf338b2640de17a254546))
+
 ## 0.4.0 (2025-06-03)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/steel-dev/steel-python/compare/v0.3.0...v0.4.0)
