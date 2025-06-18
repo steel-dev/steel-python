@@ -23,9 +23,7 @@ from pydantic import ValidationError
 
 from steel import Steel, AsyncSteel, APIResponseValidationError
 from steel._types import Omit
-from steel._utils import maybe_transform
 from steel._models import BaseModel, FinalRequestOptions
-from steel._constants import RAW_RESPONSE_HEADER
 from steel._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
 from steel._base_client import (
     DEFAULT_TIMEOUT,
@@ -35,7 +33,6 @@ from steel._base_client import (
     DefaultAsyncHttpxClient,
     make_request_options,
 )
-from steel.types.session_create_params import SessionCreateParams
 
 from .utils import update_env
 
@@ -745,32 +742,21 @@ class TestSteel:
 
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Steel) -> None:
         respx_mock.post("/v1/sessions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            self.client.post(
-                "/v1/sessions",
-                body=cast(object, maybe_transform({}, SessionCreateParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
+            client.sessions.with_streaming_response.create().__enter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Steel) -> None:
         respx_mock.post("/v1/sessions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            self.client.post(
-                "/v1/sessions",
-                body=cast(object, maybe_transform({}, SessionCreateParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
-
+            client.sessions.with_streaming_response.create().__enter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1588,32 +1574,21 @@ class TestAsyncSteel:
 
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncSteel) -> None:
         respx_mock.post("/v1/sessions").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await self.client.post(
-                "/v1/sessions",
-                body=cast(object, maybe_transform({}, SessionCreateParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
+            await async_client.sessions.with_streaming_response.create().__aenter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("steel._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncSteel) -> None:
         respx_mock.post("/v1/sessions").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await self.client.post(
-                "/v1/sessions",
-                body=cast(object, maybe_transform({}, SessionCreateParams)),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
-
+            await async_client.sessions.with_streaming_response.create().__aenter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
