@@ -44,6 +44,9 @@ class Session(BaseModel):
     proxy_bytes_used: int = FieldInfo(alias="proxyBytesUsed")
     """Amount of data transmitted through the proxy"""
 
+    proxy_source: Optional[Literal["steel", "external"]] = FieldInfo(alias="proxySource", default=None)
+    """Source of the proxy used for the session"""
+
     session_viewer_url: str = FieldInfo(alias="sessionViewerUrl")
     """URL to view session details"""
 
@@ -56,11 +59,11 @@ class Session(BaseModel):
     websocket_url: str = FieldInfo(alias="websocketUrl")
     """URL for the session's WebSocket connection"""
 
+    advanced_stealth: Optional[bool] = FieldInfo(alias="advancedStealth", default=None)
+    """Indicates if advanced stealth mode is enabled"""
+
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
-
-    proxy: Optional[str] = None
-    """Proxy server used for the session"""
 
     region: Optional[Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]] = None
     """The region where the session was created"""
