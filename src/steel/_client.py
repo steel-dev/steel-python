@@ -38,7 +38,7 @@ from ._response import (
 )
 from .resources import files, credentials
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import SteelError, APIStatusError
+from ._exceptions import APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -61,7 +61,7 @@ class Steel(SyncAPIClient):
     with_streaming_response: SteelWithStreamedResponse
 
     # client options
-    steel_api_key: str
+    steel_api_key: str | None
 
     def __init__(
         self,
@@ -92,10 +92,6 @@ class Steel(SyncAPIClient):
         """
         if steel_api_key is None:
             steel_api_key = os.environ.get("STEEL_API_KEY")
-        if steel_api_key is None:
-            raise SteelError(
-                "The steel_api_key client option must be set either by passing steel_api_key to the client or by setting the STEEL_API_KEY environment variable"
-            )
         self.steel_api_key = steel_api_key
 
         if base_url is None:
@@ -129,6 +125,8 @@ class Steel(SyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         steel_api_key = self.steel_api_key
+        if steel_api_key is None:
+            return {}
         return {"steel-api-key": steel_api_key}
 
     @property
@@ -390,7 +388,7 @@ class AsyncSteel(AsyncAPIClient):
     with_streaming_response: AsyncSteelWithStreamedResponse
 
     # client options
-    steel_api_key: str
+    steel_api_key: str | None
 
     def __init__(
         self,
@@ -421,10 +419,6 @@ class AsyncSteel(AsyncAPIClient):
         """
         if steel_api_key is None:
             steel_api_key = os.environ.get("STEEL_API_KEY")
-        if steel_api_key is None:
-            raise SteelError(
-                "The steel_api_key client option must be set either by passing steel_api_key to the client or by setting the STEEL_API_KEY environment variable"
-            )
         self.steel_api_key = steel_api_key
 
         if base_url is None:
@@ -458,6 +452,8 @@ class AsyncSteel(AsyncAPIClient):
     @override
     def auth_headers(self) -> dict[str, str]:
         steel_api_key = self.steel_api_key
+        if steel_api_key is None:
+            return {}
         return {"steel-api-key": steel_api_key}
 
     @property
