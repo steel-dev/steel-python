@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.5.0 (2025-06-30)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/steel-dev/steel-python/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** api update ([978ad9c](https://github.com/steel-dev/steel-python/commit/978ad9cb86523cf783ca1c059b137d497422d626))
+* **client:** add support for aiohttp ([87bc6e2](https://github.com/steel-dev/steel-python/commit/87bc6e2420ea32f8336251fdda4c8353b8181f35))
+
+
+### Bug Fixes
+
+* **ci:** correct conditional ([76d9c3f](https://github.com/steel-dev/steel-python/commit/76d9c3f76a200bc1d2e567bd0bf9decebf6998cc))
+* **ci:** release-doctor — report correct token name ([0500644](https://github.com/steel-dev/steel-python/commit/0500644bda4e13e3ff0975a3be3af641fb731dea))
+* **client:** correctly parse binary response | stream ([96bc0a5](https://github.com/steel-dev/steel-python/commit/96bc0a57989271ac57a5e916a9678798e8bc7123))
+* **tests:** fix: tests which call HTTP endpoints directly with the example parameters ([ffacf10](https://github.com/steel-dev/steel-python/commit/ffacf10a70b267665f65ee31aa176a2d0fdb0fca))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([4f581f1](https://github.com/steel-dev/steel-python/commit/4f581f14fac853d9ffb09aac7efcd4cba8e7e008))
+* **ci:** only run for pushes and fork pull requests ([51c348d](https://github.com/steel-dev/steel-python/commit/51c348d7d8d1811dbd054887b06a3a0fc582d61e))
+* **internal:** update conftest.py ([95540f2](https://github.com/steel-dev/steel-python/commit/95540f26791852e6a9864e4ebe12fb8762ed0241))
+* **readme:** update badges ([e210ee7](https://github.com/steel-dev/steel-python/commit/e210ee78b18dc19b9b39b67c2b37f16c855f0c58))
+* **tests:** add tests for httpx client instantiation & proxies ([ad4f8a1](https://github.com/steel-dev/steel-python/commit/ad4f8a1256746d265dd9a2c0a9bfca53fa4c61f3))
+* **tests:** run tests in parallel ([825c97f](https://github.com/steel-dev/steel-python/commit/825c97fc4b37a582267bf338b2640de17a254546))
+* **tests:** skip some failing tests on the latest python versions ([c64047c](https://github.com/steel-dev/steel-python/commit/c64047c3036b3054f1f466f7521db5f76d013c8d))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([2c5ba6f](https://github.com/steel-dev/steel-python/commit/2c5ba6f2f450b6b7a2172ee9dfcf9de93426773b))
+
 ## 0.4.0 (2025-06-03)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/steel-dev/steel-python/compare/v0.3.0...v0.4.0)
