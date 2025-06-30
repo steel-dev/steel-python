@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Dict, Union, Iterable
 from datetime import datetime
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._utils import PropertyInfo
 
@@ -19,10 +19,17 @@ __all__ = [
     "SessionContextIndexedDBData",
     "SessionContextIndexedDBDataRecord",
     "SessionContextIndexedDBDataRecordBlobFile",
+    "UseProxy",
+    "UseProxyGeolocation",
+    "UseProxyGeolocationGeolocation",
+    "UseProxyServer",
 ]
 
 
 class SessionCreateParams(TypedDict, total=False):
+    advanced_stealth: Annotated[bool, PropertyInfo(alias="advancedStealth")]
+    """Enable advanced stealth mode for the browser session. Default is false."""
+
     block_ads: Annotated[bool, PropertyInfo(alias="blockAds")]
     """Block ads in the browser session. Default is false."""
 
@@ -69,10 +76,10 @@ class SessionCreateParams(TypedDict, total=False):
     api_timeout: Annotated[int, PropertyInfo(alias="timeout")]
     """Session timeout duration in milliseconds. Default is 300000 (5 minutes)."""
 
-    use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
-    """Enable Steel-provided residential proxy usage for the browser session.
+    use_proxy: Annotated[UseProxy, PropertyInfo(alias="useProxy")]
+    """Proxy configuration for the session.
 
-    Default is false, which routes requests through datacenter proxies.
+    Can be a boolean or array of proxy configurations
     """
 
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
@@ -209,3 +216,227 @@ class SessionContext(TypedDict, total=False):
 
     session_storage: Annotated[Dict[str, Dict[str, str]], PropertyInfo(alias="sessionStorage")]
     """Domain-specific sessionStorage items to initialize in the session"""
+
+
+class UseProxyGeolocationGeolocation(TypedDict, total=False):
+    country: Required[
+        Literal[
+            "US",
+            "CA",
+            "MX",
+            "GB",
+            "DE",
+            "FR",
+            "IT",
+            "ES",
+            "PL",
+            "NL",
+            "SE",
+            "NO",
+            "DK",
+            "FI",
+            "CH",
+            "AT",
+            "BE",
+            "IE",
+            "PT",
+            "GR",
+            "CZ",
+            "HU",
+            "RO",
+            "BG",
+            "SK",
+            "SI",
+            "HR",
+            "EE",
+            "LV",
+            "LT",
+            "LU",
+            "MT",
+            "CY",
+            "IS",
+            "LI",
+            "MC",
+            "SM",
+            "VA",
+            "JP",
+            "KR",
+            "CN",
+            "HK",
+            "TW",
+            "SG",
+            "AU",
+            "NZ",
+            "IN",
+            "TH",
+            "MY",
+            "PH",
+            "ID",
+            "VN",
+            "AF",
+            "BD",
+            "BN",
+            "KH",
+            "LA",
+            "LK",
+            "MM",
+            "NP",
+            "PK",
+            "FJ",
+            "PG",
+            "AE",
+            "SA",
+            "IL",
+            "TR",
+            "IR",
+            "IQ",
+            "JO",
+            "KW",
+            "LB",
+            "OM",
+            "QA",
+            "BH",
+            "YE",
+            "SY",
+            "ZA",
+            "EG",
+            "MA",
+            "NG",
+            "KE",
+            "DZ",
+            "AO",
+            "BW",
+            "ET",
+            "GH",
+            "CI",
+            "LY",
+            "MZ",
+            "RW",
+            "SN",
+            "TN",
+            "UG",
+            "ZM",
+            "ZW",
+            "TZ",
+            "MU",
+            "SC",
+            "BR",
+            "AR",
+            "CL",
+            "CO",
+            "PE",
+            "VE",
+            "EC",
+            "UY",
+            "PY",
+            "BO",
+            "CR",
+            "CU",
+            "DO",
+            "GT",
+            "HN",
+            "JM",
+            "NI",
+            "PA",
+            "SV",
+            "TT",
+            "BB",
+            "BZ",
+            "GY",
+            "SR",
+            "RU",
+            "UA",
+            "BY",
+            "KZ",
+            "UZ",
+            "AZ",
+            "GE",
+            "AM",
+            "MD",
+            "MK",
+            "AL",
+            "BA",
+            "RS",
+            "ME",
+            "XK",
+            "MN",
+            "KG",
+            "TJ",
+            "TM",
+        ]
+    ]
+    """Country code (e.g., 'US', 'GB', 'DE') - ISO 3166-1 alpha-2"""
+
+    city: str
+    """City name (e.g., 'NEW_YORK', 'LOS_ANGELES')"""
+
+    state: Literal[
+        "AL",
+        "AK",
+        "AZ",
+        "AR",
+        "CA",
+        "CO",
+        "CT",
+        "DE",
+        "FL",
+        "GA",
+        "HI",
+        "ID",
+        "IL",
+        "IN",
+        "IA",
+        "KS",
+        "KY",
+        "LA",
+        "ME",
+        "MD",
+        "MA",
+        "MI",
+        "MN",
+        "MS",
+        "MO",
+        "MT",
+        "NE",
+        "NV",
+        "NH",
+        "NJ",
+        "NM",
+        "NY",
+        "NC",
+        "ND",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VT",
+        "VA",
+        "WA",
+        "WV",
+        "WI",
+        "WY",
+        "DC",
+        "PR",
+        "GU",
+        "VI",
+    ]
+    """State code (e.g., 'NY', 'CA') - US states only"""
+
+
+class UseProxyGeolocation(TypedDict, total=False):
+    geolocation: Required[UseProxyGeolocationGeolocation]
+    """Geographic location for the proxy"""
+
+
+class UseProxyServer(TypedDict, total=False):
+    server: Required[str]
+    """Proxy server URL"""
+
+
+UseProxy: TypeAlias = Union[bool, UseProxyGeolocation, UseProxyServer, object]

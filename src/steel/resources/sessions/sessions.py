@@ -65,6 +65,7 @@ class SessionsResource(SyncAPIResource):
     def create(
         self,
         *,
+        advanced_stealth: bool | NotGiven = NOT_GIVEN,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
         credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
@@ -77,7 +78,7 @@ class SessionsResource(SyncAPIResource):
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
         api_timeout: int | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        use_proxy: session_create_params.UseProxy | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -90,6 +91,8 @@ class SessionsResource(SyncAPIResource):
         Creates a new session with the provided configuration.
 
         Args:
+          advanced_stealth: Enable advanced stealth mode for the browser session. Default is false.
+
           block_ads: Block ads in the browser session. Default is false.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
@@ -118,8 +121,8 @@ class SessionsResource(SyncAPIResource):
 
           api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
-          use_proxy: Enable Steel-provided residential proxy usage for the browser session. Default
-              is false, which routes requests through datacenter proxies.
+          use_proxy: Proxy configuration for the session. Can be a boolean or array of proxy
+              configurations
 
           user_agent: Custom user agent string for the browser session
 
@@ -135,6 +138,7 @@ class SessionsResource(SyncAPIResource):
             "/v1/sessions",
             body=maybe_transform(
                 {
+                    "advanced_stealth": advanced_stealth,
                     "block_ads": block_ads,
                     "concurrency": concurrency,
                     "credentials": credentials,
@@ -421,6 +425,7 @@ class AsyncSessionsResource(AsyncAPIResource):
     async def create(
         self,
         *,
+        advanced_stealth: bool | NotGiven = NOT_GIVEN,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
         credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
@@ -433,7 +438,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
         api_timeout: int | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        use_proxy: session_create_params.UseProxy | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -446,6 +451,8 @@ class AsyncSessionsResource(AsyncAPIResource):
         Creates a new session with the provided configuration.
 
         Args:
+          advanced_stealth: Enable advanced stealth mode for the browser session. Default is false.
+
           block_ads: Block ads in the browser session. Default is false.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
@@ -474,8 +481,8 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
-          use_proxy: Enable Steel-provided residential proxy usage for the browser session. Default
-              is false, which routes requests through datacenter proxies.
+          use_proxy: Proxy configuration for the session. Can be a boolean or array of proxy
+              configurations
 
           user_agent: Custom user agent string for the browser session
 
@@ -491,6 +498,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             "/v1/sessions",
             body=await async_maybe_transform(
                 {
+                    "advanced_stealth": advanced_stealth,
                     "block_ads": block_ads,
                     "concurrency": concurrency,
                     "credentials": credentials,
