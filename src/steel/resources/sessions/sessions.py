@@ -65,7 +65,6 @@ class SessionsResource(SyncAPIResource):
     def create(
         self,
         *,
-        advanced_stealth: bool | NotGiven = NOT_GIVEN,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
         credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
@@ -77,6 +76,7 @@ class SessionsResource(SyncAPIResource):
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
+        stealth_config: session_create_params.StealthConfig | NotGiven = NOT_GIVEN,
         api_timeout: int | NotGiven = NOT_GIVEN,
         use_proxy: session_create_params.UseProxy | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
@@ -91,8 +91,6 @@ class SessionsResource(SyncAPIResource):
         Creates a new session with the provided configuration.
 
         Args:
-          advanced_stealth: Enable advanced stealth mode for the browser session. Default is false.
-
           block_ads: Block ads in the browser session. Default is false.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
@@ -119,6 +117,8 @@ class SessionsResource(SyncAPIResource):
 
           solve_captcha: Enable automatic captcha solving. Default is false.
 
+          stealth_config: Stealth configuration for the session
+
           api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
           use_proxy: Proxy configuration for the session. Can be a boolean or array of proxy
@@ -138,7 +138,6 @@ class SessionsResource(SyncAPIResource):
             "/v1/sessions",
             body=maybe_transform(
                 {
-                    "advanced_stealth": advanced_stealth,
                     "block_ads": block_ads,
                     "concurrency": concurrency,
                     "credentials": credentials,
@@ -150,6 +149,7 @@ class SessionsResource(SyncAPIResource):
                     "session_context": session_context,
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,
+                    "stealth_config": stealth_config,
                     "api_timeout": api_timeout,
                     "use_proxy": use_proxy,
                     "user_agent": user_agent,
@@ -425,7 +425,6 @@ class AsyncSessionsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        advanced_stealth: bool | NotGiven = NOT_GIVEN,
         block_ads: bool | NotGiven = NOT_GIVEN,
         concurrency: int | NotGiven = NOT_GIVEN,
         credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
@@ -437,6 +436,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
+        stealth_config: session_create_params.StealthConfig | NotGiven = NOT_GIVEN,
         api_timeout: int | NotGiven = NOT_GIVEN,
         use_proxy: session_create_params.UseProxy | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
@@ -451,8 +451,6 @@ class AsyncSessionsResource(AsyncAPIResource):
         Creates a new session with the provided configuration.
 
         Args:
-          advanced_stealth: Enable advanced stealth mode for the browser session. Default is false.
-
           block_ads: Block ads in the browser session. Default is false.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
@@ -479,6 +477,8 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           solve_captcha: Enable automatic captcha solving. Default is false.
 
+          stealth_config: Stealth configuration for the session
+
           api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
           use_proxy: Proxy configuration for the session. Can be a boolean or array of proxy
@@ -498,7 +498,6 @@ class AsyncSessionsResource(AsyncAPIResource):
             "/v1/sessions",
             body=await async_maybe_transform(
                 {
-                    "advanced_stealth": advanced_stealth,
                     "block_ads": block_ads,
                     "concurrency": concurrency,
                     "credentials": credentials,
@@ -510,6 +509,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "session_context": session_context,
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,
+                    "stealth_config": stealth_config,
                     "api_timeout": api_timeout,
                     "use_proxy": use_proxy,
                     "user_agent": user_agent,
