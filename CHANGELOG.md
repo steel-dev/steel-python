@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.6.0 (2025-07-02)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/steel-dev/steel-python/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** api update ([4a1726f](https://github.com/steel-dev/steel-python/commit/4a1726f54695553013b1bec0ab6c3b7e0f196482))
+* **api:** api update ([dc67b27](https://github.com/steel-dev/steel-python/commit/dc67b27864bfcf0e040996cfe3d8538dbdb5328f))
+
+
+### Chores
+
+* **ci:** change upload type ([76f1526](https://github.com/steel-dev/steel-python/commit/76f1526277ff1a1dbc75ed3ce5c57e51293dfb3d))
+
 ## 0.5.0 (2025-06-30)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/steel-dev/steel-python/compare/v0.4.0...v0.5.0)
