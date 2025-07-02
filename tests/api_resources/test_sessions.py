@@ -35,7 +35,6 @@ class TestSessions:
     @parametrize
     def test_method_create_with_all_params(self, client: Steel) -> None:
         session = client.sessions.create(
-            advanced_stealth=True,
             block_ads=True,
             concurrency=0,
             credentials={
@@ -110,6 +109,10 @@ class TestSessions:
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
+            stealth_config={
+                "humanize_interactions": True,
+                "skip_fingerprint_injection": True,
+            },
             api_timeout=0,
             use_proxy=True,
             user_agent="userAgent",
@@ -399,7 +402,6 @@ class TestAsyncSessions:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.create(
-            advanced_stealth=True,
             block_ads=True,
             concurrency=0,
             credentials={
@@ -474,6 +476,10 @@ class TestAsyncSessions:
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
+            stealth_config={
+                "humanize_interactions": True,
+                "skip_fingerprint_injection": True,
+            },
             api_timeout=0,
             use_proxy=True,
             user_agent="userAgent",

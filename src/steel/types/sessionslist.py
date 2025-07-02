@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Sessionslist", "Session", "SessionDimensions"]
+__all__ = ["Sessionslist", "Session", "SessionDimensions", "SessionStealthConfig"]
 
 
 class SessionDimensions(BaseModel):
@@ -17,6 +17,17 @@ class SessionDimensions(BaseModel):
 
     width: int
     """Width of the browser window"""
+
+
+class SessionStealthConfig(BaseModel):
+    humanize_interactions: Optional[bool] = FieldInfo(alias="humanizeInteractions", default=None)
+    """
+    This flag will make the browser act more human-like by moving the mouse in a
+    more natural way
+    """
+
+    skip_fingerprint_injection: Optional[bool] = FieldInfo(alias="skipFingerprintInjection", default=None)
+    """This flag will skip the fingerprint generation for the session."""
 
 
 class Session(BaseModel):
@@ -59,9 +70,6 @@ class Session(BaseModel):
     websocket_url: str = FieldInfo(alias="websocketUrl")
     """URL for the session's WebSocket connection"""
 
-    advanced_stealth: Optional[bool] = FieldInfo(alias="advancedStealth", default=None)
-    """Indicates if advanced stealth mode is enabled"""
-
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
 
@@ -70,6 +78,9 @@ class Session(BaseModel):
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
     """Indicates if captcha solving is enabled"""
+
+    stealth_config: Optional[SessionStealthConfig] = FieldInfo(alias="stealthConfig", default=None)
+    """Stealth configuration for the session"""
 
     user_agent: Optional[str] = FieldInfo(alias="userAgent", default=None)
     """User agent string used in the session"""
