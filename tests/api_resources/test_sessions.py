@@ -109,6 +109,10 @@ class TestSessions:
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
+            stealth_config={
+                "humanize_interactions": True,
+                "skip_fingerprint_injection": True,
+            },
             api_timeout=0,
             use_proxy=True,
             user_agent="userAgent",
@@ -472,6 +476,10 @@ class TestAsyncSessions:
             },
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
+            stealth_config={
+                "humanize_interactions": True,
+                "skip_fingerprint_injection": True,
+            },
             api_timeout=0,
             use_proxy=True,
             user_agent="userAgent",

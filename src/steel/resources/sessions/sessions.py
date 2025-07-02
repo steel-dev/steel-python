@@ -76,8 +76,9 @@ class SessionsResource(SyncAPIResource):
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
+        stealth_config: session_create_params.StealthConfig | NotGiven = NOT_GIVEN,
         api_timeout: int | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        use_proxy: session_create_params.UseProxy | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -116,10 +117,12 @@ class SessionsResource(SyncAPIResource):
 
           solve_captcha: Enable automatic captcha solving. Default is false.
 
+          stealth_config: Stealth configuration for the session
+
           api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
-          use_proxy: Enable Steel-provided residential proxy usage for the browser session. Default
-              is false, which routes requests through datacenter proxies.
+          use_proxy: Proxy configuration for the session. Can be a boolean or array of proxy
+              configurations
 
           user_agent: Custom user agent string for the browser session
 
@@ -146,6 +149,7 @@ class SessionsResource(SyncAPIResource):
                     "session_context": session_context,
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,
+                    "stealth_config": stealth_config,
                     "api_timeout": api_timeout,
                     "use_proxy": use_proxy,
                     "user_agent": user_agent,
@@ -432,8 +436,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
         session_id: str | NotGiven = NOT_GIVEN,
         solve_captcha: bool | NotGiven = NOT_GIVEN,
+        stealth_config: session_create_params.StealthConfig | NotGiven = NOT_GIVEN,
         api_timeout: int | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        use_proxy: session_create_params.UseProxy | NotGiven = NOT_GIVEN,
         user_agent: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -472,10 +477,12 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           solve_captcha: Enable automatic captcha solving. Default is false.
 
+          stealth_config: Stealth configuration for the session
+
           api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
-          use_proxy: Enable Steel-provided residential proxy usage for the browser session. Default
-              is false, which routes requests through datacenter proxies.
+          use_proxy: Proxy configuration for the session. Can be a boolean or array of proxy
+              configurations
 
           user_agent: Custom user agent string for the browser session
 
@@ -502,6 +509,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "session_context": session_context,
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,
+                    "stealth_config": stealth_config,
                     "api_timeout": api_timeout,
                     "use_proxy": use_proxy,
                     "user_agent": user_agent,

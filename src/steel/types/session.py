@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Session", "Dimensions"]
+__all__ = ["Session", "Dimensions", "StealthConfig"]
 
 
 class Dimensions(BaseModel):
@@ -17,6 +17,17 @@ class Dimensions(BaseModel):
 
     width: int
     """Width of the browser window"""
+
+
+class StealthConfig(BaseModel):
+    humanize_interactions: Optional[bool] = FieldInfo(alias="humanizeInteractions", default=None)
+    """
+    This flag will make the browser act more human-like by moving the mouse in a
+    more natural way
+    """
+
+    skip_fingerprint_injection: Optional[bool] = FieldInfo(alias="skipFingerprintInjection", default=None)
+    """This flag will skip the fingerprint generation for the session."""
 
 
 class Session(BaseModel):
@@ -44,6 +55,9 @@ class Session(BaseModel):
     proxy_bytes_used: int = FieldInfo(alias="proxyBytesUsed")
     """Amount of data transmitted through the proxy"""
 
+    proxy_source: Optional[Literal["steel", "external"]] = FieldInfo(alias="proxySource", default=None)
+    """Source of the proxy used for the session"""
+
     session_viewer_url: str = FieldInfo(alias="sessionViewerUrl")
     """URL to view session details"""
 
@@ -59,14 +73,14 @@ class Session(BaseModel):
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
 
-    proxy: Optional[str] = None
-    """Proxy server used for the session"""
-
     region: Optional[Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]] = None
     """The region where the session was created"""
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
     """Indicates if captcha solving is enabled"""
+
+    stealth_config: Optional[StealthConfig] = FieldInfo(alias="stealthConfig", default=None)
+    """Stealth configuration for the session"""
 
     user_agent: Optional[str] = FieldInfo(alias="userAgent", default=None)
     """User agent string used in the session"""
