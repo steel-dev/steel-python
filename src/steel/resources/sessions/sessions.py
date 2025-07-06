@@ -17,6 +17,14 @@ from .files import (
 from ...types import session_list_params, session_create_params
 from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from ..._utils import maybe_transform, async_maybe_transform
+from .captchas import (
+    CaptchasResource,
+    AsyncCaptchasResource,
+    CaptchasResourceWithRawResponse,
+    AsyncCaptchasResourceWithRawResponse,
+    CaptchasResourceWithStreamingResponse,
+    AsyncCaptchasResourceWithStreamingResponse,
+)
 from ..._compat import cached_property
 from ..._resource import SyncAPIResource, AsyncAPIResource
 from ..._response import (
@@ -42,6 +50,10 @@ class SessionsResource(SyncAPIResource):
     @cached_property
     def files(self) -> FilesResource:
         return FilesResource(self._client)
+
+    @cached_property
+    def captchas(self) -> CaptchasResource:
+        return CaptchasResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> SessionsResourceWithRawResponse:
@@ -402,6 +414,10 @@ class AsyncSessionsResource(AsyncAPIResource):
     @cached_property
     def files(self) -> AsyncFilesResource:
         return AsyncFilesResource(self._client)
+
+    @cached_property
+    def captchas(self) -> AsyncCaptchasResource:
+        return AsyncCaptchasResource(self._client)
 
     @cached_property
     def with_raw_response(self) -> AsyncSessionsResourceWithRawResponse:
@@ -791,6 +807,10 @@ class SessionsResourceWithRawResponse:
     def files(self) -> FilesResourceWithRawResponse:
         return FilesResourceWithRawResponse(self._sessions.files)
 
+    @cached_property
+    def captchas(self) -> CaptchasResourceWithRawResponse:
+        return CaptchasResourceWithRawResponse(self._sessions.captchas)
+
 
 class AsyncSessionsResourceWithRawResponse:
     def __init__(self, sessions: AsyncSessionsResource) -> None:
@@ -824,6 +844,10 @@ class AsyncSessionsResourceWithRawResponse:
     @cached_property
     def files(self) -> AsyncFilesResourceWithRawResponse:
         return AsyncFilesResourceWithRawResponse(self._sessions.files)
+
+    @cached_property
+    def captchas(self) -> AsyncCaptchasResourceWithRawResponse:
+        return AsyncCaptchasResourceWithRawResponse(self._sessions.captchas)
 
 
 class SessionsResourceWithStreamingResponse:
@@ -859,6 +883,10 @@ class SessionsResourceWithStreamingResponse:
     def files(self) -> FilesResourceWithStreamingResponse:
         return FilesResourceWithStreamingResponse(self._sessions.files)
 
+    @cached_property
+    def captchas(self) -> CaptchasResourceWithStreamingResponse:
+        return CaptchasResourceWithStreamingResponse(self._sessions.captchas)
+
 
 class AsyncSessionsResourceWithStreamingResponse:
     def __init__(self, sessions: AsyncSessionsResource) -> None:
@@ -892,3 +920,7 @@ class AsyncSessionsResourceWithStreamingResponse:
     @cached_property
     def files(self) -> AsyncFilesResourceWithStreamingResponse:
         return AsyncFilesResourceWithStreamingResponse(self._sessions.files)
+
+    @cached_property
+    def captchas(self) -> AsyncCaptchasResourceWithStreamingResponse:
+        return AsyncCaptchasResourceWithStreamingResponse(self._sessions.captchas)
