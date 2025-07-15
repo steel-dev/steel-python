@@ -8,6 +8,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .captchas import (
+    CaptchasResource,
+    AsyncCaptchasResource,
+    CaptchasResourceWithRawResponse,
+    AsyncCaptchasResourceWithRawResponse,
+    CaptchasResourceWithStreamingResponse,
+    AsyncCaptchasResourceWithStreamingResponse,
+)
 from .sessions import (
     SessionsResource,
     AsyncSessionsResource,
@@ -24,6 +32,12 @@ __all__ = [
     "AsyncFilesResourceWithRawResponse",
     "FilesResourceWithStreamingResponse",
     "AsyncFilesResourceWithStreamingResponse",
+    "CaptchasResource",
+    "AsyncCaptchasResource",
+    "CaptchasResourceWithRawResponse",
+    "AsyncCaptchasResourceWithRawResponse",
+    "CaptchasResourceWithStreamingResponse",
+    "AsyncCaptchasResourceWithStreamingResponse",
     "SessionsResource",
     "AsyncSessionsResource",
     "SessionsResourceWithRawResponse",

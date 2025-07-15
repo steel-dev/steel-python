@@ -84,3 +84,16 @@ Methods:
 - <code title="get /v1/sessions/{sessionId}/files/{path}">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">download</a>(path, \*, session_id) -> BinaryAPIResponse</code>
 - <code title="get /v1/sessions/{sessionId}/files.zip">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">download_archive</a>(session_id) -> BinaryAPIResponse</code>
 - <code title="post /v1/sessions/{sessionId}/files">client.sessions.files.<a href="./src/steel/resources/sessions/files.py">upload</a>(session_id, \*\*<a href="src/steel/types/sessions/file_upload_params.py">params</a>) -> <a href="./src/steel/types/file.py">File</a></code>
+
+## Captchas
+
+Types:
+
+```python
+from steel.types.sessions import CaptchaSolveImageResponse, CaptchaStatusResponse
+```
+
+Methods:
+
+- <code title="post /v1/sessions/{sessionId}/captchas/solve-image">client.sessions.captchas.<a href="./src/steel/resources/sessions/captchas.py">solve_image</a>(session_id, \*\*<a href="src/steel/types/sessions/captcha_solve_image_params.py">params</a>) -> <a href="./src/steel/types/sessions/captcha_solve_image_response.py">CaptchaSolveImageResponse</a></code>
+- <code title="get /v1/sessions/{sessionId}/captchas/status">client.sessions.captchas.<a href="./src/steel/resources/sessions/captchas.py">status</a>(session_id) -> <a href="./src/steel/types/sessions/captcha_status_response.py">CaptchaStatusResponse</a></code>

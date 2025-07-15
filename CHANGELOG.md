@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.7.0 (2025-07-12)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/steel-dev/steel-python/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([7c3a807](https://github.com/steel-dev/steel-python/commit/7c3a8071ad39d7d371c68bc5632630aba52d1126))
+
+
+### Bug Fixes
+
+* **client:** don't send Content-Type header on GET requests ([3663409](https://github.com/steel-dev/steel-python/commit/366340962d2ad7252fc25b70399293cb2b8687aa))
+* **parsing:** correctly handle nested discriminated unions ([d88c056](https://github.com/steel-dev/steel-python/commit/d88c05684f94be0249181c40365ae1605e65c9d8))
+
+
+### Chores
+
+* **internal:** bump pinned h11 dep ([f79c166](https://github.com/steel-dev/steel-python/commit/f79c16621c3a9e5b902f28294a82638f7165cf49))
+* **package:** mark python 3.13 as supported ([a70bc61](https://github.com/steel-dev/steel-python/commit/a70bc614385d48955991218901b9ae8b0ca2ae1e))
+* **readme:** fix version rendering on pypi ([14b7820](https://github.com/steel-dev/steel-python/commit/14b7820aff48a061d6eeb74df86ec2e896d5e25c))
+
 ## 0.6.0 (2025-07-02)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/steel-dev/steel-python/compare/v0.5.0...v0.6.0)
