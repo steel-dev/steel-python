@@ -64,7 +64,7 @@ class CaptchasResource(SyncAPIResource):
 
           input_x_path: XPath to the captcha input element
 
-          url: URL where the captcha is located
+          url: URL where the captcha is located. Defaults to the current page URL
 
           extra_headers: Send extra headers
 
@@ -168,7 +168,7 @@ class AsyncCaptchasResource(AsyncAPIResource):
 
           input_x_path: XPath to the captcha input element
 
-          url: URL where the captcha is located
+          url: URL where the captcha is located. Defaults to the current page URL
 
           extra_headers: Send extra headers
 
