@@ -11,11 +11,5 @@ class CaptchaSolveImageResponse(BaseModel):
     success: bool
     """Whether the action was successful"""
 
-    broadcasted: Optional[bool] = None
-    """Whether the message was broadcasted"""
-
     message: Optional[str] = None
     """Response message"""
-
-    requested: Optional[bool] = None
-    """Whether the state was requested"""

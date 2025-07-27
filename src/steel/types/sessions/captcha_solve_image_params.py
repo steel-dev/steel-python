@@ -17,4 +17,4 @@ class CaptchaSolveImageParams(TypedDict, total=False):
     """XPath to the captcha input element"""
 
     url: str
-    """URL where the captcha is located"""
+    """URL where the captcha is located. Defaults to the current page URL"""
