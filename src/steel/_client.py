@@ -194,6 +194,7 @@ class Steel(SyncAPIClient):
         *,
         url: str,
         delay: float | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -209,6 +210,8 @@ class Steel(SyncAPIClient):
           url: URL of the webpage to convert to PDF
 
           delay: Delay before generating the PDF (in milliseconds)
+
+          region: The desired region for the action to be performed in
 
           use_proxy: Use a Steel-provided residential proxy for generating the PDF
 
@@ -226,6 +229,7 @@ class Steel(SyncAPIClient):
                 {
                     "url": url,
                     "delay": delay,
+                    "region": region,
                     "use_proxy": use_proxy,
                 },
                 client_pdf_params.ClientPdfParams,
@@ -243,6 +247,7 @@ class Steel(SyncAPIClient):
         delay: float | NotGiven = NOT_GIVEN,
         format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | NotGiven = NOT_GIVEN,
         pdf: bool | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         screenshot: bool | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -264,6 +269,8 @@ class Steel(SyncAPIClient):
 
           pdf: Include a PDF in the response
 
+          region: The desired region for the action to be performed in
+
           screenshot: Include a screenshot in the response
 
           use_proxy: Use a Steel-provided residential proxy for the scrape
@@ -284,6 +291,7 @@ class Steel(SyncAPIClient):
                     "delay": delay,
                     "format": format,
                     "pdf": pdf,
+                    "region": region,
                     "screenshot": screenshot,
                     "use_proxy": use_proxy,
                 },
@@ -301,6 +309,7 @@ class Steel(SyncAPIClient):
         url: str,
         delay: float | NotGiven = NOT_GIVEN,
         full_page: bool | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -319,6 +328,8 @@ class Steel(SyncAPIClient):
 
           full_page: Capture the full page screenshot. Default is `false`.
 
+          region: The desired region for the action to be performed in
+
           use_proxy: Use a Steel-provided residential proxy for capturing the screenshot
 
           extra_headers: Send extra headers
@@ -336,6 +347,7 @@ class Steel(SyncAPIClient):
                     "url": url,
                     "delay": delay,
                     "full_page": full_page,
+                    "region": region,
                     "use_proxy": use_proxy,
                 },
                 client_screenshot_params.ClientScreenshotParams,
@@ -521,6 +533,7 @@ class AsyncSteel(AsyncAPIClient):
         *,
         url: str,
         delay: float | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -536,6 +549,8 @@ class AsyncSteel(AsyncAPIClient):
           url: URL of the webpage to convert to PDF
 
           delay: Delay before generating the PDF (in milliseconds)
+
+          region: The desired region for the action to be performed in
 
           use_proxy: Use a Steel-provided residential proxy for generating the PDF
 
@@ -553,6 +568,7 @@ class AsyncSteel(AsyncAPIClient):
                 {
                     "url": url,
                     "delay": delay,
+                    "region": region,
                     "use_proxy": use_proxy,
                 },
                 client_pdf_params.ClientPdfParams,
@@ -570,6 +586,7 @@ class AsyncSteel(AsyncAPIClient):
         delay: float | NotGiven = NOT_GIVEN,
         format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | NotGiven = NOT_GIVEN,
         pdf: bool | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         screenshot: bool | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -591,6 +608,8 @@ class AsyncSteel(AsyncAPIClient):
 
           pdf: Include a PDF in the response
 
+          region: The desired region for the action to be performed in
+
           screenshot: Include a screenshot in the response
 
           use_proxy: Use a Steel-provided residential proxy for the scrape
@@ -611,6 +630,7 @@ class AsyncSteel(AsyncAPIClient):
                     "delay": delay,
                     "format": format,
                     "pdf": pdf,
+                    "region": region,
                     "screenshot": screenshot,
                     "use_proxy": use_proxy,
                 },
@@ -628,6 +648,7 @@ class AsyncSteel(AsyncAPIClient):
         url: str,
         delay: float | NotGiven = NOT_GIVEN,
         full_page: bool | NotGiven = NOT_GIVEN,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
         use_proxy: bool | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -646,6 +667,8 @@ class AsyncSteel(AsyncAPIClient):
 
           full_page: Capture the full page screenshot. Default is `false`.
 
+          region: The desired region for the action to be performed in
+
           use_proxy: Use a Steel-provided residential proxy for capturing the screenshot
 
           extra_headers: Send extra headers
@@ -663,6 +686,7 @@ class AsyncSteel(AsyncAPIClient):
                     "url": url,
                     "delay": delay,
                     "full_page": full_page,
+                    "region": region,
                     "use_proxy": use_proxy,
                 },
                 client_screenshot_params.ClientScreenshotParams,
