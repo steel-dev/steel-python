@@ -33,6 +33,7 @@ class TestClient:
         client_ = client.pdf(
             url="https://example.com",
             delay=0,
+            region="lax",
             use_proxy=True,
         )
         assert_matches_type(PdfResponse, client_, path=["response"])
@@ -75,6 +76,7 @@ class TestClient:
             delay=0,
             format=["html"],
             pdf=True,
+            region="lax",
             screenshot=True,
             use_proxy=True,
         )
@@ -117,6 +119,7 @@ class TestClient:
             url="https://example.com",
             delay=0,
             full_page=True,
+            region="lax",
             use_proxy=True,
         )
         assert_matches_type(ScreenshotResponse, client_, path=["response"])
@@ -163,6 +166,7 @@ class TestAsyncClient:
         client = await async_client.pdf(
             url="https://example.com",
             delay=0,
+            region="lax",
             use_proxy=True,
         )
         assert_matches_type(PdfResponse, client, path=["response"])
@@ -205,6 +209,7 @@ class TestAsyncClient:
             delay=0,
             format=["html"],
             pdf=True,
+            region="lax",
             screenshot=True,
             use_proxy=True,
         )
@@ -247,6 +252,7 @@ class TestAsyncClient:
             url="https://example.com",
             delay=0,
             full_page=True,
+            region="lax",
             use_proxy=True,
         )
         assert_matches_type(ScreenshotResponse, client, path=["response"])

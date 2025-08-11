@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, Annotated, TypedDict
+from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
@@ -18,6 +18,9 @@ class ClientScreenshotParams(TypedDict, total=False):
 
     full_page: Annotated[bool, PropertyInfo(alias="fullPage")]
     """Capture the full page screenshot. Default is `false`."""
+
+    region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]
+    """The desired region for the action to be performed in"""
 
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]
     """Use a Steel-provided residential proxy for capturing the screenshot"""
