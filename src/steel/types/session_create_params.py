@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Union, Iterable
+from typing import Dict, List, Union, Iterable
 from datetime import datetime
 from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
@@ -39,6 +39,12 @@ class SessionCreateParams(TypedDict, total=False):
 
     dimensions: Dimensions
     """Viewport and browser window dimensions for the session"""
+
+    extension_ids: Annotated[List[str], PropertyInfo(alias="extensionIds")]
+    """Array of extension IDs to install in the session.
+
+    Use ['all_ext'] to install all uploaded extensions.
+    """
 
     is_selenium: Annotated[bool, PropertyInfo(alias="isSelenium")]
     """Enable Selenium mode for the browser session (default is false).
