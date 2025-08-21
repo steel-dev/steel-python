@@ -8,11 +8,11 @@ __all__ = ["ExtensionUpdateResponse"]
 
 
 class ExtensionUpdateResponse(BaseModel):
+    id: str
+    """Unique extension identifier (e.g., ext_12345)"""
+
     created_at: str = FieldInfo(alias="createdAt")
     """Creation timestamp"""
-
-    extension_id: str = FieldInfo(alias="extensionId")
-    """Unique extension identifier (e.g., ext_12345)"""
 
     name: str
     """Extension name"""
