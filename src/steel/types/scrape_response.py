@@ -36,11 +36,32 @@ class Metadata(BaseModel):
     status_code: int = FieldInfo(alias="statusCode")
     """HTTP status code of the response"""
 
+    article_author: Optional[str] = FieldInfo(alias="articleAuthor", default=None)
+    """Author of the article content"""
+
+    author: Optional[str] = None
+    """Author of the webpage content"""
+
+    canonical: Optional[str] = None
+    """Canonical URL of the webpage"""
+
     description: Optional[str] = None
     """Description of the webpage"""
 
+    favicon: Optional[str] = None
+    """Favicon URL of the website"""
+
+    json_ld: Optional[object] = FieldInfo(alias="jsonLd", default=None)
+    """JSON-LD structured data from the webpage"""
+
+    keywords: Optional[str] = None
+    """Keywords associated with the webpage"""
+
     language: Optional[str] = None
     """Detected language of the webpage"""
+
+    modified_time: Optional[str] = FieldInfo(alias="modifiedTime", default=None)
+    """Last modification time of the content"""
 
     og_description: Optional[str] = FieldInfo(alias="ogDescription", default=None)
     """Open Graph description"""
@@ -48,11 +69,17 @@ class Metadata(BaseModel):
     og_image: Optional[str] = FieldInfo(alias="ogImage", default=None)
     """Open Graph image URL"""
 
+    og_site_name: Optional[str] = FieldInfo(alias="ogSiteName", default=None)
+    """Open Graph site name"""
+
     og_title: Optional[str] = FieldInfo(alias="ogTitle", default=None)
     """Open Graph title"""
 
-    published_timestamp: Optional[datetime] = None
-    """Publication timestamp of the content (if available)"""
+    og_url: Optional[str] = FieldInfo(alias="ogUrl", default=None)
+    """Open Graph URL"""
+
+    published_time: Optional[str] = FieldInfo(alias="publishedTime", default=None)
+    """Publication time of the content"""
 
     timestamp: Optional[datetime] = None
     """Timestamp when the scrape was performed"""

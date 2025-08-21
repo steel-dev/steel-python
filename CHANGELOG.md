@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.8.0 (2025-08-21)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/steel-dev/steel-python/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([49f5992](https://github.com/steel-dev/steel-python/commit/49f59927bd2ba1e9a6e6a1cbef93dd84cbc6eef7))
+* **api:** api update ([2055ec7](https://github.com/steel-dev/steel-python/commit/2055ec74b1351d0cd32c2f0b090aea60472bb083))
+* **api:** api update ([17e78ce](https://github.com/steel-dev/steel-python/commit/17e78ced5dcc03291fc901db0a709f9163f088e4))
+* **api:** api update ([ac8847c](https://github.com/steel-dev/steel-python/commit/ac8847c5159a11f64e07b3dbe6e9734195324dbb))
+* **client:** support file upload requests ([f39ab33](https://github.com/steel-dev/steel-python/commit/f39ab33ad139f97dbded281ae95816c46b8067f1))
+
+
+### Bug Fixes
+
+* **parsing:** ignore empty metadata ([49e1aa7](https://github.com/steel-dev/steel-python/commit/49e1aa7d8c13615fea92180a934a7611f90f2453))
+* **parsing:** parse extra field types ([2e73fc7](https://github.com/steel-dev/steel-python/commit/2e73fc78a36fa3045cfd38d7cc3abdc7d9547c8b))
+
+
+### Chores
+
+* **internal:** fix ruff target version ([b686aa3](https://github.com/steel-dev/steel-python/commit/b686aa3294ca45632e573a9bc567341544f3c4e8))
+* **internal:** update comment in script ([fdaf7d9](https://github.com/steel-dev/steel-python/commit/fdaf7d9f40f5b3aaceb39e2017b2ac4677644498))
+* **project:** add settings file for vscode ([077b238](https://github.com/steel-dev/steel-python/commit/077b2387b888f5ba82e209ea307e6dd633c39e3c))
+* update @stainless-api/prism-cli to v5.15.0 ([b6cb1cd](https://github.com/steel-dev/steel-python/commit/b6cb1cdf5282c29c021a2b7a3b139e613686e8e8))
+
 ## 0.7.0 (2025-07-12)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/steel-dev/steel-python/compare/v0.6.0...v0.7.0)
