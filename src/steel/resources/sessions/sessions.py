@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import List
 from typing_extensions import Literal
 
 import httpx
@@ -81,6 +82,7 @@ class SessionsResource(SyncAPIResource):
         concurrency: int | NotGiven = NOT_GIVEN,
         credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
         dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
+        extension_ids: List[str] | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
@@ -110,6 +112,9 @@ class SessionsResource(SyncAPIResource):
           credentials: Configuration for session credentials
 
           dimensions: Viewport and browser window dimensions for the session
+
+          extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
+              uploaded extensions.
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -154,6 +159,7 @@ class SessionsResource(SyncAPIResource):
                     "concurrency": concurrency,
                     "credentials": credentials,
                     "dimensions": dimensions,
+                    "extension_ids": extension_ids,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "proxy_url": proxy_url,
@@ -445,6 +451,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         concurrency: int | NotGiven = NOT_GIVEN,
         credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
         dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
+        extension_ids: List[str] | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
@@ -474,6 +481,9 @@ class AsyncSessionsResource(AsyncAPIResource):
           credentials: Configuration for session credentials
 
           dimensions: Viewport and browser window dimensions for the session
+
+          extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
+              uploaded extensions.
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -518,6 +528,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "concurrency": concurrency,
                     "credentials": credentials,
                     "dimensions": dimensions,
+                    "extension_ids": extension_ids,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "proxy_url": proxy_url,

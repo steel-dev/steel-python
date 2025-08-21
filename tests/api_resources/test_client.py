@@ -65,14 +65,14 @@ class TestClient:
     @parametrize
     def test_method_scrape(self, client: Steel) -> None:
         client_ = client.scrape(
-            url="https://example.com",
+            url="url",
         )
         assert_matches_type(ScrapeResponse, client_, path=["response"])
 
     @parametrize
     def test_method_scrape_with_all_params(self, client: Steel) -> None:
         client_ = client.scrape(
-            url="https://example.com",
+            url="url",
             delay=0,
             format=["html"],
             pdf=True,
@@ -85,7 +85,7 @@ class TestClient:
     @parametrize
     def test_raw_response_scrape(self, client: Steel) -> None:
         response = client.with_raw_response.scrape(
-            url="https://example.com",
+            url="url",
         )
 
         assert response.is_closed is True
@@ -96,7 +96,7 @@ class TestClient:
     @parametrize
     def test_streaming_response_scrape(self, client: Steel) -> None:
         with client.with_streaming_response.scrape(
-            url="https://example.com",
+            url="url",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -198,14 +198,14 @@ class TestAsyncClient:
     @parametrize
     async def test_method_scrape(self, async_client: AsyncSteel) -> None:
         client = await async_client.scrape(
-            url="https://example.com",
+            url="url",
         )
         assert_matches_type(ScrapeResponse, client, path=["response"])
 
     @parametrize
     async def test_method_scrape_with_all_params(self, async_client: AsyncSteel) -> None:
         client = await async_client.scrape(
-            url="https://example.com",
+            url="url",
             delay=0,
             format=["html"],
             pdf=True,
@@ -218,7 +218,7 @@ class TestAsyncClient:
     @parametrize
     async def test_raw_response_scrape(self, async_client: AsyncSteel) -> None:
         response = await async_client.with_raw_response.scrape(
-            url="https://example.com",
+            url="url",
         )
 
         assert response.is_closed is True
@@ -229,7 +229,7 @@ class TestAsyncClient:
     @parametrize
     async def test_streaming_response_scrape(self, async_client: AsyncSteel) -> None:
         async with async_client.with_streaming_response.scrape(
-            url="https://example.com",
+            url="url",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
