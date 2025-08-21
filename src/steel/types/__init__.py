@@ -17,6 +17,8 @@ from .client_scrape_params import ClientScrapeParams as ClientScrapeParams
 from .session_create_params import SessionCreateParams as SessionCreateParams
 from .credential_list_params import CredentialListParams as CredentialListParams
 from .extension_list_response import ExtensionListResponse as ExtensionListResponse
+from .extension_update_params import ExtensionUpdateParams as ExtensionUpdateParams
+from .extension_upload_params import ExtensionUploadParams as ExtensionUploadParams
 from .session_events_response import SessionEventsResponse as SessionEventsResponse
 from .client_screenshot_params import ClientScreenshotParams as ClientScreenshotParams
 from .credential_create_params import CredentialCreateParams as CredentialCreateParams
