@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import httpx
 
+from ..types import extension_update_params, extension_upload_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -47,6 +49,8 @@ class ExtensionsResource(SyncAPIResource):
         self,
         extension_id: str,
         *,
+        file: object | NotGiven = NOT_GIVEN,
+        url: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -55,9 +59,14 @@ class ExtensionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ExtensionUpdateResponse:
         """
-        Update a Chrome extension (.zip/.crx file) for the organization
+        Update a Chrome extension (.zip/.crx file or Chrome Web Store URL) for the
+        organization
 
         Args:
+          file: Extension .zip/.crx file
+
+          url: Extension URL
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -68,8 +77,19 @@ class ExtensionsResource(SyncAPIResource):
         """
         if not extension_id:
             raise ValueError(f"Expected a non-empty value for `extension_id` but received {extension_id!r}")
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._put(
             f"/v1/extensions/{extension_id}",
+            body=maybe_transform(
+                {
+                    "file": file,
+                    "url": url,
+                },
+                extension_update_params.ExtensionUpdateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -183,6 +203,8 @@ class ExtensionsResource(SyncAPIResource):
     def upload(
         self,
         *,
+        file: object | NotGiven = NOT_GIVEN,
+        url: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -190,9 +212,36 @@ class ExtensionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ExtensionUploadResponse:
-        """Upload a Chrome extension (.zip/.crx file) for the organization"""
+        """
+        Upload a Chrome extension (.zip/.crx file or Chrome Web Store URL) for the
+        organization
+
+        Args:
+          file: Extension .zip/.crx file
+
+          url: Extension URL
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
             "/v1/extensions",
+            body=maybe_transform(
+                {
+                    "file": file,
+                    "url": url,
+                },
+                extension_upload_params.ExtensionUploadParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -224,6 +273,8 @@ class AsyncExtensionsResource(AsyncAPIResource):
         self,
         extension_id: str,
         *,
+        file: object | NotGiven = NOT_GIVEN,
+        url: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -232,9 +283,14 @@ class AsyncExtensionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ExtensionUpdateResponse:
         """
-        Update a Chrome extension (.zip/.crx file) for the organization
+        Update a Chrome extension (.zip/.crx file or Chrome Web Store URL) for the
+        organization
 
         Args:
+          file: Extension .zip/.crx file
+
+          url: Extension URL
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -245,8 +301,19 @@ class AsyncExtensionsResource(AsyncAPIResource):
         """
         if not extension_id:
             raise ValueError(f"Expected a non-empty value for `extension_id` but received {extension_id!r}")
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._put(
             f"/v1/extensions/{extension_id}",
+            body=await async_maybe_transform(
+                {
+                    "file": file,
+                    "url": url,
+                },
+                extension_update_params.ExtensionUpdateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -360,6 +427,8 @@ class AsyncExtensionsResource(AsyncAPIResource):
     async def upload(
         self,
         *,
+        file: object | NotGiven = NOT_GIVEN,
+        url: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -367,9 +436,36 @@ class AsyncExtensionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> ExtensionUploadResponse:
-        """Upload a Chrome extension (.zip/.crx file) for the organization"""
+        """
+        Upload a Chrome extension (.zip/.crx file or Chrome Web Store URL) for the
+        organization
+
+        Args:
+          file: Extension .zip/.crx file
+
+          url: Extension URL
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
             "/v1/extensions",
+            body=await async_maybe_transform(
+                {
+                    "file": file,
+                    "url": url,
+                },
+                extension_upload_params.ExtensionUploadParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
