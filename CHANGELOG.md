@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.1 (2025-08-22)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/steel-dev/steel-python/compare/v0.9.0...v0.9.1)
+
+### Chores
+
+* update github action ([a001e5c](https://github.com/steel-dev/steel-python/commit/a001e5ca1eaaf635369486a859e62350c922e372))
+
 ## 0.9.0 (2025-08-22)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/steel-dev/steel-python/compare/v0.8.0...v0.9.0)
