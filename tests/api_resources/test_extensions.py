@@ -26,14 +26,23 @@ class TestExtensions:
     @parametrize
     def test_method_update(self, client: Steel) -> None:
         extension = client.extensions.update(
-            "extensionId",
+            extension_id="extensionId",
+        )
+        assert_matches_type(ExtensionUpdateResponse, extension, path=["response"])
+
+    @parametrize
+    def test_method_update_with_all_params(self, client: Steel) -> None:
+        extension = client.extensions.update(
+            extension_id="extensionId",
+            file={},
+            url="https://example.com",
         )
         assert_matches_type(ExtensionUpdateResponse, extension, path=["response"])
 
     @parametrize
     def test_raw_response_update(self, client: Steel) -> None:
         response = client.extensions.with_raw_response.update(
-            "extensionId",
+            extension_id="extensionId",
         )
 
         assert response.is_closed is True
@@ -44,7 +53,7 @@ class TestExtensions:
     @parametrize
     def test_streaming_response_update(self, client: Steel) -> None:
         with client.extensions.with_streaming_response.update(
-            "extensionId",
+            extension_id="extensionId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -58,7 +67,7 @@ class TestExtensions:
     def test_path_params_update(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `extension_id` but received ''"):
             client.extensions.with_raw_response.update(
-                "",
+                extension_id="",
             )
 
     @parametrize
@@ -193,6 +202,14 @@ class TestExtensions:
         assert_matches_type(ExtensionUploadResponse, extension, path=["response"])
 
     @parametrize
+    def test_method_upload_with_all_params(self, client: Steel) -> None:
+        extension = client.extensions.upload(
+            file={},
+            url="https://example.com",
+        )
+        assert_matches_type(ExtensionUploadResponse, extension, path=["response"])
+
+    @parametrize
     def test_raw_response_upload(self, client: Steel) -> None:
         response = client.extensions.with_raw_response.upload()
 
@@ -221,14 +238,23 @@ class TestAsyncExtensions:
     @parametrize
     async def test_method_update(self, async_client: AsyncSteel) -> None:
         extension = await async_client.extensions.update(
-            "extensionId",
+            extension_id="extensionId",
+        )
+        assert_matches_type(ExtensionUpdateResponse, extension, path=["response"])
+
+    @parametrize
+    async def test_method_update_with_all_params(self, async_client: AsyncSteel) -> None:
+        extension = await async_client.extensions.update(
+            extension_id="extensionId",
+            file={},
+            url="https://example.com",
         )
         assert_matches_type(ExtensionUpdateResponse, extension, path=["response"])
 
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncSteel) -> None:
         response = await async_client.extensions.with_raw_response.update(
-            "extensionId",
+            extension_id="extensionId",
         )
 
         assert response.is_closed is True
@@ -239,7 +265,7 @@ class TestAsyncExtensions:
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncSteel) -> None:
         async with async_client.extensions.with_streaming_response.update(
-            "extensionId",
+            extension_id="extensionId",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -253,7 +279,7 @@ class TestAsyncExtensions:
     async def test_path_params_update(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `extension_id` but received ''"):
             await async_client.extensions.with_raw_response.update(
-                "",
+                extension_id="",
             )
 
     @parametrize
@@ -385,6 +411,14 @@ class TestAsyncExtensions:
     @parametrize
     async def test_method_upload(self, async_client: AsyncSteel) -> None:
         extension = await async_client.extensions.upload()
+        assert_matches_type(ExtensionUploadResponse, extension, path=["response"])
+
+    @parametrize
+    async def test_method_upload_with_all_params(self, async_client: AsyncSteel) -> None:
+        extension = await async_client.extensions.upload(
+            file={},
+            url="https://example.com",
+        )
         assert_matches_type(ExtensionUploadResponse, extension, path=["response"])
 
     @parametrize

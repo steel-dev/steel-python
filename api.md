@@ -115,9 +115,9 @@ from steel.types import (
 
 Methods:
 
-- <code title="put /v1/extensions/{extensionId}">client.extensions.<a href="./src/steel/resources/extensions.py">update</a>(extension_id) -> <a href="./src/steel/types/extension_update_response.py">ExtensionUpdateResponse</a></code>
+- <code title="put /v1/extensions/{extensionId}">client.extensions.<a href="./src/steel/resources/extensions.py">update</a>(extension_id, \*\*<a href="src/steel/types/extension_update_params.py">params</a>) -> <a href="./src/steel/types/extension_update_response.py">ExtensionUpdateResponse</a></code>
 - <code title="get /v1/extensions">client.extensions.<a href="./src/steel/resources/extensions.py">list</a>() -> <a href="./src/steel/types/extension_list_response.py">ExtensionListResponse</a></code>
 - <code title="delete /v1/extensions/{extensionId}">client.extensions.<a href="./src/steel/resources/extensions.py">delete</a>(extension_id) -> <a href="./src/steel/types/extension_delete_response.py">ExtensionDeleteResponse</a></code>
 - <code title="delete /v1/extensions">client.extensions.<a href="./src/steel/resources/extensions.py">delete_all</a>() -> <a href="./src/steel/types/extension_delete_all_response.py">ExtensionDeleteAllResponse</a></code>
 - <code title="get /v1/extensions/{extensionId}">client.extensions.<a href="./src/steel/resources/extensions.py">download</a>(extension_id) -> str</code>
-- <code title="post /v1/extensions">client.extensions.<a href="./src/steel/resources/extensions.py">upload</a>() -> <a href="./src/steel/types/extension_upload_response.py">ExtensionUploadResponse</a></code>
+- <code title="post /v1/extensions">client.extensions.<a href="./src/steel/resources/extensions.py">upload</a>(\*\*<a href="src/steel/types/extension_upload_params.py">params</a>) -> <a href="./src/steel/types/extension_upload_response.py">ExtensionUploadResponse</a></code>
