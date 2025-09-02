@@ -1,6 +1,6 @@
 [project]
 name = "steel-sdk"
-version = "0.9.1"
+version = "0.9.2"
 description = "The official Python library for the steel API"
 dynamic = ["readme"]
 license = "Apache-2.0"

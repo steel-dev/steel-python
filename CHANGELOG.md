@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.2 (2025-09-02)
+
+Full Changelog: [v0.9.1...v0.9.2](https://github.com/steel-dev/steel-python/compare/v0.9.1...v0.9.2)
+
+### Bug Fixes
+
+* timeout issue on sync api ([82fdc65](https://github.com/steel-dev/steel-python/commit/82fdc658f136cd16df8b18f00ac1fedb8dad14bd))
+
 ## 0.9.1 (2025-09-02)
 
 Full Changelog: [v0.9.0...v0.9.1](https://github.com/steel-dev/steel-python/compare/v0.9.0...v0.9.1)
