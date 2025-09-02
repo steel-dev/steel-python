@@ -537,7 +537,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "session_id": session_id,
                     "solve_captcha": solve_captcha,
                     "stealth_config": stealth_config,
-                    "api_timeout": api_timeout,
+                    "api_timeout": api_timeout or timeout,
                     "use_proxy": use_proxy,
                     "user_agent": user_agent,
                 },

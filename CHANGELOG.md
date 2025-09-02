@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.9.1 (2025-09-02)
+
+Full Changelog: [v0.9.0...v0.9.1](https://github.com/steel-dev/steel-python/compare/v0.9.0...v0.9.1)
+
+### Bug Fixes
+
+* avoid newer type syntax ([5791302](https://github.com/steel-dev/steel-python/commit/57913023bca4a08a7ae066351a4e44be45212e67))
+* timeout param issues ([8bf1ece](https://github.com/steel-dev/steel-python/commit/8bf1eced7e0966656d67ea4aad207ab5ed8235d4))
+
+
+### Chores
+
+* **internal:** add Sequence related utils ([ec2a5db](https://github.com/steel-dev/steel-python/commit/ec2a5db2fa3ff0855cb8e532a09a4e0a52387191))
+* **internal:** change ci workflow machines ([d7ce4e6](https://github.com/steel-dev/steel-python/commit/d7ce4e63f398c444339528f62c7ea893fc35f4ff))
+* **internal:** update pyright exclude list ([d0b2591](https://github.com/steel-dev/steel-python/commit/d0b2591f9890bd2069e1fb8f997f8c9f34bb5f4c))
+* update github action ([a001e5c](https://github.com/steel-dev/steel-python/commit/a001e5ca1eaaf635369486a859e62350c922e372))
+
 ## 0.9.0 (2025-08-22)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/steel-dev/steel-python/compare/v0.8.0...v0.9.0)
