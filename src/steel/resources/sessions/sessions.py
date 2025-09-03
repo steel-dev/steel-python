@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from typing import List
 from typing_extensions import Literal
 
 import httpx
@@ -16,7 +15,7 @@ from .files import (
     AsyncFilesResourceWithStreamingResponse,
 )
 from ...types import session_list_params, session_create_params
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
 from ..._utils import maybe_transform, async_maybe_transform
 from .captchas import (
     CaptchasResource,
@@ -82,7 +81,7 @@ class SessionsResource(SyncAPIResource):
         concurrency: int | NotGiven = NOT_GIVEN,
         credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
         dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
-        extension_ids: List[str] | NotGiven = NOT_GIVEN,
+        extension_ids: SequenceNotStr[str] | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
@@ -451,7 +450,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         concurrency: int | NotGiven = NOT_GIVEN,
         credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
         dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
-        extension_ids: List[str] | NotGiven = NOT_GIVEN,
+        extension_ids: SequenceNotStr[str] | NotGiven = NOT_GIVEN,
         is_selenium: bool | NotGiven = NOT_GIVEN,
         namespace: str | NotGiven = NOT_GIVEN,
         proxy_url: str | NotGiven = NOT_GIVEN,
