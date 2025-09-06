@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.10.0 (2025-09-06)
+
+Full Changelog: [v0.9.2...v0.10.0](https://github.com/steel-dev/steel-python/compare/v0.9.2...v0.10.0)
+
+### Features
+
+* improve future compat with pydantic v3 ([92560b2](https://github.com/steel-dev/steel-python/commit/92560b2cd972c5c57e6f87475e8e2149abb45eab))
+* **types:** replace List[str] with SequenceNotStr in params ([e19b0ab](https://github.com/steel-dev/steel-python/commit/e19b0abd9e90e5db05f9c266c04a5b5816536fa4))
+
+
+### Chores
+
+* **internal:** move mypy configurations to `pyproject.toml` file ([31efb95](https://github.com/steel-dev/steel-python/commit/31efb9552748ea1ce9df409b6f975e0b850dc252))
+* **tests:** simplify `get_platform` test ([b0f26dc](https://github.com/steel-dev/steel-python/commit/b0f26dc4a97c4e85aff980a1bb18218d14883c35))
+
 ## 0.9.2 (2025-09-02)
 
 Full Changelog: [v0.9.1...v0.9.2](https://github.com/steel-dev/steel-python/compare/v0.9.1...v0.9.2)
