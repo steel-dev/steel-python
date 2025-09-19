@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, List, Union, Mapping
+from typing import Any, List, Mapping
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -12,7 +12,6 @@ from . import _exceptions
 from ._qs import Querystring
 from .types import client_pdf_params, client_scrape_params, client_screenshot_params
 from ._types import (
-    NOT_GIVEN,
     Body,
     Omit,
     Query,
@@ -22,6 +21,8 @@ from ._types import (
     Transport,
     ProxiesTypes,
     RequestOptions,
+    omit,
+    not_given,
 )
 from ._utils import (
     is_given,
@@ -69,7 +70,7 @@ class Steel(SyncAPIClient):
         *,
         steel_api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -145,9 +146,9 @@ class Steel(SyncAPIClient):
         *,
         steel_api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
-        max_retries: int | NotGiven = NOT_GIVEN,
+        max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -195,15 +196,15 @@ class Steel(SyncAPIClient):
         self,
         *,
         url: str,
-        delay: float | NotGiven = NOT_GIVEN,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        delay: float | Omit = omit,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PdfResponse:
         """
         Generates a PDF from a specified webpage.
@@ -246,18 +247,18 @@ class Steel(SyncAPIClient):
         self,
         *,
         url: str,
-        delay: float | NotGiven = NOT_GIVEN,
-        format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | NotGiven = NOT_GIVEN,
-        pdf: bool | NotGiven = NOT_GIVEN,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
-        screenshot: bool | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        delay: float | Omit = omit,
+        format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | Omit = omit,
+        pdf: bool | Omit = omit,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ScrapeResponse:
         """
         Extracts content from a specified URL.
@@ -309,16 +310,16 @@ class Steel(SyncAPIClient):
         self,
         *,
         url: str,
-        delay: float | NotGiven = NOT_GIVEN,
-        full_page: bool | NotGiven = NOT_GIVEN,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        delay: float | Omit = omit,
+        full_page: bool | Omit = omit,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ScreenshotResponse:
         """
         Captures a screenshot of a specified webpage.
@@ -410,7 +411,7 @@ class AsyncSteel(AsyncAPIClient):
         *,
         steel_api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -486,9 +487,9 @@ class AsyncSteel(AsyncAPIClient):
         *,
         steel_api_key: str | None = None,
         base_url: str | httpx.URL | None = None,
-        timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
-        max_retries: int | NotGiven = NOT_GIVEN,
+        max_retries: int | NotGiven = not_given,
         default_headers: Mapping[str, str] | None = None,
         set_default_headers: Mapping[str, str] | None = None,
         default_query: Mapping[str, object] | None = None,
@@ -536,15 +537,15 @@ class AsyncSteel(AsyncAPIClient):
         self,
         *,
         url: str,
-        delay: float | NotGiven = NOT_GIVEN,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        delay: float | Omit = omit,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> PdfResponse:
         """
         Generates a PDF from a specified webpage.
@@ -587,18 +588,18 @@ class AsyncSteel(AsyncAPIClient):
         self,
         *,
         url: str,
-        delay: float | NotGiven = NOT_GIVEN,
-        format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | NotGiven = NOT_GIVEN,
-        pdf: bool | NotGiven = NOT_GIVEN,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
-        screenshot: bool | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        delay: float | Omit = omit,
+        format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | Omit = omit,
+        pdf: bool | Omit = omit,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ScrapeResponse:
         """
         Extracts content from a specified URL.
@@ -650,16 +651,16 @@ class AsyncSteel(AsyncAPIClient):
         self,
         *,
         url: str,
-        delay: float | NotGiven = NOT_GIVEN,
-        full_page: bool | NotGiven = NOT_GIVEN,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
-        use_proxy: bool | NotGiven = NOT_GIVEN,
+        delay: float | Omit = omit,
+        full_page: bool | Omit = omit,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ScreenshotResponse:
         """
         Captures a screenshot of a specified webpage.
