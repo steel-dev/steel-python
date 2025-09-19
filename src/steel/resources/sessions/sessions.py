@@ -15,7 +15,7 @@ from .files import (
     AsyncFilesResourceWithStreamingResponse,
 )
 from ...types import session_list_params, session_create_params
-from ..._types import NOT_GIVEN, Body, Query, Headers, NotGiven, SequenceNotStr
+from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from .captchas import (
     CaptchasResource,
@@ -77,28 +77,28 @@ class SessionsResource(SyncAPIResource):
     def create(
         self,
         *,
-        block_ads: bool | NotGiven = NOT_GIVEN,
-        concurrency: int | NotGiven = NOT_GIVEN,
-        credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
-        dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
-        extension_ids: SequenceNotStr[str] | NotGiven = NOT_GIVEN,
-        is_selenium: bool | NotGiven = NOT_GIVEN,
-        namespace: str | NotGiven = NOT_GIVEN,
-        proxy_url: str | NotGiven = NOT_GIVEN,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
-        session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
-        session_id: str | NotGiven = NOT_GIVEN,
-        solve_captcha: bool | NotGiven = NOT_GIVEN,
-        stealth_config: session_create_params.StealthConfig | NotGiven = NOT_GIVEN,
-        api_timeout: int | NotGiven = NOT_GIVEN,
-        use_proxy: session_create_params.UseProxy | NotGiven = NOT_GIVEN,
-        user_agent: str | NotGiven = NOT_GIVEN,
+        block_ads: bool | Omit = omit,
+        concurrency: int | Omit = omit,
+        credentials: session_create_params.Credentials | Omit = omit,
+        dimensions: session_create_params.Dimensions | Omit = omit,
+        extension_ids: SequenceNotStr[str] | Omit = omit,
+        is_selenium: bool | Omit = omit,
+        namespace: str | Omit = omit,
+        proxy_url: str | Omit = omit,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        session_context: session_create_params.SessionContext | Omit = omit,
+        session_id: str | Omit = omit,
+        solve_captcha: bool | Omit = omit,
+        stealth_config: session_create_params.StealthConfig | Omit = omit,
+        api_timeout: int | Omit = omit,
+        use_proxy: session_create_params.UseProxy | Omit = omit,
+        user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TypesSession:
         """
         Creates a new session with the provided configuration.
@@ -188,7 +188,7 @@ class SessionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TypesSession:
         """
         Retrieves details of a specific session by ID.
@@ -215,15 +215,15 @@ class SessionsResource(SyncAPIResource):
     def list(
         self,
         *,
-        cursor_id: str | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        status: Literal["live", "released", "failed"] | NotGiven = NOT_GIVEN,
+        cursor_id: str | Omit = omit,
+        limit: int | Omit = omit,
+        status: Literal["live", "released", "failed"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncSessionsCursor[SessionslistSession]:
         """
         Fetches all active sessions for the current organization.
@@ -272,7 +272,7 @@ class SessionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionContext:
         """
         Fetches the context data of a specific session.
@@ -305,7 +305,7 @@ class SessionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionEventsResponse:
         """
         This endpoint allows you to get the recorded session events in the RRWeb format
@@ -338,7 +338,7 @@ class SessionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionLiveDetailsResponse:
         """
         Returns the live state of the session, including pages, tabs, and browser state
@@ -371,7 +371,7 @@ class SessionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionReleaseResponse:
         """
         Releases a specific session by ID.
@@ -403,7 +403,7 @@ class SessionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionReleaseAllResponse:
         """Releases all active sessions for the current organization."""
         return self._post(
@@ -446,28 +446,28 @@ class AsyncSessionsResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        block_ads: bool | NotGiven = NOT_GIVEN,
-        concurrency: int | NotGiven = NOT_GIVEN,
-        credentials: session_create_params.Credentials | NotGiven = NOT_GIVEN,
-        dimensions: session_create_params.Dimensions | NotGiven = NOT_GIVEN,
-        extension_ids: SequenceNotStr[str] | NotGiven = NOT_GIVEN,
-        is_selenium: bool | NotGiven = NOT_GIVEN,
-        namespace: str | NotGiven = NOT_GIVEN,
-        proxy_url: str | NotGiven = NOT_GIVEN,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | NotGiven = NOT_GIVEN,
-        session_context: session_create_params.SessionContext | NotGiven = NOT_GIVEN,
-        session_id: str | NotGiven = NOT_GIVEN,
-        solve_captcha: bool | NotGiven = NOT_GIVEN,
-        stealth_config: session_create_params.StealthConfig | NotGiven = NOT_GIVEN,
-        api_timeout: int | NotGiven = NOT_GIVEN,
-        use_proxy: session_create_params.UseProxy | NotGiven = NOT_GIVEN,
-        user_agent: str | NotGiven = NOT_GIVEN,
+        block_ads: bool | Omit = omit,
+        concurrency: int | Omit = omit,
+        credentials: session_create_params.Credentials | Omit = omit,
+        dimensions: session_create_params.Dimensions | Omit = omit,
+        extension_ids: SequenceNotStr[str] | Omit = omit,
+        is_selenium: bool | Omit = omit,
+        namespace: str | Omit = omit,
+        proxy_url: str | Omit = omit,
+        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        session_context: session_create_params.SessionContext | Omit = omit,
+        session_id: str | Omit = omit,
+        solve_captcha: bool | Omit = omit,
+        stealth_config: session_create_params.StealthConfig | Omit = omit,
+        api_timeout: int | Omit = omit,
+        use_proxy: session_create_params.UseProxy | Omit = omit,
+        user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TypesSession:
         """
         Creates a new session with the provided configuration.
@@ -557,7 +557,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> TypesSession:
         """
         Retrieves details of a specific session by ID.
@@ -584,15 +584,15 @@ class AsyncSessionsResource(AsyncAPIResource):
     def list(
         self,
         *,
-        cursor_id: str | NotGiven = NOT_GIVEN,
-        limit: int | NotGiven = NOT_GIVEN,
-        status: Literal["live", "released", "failed"] | NotGiven = NOT_GIVEN,
+        cursor_id: str | Omit = omit,
+        limit: int | Omit = omit,
+        status: Literal["live", "released", "failed"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[SessionslistSession, AsyncSessionsCursor[SessionslistSession]]:
         """
         Fetches all active sessions for the current organization.
@@ -641,7 +641,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionContext:
         """
         Fetches the context data of a specific session.
@@ -674,7 +674,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionEventsResponse:
         """
         This endpoint allows you to get the recorded session events in the RRWeb format
@@ -707,7 +707,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionLiveDetailsResponse:
         """
         Returns the live state of the session, including pages, tabs, and browser state
@@ -740,7 +740,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionReleaseResponse:
         """
         Releases a specific session by ID.
@@ -772,7 +772,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionReleaseAllResponse:
         """Releases all active sessions for the current organization."""
         return await self._post(

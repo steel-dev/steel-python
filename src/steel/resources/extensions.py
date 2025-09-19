@@ -5,7 +5,7 @@ from __future__ import annotations
 import httpx
 
 from ..types import extension_update_params, extension_upload_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -49,14 +49,14 @@ class ExtensionsResource(SyncAPIResource):
         self,
         extension_id: str,
         *,
-        file: object | NotGiven = NOT_GIVEN,
-        url: str | NotGiven = NOT_GIVEN,
+        file: object | Omit = omit,
+        url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionUpdateResponse:
         """
         Update a Chrome extension (.zip/.crx file or Chrome Web Store URL) for the
@@ -104,7 +104,7 @@ class ExtensionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionListResponse:
         """List all extensions for the organization"""
         return self._get(
@@ -124,7 +124,7 @@ class ExtensionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionDeleteResponse:
         """
         Delete an extension by ID
@@ -156,7 +156,7 @@ class ExtensionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionDeleteAllResponse:
         """Delete all extensions for the organization"""
         return self._delete(
@@ -176,7 +176,7 @@ class ExtensionsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> str:
         """
         Download an extension file by extension ID
@@ -203,14 +203,14 @@ class ExtensionsResource(SyncAPIResource):
     def upload(
         self,
         *,
-        file: object | NotGiven = NOT_GIVEN,
-        url: str | NotGiven = NOT_GIVEN,
+        file: object | Omit = omit,
+        url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionUploadResponse:
         """
         Upload a Chrome extension (.zip/.crx file or Chrome Web Store URL) for the
@@ -273,14 +273,14 @@ class AsyncExtensionsResource(AsyncAPIResource):
         self,
         extension_id: str,
         *,
-        file: object | NotGiven = NOT_GIVEN,
-        url: str | NotGiven = NOT_GIVEN,
+        file: object | Omit = omit,
+        url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionUpdateResponse:
         """
         Update a Chrome extension (.zip/.crx file or Chrome Web Store URL) for the
@@ -328,7 +328,7 @@ class AsyncExtensionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionListResponse:
         """List all extensions for the organization"""
         return await self._get(
@@ -348,7 +348,7 @@ class AsyncExtensionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionDeleteResponse:
         """
         Delete an extension by ID
@@ -380,7 +380,7 @@ class AsyncExtensionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionDeleteAllResponse:
         """Delete all extensions for the organization"""
         return await self._delete(
@@ -400,7 +400,7 @@ class AsyncExtensionsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> str:
         """
         Download an extension file by extension ID
@@ -427,14 +427,14 @@ class AsyncExtensionsResource(AsyncAPIResource):
     async def upload(
         self,
         *,
-        file: object | NotGiven = NOT_GIVEN,
-        url: str | NotGiven = NOT_GIVEN,
+        file: object | Omit = omit,
+        url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ExtensionUploadResponse:
         """
         Upload a Chrome extension (.zip/.crx file or Chrome Web Store URL) for the
