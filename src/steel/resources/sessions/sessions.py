@@ -84,8 +84,9 @@ class SessionsResource(SyncAPIResource):
         extension_ids: SequenceNotStr[str] | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
+        optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
         proxy_url: str | Omit = omit,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        region: str | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
         session_id: str | Omit = omit,
         solve_captcha: bool | Omit = omit,
@@ -119,6 +120,9 @@ class SessionsResource(SyncAPIResource):
               you plan to connect to the browser session via Selenium.
 
           namespace: The namespace the session should be created against. Defaults to "default".
+
+          optimize_bandwidth: Enable bandwidth optimizations. Passing true enables all flags (except
+              hosts/patterns). Object allows granular control.
 
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
@@ -161,6 +165,7 @@ class SessionsResource(SyncAPIResource):
                     "extension_ids": extension_ids,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
+                    "optimize_bandwidth": optimize_bandwidth,
                     "proxy_url": proxy_url,
                     "region": region,
                     "session_context": session_context,
@@ -453,8 +458,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         extension_ids: SequenceNotStr[str] | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
+        optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
         proxy_url: str | Omit = omit,
-        region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"] | Omit = omit,
+        region: str | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
         session_id: str | Omit = omit,
         solve_captcha: bool | Omit = omit,
@@ -488,6 +494,9 @@ class AsyncSessionsResource(AsyncAPIResource):
               you plan to connect to the browser session via Selenium.
 
           namespace: The namespace the session should be created against. Defaults to "default".
+
+          optimize_bandwidth: Enable bandwidth optimizations. Passing true enables all flags (except
+              hosts/patterns). Object allows granular control.
 
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
@@ -530,6 +539,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "extension_ids": extension_ids,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
+                    "optimize_bandwidth": optimize_bandwidth,
                     "proxy_url": proxy_url,
                     "region": region,
                     "session_context": session_context,
