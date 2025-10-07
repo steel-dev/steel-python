@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Sessionslist", "Session", "SessionDimensions", "SessionStealthConfig"]
+__all__ = ["Sessionslist", "Session", "SessionDimensions", "SessionOptimizeBandwidth", "SessionStealthConfig"]
 
 
 class SessionDimensions(BaseModel):
@@ -17,6 +17,18 @@ class SessionDimensions(BaseModel):
 
     width: int
     """Width of the browser window"""
+
+
+class SessionOptimizeBandwidth(BaseModel):
+    block_hosts: Optional[List[str]] = FieldInfo(alias="blockHosts", default=None)
+
+    block_images: Optional[bool] = FieldInfo(alias="blockImages", default=None)
+
+    block_media: Optional[bool] = FieldInfo(alias="blockMedia", default=None)
+
+    block_stylesheets: Optional[bool] = FieldInfo(alias="blockStylesheets", default=None)
+
+    block_url_patterns: Optional[List[str]] = FieldInfo(alias="blockUrlPatterns", default=None)
 
 
 class SessionStealthConfig(BaseModel):
@@ -52,6 +64,9 @@ class Session(BaseModel):
     event_count: int = FieldInfo(alias="eventCount")
     """Number of events processed in the session"""
 
+    optimize_bandwidth: SessionOptimizeBandwidth = FieldInfo(alias="optimizeBandwidth")
+    """Bandwidth optimizations that were applied to the session."""
+
     proxy_bytes_used: int = FieldInfo(alias="proxyBytesUsed")
     """Amount of data transmitted through the proxy"""
 
@@ -73,7 +88,7 @@ class Session(BaseModel):
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
 
-    region: Optional[Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]] = None
+    region: Optional[Literal["lax", "ord", "iad", "scl", "fra"]] = None
     """The region where the session was created"""
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
