@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
@@ -16,7 +16,7 @@ class ClientPdfParams(TypedDict, total=False):
     delay: float
     """Delay before generating the PDF (in milliseconds)"""
 
-    region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]
+    region: str
     """The desired region for the action to be performed in"""
 
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]

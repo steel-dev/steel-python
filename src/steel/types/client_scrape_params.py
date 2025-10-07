@@ -23,7 +23,7 @@ class ClientScrapeParams(TypedDict, total=False):
     pdf: bool
     """Include a PDF in the response"""
 
-    region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]
+    region: str
     """The desired region for the action to be performed in"""
 
     screenshot: bool

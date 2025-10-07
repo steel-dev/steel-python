@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 from typing_extensions import Literal
 
@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Session", "Dimensions", "StealthConfig"]
+__all__ = ["Session", "Dimensions", "OptimizeBandwidth", "StealthConfig"]
 
 
 class Dimensions(BaseModel):
@@ -17,6 +17,18 @@ class Dimensions(BaseModel):
 
     width: int
     """Width of the browser window"""
+
+
+class OptimizeBandwidth(BaseModel):
+    block_hosts: Optional[List[str]] = FieldInfo(alias="blockHosts", default=None)
+
+    block_images: Optional[bool] = FieldInfo(alias="blockImages", default=None)
+
+    block_media: Optional[bool] = FieldInfo(alias="blockMedia", default=None)
+
+    block_stylesheets: Optional[bool] = FieldInfo(alias="blockStylesheets", default=None)
+
+    block_url_patterns: Optional[List[str]] = FieldInfo(alias="blockUrlPatterns", default=None)
 
 
 class StealthConfig(BaseModel):
@@ -52,6 +64,9 @@ class Session(BaseModel):
     event_count: int = FieldInfo(alias="eventCount")
     """Number of events processed in the session"""
 
+    optimize_bandwidth: OptimizeBandwidth = FieldInfo(alias="optimizeBandwidth")
+    """Bandwidth optimizations that were applied to the session."""
+
     proxy_bytes_used: int = FieldInfo(alias="proxyBytesUsed")
     """Amount of data transmitted through the proxy"""
 
@@ -73,7 +88,7 @@ class Session(BaseModel):
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
 
-    region: Optional[Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]] = None
+    region: Optional[Literal["lax", "ord", "iad", "scl", "fra"]] = None
     """The region where the session was created"""
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)

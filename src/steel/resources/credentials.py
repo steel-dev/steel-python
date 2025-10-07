@@ -7,7 +7,7 @@ from typing import Dict
 import httpx
 
 from ..types import credential_list_params, credential_create_params, credential_delete_params, credential_update_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -50,15 +50,15 @@ class CredentialsResource(SyncAPIResource):
         self,
         *,
         value: Dict[str, str],
-        label: str | NotGiven = NOT_GIVEN,
-        namespace: str | NotGiven = NOT_GIVEN,
-        origin: str | NotGiven = NOT_GIVEN,
+        label: str | Omit = omit,
+        namespace: str | Omit = omit,
+        origin: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CredentialCreateResponse:
         """
         Encrypts and stores credentials for an origin
@@ -100,16 +100,16 @@ class CredentialsResource(SyncAPIResource):
     def update(
         self,
         *,
-        label: str | NotGiven = NOT_GIVEN,
-        namespace: str | NotGiven = NOT_GIVEN,
-        origin: str | NotGiven = NOT_GIVEN,
-        value: Dict[str, str] | NotGiven = NOT_GIVEN,
+        label: str | Omit = omit,
+        namespace: str | Omit = omit,
+        origin: str | Omit = omit,
+        value: Dict[str, str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CredentialUpdateResponse:
         """
         Encrypts and updates credentials for an origin
@@ -151,14 +151,14 @@ class CredentialsResource(SyncAPIResource):
     def list(
         self,
         *,
-        namespace: str | NotGiven = NOT_GIVEN,
-        origin: str | NotGiven = NOT_GIVEN,
+        namespace: str | Omit = omit,
+        origin: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CredentialListResponse:
         """
         Fetches all credential metadata for the current organization.
@@ -198,13 +198,13 @@ class CredentialsResource(SyncAPIResource):
         self,
         *,
         origin: str,
-        namespace: str | NotGiven = NOT_GIVEN,
+        namespace: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CredentialDeleteResponse:
         """
         Deletes encrypted credentials from the database
@@ -262,15 +262,15 @@ class AsyncCredentialsResource(AsyncAPIResource):
         self,
         *,
         value: Dict[str, str],
-        label: str | NotGiven = NOT_GIVEN,
-        namespace: str | NotGiven = NOT_GIVEN,
-        origin: str | NotGiven = NOT_GIVEN,
+        label: str | Omit = omit,
+        namespace: str | Omit = omit,
+        origin: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CredentialCreateResponse:
         """
         Encrypts and stores credentials for an origin
@@ -312,16 +312,16 @@ class AsyncCredentialsResource(AsyncAPIResource):
     async def update(
         self,
         *,
-        label: str | NotGiven = NOT_GIVEN,
-        namespace: str | NotGiven = NOT_GIVEN,
-        origin: str | NotGiven = NOT_GIVEN,
-        value: Dict[str, str] | NotGiven = NOT_GIVEN,
+        label: str | Omit = omit,
+        namespace: str | Omit = omit,
+        origin: str | Omit = omit,
+        value: Dict[str, str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CredentialUpdateResponse:
         """
         Encrypts and updates credentials for an origin
@@ -363,14 +363,14 @@ class AsyncCredentialsResource(AsyncAPIResource):
     async def list(
         self,
         *,
-        namespace: str | NotGiven = NOT_GIVEN,
-        origin: str | NotGiven = NOT_GIVEN,
+        namespace: str | Omit = omit,
+        origin: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CredentialListResponse:
         """
         Fetches all credential metadata for the current organization.
@@ -410,13 +410,13 @@ class AsyncCredentialsResource(AsyncAPIResource):
         self,
         *,
         origin: str,
-        namespace: str | NotGiven = NOT_GIVEN,
+        namespace: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CredentialDeleteResponse:
         """
         Deletes encrypted credentials from the database

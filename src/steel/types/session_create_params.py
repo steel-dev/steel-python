@@ -2,16 +2,19 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Union, Iterable
+from typing import Dict, Union, Iterable
 from datetime import datetime
 from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
 __all__ = [
     "SessionCreateParams",
     "Credentials",
     "Dimensions",
+    "OptimizeBandwidth",
+    "OptimizeBandwidthUnionMember1",
     "SessionContext",
     "SessionContextCookie",
     "SessionContextCookiePartitionKey",
@@ -40,7 +43,7 @@ class SessionCreateParams(TypedDict, total=False):
     dimensions: Dimensions
     """Viewport and browser window dimensions for the session"""
 
-    extension_ids: Annotated[List[str], PropertyInfo(alias="extensionIds")]
+    extension_ids: Annotated[SequenceNotStr[str], PropertyInfo(alias="extensionIds")]
     """Array of extension IDs to install in the session.
 
     Use ['all_ext'] to install all uploaded extensions.
@@ -55,6 +58,13 @@ class SessionCreateParams(TypedDict, total=False):
     namespace: str
     """The namespace the session should be created against. Defaults to "default"."""
 
+    optimize_bandwidth: Annotated[OptimizeBandwidth, PropertyInfo(alias="optimizeBandwidth")]
+    """Enable bandwidth optimizations.
+
+    Passing true enables all flags (except hosts/patterns). Object allows granular
+    control.
+    """
+
     proxy_url: Annotated[str, PropertyInfo(alias="proxyUrl")]
     """Custom proxy URL for the browser session.
 
@@ -62,7 +72,7 @@ class SessionCreateParams(TypedDict, total=False):
     proxy. Format: http(s)://username:password@hostname:port
     """
 
-    region: Literal["lax", "ord", "iad", "bom", "scl", "fra", "hkg"]
+    region: str
     """The desired region for the session to be started in"""
 
     session_context: Annotated[SessionContext, PropertyInfo(alias="sessionContext")]
@@ -107,6 +117,21 @@ class Dimensions(TypedDict, total=False):
 
     width: Required[int]
     """Width of the session"""
+
+
+class OptimizeBandwidthUnionMember1(TypedDict, total=False):
+    block_hosts: Annotated[SequenceNotStr[str], PropertyInfo(alias="blockHosts")]
+
+    block_images: Annotated[bool, PropertyInfo(alias="blockImages")]
+
+    block_media: Annotated[bool, PropertyInfo(alias="blockMedia")]
+
+    block_stylesheets: Annotated[bool, PropertyInfo(alias="blockStylesheets")]
+
+    block_url_patterns: Annotated[SequenceNotStr[str], PropertyInfo(alias="blockUrlPatterns")]
+
+
+OptimizeBandwidth: TypeAlias = Union[bool, OptimizeBandwidthUnionMember1]
 
 
 class SessionContextCookiePartitionKey(TypedDict, total=False):

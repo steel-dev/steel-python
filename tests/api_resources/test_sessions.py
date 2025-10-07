@@ -49,8 +49,9 @@ class TestSessions:
             extension_ids=["string"],
             is_selenium=True,
             namespace="namespace",
+            optimize_bandwidth=True,
             proxy_url="https://example.com",
-            region="lax",
+            region="region",
             session_context={
                 "cookies": [
                     {
@@ -417,8 +418,9 @@ class TestAsyncSessions:
             extension_ids=["string"],
             is_selenium=True,
             namespace="namespace",
+            optimize_bandwidth=True,
             proxy_url="https://example.com",
-            region="lax",
+            region="region",
             session_context={
                 "cookies": [
                     {
