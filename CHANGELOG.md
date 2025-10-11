@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.1 (2025-10-11)
+
+Full Changelog: [v0.10.0...v0.10.1](https://github.com/steel-dev/steel-python/compare/v0.10.0...v0.10.1)
+
+### Chores
+
+* **internal:** detect missing future annotations with ruff ([f3a0218](https://github.com/steel-dev/steel-python/commit/f3a0218c5514f51c9f41bd433f2c7924eb5b59e6))
+
 ## 0.10.0 (2025-10-07)
 
 Full Changelog: [v0.9.2...v0.10.0](https://github.com/steel-dev/steel-python/compare/v0.9.2...v0.10.0)
