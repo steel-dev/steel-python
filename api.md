@@ -121,3 +121,16 @@ Methods:
 - <code title="delete /v1/extensions">client.extensions.<a href="./src/steel/resources/extensions.py">delete_all</a>() -> <a href="./src/steel/types/extension_delete_all_response.py">ExtensionDeleteAllResponse</a></code>
 - <code title="get /v1/extensions/{extensionId}">client.extensions.<a href="./src/steel/resources/extensions.py">download</a>(extension_id) -> str</code>
 - <code title="post /v1/extensions">client.extensions.<a href="./src/steel/resources/extensions.py">upload</a>(\*\*<a href="src/steel/types/extension_upload_params.py">params</a>) -> <a href="./src/steel/types/extension_upload_response.py">ExtensionUploadResponse</a></code>
+
+# Profiles
+
+Types:
+
+```python
+from steel.types import ProfileCreateResponse, ProfileListResponse
+```
+
+Methods:
+
+- <code title="post /v1/profiles">client.profiles.<a href="./src/steel/resources/profiles.py">create</a>(\*\*<a href="src/steel/types/profile_create_params.py">params</a>) -> <a href="./src/steel/types/profile_create_response.py">ProfileCreateResponse</a></code>
+- <code title="get /v1/profiles">client.profiles.<a href="./src/steel/resources/profiles.py">list</a>() -> <a href="./src/steel/types/profile_list_response.py">ProfileListResponse</a></code>

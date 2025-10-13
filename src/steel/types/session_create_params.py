@@ -65,6 +65,12 @@ class SessionCreateParams(TypedDict, total=False):
     control.
     """
 
+    persist_profile: Annotated[bool, PropertyInfo(alias="persistProfile")]
+    """This flag will persist the user profile for the session."""
+
+    profile_id: Annotated[str, PropertyInfo(alias="profileId")]
+    """This flag will set the profile for the session."""
+
     proxy_url: Annotated[str, PropertyInfo(alias="proxyUrl")]
     """Custom proxy URL for the browser session.
 

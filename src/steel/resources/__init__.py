@@ -8,6 +8,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .profiles import (
+    ProfilesResource,
+    AsyncProfilesResource,
+    ProfilesResourceWithRawResponse,
+    AsyncProfilesResourceWithRawResponse,
+    ProfilesResourceWithStreamingResponse,
+    AsyncProfilesResourceWithStreamingResponse,
+)
 from .sessions import (
     SessionsResource,
     AsyncSessionsResource,
@@ -58,4 +66,10 @@ __all__ = [
     "AsyncExtensionsResourceWithRawResponse",
     "ExtensionsResourceWithStreamingResponse",
     "AsyncExtensionsResourceWithStreamingResponse",
+    "ProfilesResource",
+    "AsyncProfilesResource",
+    "ProfilesResourceWithRawResponse",
+    "AsyncProfilesResourceWithRawResponse",
+    "ProfilesResourceWithStreamingResponse",
+    "AsyncProfilesResourceWithStreamingResponse",
 ]
