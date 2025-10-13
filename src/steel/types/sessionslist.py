@@ -88,6 +88,12 @@ class Session(BaseModel):
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
 
+    persist_profile: Optional[bool] = FieldInfo(alias="persistProfile", default=None)
+    """This flag will persist the profile for the session."""
+
+    profile_id: Optional[str] = FieldInfo(alias="profileId", default=None)
+    """The ID of the profile associated with the session"""
+
     region: Optional[Literal["lax", "ord", "iad", "scl", "fra"]] = None
     """The region where the session was created"""
 

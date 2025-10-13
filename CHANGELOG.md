@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.11.0 (2025-10-13)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/steel-dev/steel-python/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **api:** api update ([6090b1f](https://github.com/steel-dev/steel-python/commit/6090b1fc816a55bd27ce0ffd2eb9b55c9d03a019))
+* **api:** api update ([cf111c0](https://github.com/steel-dev/steel-python/commit/cf111c04b663800409cb925b8e5ac3a78e1516a5))
+
+
+### Chores
+
+* **internal:** detect missing future annotations with ruff ([f3a0218](https://github.com/steel-dev/steel-python/commit/f3a0218c5514f51c9f41bd433f2c7924eb5b59e6))
+
 ## 0.10.0 (2025-10-07)
 
 Full Changelog: [v0.9.2...v0.10.0](https://github.com/steel-dev/steel-python/compare/v0.9.2...v0.10.0)
