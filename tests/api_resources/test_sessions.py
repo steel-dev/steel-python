@@ -50,6 +50,8 @@ class TestSessions:
             is_selenium=True,
             namespace="namespace",
             optimize_bandwidth=True,
+            persist_profile=True,
+            profile_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             region="region",
             session_context={
@@ -419,6 +421,8 @@ class TestAsyncSessions:
             is_selenium=True,
             namespace="namespace",
             optimize_bandwidth=True,
+            persist_profile=True,
+            profile_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             region="region",
             session_context={

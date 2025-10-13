@@ -85,6 +85,8 @@ class SessionsResource(SyncAPIResource):
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
         optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
+        persist_profile: bool | Omit = omit,
+        profile_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         region: str | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
@@ -123,6 +125,10 @@ class SessionsResource(SyncAPIResource):
 
           optimize_bandwidth: Enable bandwidth optimizations. Passing true enables all flags (except
               hosts/patterns). Object allows granular control.
+
+          persist_profile: This flag will persist the user profile for the session.
+
+          profile_id: This flag will set the profile for the session.
 
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
@@ -166,6 +172,8 @@ class SessionsResource(SyncAPIResource):
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "optimize_bandwidth": optimize_bandwidth,
+                    "persist_profile": persist_profile,
+                    "profile_id": profile_id,
                     "proxy_url": proxy_url,
                     "region": region,
                     "session_context": session_context,
@@ -459,6 +467,8 @@ class AsyncSessionsResource(AsyncAPIResource):
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
         optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
+        persist_profile: bool | Omit = omit,
+        profile_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         region: str | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
@@ -497,6 +507,10 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           optimize_bandwidth: Enable bandwidth optimizations. Passing true enables all flags (except
               hosts/patterns). Object allows granular control.
+
+          persist_profile: This flag will persist the user profile for the session.
+
+          profile_id: This flag will set the profile for the session.
 
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
@@ -540,6 +554,8 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "optimize_bandwidth": optimize_bandwidth,
+                    "persist_profile": persist_profile,
+                    "profile_id": profile_id,
                     "proxy_url": proxy_url,
                     "region": region,
                     "session_context": session_context,
