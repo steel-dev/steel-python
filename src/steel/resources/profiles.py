@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import httpx
 
 from ..types import profile_create_params
@@ -47,10 +45,9 @@ class ProfilesResource(SyncAPIResource):
     def create(
         self,
         *,
-        fingerprint: Optional[profile_create_params.Fingerprint],
-        proxy_url: Optional[str],
-        user_agent: Optional[str],
         dimensions: profile_create_params.Dimensions | Omit = omit,
+        proxy_url: str | Omit = omit,
+        user_agent: str | Omit = omit,
         user_data_dir: object | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -63,13 +60,11 @@ class ProfilesResource(SyncAPIResource):
         Create a new profile
 
         Args:
-          fingerprint: The fingerprint associated with the profile
+          dimensions: The dimensions associated with the profile
 
           proxy_url: The proxy associated with the profile
 
           user_agent: The user agent associated with the profile
-
-          dimensions: The dimensions associated with the profile
 
           user_data_dir: The user data directory associated with the profile
 
@@ -89,10 +84,9 @@ class ProfilesResource(SyncAPIResource):
             "/v1/profiles",
             body=maybe_transform(
                 {
-                    "fingerprint": fingerprint,
+                    "dimensions": dimensions,
                     "proxy_url": proxy_url,
                     "user_agent": user_agent,
-                    "dimensions": dimensions,
                     "user_data_dir": user_data_dir,
                 },
                 profile_create_params.ProfileCreateParams,
@@ -146,10 +140,9 @@ class AsyncProfilesResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        fingerprint: Optional[profile_create_params.Fingerprint],
-        proxy_url: Optional[str],
-        user_agent: Optional[str],
         dimensions: profile_create_params.Dimensions | Omit = omit,
+        proxy_url: str | Omit = omit,
+        user_agent: str | Omit = omit,
         user_data_dir: object | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -162,13 +155,11 @@ class AsyncProfilesResource(AsyncAPIResource):
         Create a new profile
 
         Args:
-          fingerprint: The fingerprint associated with the profile
+          dimensions: The dimensions associated with the profile
 
           proxy_url: The proxy associated with the profile
 
           user_agent: The user agent associated with the profile
-
-          dimensions: The dimensions associated with the profile
 
           user_data_dir: The user data directory associated with the profile
 
@@ -188,10 +179,9 @@ class AsyncProfilesResource(AsyncAPIResource):
             "/v1/profiles",
             body=await async_maybe_transform(
                 {
-                    "fingerprint": fingerprint,
+                    "dimensions": dimensions,
                     "proxy_url": proxy_url,
                     "user_agent": user_agent,
-                    "dimensions": dimensions,
                     "user_data_dir": user_data_dir,
                 },
                 profile_create_params.ProfileCreateParams,
