@@ -80,6 +80,7 @@ class SessionsResource(SyncAPIResource):
         block_ads: bool | Omit = omit,
         concurrency: int | Omit = omit,
         credentials: session_create_params.Credentials | Omit = omit,
+        device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
         is_selenium: bool | Omit = omit,
@@ -112,6 +113,9 @@ class SessionsResource(SyncAPIResource):
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
           credentials: Configuration for session credentials
+
+          device_config: Device configuration for the session. Specify 'mobile' for mobile device
+              fingerprints and configurations.
 
           dimensions: Viewport and browser window dimensions for the session
 
@@ -167,6 +171,7 @@ class SessionsResource(SyncAPIResource):
                     "block_ads": block_ads,
                     "concurrency": concurrency,
                     "credentials": credentials,
+                    "device_config": device_config,
                     "dimensions": dimensions,
                     "extension_ids": extension_ids,
                     "is_selenium": is_selenium,
@@ -462,6 +467,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         block_ads: bool | Omit = omit,
         concurrency: int | Omit = omit,
         credentials: session_create_params.Credentials | Omit = omit,
+        device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
         is_selenium: bool | Omit = omit,
@@ -494,6 +500,9 @@ class AsyncSessionsResource(AsyncAPIResource):
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
           credentials: Configuration for session credentials
+
+          device_config: Device configuration for the session. Specify 'mobile' for mobile device
+              fingerprints and configurations.
 
           dimensions: Viewport and browser window dimensions for the session
 
@@ -549,6 +558,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "block_ads": block_ads,
                     "concurrency": concurrency,
                     "credentials": credentials,
+                    "device_config": device_config,
                     "dimensions": dimensions,
                     "extension_ids": extension_ids,
                     "is_selenium": is_selenium,

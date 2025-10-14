@@ -42,6 +42,7 @@ class TestSessions:
                 "blur_fields": True,
                 "exact_origin": True,
             },
+            device_config={"device": "desktop"},
             dimensions={
                 "height": 0,
                 "width": 0,
@@ -413,6 +414,7 @@ class TestAsyncSessions:
                 "blur_fields": True,
                 "exact_origin": True,
             },
+            device_config={"device": "desktop"},
             dimensions={
                 "height": 0,
                 "width": 0,

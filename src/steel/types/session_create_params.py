@@ -12,6 +12,7 @@ from .._utils import PropertyInfo
 __all__ = [
     "SessionCreateParams",
     "Credentials",
+    "DeviceConfig",
     "Dimensions",
     "OptimizeBandwidth",
     "OptimizeBandwidthUnionMember1",
@@ -39,6 +40,12 @@ class SessionCreateParams(TypedDict, total=False):
 
     credentials: Credentials
     """Configuration for session credentials"""
+
+    device_config: Annotated[DeviceConfig, PropertyInfo(alias="deviceConfig")]
+    """Device configuration for the session.
+
+    Specify 'mobile' for mobile device fingerprints and configurations.
+    """
 
     dimensions: Dimensions
     """Viewport and browser window dimensions for the session"""
@@ -115,6 +122,10 @@ class Credentials(TypedDict, total=False):
     blur_fields: Annotated[bool, PropertyInfo(alias="blurFields")]
 
     exact_origin: Annotated[bool, PropertyInfo(alias="exactOrigin")]
+
+
+class DeviceConfig(TypedDict, total=False):
+    device: Literal["desktop", "mobile"]
 
 
 class Dimensions(TypedDict, total=False):
