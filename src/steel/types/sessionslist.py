@@ -8,7 +8,14 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Sessionslist", "Session", "SessionDimensions", "SessionOptimizeBandwidth", "SessionStealthConfig"]
+__all__ = [
+    "Sessionslist",
+    "Session",
+    "SessionDimensions",
+    "SessionOptimizeBandwidth",
+    "SessionDeviceConfig",
+    "SessionStealthConfig",
+]
 
 
 class SessionDimensions(BaseModel):
@@ -29,6 +36,10 @@ class SessionOptimizeBandwidth(BaseModel):
     block_stylesheets: Optional[bool] = FieldInfo(alias="blockStylesheets", default=None)
 
     block_url_patterns: Optional[List[str]] = FieldInfo(alias="blockUrlPatterns", default=None)
+
+
+class SessionDeviceConfig(BaseModel):
+    device: Optional[Literal["desktop", "mobile"]] = None
 
 
 class SessionStealthConfig(BaseModel):
@@ -84,6 +95,9 @@ class Session(BaseModel):
 
     websocket_url: str = FieldInfo(alias="websocketUrl")
     """URL for the session's WebSocket connection"""
+
+    device_config: Optional[SessionDeviceConfig] = FieldInfo(alias="deviceConfig", default=None)
+    """Device configuration for the session"""
 
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
