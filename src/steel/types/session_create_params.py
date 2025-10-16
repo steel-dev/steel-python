@@ -56,6 +56,9 @@ class SessionCreateParams(TypedDict, total=False):
     Use ['all_ext'] to install all uploaded extensions.
     """
 
+    headless: bool
+    """Enable headless browser mode (disable Headful mode)"""
+
     is_selenium: Annotated[bool, PropertyInfo(alias="isSelenium")]
     """Enable Selenium mode for the browser session (default is false).
 
