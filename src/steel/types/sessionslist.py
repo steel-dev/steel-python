@@ -75,6 +75,9 @@ class Session(BaseModel):
     event_count: int = FieldInfo(alias="eventCount")
     """Number of events processed in the session"""
 
+    headless: bool
+    """Indicates if the session is headless or headful"""
+
     optimize_bandwidth: SessionOptimizeBandwidth = FieldInfo(alias="optimizeBandwidth")
     """Bandwidth optimizations that were applied to the session."""
 
