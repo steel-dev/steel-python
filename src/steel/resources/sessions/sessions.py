@@ -83,6 +83,7 @@ class SessionsResource(SyncAPIResource):
         device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
+        is_headful: bool | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
         optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
@@ -121,6 +122,8 @@ class SessionsResource(SyncAPIResource):
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
+
+          is_headful: Enable experimental Headful browser support
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -174,6 +177,7 @@ class SessionsResource(SyncAPIResource):
                     "device_config": device_config,
                     "dimensions": dimensions,
                     "extension_ids": extension_ids,
+                    "is_headful": is_headful,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "optimize_bandwidth": optimize_bandwidth,
@@ -470,6 +474,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
+        is_headful: bool | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
         optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
@@ -508,6 +513,8 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
+
+          is_headful: Enable experimental Headful browser support
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -561,6 +568,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "device_config": device_config,
                     "dimensions": dimensions,
                     "extension_ids": extension_ids,
+                    "is_headful": is_headful,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "optimize_bandwidth": optimize_bandwidth,
