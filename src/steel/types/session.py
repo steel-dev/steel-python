@@ -110,9 +110,6 @@ class Session(BaseModel):
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
     """Indicates if captcha solving is enabled"""
 
-    source: Optional[str] = None
-    """Source of the session, e.g. 'api:sessions'"""
-
     stealth_config: Optional[StealthConfig] = FieldInfo(alias="stealthConfig", default=None)
     """Stealth configuration for the session"""
 
