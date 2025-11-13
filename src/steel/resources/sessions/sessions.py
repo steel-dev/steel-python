@@ -141,7 +141,8 @@ class SessionsResource(SyncAPIResource):
               Steel-provided proxies in favor of your specified proxy. Format:
               http(s)://username:password@hostname:port
 
-          region: The desired region for the session to be started in
+          region: The desired region for the session to be started in. Available regions are lax,
+              ord, iad
 
           session_context: Session context data to be used in the created session. Sessions will start with
               an empty context by default.
@@ -532,7 +533,8 @@ class AsyncSessionsResource(AsyncAPIResource):
               Steel-provided proxies in favor of your specified proxy. Format:
               http(s)://username:password@hostname:port
 
-          region: The desired region for the session to be started in
+          region: The desired region for the session to be started in. Available regions are lax,
+              ord, iad
 
           session_context: Session context data to be used in the created session. Sessions will start with
               an empty context by default.
