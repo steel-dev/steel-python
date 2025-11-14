@@ -219,24 +219,31 @@ class TestSessions:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_method_computer(self, client: Steel) -> None:
+    def test_method_computer_overload_1(self, client: Steel) -> None:
         session = client.sessions.computer(
             session_id="sessionId",
+            action="move_mouse",
+            coordinates=[0, 0],
         )
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
     @parametrize
-    def test_method_computer_with_all_params(self, client: Steel) -> None:
+    def test_method_computer_with_all_params_overload_1(self, client: Steel) -> None:
         session = client.sessions.computer(
             session_id="sessionId",
-            body={},
+            action="move_mouse",
+            coordinates=[0, 0],
+            hold_keys=["string"],
+            screenshot=True,
         )
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
     @parametrize
-    def test_raw_response_computer(self, client: Steel) -> None:
+    def test_raw_response_computer_overload_1(self, client: Steel) -> None:
         response = client.sessions.with_raw_response.computer(
             session_id="sessionId",
+            action="move_mouse",
+            coordinates=[0, 0],
         )
 
         assert response.is_closed is True
@@ -245,9 +252,11 @@ class TestSessions:
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
     @parametrize
-    def test_streaming_response_computer(self, client: Steel) -> None:
+    def test_streaming_response_computer_overload_1(self, client: Steel) -> None:
         with client.sessions.with_streaming_response.computer(
             session_id="sessionId",
+            action="move_mouse",
+            coordinates=[0, 0],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -258,10 +267,438 @@ class TestSessions:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    def test_path_params_computer(self, client: Steel) -> None:
+    def test_path_params_computer_overload_1(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
             client.sessions.with_raw_response.computer(
                 session_id="",
+                action="move_mouse",
+                coordinates=[0, 0],
+            )
+
+    @parametrize
+    def test_method_computer_overload_2(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="click_mouse",
+            button="left",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_method_computer_with_all_params_overload_2(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="click_mouse",
+            button="left",
+            click_type="down",
+            coordinates=[0, 0],
+            hold_keys=["string"],
+            num_clicks=0,
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer_overload_2(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="click_mouse",
+            button="left",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer_overload_2(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="click_mouse",
+            button="left",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer_overload_2(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+                action="click_mouse",
+                button="left",
+            )
+
+    @parametrize
+    def test_method_computer_overload_3(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="drag_mouse",
+            path=[[0, 0]],
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_method_computer_with_all_params_overload_3(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="drag_mouse",
+            path=[[0, 0]],
+            hold_keys=["string"],
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer_overload_3(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="drag_mouse",
+            path=[[0, 0]],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer_overload_3(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="drag_mouse",
+            path=[[0, 0]],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer_overload_3(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+                action="drag_mouse",
+                path=[[0, 0]],
+            )
+
+    @parametrize
+    def test_method_computer_overload_4(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="scroll",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_method_computer_with_all_params_overload_4(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="scroll",
+            coordinates=[0, 0],
+            delta_x=0,
+            delta_y=0,
+            hold_keys=["string"],
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer_overload_4(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="scroll",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer_overload_4(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="scroll",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer_overload_4(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+                action="scroll",
+            )
+
+    @parametrize
+    def test_method_computer_overload_5(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="press_key",
+            keys=["string"],
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_method_computer_with_all_params_overload_5(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="press_key",
+            keys=["string"],
+            duration=0,
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer_overload_5(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="press_key",
+            keys=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer_overload_5(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="press_key",
+            keys=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer_overload_5(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+                action="press_key",
+                keys=["string"],
+            )
+
+    @parametrize
+    def test_method_computer_overload_6(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="type_text",
+            text="text",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_method_computer_with_all_params_overload_6(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="type_text",
+            text="text",
+            hold_keys=["string"],
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer_overload_6(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="type_text",
+            text="text",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer_overload_6(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="type_text",
+            text="text",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer_overload_6(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+                action="type_text",
+                text="text",
+            )
+
+    @parametrize
+    def test_method_computer_overload_7(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="wait",
+            duration=0,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_method_computer_with_all_params_overload_7(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="wait",
+            duration=0,
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer_overload_7(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="wait",
+            duration=0,
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer_overload_7(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="wait",
+            duration=0,
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer_overload_7(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+                action="wait",
+                duration=0,
+            )
+
+    @parametrize
+    def test_method_computer_overload_8(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="take_screenshot",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer_overload_8(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="take_screenshot",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer_overload_8(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="take_screenshot",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer_overload_8(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+                action="take_screenshot",
+            )
+
+    @parametrize
+    def test_method_computer_overload_9(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            action="get_cursor_position",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer_overload_9(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="get_cursor_position",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer_overload_9(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="get_cursor_position",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer_overload_9(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+                action="get_cursor_position",
             )
 
     @parametrize
@@ -638,24 +1075,31 @@ class TestAsyncSessions:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_method_computer(self, async_client: AsyncSteel) -> None:
+    async def test_method_computer_overload_1(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.computer(
             session_id="sessionId",
+            action="move_mouse",
+            coordinates=[0, 0],
         )
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
     @parametrize
-    async def test_method_computer_with_all_params(self, async_client: AsyncSteel) -> None:
+    async def test_method_computer_with_all_params_overload_1(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.computer(
             session_id="sessionId",
-            body={},
+            action="move_mouse",
+            coordinates=[0, 0],
+            hold_keys=["string"],
+            screenshot=True,
         )
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
     @parametrize
-    async def test_raw_response_computer(self, async_client: AsyncSteel) -> None:
+    async def test_raw_response_computer_overload_1(self, async_client: AsyncSteel) -> None:
         response = await async_client.sessions.with_raw_response.computer(
             session_id="sessionId",
+            action="move_mouse",
+            coordinates=[0, 0],
         )
 
         assert response.is_closed is True
@@ -664,9 +1108,11 @@ class TestAsyncSessions:
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
     @parametrize
-    async def test_streaming_response_computer(self, async_client: AsyncSteel) -> None:
+    async def test_streaming_response_computer_overload_1(self, async_client: AsyncSteel) -> None:
         async with async_client.sessions.with_streaming_response.computer(
             session_id="sessionId",
+            action="move_mouse",
+            coordinates=[0, 0],
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -677,10 +1123,438 @@ class TestAsyncSessions:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
-    async def test_path_params_computer(self, async_client: AsyncSteel) -> None:
+    async def test_path_params_computer_overload_1(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
             await async_client.sessions.with_raw_response.computer(
                 session_id="",
+                action="move_mouse",
+                coordinates=[0, 0],
+            )
+
+    @parametrize
+    async def test_method_computer_overload_2(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="click_mouse",
+            button="left",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_computer_with_all_params_overload_2(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="click_mouse",
+            button="left",
+            click_type="down",
+            coordinates=[0, 0],
+            hold_keys=["string"],
+            num_clicks=0,
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer_overload_2(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="click_mouse",
+            button="left",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer_overload_2(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="click_mouse",
+            button="left",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer_overload_2(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+                action="click_mouse",
+                button="left",
+            )
+
+    @parametrize
+    async def test_method_computer_overload_3(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="drag_mouse",
+            path=[[0, 0]],
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_computer_with_all_params_overload_3(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="drag_mouse",
+            path=[[0, 0]],
+            hold_keys=["string"],
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer_overload_3(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="drag_mouse",
+            path=[[0, 0]],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer_overload_3(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="drag_mouse",
+            path=[[0, 0]],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer_overload_3(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+                action="drag_mouse",
+                path=[[0, 0]],
+            )
+
+    @parametrize
+    async def test_method_computer_overload_4(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="scroll",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_computer_with_all_params_overload_4(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="scroll",
+            coordinates=[0, 0],
+            delta_x=0,
+            delta_y=0,
+            hold_keys=["string"],
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer_overload_4(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="scroll",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer_overload_4(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="scroll",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer_overload_4(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+                action="scroll",
+            )
+
+    @parametrize
+    async def test_method_computer_overload_5(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="press_key",
+            keys=["string"],
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_computer_with_all_params_overload_5(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="press_key",
+            keys=["string"],
+            duration=0,
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer_overload_5(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="press_key",
+            keys=["string"],
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer_overload_5(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="press_key",
+            keys=["string"],
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer_overload_5(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+                action="press_key",
+                keys=["string"],
+            )
+
+    @parametrize
+    async def test_method_computer_overload_6(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="type_text",
+            text="text",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_computer_with_all_params_overload_6(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="type_text",
+            text="text",
+            hold_keys=["string"],
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer_overload_6(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="type_text",
+            text="text",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer_overload_6(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="type_text",
+            text="text",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer_overload_6(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+                action="type_text",
+                text="text",
+            )
+
+    @parametrize
+    async def test_method_computer_overload_7(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="wait",
+            duration=0,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_computer_with_all_params_overload_7(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="wait",
+            duration=0,
+            screenshot=True,
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer_overload_7(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="wait",
+            duration=0,
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer_overload_7(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="wait",
+            duration=0,
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer_overload_7(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+                action="wait",
+                duration=0,
+            )
+
+    @parametrize
+    async def test_method_computer_overload_8(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="take_screenshot",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer_overload_8(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="take_screenshot",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer_overload_8(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="take_screenshot",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer_overload_8(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+                action="take_screenshot",
+            )
+
+    @parametrize
+    async def test_method_computer_overload_9(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            action="get_cursor_position",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer_overload_9(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+            action="get_cursor_position",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer_overload_9(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+            action="get_cursor_position",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer_overload_9(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+                action="get_cursor_position",
             )
 
     @parametrize

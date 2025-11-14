@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal
+from typing import Iterable
+from typing_extensions import Literal, overload
 
 import httpx
 
@@ -16,7 +17,7 @@ from .files import (
 )
 from ...types import session_list_params, session_create_params, session_computer_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import maybe_transform, async_maybe_transform
+from ..._utils import required_args, maybe_transform, async_maybe_transform
 from .captchas import (
     CaptchasResource,
     AsyncCaptchasResource,
@@ -287,11 +288,15 @@ class SessionsResource(SyncAPIResource):
             model=SessionslistSession,
         )
 
+    @overload
     def computer(
         self,
         session_id: str,
         *,
-        body: object | Omit = omit,
+        action: Literal["move_mouse"],
+        coordinates: Iterable[float],
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -303,7 +308,11 @@ class SessionsResource(SyncAPIResource):
         Execute computer actions like mouse movements, clicks, keyboard input, and more
 
         Args:
-          body: Computer action to execute (validation done in controller)
+          coordinates: X and Y coordinates [x, y]
+
+          hold_keys: Keys to hold while moving
+
+          screenshot: Whether to take a screenshot after the action
 
           extra_headers: Send extra headers
 
@@ -313,11 +322,353 @@ class SessionsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        ...
+
+    @overload
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["click_mouse"],
+        button: Literal["left", "right", "middle", "back", "forward"],
+        click_type: Literal["down", "up", "click"] | Omit = omit,
+        coordinates: Iterable[float] | Omit = omit,
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        num_clicks: float | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          button: Mouse button to click
+
+          click_type: Type of click (down, up, or click). Defaults to 'click'
+
+          coordinates: X and Y coordinates [x, y]
+
+          hold_keys: Keys to hold while clicking
+
+          num_clicks: Number of clicks. Defaults to 1
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["drag_mouse"],
+        path: Iterable[Iterable[float]],
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          path: Array of [x, y] coordinate pairs
+
+          hold_keys: Keys to hold while dragging
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["scroll"],
+        coordinates: Iterable[float] | Omit = omit,
+        delta_x: float | Omit = omit,
+        delta_y: float | Omit = omit,
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          coordinates: X and Y coordinates [x, y]
+
+          delta_x: Horizontal scroll amount. Defaults to 0
+
+          delta_y: Vertical scroll amount. Defaults to 0
+
+          hold_keys: Keys to hold while scrolling
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["press_key"],
+        keys: SequenceNotStr[str],
+        duration: float | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          keys: Keys to press
+
+          duration: Duration to hold keys in seconds
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["type_text"],
+        text: str,
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          text: Text to type
+
+          hold_keys: Keys to hold while typing
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["wait"],
+        duration: float,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          duration: Duration to wait in seconds
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["take_screenshot"],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["get_cursor_position"],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @required_args(
+        ["action", "coordinates"],
+        ["action", "button"],
+        ["action", "path"],
+        ["action"],
+        ["action", "keys"],
+        ["action", "text"],
+        ["action", "duration"],
+    )
+    def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["move_mouse"]
+        | Literal["click_mouse"]
+        | Literal["drag_mouse"]
+        | Literal["scroll"]
+        | Literal["press_key"]
+        | Literal["type_text"]
+        | Literal["wait"]
+        | Literal["take_screenshot"]
+        | Literal["get_cursor_position"],
+        coordinates: Iterable[float] | Omit = omit,
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        button: Literal["left", "right", "middle", "back", "forward"] | Omit = omit,
+        click_type: Literal["down", "up", "click"] | Omit = omit,
+        num_clicks: float | Omit = omit,
+        path: Iterable[Iterable[float]] | Omit = omit,
+        delta_x: float | Omit = omit,
+        delta_y: float | Omit = omit,
+        keys: SequenceNotStr[str] | Omit = omit,
+        duration: float | Omit = omit,
+        text: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         return self._post(
             f"/v1/sessions/{session_id}/computer",
-            body=maybe_transform(body, session_computer_params.SessionComputerParams),
+            body=maybe_transform(
+                {
+                    "action": action,
+                    "coordinates": coordinates,
+                    "hold_keys": hold_keys,
+                    "screenshot": screenshot,
+                    "button": button,
+                    "click_type": click_type,
+                    "num_clicks": num_clicks,
+                    "path": path,
+                    "delta_x": delta_x,
+                    "delta_y": delta_y,
+                    "keys": keys,
+                    "duration": duration,
+                    "text": text,
+                },
+                session_computer_params.SessionComputerParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -716,11 +1067,15 @@ class AsyncSessionsResource(AsyncAPIResource):
             model=SessionslistSession,
         )
 
+    @overload
     async def computer(
         self,
         session_id: str,
         *,
-        body: object | Omit = omit,
+        action: Literal["move_mouse"],
+        coordinates: Iterable[float],
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -732,7 +1087,11 @@ class AsyncSessionsResource(AsyncAPIResource):
         Execute computer actions like mouse movements, clicks, keyboard input, and more
 
         Args:
-          body: Computer action to execute (validation done in controller)
+          coordinates: X and Y coordinates [x, y]
+
+          hold_keys: Keys to hold while moving
+
+          screenshot: Whether to take a screenshot after the action
 
           extra_headers: Send extra headers
 
@@ -742,11 +1101,353 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        ...
+
+    @overload
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["click_mouse"],
+        button: Literal["left", "right", "middle", "back", "forward"],
+        click_type: Literal["down", "up", "click"] | Omit = omit,
+        coordinates: Iterable[float] | Omit = omit,
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        num_clicks: float | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          button: Mouse button to click
+
+          click_type: Type of click (down, up, or click). Defaults to 'click'
+
+          coordinates: X and Y coordinates [x, y]
+
+          hold_keys: Keys to hold while clicking
+
+          num_clicks: Number of clicks. Defaults to 1
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["drag_mouse"],
+        path: Iterable[Iterable[float]],
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          path: Array of [x, y] coordinate pairs
+
+          hold_keys: Keys to hold while dragging
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["scroll"],
+        coordinates: Iterable[float] | Omit = omit,
+        delta_x: float | Omit = omit,
+        delta_y: float | Omit = omit,
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          coordinates: X and Y coordinates [x, y]
+
+          delta_x: Horizontal scroll amount. Defaults to 0
+
+          delta_y: Vertical scroll amount. Defaults to 0
+
+          hold_keys: Keys to hold while scrolling
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["press_key"],
+        keys: SequenceNotStr[str],
+        duration: float | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          keys: Keys to press
+
+          duration: Duration to hold keys in seconds
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["type_text"],
+        text: str,
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          text: Text to type
+
+          hold_keys: Keys to hold while typing
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["wait"],
+        duration: float,
+        screenshot: bool | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          duration: Duration to wait in seconds
+
+          screenshot: Whether to take a screenshot after the action
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["take_screenshot"],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @overload
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["get_cursor_position"],
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        ...
+
+    @required_args(
+        ["action", "coordinates"],
+        ["action", "button"],
+        ["action", "path"],
+        ["action"],
+        ["action", "keys"],
+        ["action", "text"],
+        ["action", "duration"],
+    )
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        action: Literal["move_mouse"]
+        | Literal["click_mouse"]
+        | Literal["drag_mouse"]
+        | Literal["scroll"]
+        | Literal["press_key"]
+        | Literal["type_text"]
+        | Literal["wait"]
+        | Literal["take_screenshot"]
+        | Literal["get_cursor_position"],
+        coordinates: Iterable[float] | Omit = omit,
+        hold_keys: SequenceNotStr[str] | Omit = omit,
+        screenshot: bool | Omit = omit,
+        button: Literal["left", "right", "middle", "back", "forward"] | Omit = omit,
+        click_type: Literal["down", "up", "click"] | Omit = omit,
+        num_clicks: float | Omit = omit,
+        path: Iterable[Iterable[float]] | Omit = omit,
+        delta_x: float | Omit = omit,
+        delta_y: float | Omit = omit,
+        keys: SequenceNotStr[str] | Omit = omit,
+        duration: float | Omit = omit,
+        text: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         return await self._post(
             f"/v1/sessions/{session_id}/computer",
-            body=await async_maybe_transform(body, session_computer_params.SessionComputerParams),
+            body=await async_maybe_transform(
+                {
+                    "action": action,
+                    "coordinates": coordinates,
+                    "hold_keys": hold_keys,
+                    "screenshot": screenshot,
+                    "button": button,
+                    "click_type": click_type,
+                    "num_clicks": num_clicks,
+                    "path": path,
+                    "delta_x": delta_x,
+                    "delta_y": delta_y,
+                    "keys": keys,
+                    "duration": duration,
+                    "text": text,
+                },
+                session_computer_params.SessionComputerParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
