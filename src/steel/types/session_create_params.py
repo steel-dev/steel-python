@@ -89,7 +89,10 @@ class SessionCreateParams(TypedDict, total=False):
     """
 
     region: str
-    """The desired region for the session to be started in"""
+    """The desired region for the session to be started in.
+
+    Available regions are lax, ord, iad
+    """
 
     session_context: Annotated[SessionContext, PropertyInfo(alias="sessionContext")]
     """Session context data to be used in the created session.

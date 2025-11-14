@@ -68,9 +68,6 @@ class Session(BaseModel):
     event_count: int = FieldInfo(alias="eventCount")
     """Number of events processed in the session"""
 
-    headless: bool
-    """Indicates if the session is headless or headful"""
-
     optimize_bandwidth: OptimizeBandwidth = FieldInfo(alias="optimizeBandwidth")
     """Bandwidth optimizations that were applied to the session."""
 
@@ -95,6 +92,9 @@ class Session(BaseModel):
     device_config: Optional[DeviceConfig] = FieldInfo(alias="deviceConfig", default=None)
     """Device configuration for the session"""
 
+    headless: Optional[bool] = None
+    """Indicates if the session is headless or headful"""
+
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
 
@@ -104,7 +104,7 @@ class Session(BaseModel):
     profile_id: Optional[str] = FieldInfo(alias="profileId", default=None)
     """The ID of the profile associated with the session"""
 
-    region: Optional[Literal["lax", "ord", "iad", "scl", "fra"]] = None
+    region: Optional[Literal["lax", "ord", "iad", "scl", "fra", "nrt"]] = None
     """The region where the session was created"""
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)

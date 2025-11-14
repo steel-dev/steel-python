@@ -56,6 +56,7 @@ from steel.types import (
     Session,
     SessionContext,
     Sessionslist,
+    SessionComputerResponse,
     SessionEventsResponse,
     SessionLiveDetailsResponse,
     SessionReleaseResponse,
@@ -68,6 +69,7 @@ Methods:
 - <code title="post /v1/sessions">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">create</a>(\*\*<a href="src/steel/types/session_create_params.py">params</a>) -> <a href="./src/steel/types/session.py">Session</a></code>
 - <code title="get /v1/sessions/{id}">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">retrieve</a>(id) -> <a href="./src/steel/types/session.py">Session</a></code>
 - <code title="get /v1/sessions">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">list</a>(\*\*<a href="src/steel/types/session_list_params.py">params</a>) -> SyncSessionsCursor[Session]</code>
+- <code title="post /v1/sessions/{sessionId}/computer">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">computer</a>(session_id, \*\*<a href="src/steel/types/session_computer_params.py">params</a>) -> <a href="./src/steel/types/session_computer_response.py">SessionComputerResponse</a></code>
 - <code title="get /v1/sessions/{id}/context">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">context</a>(id) -> <a href="./src/steel/types/session_context.py">SessionContext</a></code>
 - <code title="get /v1/sessions/{id}/events">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">events</a>(id) -> <a href="./src/steel/types/session_events_response.py">SessionEventsResponse</a></code>
 - <code title="get /v1/sessions/{id}/live-details">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">live_details</a>(id) -> <a href="./src/steel/types/session_live_details_response.py">SessionLiveDetailsResponse</a></code>

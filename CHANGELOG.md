@@ -1,5 +1,32 @@
 # Changelog
 
+## 0.14.0 (2025-11-14)
+
+Full Changelog: [v0.13.0...v0.14.0](https://github.com/steel-dev/steel-python/compare/v0.13.0...v0.14.0)
+
+### Features
+
+* **api:** api update ([8e574f7](https://github.com/steel-dev/steel-python/commit/8e574f7ac89ba7cd9d45c33ec1b574d0f5b24d46))
+* **api:** api update ([2081caf](https://github.com/steel-dev/steel-python/commit/2081cafc210ec3ef8719aa110c02c7169cd567a4))
+* **api:** api update ([9cf3f22](https://github.com/steel-dev/steel-python/commit/9cf3f22913a76ca9213d901b6fcc36083b770634))
+* **api:** api update ([3c50c72](https://github.com/steel-dev/steel-python/commit/3c50c72c7958753e3a1fc272e0a5f265dd52c1e9))
+* **api:** api update ([9484ce7](https://github.com/steel-dev/steel-python/commit/9484ce7490da8f5b08d51924b929a18658044bb5))
+
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([f8369a5](https://github.com/steel-dev/steel-python/commit/f8369a5fd241e51da8e21af879ebfab2b027b3c2))
+* compat with Python 3.14 ([7c47c34](https://github.com/steel-dev/steel-python/commit/7c47c34fc1dd806dff792304e8929ca8886e51f5))
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([3db59eb](https://github.com/steel-dev/steel-python/commit/3db59ebb31542e3432aa1ebef4a1f6f8176d7c9e))
+
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([99fd534](https://github.com/steel-dev/steel-python/commit/99fd53418bb619da32d839e8fe6086e14e867159))
+* **internal/tests:** avoid race condition with implicit client cleanup ([6aefd1c](https://github.com/steel-dev/steel-python/commit/6aefd1cffd7e4c1418fa02ddc466e0ed841f5402))
+* **internal:** grammar fix (it's -&gt; its) ([a9b53d6](https://github.com/steel-dev/steel-python/commit/a9b53d6c99d567cf08684188ee769f737777c258))
+* **package:** drop Python 3.8 support ([1cc7fed](https://github.com/steel-dev/steel-python/commit/1cc7fed7022c1b728868876930da637c4d946dd1))
+
 ## 0.13.0 (2025-10-16)
 
 Full Changelog: [v0.12.0...v0.13.0](https://github.com/steel-dev/steel-python/compare/v0.12.0...v0.13.0)
