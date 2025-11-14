@@ -22,6 +22,7 @@ from .extension_list_response import ExtensionListResponse as ExtensionListRespo
 from .extension_update_params import ExtensionUpdateParams as ExtensionUpdateParams
 from .extension_upload_params import ExtensionUploadParams as ExtensionUploadParams
 from .profile_create_response import ProfileCreateResponse as ProfileCreateResponse
+from .session_computer_params import SessionComputerParams as SessionComputerParams
 from .session_events_response import SessionEventsResponse as SessionEventsResponse
 from .client_screenshot_params import ClientScreenshotParams as ClientScreenshotParams
 from .credential_create_params import CredentialCreateParams as CredentialCreateParams
@@ -32,6 +33,7 @@ from .session_release_response import SessionReleaseResponse as SessionReleaseRe
 from .extension_delete_response import ExtensionDeleteResponse as ExtensionDeleteResponse
 from .extension_update_response import ExtensionUpdateResponse as ExtensionUpdateResponse
 from .extension_upload_response import ExtensionUploadResponse as ExtensionUploadResponse
+from .session_computer_response import SessionComputerResponse as SessionComputerResponse
 from .credential_create_response import CredentialCreateResponse as CredentialCreateResponse
 from .credential_delete_response import CredentialDeleteResponse as CredentialDeleteResponse
 from .credential_update_response import CredentialUpdateResponse as CredentialUpdateResponse

@@ -13,6 +13,7 @@ from steel.types import (
     SessionContext,
     SessionEventsResponse,
     SessionReleaseResponse,
+    SessionComputerResponse,
     SessionReleaseAllResponse,
     SessionLiveDetailsResponse,
 )
@@ -216,6 +217,52 @@ class TestSessions:
             assert_matches_type(SyncSessionsCursor[SessionslistSession], session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_computer(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_method_computer_with_all_params(self, client: Steel) -> None:
+        session = client.sessions.computer(
+            session_id="sessionId",
+            body={},
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_raw_response_computer(self, client: Steel) -> None:
+        response = client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    def test_streaming_response_computer(self, client: Steel) -> None:
+        with client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_computer(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            client.sessions.with_raw_response.computer(
+                session_id="",
+            )
 
     @parametrize
     def test_method_context(self, client: Steel) -> None:
@@ -589,6 +636,52 @@ class TestAsyncSessions:
             assert_matches_type(AsyncSessionsCursor[SessionslistSession], session, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_computer(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_computer_with_all_params(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.computer(
+            session_id="sessionId",
+            body={},
+        )
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_raw_response_computer(self, async_client: AsyncSteel) -> None:
+        response = await async_client.sessions.with_raw_response.computer(
+            session_id="sessionId",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        session = await response.parse()
+        assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_computer(self, async_client: AsyncSteel) -> None:
+        async with async_client.sessions.with_streaming_response.computer(
+            session_id="sessionId",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            session = await response.parse()
+            assert_matches_type(SessionComputerResponse, session, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_computer(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
+            await async_client.sessions.with_raw_response.computer(
+                session_id="",
+            )
 
     @parametrize
     async def test_method_context(self, async_client: AsyncSteel) -> None:
