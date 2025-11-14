@@ -14,7 +14,7 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from ...types import session_list_params, session_create_params
+from ...types import session_list_params, session_create_params, session_computer_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import maybe_transform, async_maybe_transform
 from .captchas import (
@@ -40,6 +40,7 @@ from ...types.sessionslist import Session as SessionslistSession
 from ...types.session_context import SessionContext
 from ...types.session_events_response import SessionEventsResponse
 from ...types.session_release_response import SessionReleaseResponse
+from ...types.session_computer_response import SessionComputerResponse
 from ...types.session_release_all_response import SessionReleaseAllResponse
 from ...types.session_live_details_response import SessionLiveDetailsResponse
 
@@ -284,6 +285,43 @@ class SessionsResource(SyncAPIResource):
                 ),
             ),
             model=SessionslistSession,
+        )
+
+    def computer(
+        self,
+        session_id: str,
+        *,
+        body: object | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          body: Computer action to execute (validation done in controller)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not session_id:
+            raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
+        return self._post(
+            f"/v1/sessions/{session_id}/computer",
+            body=maybe_transform(body, session_computer_params.SessionComputerParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SessionComputerResponse,
         )
 
     def context(
@@ -678,6 +716,43 @@ class AsyncSessionsResource(AsyncAPIResource):
             model=SessionslistSession,
         )
 
+    async def computer(
+        self,
+        session_id: str,
+        *,
+        body: object | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SessionComputerResponse:
+        """
+        Execute computer actions like mouse movements, clicks, keyboard input, and more
+
+        Args:
+          body: Computer action to execute (validation done in controller)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not session_id:
+            raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
+        return await self._post(
+            f"/v1/sessions/{session_id}/computer",
+            body=await async_maybe_transform(body, session_computer_params.SessionComputerParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SessionComputerResponse,
+        )
+
     async def context(
         self,
         id: str,
@@ -843,6 +918,9 @@ class SessionsResourceWithRawResponse:
         self.list = to_raw_response_wrapper(
             sessions.list,
         )
+        self.computer = to_raw_response_wrapper(
+            sessions.computer,
+        )
         self.context = to_raw_response_wrapper(
             sessions.context,
         )
@@ -880,6 +958,9 @@ class AsyncSessionsResourceWithRawResponse:
         )
         self.list = async_to_raw_response_wrapper(
             sessions.list,
+        )
+        self.computer = async_to_raw_response_wrapper(
+            sessions.computer,
         )
         self.context = async_to_raw_response_wrapper(
             sessions.context,
@@ -919,6 +1000,9 @@ class SessionsResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             sessions.list,
         )
+        self.computer = to_streamed_response_wrapper(
+            sessions.computer,
+        )
         self.context = to_streamed_response_wrapper(
             sessions.context,
         )
@@ -956,6 +1040,9 @@ class AsyncSessionsResourceWithStreamingResponse:
         )
         self.list = async_to_streamed_response_wrapper(
             sessions.list,
+        )
+        self.computer = async_to_streamed_response_wrapper(
+            sessions.computer,
         )
         self.context = async_to_streamed_response_wrapper(
             sessions.context,
