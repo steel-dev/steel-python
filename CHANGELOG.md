@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.15.0 (2025-12-05)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/steel-dev/steel-python/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **api:** api update ([6ae068d](https://github.com/steel-dev/steel-python/commit/6ae068da03dd776b6571096f529bc750450f411f))
+* **api:** api update ([56e9641](https://github.com/steel-dev/steel-python/commit/56e9641da450a29059f2012cfe0468138b007669))
+* **api:** api update ([c01b21b](https://github.com/steel-dev/steel-python/commit/c01b21b1f0931a1168a6d161775e19479e10ab5e))
+
+
+### Bug Fixes
+
+* ensure streams are always closed ([10f74eb](https://github.com/steel-dev/steel-python/commit/10f74eb193fe0a574c3b777a0bc13d9ee377ab19))
+
+
+### Chores
+
+* add Python 3.14 classifier and testing ([3a8c21e](https://github.com/steel-dev/steel-python/commit/3a8c21e8387e0a212b9fb0b5cbad79e81fbacda0))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([e17dfc9](https://github.com/steel-dev/steel-python/commit/e17dfc9ad931e8438e54c0b2c7e76661e2b3c3b8))
+* update lockfile ([c360fbf](https://github.com/steel-dev/steel-python/commit/c360fbfb6d051f5f93dbb00076dd577ca8f2c6c4))
+
 ## 0.14.0 (2025-11-14)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/steel-dev/steel-python/compare/v0.13.0...v0.14.0)
