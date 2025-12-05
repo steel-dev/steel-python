@@ -13,6 +13,7 @@ __all__ = [
     "Session",
     "SessionDimensions",
     "SessionOptimizeBandwidth",
+    "SessionDebugConfig",
     "SessionDeviceConfig",
     "SessionStealthConfig",
 ]
@@ -36,6 +37,20 @@ class SessionOptimizeBandwidth(BaseModel):
     block_stylesheets: Optional[bool] = FieldInfo(alias="blockStylesheets", default=None)
 
     block_url_patterns: Optional[List[str]] = FieldInfo(alias="blockUrlPatterns", default=None)
+
+
+class SessionDebugConfig(BaseModel):
+    interactive: Optional[bool] = None
+    """Whether interaction is allowed via the debug URL viewer.
+
+    When false, the session viewer is view-only.
+    """
+
+    system_cursor: Optional[bool] = FieldInfo(alias="systemCursor", default=None)
+    """
+    Whether the OS-level mouse cursor is shown in the WebRTC stream (headful mode
+    only).
+    """
 
 
 class SessionDeviceConfig(BaseModel):
@@ -95,6 +110,12 @@ class Session(BaseModel):
 
     websocket_url: str = FieldInfo(alias="websocketUrl")
     """URL for the session's WebSocket connection"""
+
+    debug_config: Optional[SessionDebugConfig] = FieldInfo(alias="debugConfig", default=None)
+    """Configuration for the debug URL and session viewer.
+
+    Controls interaction capabilities and cursor visibility.
+    """
 
     device_config: Optional[SessionDeviceConfig] = FieldInfo(alias="deviceConfig", default=None)
     """Device configuration for the session"""

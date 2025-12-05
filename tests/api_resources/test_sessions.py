@@ -43,6 +43,10 @@ class TestSessions:
                 "blur_fields": True,
                 "exact_origin": True,
             },
+            debug_config={
+                "interactive": True,
+                "system_cursor": True,
+            },
             device_config={"device": "desktop"},
             dimensions={
                 "height": 0,
@@ -898,6 +902,10 @@ class TestAsyncSessions:
                 "auto_submit": True,
                 "blur_fields": True,
                 "exact_origin": True,
+            },
+            debug_config={
+                "interactive": True,
+                "system_cursor": True,
             },
             device_config={"device": "desktop"},
             dimensions={
