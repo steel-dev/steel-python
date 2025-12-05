@@ -82,6 +82,7 @@ class SessionsResource(SyncAPIResource):
         block_ads: bool | Omit = omit,
         concurrency: int | Omit = omit,
         credentials: session_create_params.Credentials | Omit = omit,
+        debug_config: session_create_params.DebugConfig | Omit = omit,
         device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
@@ -116,6 +117,9 @@ class SessionsResource(SyncAPIResource):
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
           credentials: Configuration for session credentials
+
+          debug_config: Configuration for the debug URL and session viewer. Controls interaction
+              capabilities, cursor visibility, and other debug-related settings.
 
           device_config: Device configuration for the session. Specify 'mobile' for mobile device
               fingerprints and configurations.
@@ -177,6 +181,7 @@ class SessionsResource(SyncAPIResource):
                     "block_ads": block_ads,
                     "concurrency": concurrency,
                     "credentials": credentials,
+                    "debug_config": debug_config,
                     "device_config": device_config,
                     "dimensions": dimensions,
                     "extension_ids": extension_ids,
@@ -861,6 +866,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         block_ads: bool | Omit = omit,
         concurrency: int | Omit = omit,
         credentials: session_create_params.Credentials | Omit = omit,
+        debug_config: session_create_params.DebugConfig | Omit = omit,
         device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
@@ -895,6 +901,9 @@ class AsyncSessionsResource(AsyncAPIResource):
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
           credentials: Configuration for session credentials
+
+          debug_config: Configuration for the debug URL and session viewer. Controls interaction
+              capabilities, cursor visibility, and other debug-related settings.
 
           device_config: Device configuration for the session. Specify 'mobile' for mobile device
               fingerprints and configurations.
@@ -956,6 +965,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "block_ads": block_ads,
                     "concurrency": concurrency,
                     "credentials": credentials,
+                    "debug_config": debug_config,
                     "device_config": device_config,
                     "dimensions": dimensions,
                     "extension_ids": extension_ids,

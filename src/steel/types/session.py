@@ -8,7 +8,7 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Session", "Dimensions", "OptimizeBandwidth", "DeviceConfig", "StealthConfig"]
+__all__ = ["Session", "Dimensions", "OptimizeBandwidth", "DebugConfig", "DeviceConfig", "StealthConfig"]
 
 
 class Dimensions(BaseModel):
@@ -29,6 +29,20 @@ class OptimizeBandwidth(BaseModel):
     block_stylesheets: Optional[bool] = FieldInfo(alias="blockStylesheets", default=None)
 
     block_url_patterns: Optional[List[str]] = FieldInfo(alias="blockUrlPatterns", default=None)
+
+
+class DebugConfig(BaseModel):
+    interactive: Optional[bool] = None
+    """Whether interaction is allowed via the debug URL viewer.
+
+    When false, the session viewer is view-only.
+    """
+
+    system_cursor: Optional[bool] = FieldInfo(alias="systemCursor", default=None)
+    """
+    Whether the OS-level mouse cursor is shown in the WebRTC stream (headful mode
+    only).
+    """
 
 
 class DeviceConfig(BaseModel):
@@ -88,6 +102,12 @@ class Session(BaseModel):
 
     websocket_url: str = FieldInfo(alias="websocketUrl")
     """URL for the session's WebSocket connection"""
+
+    debug_config: Optional[DebugConfig] = FieldInfo(alias="debugConfig", default=None)
+    """Configuration for the debug URL and session viewer.
+
+    Controls interaction capabilities and cursor visibility.
+    """
 
     device_config: Optional[DeviceConfig] = FieldInfo(alias="deviceConfig", default=None)
     """Device configuration for the session"""

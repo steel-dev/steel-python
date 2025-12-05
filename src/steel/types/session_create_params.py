@@ -12,6 +12,7 @@ from .._utils import PropertyInfo
 __all__ = [
     "SessionCreateParams",
     "Credentials",
+    "DebugConfig",
     "DeviceConfig",
     "Dimensions",
     "OptimizeBandwidth",
@@ -40,6 +41,13 @@ class SessionCreateParams(TypedDict, total=False):
 
     credentials: Credentials
     """Configuration for session credentials"""
+
+    debug_config: Annotated[DebugConfig, PropertyInfo(alias="debugConfig")]
+    """Configuration for the debug URL and session viewer.
+
+    Controls interaction capabilities, cursor visibility, and other debug-related
+    settings.
+    """
 
     device_config: Annotated[DeviceConfig, PropertyInfo(alias="deviceConfig")]
     """Device configuration for the session.
@@ -128,6 +136,21 @@ class Credentials(TypedDict, total=False):
     blur_fields: Annotated[bool, PropertyInfo(alias="blurFields")]
 
     exact_origin: Annotated[bool, PropertyInfo(alias="exactOrigin")]
+
+
+class DebugConfig(TypedDict, total=False):
+    interactive: bool
+    """Allow interaction with the browser session via the debug URL viewer.
+
+    When false, the session viewer will be view-only. Default is true.
+    """
+
+    system_cursor: Annotated[bool, PropertyInfo(alias="systemCursor")]
+    """Show the OS-level mouse cursor in the WebRTC stream (headful mode only).
+
+    When false, the system cursor will not be rendered in the stream. Default is
+    true.
+    """
 
 
 class DeviceConfig(TypedDict, total=False):
