@@ -131,6 +131,8 @@ class SessionCreateParams(TypedDict, total=False):
 
 
 class Credentials(TypedDict, total=False):
+    """Configuration for session credentials"""
+
     auto_submit: Annotated[bool, PropertyInfo(alias="autoSubmit")]
 
     blur_fields: Annotated[bool, PropertyInfo(alias="blurFields")]
@@ -139,6 +141,11 @@ class Credentials(TypedDict, total=False):
 
 
 class DebugConfig(TypedDict, total=False):
+    """Configuration for the debug URL and session viewer.
+
+    Controls interaction capabilities, cursor visibility, and other debug-related settings.
+    """
+
     interactive: bool
     """Allow interaction with the browser session via the debug URL viewer.
 
@@ -154,10 +161,17 @@ class DebugConfig(TypedDict, total=False):
 
 
 class DeviceConfig(TypedDict, total=False):
+    """Device configuration for the session.
+
+    Specify 'mobile' for mobile device fingerprints and configurations.
+    """
+
     device: Literal["desktop", "mobile"]
 
 
 class Dimensions(TypedDict, total=False):
+    """Viewport and browser window dimensions for the session"""
+
     height: Required[int]
     """Height of the session"""
 
@@ -181,6 +195,8 @@ OptimizeBandwidth: TypeAlias = Union[bool, OptimizeBandwidthUnionMember1]
 
 
 class SessionContextCookiePartitionKey(TypedDict, total=False):
+    """The partition key of the cookie"""
+
     has_cross_site_ancestor: Required[Annotated[bool, PropertyInfo(alias="hasCrossSiteAncestor")]]
     """
     Indicates if the cookie has any ancestors that are cross-site to the
@@ -283,6 +299,11 @@ class SessionContextIndexedDB(TypedDict, total=False):
 
 
 class SessionContext(TypedDict, total=False):
+    """Session context data to be used in the created session.
+
+    Sessions will start with an empty context by default.
+    """
+
     cookies: Iterable[SessionContextCookie]
     """Cookies to initialize in the session"""
 
@@ -297,6 +318,8 @@ class SessionContext(TypedDict, total=False):
 
 
 class StealthConfig(TypedDict, total=False):
+    """Stealth configuration for the session"""
+
     humanize_interactions: Annotated[bool, PropertyInfo(alias="humanizeInteractions")]
     """
     This flag will make the browser act more human-like by moving the mouse in a
@@ -308,6 +331,8 @@ class StealthConfig(TypedDict, total=False):
 
 
 class UseProxyGeolocationGeolocation(TypedDict, total=False):
+    """Geographic location for the proxy"""
+
     country: Required[
         Literal[
             "US",

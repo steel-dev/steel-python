@@ -102,6 +102,8 @@ class Screenshot(BaseModel):
 
 
 class ScrapeResponse(BaseModel):
+    """Response from a successful scrape request"""
+
     content: Content
 
     links: List[Link]
