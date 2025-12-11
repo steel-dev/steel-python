@@ -6,6 +6,8 @@ __all__ = ["SessionReleaseResponse"]
 
 
 class SessionReleaseResponse(BaseModel):
+    """Response for releasing a single session."""
+
     message: str
     """Details about the outcome of the release operation"""
 

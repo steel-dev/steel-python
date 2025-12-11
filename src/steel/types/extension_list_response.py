@@ -24,6 +24,8 @@ class Extension(BaseModel):
 
 
 class ExtensionListResponse(BaseModel):
+    """Response containing a list of extensions for the organization"""
+
     count: float
     """Total number of extensions"""
 

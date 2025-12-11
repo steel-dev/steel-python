@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.15.1 (2025-12-11)
+
+Full Changelog: [v0.15.0...v0.15.1](https://github.com/steel-dev/steel-python/compare/v0.15.0...v0.15.1)
+
+### Bug Fixes
+
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([941b1cc](https://github.com/steel-dev/steel-python/commit/941b1cc3019655d765bc4e1d66a8d5eb7c66b699))
+
+
+### Chores
+
+* add missing docstrings ([f16212d](https://github.com/steel-dev/steel-python/commit/f16212dbd7d11e72e909b4c527358e4c6577d342))
+
 ## 0.15.0 (2025-12-05)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/steel-dev/steel-python/compare/v0.14.0...v0.15.0)
