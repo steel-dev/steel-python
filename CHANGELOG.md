@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.15.1 (2025-12-19)
+
+Full Changelog: [v0.15.0...v0.15.1](https://github.com/steel-dev/steel-python/compare/v0.15.0...v0.15.1)
+
+### Bug Fixes
+
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([941b1cc](https://github.com/steel-dev/steel-python/commit/941b1cc3019655d765bc4e1d66a8d5eb7c66b699))
+* use async_to_httpx_files in patch method ([4d5f789](https://github.com/steel-dev/steel-python/commit/4d5f789e363954650468371049d9d9a6822d4484))
+
+
+### Chores
+
+* add missing docstrings ([f16212d](https://github.com/steel-dev/steel-python/commit/f16212dbd7d11e72e909b4c527358e4c6577d342))
+* **internal:** add `--fix` argument to lint script ([ed11e7a](https://github.com/steel-dev/steel-python/commit/ed11e7aa7441a51314e4ca6b97489d89e34dc75a))
+* **internal:** add missing files argument to base client ([92b8e72](https://github.com/steel-dev/steel-python/commit/92b8e72a9530757a3da642154a0c9d6e00f158b8))
+* speedup initial import ([cb228f5](https://github.com/steel-dev/steel-python/commit/cb228f5f13404ed892accf61ecece2d4a62a6670))
+
 ## 0.15.0 (2025-12-05)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/steel-dev/steel-python/compare/v0.14.0...v0.15.0)
