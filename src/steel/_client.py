@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, List, Mapping
+from typing import TYPE_CHECKING, Any, List, Mapping
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -30,6 +30,7 @@ from ._utils import (
     get_async_library,
     async_maybe_transform,
 )
+from ._compat import cached_property
 from ._version import __version__
 from ._response import (
     to_raw_response_wrapper,
@@ -37,7 +38,6 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import files, profiles, extensions, credentials
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -46,23 +46,22 @@ from ._base_client import (
     AsyncAPIClient,
     make_request_options,
 )
-from .resources.sessions import sessions
 from .types.pdf_response import PdfResponse
 from .types.scrape_response import ScrapeResponse
 from .types.screenshot_response import ScreenshotResponse
+
+if TYPE_CHECKING:
+    from .resources import files, profiles, sessions, extensions, credentials
+    from .resources.files import FilesResource, AsyncFilesResource
+    from .resources.profiles import ProfilesResource, AsyncProfilesResource
+    from .resources.extensions import ExtensionsResource, AsyncExtensionsResource
+    from .resources.credentials import CredentialsResource, AsyncCredentialsResource
+    from .resources.sessions.sessions import SessionsResource, AsyncSessionsResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Steel", "AsyncSteel", "Client", "AsyncClient"]
 
 
 class Steel(SyncAPIClient):
-    credentials: credentials.CredentialsResource
-    files: files.FilesResource
-    sessions: sessions.SessionsResource
-    extensions: extensions.ExtensionsResource
-    profiles: profiles.ProfilesResource
-    with_raw_response: SteelWithRawResponse
-    with_streaming_response: SteelWithStreamedResponse
-
     # client options
     steel_api_key: str | None
 
@@ -113,13 +112,43 @@ class Steel(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.credentials = credentials.CredentialsResource(self)
-        self.files = files.FilesResource(self)
-        self.sessions = sessions.SessionsResource(self)
-        self.extensions = extensions.ExtensionsResource(self)
-        self.profiles = profiles.ProfilesResource(self)
-        self.with_raw_response = SteelWithRawResponse(self)
-        self.with_streaming_response = SteelWithStreamedResponse(self)
+    @cached_property
+    def credentials(self) -> CredentialsResource:
+        from .resources.credentials import CredentialsResource
+
+        return CredentialsResource(self)
+
+    @cached_property
+    def files(self) -> FilesResource:
+        from .resources.files import FilesResource
+
+        return FilesResource(self)
+
+    @cached_property
+    def sessions(self) -> SessionsResource:
+        from .resources.sessions import SessionsResource
+
+        return SessionsResource(self)
+
+    @cached_property
+    def extensions(self) -> ExtensionsResource:
+        from .resources.extensions import ExtensionsResource
+
+        return ExtensionsResource(self)
+
+    @cached_property
+    def profiles(self) -> ProfilesResource:
+        from .resources.profiles import ProfilesResource
+
+        return ProfilesResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> SteelWithRawResponse:
+        return SteelWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> SteelWithStreamedResponse:
+        return SteelWithStreamedResponse(self)
 
     @property
     @override
@@ -398,14 +427,6 @@ class Steel(SyncAPIClient):
 
 
 class AsyncSteel(AsyncAPIClient):
-    credentials: credentials.AsyncCredentialsResource
-    files: files.AsyncFilesResource
-    sessions: sessions.AsyncSessionsResource
-    extensions: extensions.AsyncExtensionsResource
-    profiles: profiles.AsyncProfilesResource
-    with_raw_response: AsyncSteelWithRawResponse
-    with_streaming_response: AsyncSteelWithStreamedResponse
-
     # client options
     steel_api_key: str | None
 
@@ -456,13 +477,43 @@ class AsyncSteel(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.credentials = credentials.AsyncCredentialsResource(self)
-        self.files = files.AsyncFilesResource(self)
-        self.sessions = sessions.AsyncSessionsResource(self)
-        self.extensions = extensions.AsyncExtensionsResource(self)
-        self.profiles = profiles.AsyncProfilesResource(self)
-        self.with_raw_response = AsyncSteelWithRawResponse(self)
-        self.with_streaming_response = AsyncSteelWithStreamedResponse(self)
+    @cached_property
+    def credentials(self) -> AsyncCredentialsResource:
+        from .resources.credentials import AsyncCredentialsResource
+
+        return AsyncCredentialsResource(self)
+
+    @cached_property
+    def files(self) -> AsyncFilesResource:
+        from .resources.files import AsyncFilesResource
+
+        return AsyncFilesResource(self)
+
+    @cached_property
+    def sessions(self) -> AsyncSessionsResource:
+        from .resources.sessions import AsyncSessionsResource
+
+        return AsyncSessionsResource(self)
+
+    @cached_property
+    def extensions(self) -> AsyncExtensionsResource:
+        from .resources.extensions import AsyncExtensionsResource
+
+        return AsyncExtensionsResource(self)
+
+    @cached_property
+    def profiles(self) -> AsyncProfilesResource:
+        from .resources.profiles import AsyncProfilesResource
+
+        return AsyncProfilesResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncSteelWithRawResponse:
+        return AsyncSteelWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncSteelWithStreamedResponse:
+        return AsyncSteelWithStreamedResponse(self)
 
     @property
     @override
@@ -741,12 +792,10 @@ class AsyncSteel(AsyncAPIClient):
 
 
 class SteelWithRawResponse:
+    _client: Steel
+
     def __init__(self, client: Steel) -> None:
-        self.credentials = credentials.CredentialsResourceWithRawResponse(client.credentials)
-        self.files = files.FilesResourceWithRawResponse(client.files)
-        self.sessions = sessions.SessionsResourceWithRawResponse(client.sessions)
-        self.extensions = extensions.ExtensionsResourceWithRawResponse(client.extensions)
-        self.profiles = profiles.ProfilesResourceWithRawResponse(client.profiles)
+        self._client = client
 
         self.pdf = to_raw_response_wrapper(
             client.pdf,
@@ -758,14 +807,42 @@ class SteelWithRawResponse:
             client.screenshot,
         )
 
+    @cached_property
+    def credentials(self) -> credentials.CredentialsResourceWithRawResponse:
+        from .resources.credentials import CredentialsResourceWithRawResponse
+
+        return CredentialsResourceWithRawResponse(self._client.credentials)
+
+    @cached_property
+    def files(self) -> files.FilesResourceWithRawResponse:
+        from .resources.files import FilesResourceWithRawResponse
+
+        return FilesResourceWithRawResponse(self._client.files)
+
+    @cached_property
+    def sessions(self) -> sessions.SessionsResourceWithRawResponse:
+        from .resources.sessions import SessionsResourceWithRawResponse
+
+        return SessionsResourceWithRawResponse(self._client.sessions)
+
+    @cached_property
+    def extensions(self) -> extensions.ExtensionsResourceWithRawResponse:
+        from .resources.extensions import ExtensionsResourceWithRawResponse
+
+        return ExtensionsResourceWithRawResponse(self._client.extensions)
+
+    @cached_property
+    def profiles(self) -> profiles.ProfilesResourceWithRawResponse:
+        from .resources.profiles import ProfilesResourceWithRawResponse
+
+        return ProfilesResourceWithRawResponse(self._client.profiles)
+
 
 class AsyncSteelWithRawResponse:
+    _client: AsyncSteel
+
     def __init__(self, client: AsyncSteel) -> None:
-        self.credentials = credentials.AsyncCredentialsResourceWithRawResponse(client.credentials)
-        self.files = files.AsyncFilesResourceWithRawResponse(client.files)
-        self.sessions = sessions.AsyncSessionsResourceWithRawResponse(client.sessions)
-        self.extensions = extensions.AsyncExtensionsResourceWithRawResponse(client.extensions)
-        self.profiles = profiles.AsyncProfilesResourceWithRawResponse(client.profiles)
+        self._client = client
 
         self.pdf = async_to_raw_response_wrapper(
             client.pdf,
@@ -777,14 +854,42 @@ class AsyncSteelWithRawResponse:
             client.screenshot,
         )
 
+    @cached_property
+    def credentials(self) -> credentials.AsyncCredentialsResourceWithRawResponse:
+        from .resources.credentials import AsyncCredentialsResourceWithRawResponse
+
+        return AsyncCredentialsResourceWithRawResponse(self._client.credentials)
+
+    @cached_property
+    def files(self) -> files.AsyncFilesResourceWithRawResponse:
+        from .resources.files import AsyncFilesResourceWithRawResponse
+
+        return AsyncFilesResourceWithRawResponse(self._client.files)
+
+    @cached_property
+    def sessions(self) -> sessions.AsyncSessionsResourceWithRawResponse:
+        from .resources.sessions import AsyncSessionsResourceWithRawResponse
+
+        return AsyncSessionsResourceWithRawResponse(self._client.sessions)
+
+    @cached_property
+    def extensions(self) -> extensions.AsyncExtensionsResourceWithRawResponse:
+        from .resources.extensions import AsyncExtensionsResourceWithRawResponse
+
+        return AsyncExtensionsResourceWithRawResponse(self._client.extensions)
+
+    @cached_property
+    def profiles(self) -> profiles.AsyncProfilesResourceWithRawResponse:
+        from .resources.profiles import AsyncProfilesResourceWithRawResponse
+
+        return AsyncProfilesResourceWithRawResponse(self._client.profiles)
+
 
 class SteelWithStreamedResponse:
+    _client: Steel
+
     def __init__(self, client: Steel) -> None:
-        self.credentials = credentials.CredentialsResourceWithStreamingResponse(client.credentials)
-        self.files = files.FilesResourceWithStreamingResponse(client.files)
-        self.sessions = sessions.SessionsResourceWithStreamingResponse(client.sessions)
-        self.extensions = extensions.ExtensionsResourceWithStreamingResponse(client.extensions)
-        self.profiles = profiles.ProfilesResourceWithStreamingResponse(client.profiles)
+        self._client = client
 
         self.pdf = to_streamed_response_wrapper(
             client.pdf,
@@ -796,14 +901,42 @@ class SteelWithStreamedResponse:
             client.screenshot,
         )
 
+    @cached_property
+    def credentials(self) -> credentials.CredentialsResourceWithStreamingResponse:
+        from .resources.credentials import CredentialsResourceWithStreamingResponse
+
+        return CredentialsResourceWithStreamingResponse(self._client.credentials)
+
+    @cached_property
+    def files(self) -> files.FilesResourceWithStreamingResponse:
+        from .resources.files import FilesResourceWithStreamingResponse
+
+        return FilesResourceWithStreamingResponse(self._client.files)
+
+    @cached_property
+    def sessions(self) -> sessions.SessionsResourceWithStreamingResponse:
+        from .resources.sessions import SessionsResourceWithStreamingResponse
+
+        return SessionsResourceWithStreamingResponse(self._client.sessions)
+
+    @cached_property
+    def extensions(self) -> extensions.ExtensionsResourceWithStreamingResponse:
+        from .resources.extensions import ExtensionsResourceWithStreamingResponse
+
+        return ExtensionsResourceWithStreamingResponse(self._client.extensions)
+
+    @cached_property
+    def profiles(self) -> profiles.ProfilesResourceWithStreamingResponse:
+        from .resources.profiles import ProfilesResourceWithStreamingResponse
+
+        return ProfilesResourceWithStreamingResponse(self._client.profiles)
+
 
 class AsyncSteelWithStreamedResponse:
+    _client: AsyncSteel
+
     def __init__(self, client: AsyncSteel) -> None:
-        self.credentials = credentials.AsyncCredentialsResourceWithStreamingResponse(client.credentials)
-        self.files = files.AsyncFilesResourceWithStreamingResponse(client.files)
-        self.sessions = sessions.AsyncSessionsResourceWithStreamingResponse(client.sessions)
-        self.extensions = extensions.AsyncExtensionsResourceWithStreamingResponse(client.extensions)
-        self.profiles = profiles.AsyncProfilesResourceWithStreamingResponse(client.profiles)
+        self._client = client
 
         self.pdf = async_to_streamed_response_wrapper(
             client.pdf,
@@ -814,6 +947,36 @@ class AsyncSteelWithStreamedResponse:
         self.screenshot = async_to_streamed_response_wrapper(
             client.screenshot,
         )
+
+    @cached_property
+    def credentials(self) -> credentials.AsyncCredentialsResourceWithStreamingResponse:
+        from .resources.credentials import AsyncCredentialsResourceWithStreamingResponse
+
+        return AsyncCredentialsResourceWithStreamingResponse(self._client.credentials)
+
+    @cached_property
+    def files(self) -> files.AsyncFilesResourceWithStreamingResponse:
+        from .resources.files import AsyncFilesResourceWithStreamingResponse
+
+        return AsyncFilesResourceWithStreamingResponse(self._client.files)
+
+    @cached_property
+    def sessions(self) -> sessions.AsyncSessionsResourceWithStreamingResponse:
+        from .resources.sessions import AsyncSessionsResourceWithStreamingResponse
+
+        return AsyncSessionsResourceWithStreamingResponse(self._client.sessions)
+
+    @cached_property
+    def extensions(self) -> extensions.AsyncExtensionsResourceWithStreamingResponse:
+        from .resources.extensions import AsyncExtensionsResourceWithStreamingResponse
+
+        return AsyncExtensionsResourceWithStreamingResponse(self._client.extensions)
+
+    @cached_property
+    def profiles(self) -> profiles.AsyncProfilesResourceWithStreamingResponse:
+        from .resources.profiles import AsyncProfilesResourceWithStreamingResponse
+
+        return AsyncProfilesResourceWithStreamingResponse(self._client.profiles)
 
 
 Client = Steel

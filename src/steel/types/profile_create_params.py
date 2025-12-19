@@ -24,6 +24,8 @@ class ProfileCreateParams(TypedDict, total=False):
 
 
 class Dimensions(TypedDict, total=False):
+    """The dimensions associated with the profile"""
+
     height: Required[float]
 
     width: Required[float]

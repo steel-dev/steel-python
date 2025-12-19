@@ -32,6 +32,8 @@ __all__ = [
 
 
 class Dimensions(BaseModel):
+    """The dimensions associated with the profile"""
+
     height: float
 
     width: float
@@ -466,6 +468,8 @@ class FingerprintHeaders(BaseModel):
 
 
 class Fingerprint(BaseModel):
+    """The fingerprint associated with the profile"""
+
     fingerprint: FingerprintFingerprint
 
     headers: FingerprintHeaders
