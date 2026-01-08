@@ -100,11 +100,11 @@ class IndexedDBDataRecordBlobFile(BaseModel):
 
 
 class IndexedDBDataRecord(BaseModel):
+    key: object
+
+    value: object
+
     blob_files: Optional[List[IndexedDBDataRecordBlobFile]] = FieldInfo(alias="blobFiles", default=None)
-
-    key: Optional[object] = None
-
-    value: Optional[object] = None
 
 
 class IndexedDBData(BaseModel):

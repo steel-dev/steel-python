@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+from typing import Mapping, cast
+
 import httpx
 
 from ..types import extension_update_params, extension_upload_params
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
+from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -49,7 +51,7 @@ class ExtensionsResource(SyncAPIResource):
         self,
         extension_id: str,
         *,
-        file: object | Omit = omit,
+        file: FileTypes | Omit = omit,
         url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -77,19 +79,21 @@ class ExtensionsResource(SyncAPIResource):
         """
         if not extension_id:
             raise ValueError(f"Expected a non-empty value for `extension_id` but received {extension_id!r}")
+        body = deepcopy_minimal(
+            {
+                "file": file,
+                "url": url,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._put(
             f"/v1/extensions/{extension_id}",
-            body=maybe_transform(
-                {
-                    "file": file,
-                    "url": url,
-                },
-                extension_update_params.ExtensionUpdateParams,
-            ),
+            body=maybe_transform(body, extension_update_params.ExtensionUpdateParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -203,7 +207,7 @@ class ExtensionsResource(SyncAPIResource):
     def upload(
         self,
         *,
-        file: object | Omit = omit,
+        file: FileTypes | Omit = omit,
         url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -229,19 +233,21 @@ class ExtensionsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        body = deepcopy_minimal(
+            {
+                "file": file,
+                "url": url,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
             "/v1/extensions",
-            body=maybe_transform(
-                {
-                    "file": file,
-                    "url": url,
-                },
-                extension_upload_params.ExtensionUploadParams,
-            ),
+            body=maybe_transform(body, extension_upload_params.ExtensionUploadParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -273,7 +279,7 @@ class AsyncExtensionsResource(AsyncAPIResource):
         self,
         extension_id: str,
         *,
-        file: object | Omit = omit,
+        file: FileTypes | Omit = omit,
         url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -301,19 +307,21 @@ class AsyncExtensionsResource(AsyncAPIResource):
         """
         if not extension_id:
             raise ValueError(f"Expected a non-empty value for `extension_id` but received {extension_id!r}")
+        body = deepcopy_minimal(
+            {
+                "file": file,
+                "url": url,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._put(
             f"/v1/extensions/{extension_id}",
-            body=await async_maybe_transform(
-                {
-                    "file": file,
-                    "url": url,
-                },
-                extension_update_params.ExtensionUpdateParams,
-            ),
+            body=await async_maybe_transform(body, extension_update_params.ExtensionUpdateParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -427,7 +435,7 @@ class AsyncExtensionsResource(AsyncAPIResource):
     async def upload(
         self,
         *,
-        file: object | Omit = omit,
+        file: FileTypes | Omit = omit,
         url: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -453,19 +461,21 @@ class AsyncExtensionsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        body = deepcopy_minimal(
+            {
+                "file": file,
+                "url": url,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
             "/v1/extensions",
-            body=await async_maybe_transform(
-                {
-                    "file": file,
-                    "url": url,
-                },
-                extension_upload_params.ExtensionUploadParams,
-            ),
+            body=await async_maybe_transform(body, extension_upload_params.ExtensionUploadParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),

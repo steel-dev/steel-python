@@ -129,10 +129,17 @@ Methods:
 Types:
 
 ```python
-from steel.types import ProfileCreateResponse, ProfileListResponse
+from steel.types import (
+    ProfileCreateResponse,
+    ProfileUpdateResponse,
+    ProfileListResponse,
+    ProfileGetResponse,
+)
 ```
 
 Methods:
 
 - <code title="post /v1/profiles">client.profiles.<a href="./src/steel/resources/profiles.py">create</a>(\*\*<a href="src/steel/types/profile_create_params.py">params</a>) -> <a href="./src/steel/types/profile_create_response.py">ProfileCreateResponse</a></code>
+- <code title="patch /v1/profiles/{id}">client.profiles.<a href="./src/steel/resources/profiles.py">update</a>(id, \*\*<a href="src/steel/types/profile_update_params.py">params</a>) -> <a href="./src/steel/types/profile_update_response.py">ProfileUpdateResponse</a></code>
 - <code title="get /v1/profiles">client.profiles.<a href="./src/steel/resources/profiles.py">list</a>() -> <a href="./src/steel/types/profile_list_response.py">ProfileListResponse</a></code>
+- <code title="get /v1/profiles/{id}">client.profiles.<a href="./src/steel/resources/profiles.py">get</a>(id) -> <a href="./src/steel/types/profile_get_response.py">ProfileGetResponse</a></code>

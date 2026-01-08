@@ -34,7 +34,7 @@ class TestExtensions:
     def test_method_update_with_all_params(self, client: Steel) -> None:
         extension = client.extensions.update(
             extension_id="extensionId",
-            file={},
+            file=b"raw file contents",
             url="https://example.com",
         )
         assert_matches_type(ExtensionUpdateResponse, extension, path=["response"])
@@ -204,7 +204,7 @@ class TestExtensions:
     @parametrize
     def test_method_upload_with_all_params(self, client: Steel) -> None:
         extension = client.extensions.upload(
-            file={},
+            file=b"raw file contents",
             url="https://example.com",
         )
         assert_matches_type(ExtensionUploadResponse, extension, path=["response"])
@@ -246,7 +246,7 @@ class TestAsyncExtensions:
     async def test_method_update_with_all_params(self, async_client: AsyncSteel) -> None:
         extension = await async_client.extensions.update(
             extension_id="extensionId",
-            file={},
+            file=b"raw file contents",
             url="https://example.com",
         )
         assert_matches_type(ExtensionUpdateResponse, extension, path=["response"])
@@ -416,7 +416,7 @@ class TestAsyncExtensions:
     @parametrize
     async def test_method_upload_with_all_params(self, async_client: AsyncSteel) -> None:
         extension = await async_client.extensions.upload(
-            file={},
+            file=b"raw file contents",
             url="https://example.com",
         )
         assert_matches_type(ExtensionUploadResponse, extension, path=["response"])

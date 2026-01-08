@@ -7,10 +7,10 @@ from typing_extensions import Required, Annotated, TypedDict
 from .._types import FileTypes
 from .._utils import PropertyInfo
 
-__all__ = ["ProfileCreateParams", "Dimensions"]
+__all__ = ["ProfileUpdateParams", "Dimensions"]
 
 
-class ProfileCreateParams(TypedDict, total=False):
+class ProfileUpdateParams(TypedDict, total=False):
     user_data_dir: Required[Annotated[FileTypes, PropertyInfo(alias="userDataDir")]]
     """The user data directory associated with the profile"""
 
