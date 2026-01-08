@@ -483,6 +483,9 @@ class Profile(BaseModel):
     created_at: datetime = FieldInfo(alias="createdAt")
     """The date and time when the profile was created"""
 
+    credentials_config: object = FieldInfo(alias="credentialsConfig")
+    """The credentials configuration associated with the profile"""
+
     dimensions: Optional[ProfileDimensions] = None
     """The dimensions associated with the profile"""
 
@@ -495,20 +498,17 @@ class Profile(BaseModel):
     source_session_id: Optional[str] = FieldInfo(alias="sourceSessionId", default=None)
     """The last session ID associated with the profile"""
 
-    status: Literal["UPLOADING", "READY", "FAILED"]
+    status: Literal["UPLOADING", "READY", "FAILED", "DELETED"]
     """The status of the profile"""
 
     updated_at: datetime = FieldInfo(alias="updatedAt")
     """The date and time when the profile was last updated"""
 
+    use_proxy_config: object = FieldInfo(alias="useProxyConfig")
+    """The proxy configuration associated with the profile"""
+
     user_agent: Optional[str] = FieldInfo(alias="userAgent", default=None)
     """The user agent associated with the profile"""
-
-    credentials_config: Optional[object] = FieldInfo(alias="credentialsConfig", default=None)
-    """The credentials configuration associated with the profile"""
-
-    use_proxy_config: Optional[object] = FieldInfo(alias="useProxyConfig", default=None)
-    """The proxy configuration associated with the profile"""
 
 
 class ProfileListResponse(BaseModel):

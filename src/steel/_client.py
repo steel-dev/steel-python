@@ -228,7 +228,7 @@ class Steel(SyncAPIClient):
         *,
         url: str,
         delay: float | Omit = omit,
-        region: str | Omit = omit,
+        region: object | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -281,7 +281,7 @@ class Steel(SyncAPIClient):
         delay: float | Omit = omit,
         format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | Omit = omit,
         pdf: bool | Omit = omit,
-        region: str | Omit = omit,
+        region: object | Omit = omit,
         screenshot: bool | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -343,7 +343,7 @@ class Steel(SyncAPIClient):
         url: str,
         delay: float | Omit = omit,
         full_page: bool | Omit = omit,
-        region: str | Omit = omit,
+        region: object | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -593,7 +593,7 @@ class AsyncSteel(AsyncAPIClient):
         *,
         url: str,
         delay: float | Omit = omit,
-        region: str | Omit = omit,
+        region: object | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -646,7 +646,7 @@ class AsyncSteel(AsyncAPIClient):
         delay: float | Omit = omit,
         format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | Omit = omit,
         pdf: bool | Omit = omit,
-        region: str | Omit = omit,
+        region: object | Omit = omit,
         screenshot: bool | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -708,7 +708,7 @@ class AsyncSteel(AsyncAPIClient):
         url: str,
         delay: float | Omit = omit,
         full_page: bool | Omit = omit,
-        region: str | Omit = omit,
+        region: object | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

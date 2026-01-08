@@ -165,5 +165,11 @@ class Session(BaseModel):
 class Sessionslist(BaseModel):
     """Response containing a list of browser sessions with pagination details."""
 
+    next_cursor: Optional[str] = FieldInfo(alias="nextCursor", default=None)
+    """Cursor for the next page of results. Null if no more pages."""
+
     sessions: List[Session]
     """List of browser sessions"""
+
+    total_count: int = FieldInfo(alias="totalCount")
+    """Total number of sessions matching the query"""

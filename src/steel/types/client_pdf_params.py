@@ -16,7 +16,7 @@ class ClientPdfParams(TypedDict, total=False):
     delay: float
     """Delay before generating the PDF (in milliseconds)"""
 
-    region: str
+    region: object
     """The desired region for the action to be performed in"""
 
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]

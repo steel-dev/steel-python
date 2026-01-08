@@ -9,7 +9,7 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 
 __all__ = [
-    "ProfileCreateResponse",
+    "ProfileUpdateResponse",
     "Dimensions",
     "Fingerprint",
     "FingerprintFingerprint",
@@ -475,7 +475,7 @@ class Fingerprint(BaseModel):
     headers: FingerprintHeaders
 
 
-class ProfileCreateResponse(BaseModel):
+class ProfileUpdateResponse(BaseModel):
     id: str
     """The unique identifier for the profile"""
 

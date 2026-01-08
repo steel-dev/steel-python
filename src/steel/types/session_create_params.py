@@ -96,7 +96,7 @@ class SessionCreateParams(TypedDict, total=False):
     proxy. Format: http(s)://username:password@hostname:port
     """
 
-    region: str
+    region: object
     """The desired region for the session to be started in.
 
     Available regions are lax, ord, iad
@@ -121,10 +121,7 @@ class SessionCreateParams(TypedDict, total=False):
     """Session timeout duration in milliseconds. Default is 300000 (5 minutes)."""
 
     use_proxy: Annotated[UseProxy, PropertyInfo(alias="useProxy")]
-    """Proxy configuration for the session.
-
-    Can be a boolean or array of proxy configurations
-    """
+    """Simple boolean to enable/disable Steel proxies"""
 
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
     """Custom user agent string for the browser session"""
@@ -275,11 +272,11 @@ class SessionContextIndexedDBDataRecordBlobFile(TypedDict, total=False):
 
 
 class SessionContextIndexedDBDataRecord(TypedDict, total=False):
+    key: Required[object]
+
+    value: Required[object]
+
     blob_files: Annotated[Iterable[SessionContextIndexedDBDataRecordBlobFile], PropertyInfo(alias="blobFiles")]
-
-    key: object
-
-    value: object
 
 
 class SessionContextIndexedDBData(TypedDict, total=False):

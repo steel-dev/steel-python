@@ -14,7 +14,7 @@ class SessionListParams(TypedDict, total=False):
     """Cursor ID for pagination"""
 
     limit: int
-    """Number of sessions to return. Default is 50."""
+    """Number of sessions to return. Default is 50, max is 100."""
 
     status: Literal["live", "released", "failed"]
     """Filter sessions by current status"""

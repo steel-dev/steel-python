@@ -14,14 +14,17 @@ from .file_upload_params import FileUploadParams as FileUploadParams
 from .screenshot_response import ScreenshotResponse as ScreenshotResponse
 from .session_list_params import SessionListParams as SessionListParams
 from .client_scrape_params import ClientScrapeParams as ClientScrapeParams
+from .profile_get_response import ProfileGetResponse as ProfileGetResponse
 from .profile_create_params import ProfileCreateParams as ProfileCreateParams
 from .profile_list_response import ProfileListResponse as ProfileListResponse
+from .profile_update_params import ProfileUpdateParams as ProfileUpdateParams
 from .session_create_params import SessionCreateParams as SessionCreateParams
 from .credential_list_params import CredentialListParams as CredentialListParams
 from .extension_list_response import ExtensionListResponse as ExtensionListResponse
 from .extension_update_params import ExtensionUpdateParams as ExtensionUpdateParams
 from .extension_upload_params import ExtensionUploadParams as ExtensionUploadParams
 from .profile_create_response import ProfileCreateResponse as ProfileCreateResponse
+from .profile_update_response import ProfileUpdateResponse as ProfileUpdateResponse
 from .session_computer_params import SessionComputerParams as SessionComputerParams
 from .session_events_response import SessionEventsResponse as SessionEventsResponse
 from .client_screenshot_params import ClientScreenshotParams as ClientScreenshotParams
