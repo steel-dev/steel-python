@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.16.0 (2026-02-06)
+
+Full Changelog: [v0.15.0...v0.16.0](https://github.com/steel-dev/steel-python/compare/v0.15.0...v0.16.0)
+
+### Features
+
+* **api:** api update ([6efa7c6](https://github.com/steel-dev/steel-python/commit/6efa7c68d1783cf007c2854e095aaaa29cf70bde))
+* **api:** api update ([39bf149](https://github.com/steel-dev/steel-python/commit/39bf14915d1a92a92bf999c7d4d7cdf457f594fd))
+* **client:** add custom JSON encoder for extended type support ([9c37892](https://github.com/steel-dev/steel-python/commit/9c3789211e990081c0d97fd4684d480671942503))
+* **client:** add support for binary request streaming ([173f4bc](https://github.com/steel-dev/steel-python/commit/173f4bccb8cec99bd0cbe652203a85d200a98520))
+
+
+### Bug Fixes
+
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([941b1cc](https://github.com/steel-dev/steel-python/commit/941b1cc3019655d765bc4e1d66a8d5eb7c66b699))
+* use async_to_httpx_files in patch method ([4d5f789](https://github.com/steel-dev/steel-python/commit/4d5f789e363954650468371049d9d9a6822d4484))
+
+
+### Chores
+
+* add missing docstrings ([f16212d](https://github.com/steel-dev/steel-python/commit/f16212dbd7d11e72e909b4c527358e4c6577d342))
+* **ci:** upgrade `actions/github-script` ([a950e2a](https://github.com/steel-dev/steel-python/commit/a950e2afb5d34aace130b42e6118ccb255639b82))
+* **internal:** add `--fix` argument to lint script ([ed11e7a](https://github.com/steel-dev/steel-python/commit/ed11e7aa7441a51314e4ca6b97489d89e34dc75a))
+* **internal:** add missing files argument to base client ([92b8e72](https://github.com/steel-dev/steel-python/commit/92b8e72a9530757a3da642154a0c9d6e00f158b8))
+* **internal:** codegen related update ([fa9cdd1](https://github.com/steel-dev/steel-python/commit/fa9cdd1963f4ef1b62c7043f6357152a1044ccf2))
+* **internal:** update `actions/checkout` version ([f226fef](https://github.com/steel-dev/steel-python/commit/f226fef740814026024c09636063a76c6e702e0c))
+* speedup initial import ([cb228f5](https://github.com/steel-dev/steel-python/commit/cb228f5f13404ed892accf61ecece2d4a62a6670))
+
 ## 0.15.0 (2025-12-05)
 
 Full Changelog: [v0.14.0...v0.15.0](https://github.com/steel-dev/steel-python/compare/v0.14.0...v0.15.0)
