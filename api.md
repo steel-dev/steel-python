@@ -92,11 +92,16 @@ Methods:
 Types:
 
 ```python
-from steel.types.sessions import CaptchaSolveImageResponse, CaptchaStatusResponse
+from steel.types.sessions import (
+    CaptchaSolveResponse,
+    CaptchaSolveImageResponse,
+    CaptchaStatusResponse,
+)
 ```
 
 Methods:
 
+- <code title="post /v1/sessions/{sessionId}/captchas/solve">client.sessions.captchas.<a href="./src/steel/resources/sessions/captchas.py">solve</a>(session_id, \*\*<a href="src/steel/types/sessions/captcha_solve_params.py">params</a>) -> <a href="./src/steel/types/sessions/captcha_solve_response.py">CaptchaSolveResponse</a></code>
 - <code title="post /v1/sessions/{sessionId}/captchas/solve-image">client.sessions.captchas.<a href="./src/steel/resources/sessions/captchas.py">solve_image</a>(session_id, \*\*<a href="src/steel/types/sessions/captcha_solve_image_params.py">params</a>) -> <a href="./src/steel/types/sessions/captcha_solve_image_response.py">CaptchaSolveImageResponse</a></code>
 - <code title="get /v1/sessions/{sessionId}/captchas/status">client.sessions.captchas.<a href="./src/steel/resources/sessions/captchas.py">status</a>(session_id) -> <a href="./src/steel/types/sessions/captcha_status_response.py">CaptchaStatusResponse</a></code>
 

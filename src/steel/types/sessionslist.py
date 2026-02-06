@@ -71,6 +71,12 @@ class SessionDeviceConfig(BaseModel):
 class SessionStealthConfig(BaseModel):
     """Stealth configuration for the session"""
 
+    auto_captcha_solving: Optional[bool] = FieldInfo(alias="autoCaptchaSolving", default=None)
+    """When true, captchas will be automatically solved when detected.
+
+    When false, use the solve endpoints to manually initiate solving.
+    """
+
     humanize_interactions: Optional[bool] = FieldInfo(alias="humanizeInteractions", default=None)
     """
     This flag will make the browser act more human-like by moving the mouse in a
