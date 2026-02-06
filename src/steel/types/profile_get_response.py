@@ -497,7 +497,7 @@ class ProfileGetResponse(BaseModel):
     source_session_id: Optional[str] = FieldInfo(alias="sourceSessionId", default=None)
     """The last session ID associated with the profile"""
 
-    status: Literal["UPLOADING", "READY", "FAILED", "DELETED"]
+    status: Literal["UPLOADING", "READY", "FAILED"]
     """The status of the profile"""
 
     updated_at: datetime = FieldInfo(alias="updatedAt")

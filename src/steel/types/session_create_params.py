@@ -317,6 +317,12 @@ class SessionContext(TypedDict, total=False):
 class StealthConfig(TypedDict, total=False):
     """Stealth configuration for the session"""
 
+    auto_captcha_solving: Annotated[bool, PropertyInfo(alias="autoCaptchaSolving")]
+    """When true, captchas will be automatically solved when detected.
+
+    When false, use the solve endpoints to manually initiate solving.
+    """
+
     humanize_interactions: Annotated[bool, PropertyInfo(alias="humanizeInteractions")]
     """
     This flag will make the browser act more human-like by moving the mouse in a

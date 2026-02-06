@@ -121,6 +121,7 @@ class TestSessions:
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
             stealth_config={
+                "auto_captcha_solving": True,
                 "humanize_interactions": True,
                 "skip_fingerprint_injection": True,
             },
@@ -981,6 +982,7 @@ class TestAsyncSessions:
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
             stealth_config={
+                "auto_captcha_solving": True,
                 "humanize_interactions": True,
                 "skip_fingerprint_injection": True,
             },
