@@ -32,6 +32,8 @@ __all__ = [
 
 
 class Dimensions(BaseModel):
+    """The dimensions associated with the profile"""
+
     height: float
 
     width: float
@@ -466,6 +468,8 @@ class FingerprintHeaders(BaseModel):
 
 
 class Fingerprint(BaseModel):
+    """The fingerprint associated with the profile"""
+
     fingerprint: FingerprintFingerprint
 
     headers: FingerprintHeaders
@@ -477,6 +481,9 @@ class ProfileCreateResponse(BaseModel):
 
     created_at: datetime = FieldInfo(alias="createdAt")
     """The date and time when the profile was created"""
+
+    credentials_config: object = FieldInfo(alias="credentialsConfig")
+    """The credentials configuration associated with the profile"""
 
     dimensions: Optional[Dimensions] = None
     """The dimensions associated with the profile"""
@@ -496,11 +503,8 @@ class ProfileCreateResponse(BaseModel):
     updated_at: datetime = FieldInfo(alias="updatedAt")
     """The date and time when the profile was last updated"""
 
+    use_proxy_config: object = FieldInfo(alias="useProxyConfig")
+    """The proxy configuration associated with the profile"""
+
     user_agent: Optional[str] = FieldInfo(alias="userAgent", default=None)
     """The user agent associated with the profile"""
-
-    credentials_config: Optional[object] = FieldInfo(alias="credentialsConfig", default=None)
-    """The credentials configuration associated with the profile"""
-
-    use_proxy_config: Optional[object] = FieldInfo(alias="useProxyConfig", default=None)
-    """The proxy configuration associated with the profile"""

@@ -9,30 +9,29 @@ from pydantic import Field as FieldInfo
 from .._models import BaseModel
 
 __all__ = [
-    "ProfileListResponse",
-    "Profile",
-    "ProfileDimensions",
-    "ProfileFingerprint",
-    "ProfileFingerprintFingerprint",
-    "ProfileFingerprintFingerprintBattery",
-    "ProfileFingerprintFingerprintMultimediaDevices",
-    "ProfileFingerprintFingerprintMultimediaDevicesMicro",
-    "ProfileFingerprintFingerprintMultimediaDevicesSpeaker",
-    "ProfileFingerprintFingerprintMultimediaDevicesWebcam",
-    "ProfileFingerprintFingerprintNavigator",
-    "ProfileFingerprintFingerprintNavigatorExtraProperties",
-    "ProfileFingerprintFingerprintNavigatorUserAgentData",
-    "ProfileFingerprintFingerprintNavigatorUserAgentDataBrand",
-    "ProfileFingerprintFingerprintPluginsData",
-    "ProfileFingerprintFingerprintPluginsDataPlugin",
-    "ProfileFingerprintFingerprintPluginsDataPluginMimeType",
-    "ProfileFingerprintFingerprintScreen",
-    "ProfileFingerprintFingerprintVideoCard",
-    "ProfileFingerprintHeaders",
+    "ProfileGetResponse",
+    "Dimensions",
+    "Fingerprint",
+    "FingerprintFingerprint",
+    "FingerprintFingerprintBattery",
+    "FingerprintFingerprintMultimediaDevices",
+    "FingerprintFingerprintMultimediaDevicesMicro",
+    "FingerprintFingerprintMultimediaDevicesSpeaker",
+    "FingerprintFingerprintMultimediaDevicesWebcam",
+    "FingerprintFingerprintNavigator",
+    "FingerprintFingerprintNavigatorExtraProperties",
+    "FingerprintFingerprintNavigatorUserAgentData",
+    "FingerprintFingerprintNavigatorUserAgentDataBrand",
+    "FingerprintFingerprintPluginsData",
+    "FingerprintFingerprintPluginsDataPlugin",
+    "FingerprintFingerprintPluginsDataPluginMimeType",
+    "FingerprintFingerprintScreen",
+    "FingerprintFingerprintVideoCard",
+    "FingerprintHeaders",
 ]
 
 
-class ProfileDimensions(BaseModel):
+class Dimensions(BaseModel):
     """The dimensions associated with the profile"""
 
     height: float
@@ -40,7 +39,7 @@ class ProfileDimensions(BaseModel):
     width: float
 
 
-class ProfileFingerprintFingerprintBattery(BaseModel):
+class FingerprintFingerprintBattery(BaseModel):
     charging: Optional[bool] = None
 
     charging_time: Optional[float] = FieldInfo(alias="chargingTime", default=None)
@@ -62,7 +61,7 @@ class ProfileFingerprintFingerprintBattery(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintMultimediaDevicesMicro(BaseModel):
+class FingerprintFingerprintMultimediaDevicesMicro(BaseModel):
     device_id: Optional[str] = FieldInfo(alias="deviceId", default=None)
 
     group_id: Optional[str] = FieldInfo(alias="groupId", default=None)
@@ -84,7 +83,7 @@ class ProfileFingerprintFingerprintMultimediaDevicesMicro(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintMultimediaDevicesSpeaker(BaseModel):
+class FingerprintFingerprintMultimediaDevicesSpeaker(BaseModel):
     device_id: Optional[str] = FieldInfo(alias="deviceId", default=None)
 
     group_id: Optional[str] = FieldInfo(alias="groupId", default=None)
@@ -106,7 +105,7 @@ class ProfileFingerprintFingerprintMultimediaDevicesSpeaker(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintMultimediaDevicesWebcam(BaseModel):
+class FingerprintFingerprintMultimediaDevicesWebcam(BaseModel):
     device_id: Optional[str] = FieldInfo(alias="deviceId", default=None)
 
     group_id: Optional[str] = FieldInfo(alias="groupId", default=None)
@@ -128,12 +127,12 @@ class ProfileFingerprintFingerprintMultimediaDevicesWebcam(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintMultimediaDevices(BaseModel):
-    micros: List[ProfileFingerprintFingerprintMultimediaDevicesMicro]
+class FingerprintFingerprintMultimediaDevices(BaseModel):
+    micros: List[FingerprintFingerprintMultimediaDevicesMicro]
 
-    speakers: List[ProfileFingerprintFingerprintMultimediaDevicesSpeaker]
+    speakers: List[FingerprintFingerprintMultimediaDevicesSpeaker]
 
-    webcams: List[ProfileFingerprintFingerprintMultimediaDevicesWebcam]
+    webcams: List[FingerprintFingerprintMultimediaDevicesWebcam]
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -148,7 +147,7 @@ class ProfileFingerprintFingerprintMultimediaDevices(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintNavigatorExtraProperties(BaseModel):
+class FingerprintFingerprintNavigatorExtraProperties(BaseModel):
     global_privacy_control: Optional[bool] = FieldInfo(alias="globalPrivacyControl", default=None)
 
     installed_apps: List[Optional[str]] = FieldInfo(alias="installedApps")
@@ -170,7 +169,7 @@ class ProfileFingerprintFingerprintNavigatorExtraProperties(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintNavigatorUserAgentDataBrand(BaseModel):
+class FingerprintFingerprintNavigatorUserAgentDataBrand(BaseModel):
     brand: Optional[str] = None
 
     version: Optional[str] = None
@@ -188,8 +187,8 @@ class ProfileFingerprintFingerprintNavigatorUserAgentDataBrand(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintNavigatorUserAgentData(BaseModel):
-    brands: List[ProfileFingerprintFingerprintNavigatorUserAgentDataBrand]
+class FingerprintFingerprintNavigatorUserAgentData(BaseModel):
+    brands: List[FingerprintFingerprintNavigatorUserAgentDataBrand]
 
     mobile: Optional[bool] = None
 
@@ -208,7 +207,7 @@ class ProfileFingerprintFingerprintNavigatorUserAgentData(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintNavigator(BaseModel):
+class FingerprintFingerprintNavigator(BaseModel):
     app_code_name: Optional[str] = FieldInfo(alias="appCodeName", default=None)
 
     app_name: Optional[str] = FieldInfo(alias="appName", default=None)
@@ -217,7 +216,7 @@ class ProfileFingerprintFingerprintNavigator(BaseModel):
 
     device_memory: Optional[float] = FieldInfo(alias="deviceMemory", default=None)
 
-    extra_properties: ProfileFingerprintFingerprintNavigatorExtraProperties = FieldInfo(alias="extraProperties")
+    extra_properties: FingerprintFingerprintNavigatorExtraProperties = FieldInfo(alias="extraProperties")
 
     hardware_concurrency: Optional[float] = FieldInfo(alias="hardwareConcurrency", default=None)
 
@@ -237,7 +236,7 @@ class ProfileFingerprintFingerprintNavigator(BaseModel):
 
     user_agent: Optional[str] = FieldInfo(alias="userAgent", default=None)
 
-    user_agent_data: ProfileFingerprintFingerprintNavigatorUserAgentData = FieldInfo(alias="userAgentData")
+    user_agent_data: FingerprintFingerprintNavigatorUserAgentData = FieldInfo(alias="userAgentData")
 
     vendor: Optional[str] = None
 
@@ -260,7 +259,7 @@ class ProfileFingerprintFingerprintNavigator(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintPluginsDataPluginMimeType(BaseModel):
+class FingerprintFingerprintPluginsDataPluginMimeType(BaseModel):
     description: Optional[str] = None
 
     enabled_plugin: Optional[str] = FieldInfo(alias="enabledPlugin", default=None)
@@ -282,12 +281,12 @@ class ProfileFingerprintFingerprintPluginsDataPluginMimeType(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintPluginsDataPlugin(BaseModel):
+class FingerprintFingerprintPluginsDataPlugin(BaseModel):
     description: Optional[str] = None
 
     filename: Optional[str] = None
 
-    mime_types: List[ProfileFingerprintFingerprintPluginsDataPluginMimeType] = FieldInfo(alias="mimeTypes")
+    mime_types: List[FingerprintFingerprintPluginsDataPluginMimeType] = FieldInfo(alias="mimeTypes")
 
     name: Optional[str] = None
 
@@ -304,10 +303,10 @@ class ProfileFingerprintFingerprintPluginsDataPlugin(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintPluginsData(BaseModel):
+class FingerprintFingerprintPluginsData(BaseModel):
     mime_types: List[Optional[str]] = FieldInfo(alias="mimeTypes")
 
-    plugins: List[ProfileFingerprintFingerprintPluginsDataPlugin]
+    plugins: List[FingerprintFingerprintPluginsDataPlugin]
 
     if TYPE_CHECKING:
         # Some versions of Pydantic <2.8.0 have a bug and don’t allow assigning a
@@ -322,7 +321,7 @@ class ProfileFingerprintFingerprintPluginsData(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintScreen(BaseModel):
+class FingerprintFingerprintScreen(BaseModel):
     avail_height: Optional[float] = FieldInfo(alias="availHeight", default=None)
 
     avail_left: Optional[float] = FieldInfo(alias="availLeft", default=None)
@@ -374,7 +373,7 @@ class ProfileFingerprintFingerprintScreen(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprintVideoCard(BaseModel):
+class FingerprintFingerprintVideoCard(BaseModel):
     renderer: Optional[str] = None
 
     vendor: Optional[str] = None
@@ -392,26 +391,26 @@ class ProfileFingerprintFingerprintVideoCard(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintFingerprint(BaseModel):
+class FingerprintFingerprint(BaseModel):
     audio_codecs: Dict[str, Optional[str]] = FieldInfo(alias="audioCodecs")
 
-    battery: ProfileFingerprintFingerprintBattery
+    battery: FingerprintFingerprintBattery
 
     fonts: List[Optional[str]]
 
     mock_web_rtc: Optional[bool] = FieldInfo(alias="mockWebRTC", default=None)
 
-    multimedia_devices: ProfileFingerprintFingerprintMultimediaDevices = FieldInfo(alias="multimediaDevices")
+    multimedia_devices: FingerprintFingerprintMultimediaDevices = FieldInfo(alias="multimediaDevices")
 
-    navigator: ProfileFingerprintFingerprintNavigator
+    navigator: FingerprintFingerprintNavigator
 
-    plugins_data: ProfileFingerprintFingerprintPluginsData = FieldInfo(alias="pluginsData")
+    plugins_data: FingerprintFingerprintPluginsData = FieldInfo(alias="pluginsData")
 
-    screen: ProfileFingerprintFingerprintScreen
+    screen: FingerprintFingerprintScreen
 
     slim: Optional[bool] = None
 
-    video_card: ProfileFingerprintFingerprintVideoCard = FieldInfo(alias="videoCard")
+    video_card: FingerprintFingerprintVideoCard = FieldInfo(alias="videoCard")
 
     video_codecs: Dict[str, Optional[str]] = FieldInfo(alias="videoCodecs")
 
@@ -428,7 +427,7 @@ class ProfileFingerprintFingerprint(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprintHeaders(BaseModel):
+class FingerprintHeaders(BaseModel):
     user_agent: Optional[str] = FieldInfo(alias="user-agent", default=None)
 
     accept: Optional[str] = None
@@ -468,15 +467,15 @@ class ProfileFingerprintHeaders(BaseModel):
         __pydantic_extra__: Dict[str, object]
 
 
-class ProfileFingerprint(BaseModel):
+class Fingerprint(BaseModel):
     """The fingerprint associated with the profile"""
 
-    fingerprint: ProfileFingerprintFingerprint
+    fingerprint: FingerprintFingerprint
 
-    headers: ProfileFingerprintHeaders
+    headers: FingerprintHeaders
 
 
-class Profile(BaseModel):
+class ProfileGetResponse(BaseModel):
     id: str
     """The unique identifier for the profile"""
 
@@ -486,13 +485,13 @@ class Profile(BaseModel):
     credentials_config: object = FieldInfo(alias="credentialsConfig")
     """The credentials configuration associated with the profile"""
 
-    dimensions: Optional[ProfileDimensions] = None
+    dimensions: Optional[Dimensions] = None
     """The dimensions associated with the profile"""
 
     extension_ids: Optional[List[str]] = FieldInfo(alias="extensionIds", default=None)
     """The extension IDs associated with the profile"""
 
-    fingerprint: Optional[ProfileFingerprint] = None
+    fingerprint: Optional[Fingerprint] = None
     """The fingerprint associated with the profile"""
 
     source_session_id: Optional[str] = FieldInfo(alias="sourceSessionId", default=None)
@@ -509,11 +508,3 @@ class Profile(BaseModel):
 
     user_agent: Optional[str] = FieldInfo(alias="userAgent", default=None)
     """The user agent associated with the profile"""
-
-
-class ProfileListResponse(BaseModel):
-    count: float
-    """The total number of profiles"""
-
-    profiles: List[Profile]
-    """The list of profiles"""

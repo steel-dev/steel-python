@@ -20,6 +20,8 @@ __all__ = [
 
 
 class CookiePartitionKey(BaseModel):
+    """The partition key of the cookie"""
+
     has_cross_site_ancestor: bool = FieldInfo(alias="hasCrossSiteAncestor")
     """
     Indicates if the cookie has any ancestors that are cross-site to the
@@ -98,11 +100,11 @@ class IndexedDBDataRecordBlobFile(BaseModel):
 
 
 class IndexedDBDataRecord(BaseModel):
+    key: object
+
+    value: object
+
     blob_files: Optional[List[IndexedDBDataRecordBlobFile]] = FieldInfo(alias="blobFiles", default=None)
-
-    key: Optional[object] = None
-
-    value: Optional[object] = None
 
 
 class IndexedDBData(BaseModel):
@@ -122,6 +124,8 @@ class IndexedDB(BaseModel):
 
 
 class SessionContext(BaseModel):
+    """Session context data returned from a browser session."""
+
     cookies: Optional[List[Cookie]] = None
     """Cookies to initialize in the session"""
 

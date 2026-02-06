@@ -20,6 +20,8 @@ __all__ = [
 
 
 class SessionDimensions(BaseModel):
+    """Viewport and browser window dimensions for the session"""
+
     height: int
     """Height of the browser window"""
 
@@ -28,6 +30,8 @@ class SessionDimensions(BaseModel):
 
 
 class SessionOptimizeBandwidth(BaseModel):
+    """Bandwidth optimizations that were applied to the session."""
+
     block_hosts: Optional[List[str]] = FieldInfo(alias="blockHosts", default=None)
 
     block_images: Optional[bool] = FieldInfo(alias="blockImages", default=None)
@@ -40,6 +44,11 @@ class SessionOptimizeBandwidth(BaseModel):
 
 
 class SessionDebugConfig(BaseModel):
+    """Configuration for the debug URL and session viewer.
+
+    Controls interaction capabilities and cursor visibility.
+    """
+
     interactive: Optional[bool] = None
     """Whether interaction is allowed via the debug URL viewer.
 
@@ -54,10 +63,20 @@ class SessionDebugConfig(BaseModel):
 
 
 class SessionDeviceConfig(BaseModel):
+    """Device configuration for the session"""
+
     device: Optional[Literal["desktop", "mobile"]] = None
 
 
 class SessionStealthConfig(BaseModel):
+    """Stealth configuration for the session"""
+
+    auto_captcha_solving: Optional[bool] = FieldInfo(alias="autoCaptchaSolving", default=None)
+    """When true, captchas will be automatically solved when detected.
+
+    When false, use the solve endpoints to manually initiate solving.
+    """
+
     humanize_interactions: Optional[bool] = FieldInfo(alias="humanizeInteractions", default=None)
     """
     This flag will make the browser act more human-like by moving the mouse in a
@@ -69,6 +88,10 @@ class SessionStealthConfig(BaseModel):
 
 
 class Session(BaseModel):
+    """
+    Represents the data structure for a browser session, including its configuration and status.
+    """
+
     id: str
     """Unique identifier for the session"""
 
@@ -146,5 +169,13 @@ class Session(BaseModel):
 
 
 class Sessionslist(BaseModel):
+    """Response containing a list of browser sessions with pagination details."""
+
+    next_cursor: Optional[str] = FieldInfo(alias="nextCursor", default=None)
+    """Cursor for the next page of results. Null if no more pages."""
+
     sessions: List[Session]
     """List of browser sessions"""
+
+    total_count: int = FieldInfo(alias="totalCount")
+    """Total number of sessions matching the query"""

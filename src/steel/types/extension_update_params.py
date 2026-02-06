@@ -4,11 +4,13 @@ from __future__ import annotations
 
 from typing_extensions import TypedDict
 
+from .._types import FileTypes
+
 __all__ = ["ExtensionUpdateParams"]
 
 
 class ExtensionUpdateParams(TypedDict, total=False):
-    file: object
+    file: FileTypes
     """Extension .zip/.crx file"""
 
     url: str

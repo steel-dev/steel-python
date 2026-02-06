@@ -19,7 +19,7 @@ class ClientScreenshotParams(TypedDict, total=False):
     full_page: Annotated[bool, PropertyInfo(alias="fullPage")]
     """Capture the full page screenshot. Default is `false`."""
 
-    region: str
+    region: object
     """The desired region for the action to be performed in"""
 
     use_proxy: Annotated[bool, PropertyInfo(alias="useProxy")]

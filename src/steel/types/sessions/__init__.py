@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from .file_upload_params import FileUploadParams as FileUploadParams
+from .captcha_solve_params import CaptchaSolveParams as CaptchaSolveParams
+from .captcha_solve_response import CaptchaSolveResponse as CaptchaSolveResponse
 from .captcha_status_response import CaptchaStatusResponse as CaptchaStatusResponse
 from .captcha_solve_image_params import CaptchaSolveImageParams as CaptchaSolveImageParams
 from .captcha_solve_image_response import CaptchaSolveImageResponse as CaptchaSolveImageResponse

@@ -37,7 +37,7 @@ class TestSessions:
     def test_method_create_with_all_params(self, client: Steel) -> None:
         session = client.sessions.create(
             block_ads=True,
-            concurrency=0,
+            concurrency=-9007199254740991,
             credentials={
                 "auto_submit": True,
                 "blur_fields": True,
@@ -49,8 +49,8 @@ class TestSessions:
             },
             device_config={"device": "desktop"},
             dimensions={
-                "height": 0,
-                "width": 0,
+                "height": -9007199254740991,
+                "width": -9007199254740991,
             },
             extension_ids=["string"],
             headless=True,
@@ -60,7 +60,7 @@ class TestSessions:
             persist_profile=True,
             profile_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
-            region="region",
+            region={},
             session_context={
                 "cookies": [
                     {
@@ -95,6 +95,8 @@ class TestSessions:
                                     "name": "name",
                                     "records": [
                                         {
+                                            "key": {},
+                                            "value": {},
                                             "blob_files": [
                                                 {
                                                     "blob_number": 0,
@@ -105,8 +107,6 @@ class TestSessions:
                                                     "path": "path",
                                                 }
                                             ],
-                                            "key": {},
-                                            "value": {},
                                         }
                                     ],
                                 }
@@ -121,10 +121,11 @@ class TestSessions:
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
             stealth_config={
+                "auto_captcha_solving": True,
                 "humanize_interactions": True,
                 "skip_fingerprint_injection": True,
             },
-            api_timeout=0,
+            api_timeout=-9007199254740991,
             use_proxy=True,
             user_agent="userAgent",
         )
@@ -197,7 +198,7 @@ class TestSessions:
     def test_method_list_with_all_params(self, client: Steel) -> None:
         session = client.sessions.list(
             cursor_id="cursorId",
-            limit=0,
+            limit=1,
             status="live",
         )
         assert_matches_type(SyncSessionsCursor[SessionslistSession], session, path=["response"])
@@ -897,7 +898,7 @@ class TestAsyncSessions:
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.create(
             block_ads=True,
-            concurrency=0,
+            concurrency=-9007199254740991,
             credentials={
                 "auto_submit": True,
                 "blur_fields": True,
@@ -909,8 +910,8 @@ class TestAsyncSessions:
             },
             device_config={"device": "desktop"},
             dimensions={
-                "height": 0,
-                "width": 0,
+                "height": -9007199254740991,
+                "width": -9007199254740991,
             },
             extension_ids=["string"],
             headless=True,
@@ -920,7 +921,7 @@ class TestAsyncSessions:
             persist_profile=True,
             profile_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
-            region="region",
+            region={},
             session_context={
                 "cookies": [
                     {
@@ -955,6 +956,8 @@ class TestAsyncSessions:
                                     "name": "name",
                                     "records": [
                                         {
+                                            "key": {},
+                                            "value": {},
                                             "blob_files": [
                                                 {
                                                     "blob_number": 0,
@@ -965,8 +968,6 @@ class TestAsyncSessions:
                                                     "path": "path",
                                                 }
                                             ],
-                                            "key": {},
-                                            "value": {},
                                         }
                                     ],
                                 }
@@ -981,10 +982,11 @@ class TestAsyncSessions:
             session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             solve_captcha=True,
             stealth_config={
+                "auto_captcha_solving": True,
                 "humanize_interactions": True,
                 "skip_fingerprint_injection": True,
             },
-            api_timeout=0,
+            api_timeout=-9007199254740991,
             use_proxy=True,
             user_agent="userAgent",
         )
@@ -1057,7 +1059,7 @@ class TestAsyncSessions:
     async def test_method_list_with_all_params(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.list(
             cursor_id="cursorId",
-            limit=0,
+            limit=1,
             status="live",
         )
         assert_matches_type(AsyncSessionsCursor[SessionslistSession], session, path=["response"])

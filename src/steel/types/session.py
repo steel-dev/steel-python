@@ -12,6 +12,8 @@ __all__ = ["Session", "Dimensions", "OptimizeBandwidth", "DebugConfig", "DeviceC
 
 
 class Dimensions(BaseModel):
+    """Viewport and browser window dimensions for the session"""
+
     height: int
     """Height of the browser window"""
 
@@ -20,6 +22,8 @@ class Dimensions(BaseModel):
 
 
 class OptimizeBandwidth(BaseModel):
+    """Bandwidth optimizations that were applied to the session."""
+
     block_hosts: Optional[List[str]] = FieldInfo(alias="blockHosts", default=None)
 
     block_images: Optional[bool] = FieldInfo(alias="blockImages", default=None)
@@ -32,6 +36,11 @@ class OptimizeBandwidth(BaseModel):
 
 
 class DebugConfig(BaseModel):
+    """Configuration for the debug URL and session viewer.
+
+    Controls interaction capabilities and cursor visibility.
+    """
+
     interactive: Optional[bool] = None
     """Whether interaction is allowed via the debug URL viewer.
 
@@ -46,10 +55,20 @@ class DebugConfig(BaseModel):
 
 
 class DeviceConfig(BaseModel):
+    """Device configuration for the session"""
+
     device: Optional[Literal["desktop", "mobile"]] = None
 
 
 class StealthConfig(BaseModel):
+    """Stealth configuration for the session"""
+
+    auto_captcha_solving: Optional[bool] = FieldInfo(alias="autoCaptchaSolving", default=None)
+    """When true, captchas will be automatically solved when detected.
+
+    When false, use the solve endpoints to manually initiate solving.
+    """
+
     humanize_interactions: Optional[bool] = FieldInfo(alias="humanizeInteractions", default=None)
     """
     This flag will make the browser act more human-like by moving the mouse in a
@@ -61,6 +80,10 @@ class StealthConfig(BaseModel):
 
 
 class Session(BaseModel):
+    """
+    Represents the data structure for a browser session, including its configuration and status.
+    """
+
     id: str
     """Unique identifier for the session"""
 

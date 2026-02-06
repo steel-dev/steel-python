@@ -96,7 +96,7 @@ class SessionCreateParams(TypedDict, total=False):
     proxy. Format: http(s)://username:password@hostname:port
     """
 
-    region: str
+    region: object
     """The desired region for the session to be started in.
 
     Available regions are lax, ord, iad
@@ -121,16 +121,15 @@ class SessionCreateParams(TypedDict, total=False):
     """Session timeout duration in milliseconds. Default is 300000 (5 minutes)."""
 
     use_proxy: Annotated[UseProxy, PropertyInfo(alias="useProxy")]
-    """Proxy configuration for the session.
-
-    Can be a boolean or array of proxy configurations
-    """
+    """Simple boolean to enable/disable Steel proxies"""
 
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
     """Custom user agent string for the browser session"""
 
 
 class Credentials(TypedDict, total=False):
+    """Configuration for session credentials"""
+
     auto_submit: Annotated[bool, PropertyInfo(alias="autoSubmit")]
 
     blur_fields: Annotated[bool, PropertyInfo(alias="blurFields")]
@@ -139,6 +138,11 @@ class Credentials(TypedDict, total=False):
 
 
 class DebugConfig(TypedDict, total=False):
+    """Configuration for the debug URL and session viewer.
+
+    Controls interaction capabilities, cursor visibility, and other debug-related settings.
+    """
+
     interactive: bool
     """Allow interaction with the browser session via the debug URL viewer.
 
@@ -154,10 +158,17 @@ class DebugConfig(TypedDict, total=False):
 
 
 class DeviceConfig(TypedDict, total=False):
+    """Device configuration for the session.
+
+    Specify 'mobile' for mobile device fingerprints and configurations.
+    """
+
     device: Literal["desktop", "mobile"]
 
 
 class Dimensions(TypedDict, total=False):
+    """Viewport and browser window dimensions for the session"""
+
     height: Required[int]
     """Height of the session"""
 
@@ -181,6 +192,8 @@ OptimizeBandwidth: TypeAlias = Union[bool, OptimizeBandwidthUnionMember1]
 
 
 class SessionContextCookiePartitionKey(TypedDict, total=False):
+    """The partition key of the cookie"""
+
     has_cross_site_ancestor: Required[Annotated[bool, PropertyInfo(alias="hasCrossSiteAncestor")]]
     """
     Indicates if the cookie has any ancestors that are cross-site to the
@@ -259,11 +272,11 @@ class SessionContextIndexedDBDataRecordBlobFile(TypedDict, total=False):
 
 
 class SessionContextIndexedDBDataRecord(TypedDict, total=False):
+    key: Required[object]
+
+    value: Required[object]
+
     blob_files: Annotated[Iterable[SessionContextIndexedDBDataRecordBlobFile], PropertyInfo(alias="blobFiles")]
-
-    key: object
-
-    value: object
 
 
 class SessionContextIndexedDBData(TypedDict, total=False):
@@ -283,6 +296,11 @@ class SessionContextIndexedDB(TypedDict, total=False):
 
 
 class SessionContext(TypedDict, total=False):
+    """Session context data to be used in the created session.
+
+    Sessions will start with an empty context by default.
+    """
+
     cookies: Iterable[SessionContextCookie]
     """Cookies to initialize in the session"""
 
@@ -297,6 +315,14 @@ class SessionContext(TypedDict, total=False):
 
 
 class StealthConfig(TypedDict, total=False):
+    """Stealth configuration for the session"""
+
+    auto_captcha_solving: Annotated[bool, PropertyInfo(alias="autoCaptchaSolving")]
+    """When true, captchas will be automatically solved when detected.
+
+    When false, use the solve endpoints to manually initiate solving.
+    """
+
     humanize_interactions: Annotated[bool, PropertyInfo(alias="humanizeInteractions")]
     """
     This flag will make the browser act more human-like by moving the mouse in a
@@ -308,6 +334,8 @@ class StealthConfig(TypedDict, total=False):
 
 
 class UseProxyGeolocationGeolocation(TypedDict, total=False):
+    """Geographic location for the proxy"""
+
     country: Required[
         Literal[
             "US",

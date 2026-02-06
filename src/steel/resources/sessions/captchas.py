@@ -15,7 +15,8 @@ from ..._response import (
     async_to_streamed_response_wrapper,
 )
 from ..._base_client import make_request_options
-from ...types.sessions import captcha_solve_image_params
+from ...types.sessions import captcha_solve_params, captcha_solve_image_params
+from ...types.sessions.captcha_solve_response import CaptchaSolveResponse
 from ...types.sessions.captcha_status_response import CaptchaStatusResponse
 from ...types.sessions.captcha_solve_image_response import CaptchaSolveImageResponse
 
@@ -41,6 +42,59 @@ class CaptchasResource(SyncAPIResource):
         For more information, see https://www.github.com/steel-dev/steel-python#with_streaming_response
         """
         return CaptchasResourceWithStreamingResponse(self)
+
+    def solve(
+        self,
+        session_id: str,
+        *,
+        page_id: str | Omit = omit,
+        task_id: str | Omit = omit,
+        url: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> CaptchaSolveResponse:
+        """Solves captcha(s) for the session.
+
+        If pageId, url, or taskId is provided, solves
+        that specific captcha. If no parameters are provided, solves all detected
+        captchas. Use this when autoCaptchaSolving is disabled in stealthConfig.
+
+        Args:
+          page_id: The page ID where the captcha is located
+
+          task_id: The task ID of the specific captcha to solve
+
+          url: The URL where the captcha is located
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not session_id:
+            raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
+        return self._post(
+            f"/v1/sessions/{session_id}/captchas/solve",
+            body=maybe_transform(
+                {
+                    "page_id": page_id,
+                    "task_id": task_id,
+                    "url": url,
+                },
+                captcha_solve_params.CaptchaSolveParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CaptchaSolveResponse,
+        )
 
     def solve_image(
         self,
@@ -146,6 +200,59 @@ class AsyncCaptchasResource(AsyncAPIResource):
         """
         return AsyncCaptchasResourceWithStreamingResponse(self)
 
+    async def solve(
+        self,
+        session_id: str,
+        *,
+        page_id: str | Omit = omit,
+        task_id: str | Omit = omit,
+        url: str | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> CaptchaSolveResponse:
+        """Solves captcha(s) for the session.
+
+        If pageId, url, or taskId is provided, solves
+        that specific captcha. If no parameters are provided, solves all detected
+        captchas. Use this when autoCaptchaSolving is disabled in stealthConfig.
+
+        Args:
+          page_id: The page ID where the captcha is located
+
+          task_id: The task ID of the specific captcha to solve
+
+          url: The URL where the captcha is located
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not session_id:
+            raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
+        return await self._post(
+            f"/v1/sessions/{session_id}/captchas/solve",
+            body=await async_maybe_transform(
+                {
+                    "page_id": page_id,
+                    "task_id": task_id,
+                    "url": url,
+                },
+                captcha_solve_params.CaptchaSolveParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CaptchaSolveResponse,
+        )
+
     async def solve_image(
         self,
         session_id: str,
@@ -234,6 +341,9 @@ class CaptchasResourceWithRawResponse:
     def __init__(self, captchas: CaptchasResource) -> None:
         self._captchas = captchas
 
+        self.solve = to_raw_response_wrapper(
+            captchas.solve,
+        )
         self.solve_image = to_raw_response_wrapper(
             captchas.solve_image,
         )
@@ -246,6 +356,9 @@ class AsyncCaptchasResourceWithRawResponse:
     def __init__(self, captchas: AsyncCaptchasResource) -> None:
         self._captchas = captchas
 
+        self.solve = async_to_raw_response_wrapper(
+            captchas.solve,
+        )
         self.solve_image = async_to_raw_response_wrapper(
             captchas.solve_image,
         )
@@ -258,6 +371,9 @@ class CaptchasResourceWithStreamingResponse:
     def __init__(self, captchas: CaptchasResource) -> None:
         self._captchas = captchas
 
+        self.solve = to_streamed_response_wrapper(
+            captchas.solve,
+        )
         self.solve_image = to_streamed_response_wrapper(
             captchas.solve_image,
         )
@@ -270,6 +386,9 @@ class AsyncCaptchasResourceWithStreamingResponse:
     def __init__(self, captchas: AsyncCaptchasResource) -> None:
         self._captchas = captchas
 
+        self.solve = async_to_streamed_response_wrapper(
+            captchas.solve,
+        )
         self.solve_image = async_to_streamed_response_wrapper(
             captchas.solve_image,
         )

@@ -140,20 +140,24 @@ class TestFiles:
 
     @parametrize
     def test_method_upload(self, client: Steel) -> None:
-        file = client.files.upload()
+        file = client.files.upload(
+            file=b"raw file contents",
+        )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     def test_method_upload_with_all_params(self, client: Steel) -> None:
         file = client.files.upload(
-            file={},
+            file=b"raw file contents",
             path="path",
         )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     def test_raw_response_upload(self, client: Steel) -> None:
-        response = client.files.with_raw_response.upload()
+        response = client.files.with_raw_response.upload(
+            file=b"raw file contents",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -162,7 +166,9 @@ class TestFiles:
 
     @parametrize
     def test_streaming_response_upload(self, client: Steel) -> None:
-        with client.files.with_streaming_response.upload() as response:
+        with client.files.with_streaming_response.upload(
+            file=b"raw file contents",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -292,20 +298,24 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_method_upload(self, async_client: AsyncSteel) -> None:
-        file = await async_client.files.upload()
+        file = await async_client.files.upload(
+            file=b"raw file contents",
+        )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     async def test_method_upload_with_all_params(self, async_client: AsyncSteel) -> None:
         file = await async_client.files.upload(
-            file={},
+            file=b"raw file contents",
             path="path",
         )
         assert_matches_type(File, file, path=["response"])
 
     @parametrize
     async def test_raw_response_upload(self, async_client: AsyncSteel) -> None:
-        response = await async_client.files.with_raw_response.upload()
+        response = await async_client.files.with_raw_response.upload(
+            file=b"raw file contents",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -314,7 +324,9 @@ class TestAsyncFiles:
 
     @parametrize
     async def test_streaming_response_upload(self, async_client: AsyncSteel) -> None:
-        async with async_client.files.with_streaming_response.upload() as response:
+        async with async_client.files.with_streaming_response.upload(
+            file=b"raw file contents",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

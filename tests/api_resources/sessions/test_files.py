@@ -263,6 +263,7 @@ class TestFiles:
     def test_method_upload(self, client: Steel) -> None:
         file = client.sessions.files.upload(
             session_id="sessionId",
+            file=b"raw file contents",
         )
         assert_matches_type(File, file, path=["response"])
 
@@ -270,7 +271,7 @@ class TestFiles:
     def test_method_upload_with_all_params(self, client: Steel) -> None:
         file = client.sessions.files.upload(
             session_id="sessionId",
-            file={},
+            file=b"raw file contents",
             path="path",
         )
         assert_matches_type(File, file, path=["response"])
@@ -279,6 +280,7 @@ class TestFiles:
     def test_raw_response_upload(self, client: Steel) -> None:
         response = client.sessions.files.with_raw_response.upload(
             session_id="sessionId",
+            file=b"raw file contents",
         )
 
         assert response.is_closed is True
@@ -290,6 +292,7 @@ class TestFiles:
     def test_streaming_response_upload(self, client: Steel) -> None:
         with client.sessions.files.with_streaming_response.upload(
             session_id="sessionId",
+            file=b"raw file contents",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -304,6 +307,7 @@ class TestFiles:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
             client.sessions.files.with_raw_response.upload(
                 session_id="",
+                file=b"raw file contents",
             )
 
 
@@ -550,6 +554,7 @@ class TestAsyncFiles:
     async def test_method_upload(self, async_client: AsyncSteel) -> None:
         file = await async_client.sessions.files.upload(
             session_id="sessionId",
+            file=b"raw file contents",
         )
         assert_matches_type(File, file, path=["response"])
 
@@ -557,7 +562,7 @@ class TestAsyncFiles:
     async def test_method_upload_with_all_params(self, async_client: AsyncSteel) -> None:
         file = await async_client.sessions.files.upload(
             session_id="sessionId",
-            file={},
+            file=b"raw file contents",
             path="path",
         )
         assert_matches_type(File, file, path=["response"])
@@ -566,6 +571,7 @@ class TestAsyncFiles:
     async def test_raw_response_upload(self, async_client: AsyncSteel) -> None:
         response = await async_client.sessions.files.with_raw_response.upload(
             session_id="sessionId",
+            file=b"raw file contents",
         )
 
         assert response.is_closed is True
@@ -577,6 +583,7 @@ class TestAsyncFiles:
     async def test_streaming_response_upload(self, async_client: AsyncSteel) -> None:
         async with async_client.sessions.files.with_streaming_response.upload(
             session_id="sessionId",
+            file=b"raw file contents",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -591,4 +598,5 @@ class TestAsyncFiles:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `session_id` but received ''"):
             await async_client.sessions.files.with_raw_response.upload(
                 session_id="",
+                file=b"raw file contents",
             )

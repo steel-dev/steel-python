@@ -93,7 +93,7 @@ class SessionsResource(SyncAPIResource):
         persist_profile: bool | Omit = omit,
         profile_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
-        region: str | Omit = omit,
+        region: object | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
         session_id: str | Omit = omit,
         solve_captcha: bool | Omit = omit,
@@ -161,8 +161,7 @@ class SessionsResource(SyncAPIResource):
 
           api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
-          use_proxy: Proxy configuration for the session. Can be a boolean or array of proxy
-              configurations
+          use_proxy: Simple boolean to enable/disable Steel proxies
 
           user_agent: Custom user agent string for the browser session
 
@@ -261,7 +260,7 @@ class SessionsResource(SyncAPIResource):
         Args:
           cursor_id: Cursor ID for pagination
 
-          limit: Number of sessions to return. Default is 50.
+          limit: Number of sessions to return. Default is 50, max is 100.
 
           status: Filter sessions by current status
 
@@ -877,7 +876,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         persist_profile: bool | Omit = omit,
         profile_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
-        region: str | Omit = omit,
+        region: object | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
         session_id: str | Omit = omit,
         solve_captcha: bool | Omit = omit,
@@ -945,8 +944,7 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           api_timeout: Session timeout duration in milliseconds. Default is 300000 (5 minutes).
 
-          use_proxy: Proxy configuration for the session. Can be a boolean or array of proxy
-              configurations
+          use_proxy: Simple boolean to enable/disable Steel proxies
 
           user_agent: Custom user agent string for the browser session
 
@@ -1045,7 +1043,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         Args:
           cursor_id: Cursor ID for pagination
 
-          limit: Number of sessions to return. Default is 50.
+          limit: Number of sessions to return. Default is 50, max is 100.
 
           status: Filter sessions by current status
 
