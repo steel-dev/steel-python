@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.16.1 (2026-02-13)
+
+Full Changelog: [v0.16.0...v0.16.1](https://github.com/steel-dev/steel-python/compare/v0.16.0...v0.16.1)
+
+### Chores
+
+* format all `api.md` files ([99ec714](https://github.com/steel-dev/steel-python/commit/99ec714917e3375108409099c28ce0a8efc2171e))
+* **internal:** bump dependencies ([d04a927](https://github.com/steel-dev/steel-python/commit/d04a92742a449ee597cc68b2312e90a835f9e8b2))
+* **internal:** fix lint error on Python 3.14 ([5bfdbc9](https://github.com/steel-dev/steel-python/commit/5bfdbc994392efd19eb97b366113416dddb4eb69))
+
 ## 0.16.0 (2026-02-06)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/steel-dev/steel-python/compare/v0.15.0...v0.16.0)
