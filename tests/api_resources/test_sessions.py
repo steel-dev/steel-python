@@ -747,14 +747,24 @@ class TestSessions:
     @parametrize
     def test_method_events(self, client: Steel) -> None:
         session = client.sessions.events(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(SessionEventsResponse, session, path=["response"])
+
+    @parametrize
+    def test_method_events_with_all_params(self, client: Steel) -> None:
+        session = client.sessions.events(
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            compressed=True,
+            limit=-9007199254740991,
+            pointer="pointer",
         )
         assert_matches_type(SessionEventsResponse, session, path=["response"])
 
     @parametrize
     def test_raw_response_events(self, client: Steel) -> None:
         response = client.sessions.with_raw_response.events(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -765,7 +775,7 @@ class TestSessions:
     @parametrize
     def test_streaming_response_events(self, client: Steel) -> None:
         with client.sessions.with_streaming_response.events(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -779,7 +789,7 @@ class TestSessions:
     def test_path_params_events(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             client.sessions.with_raw_response.events(
-                "",
+                id="",
             )
 
     @parametrize
@@ -1608,14 +1618,24 @@ class TestAsyncSessions:
     @parametrize
     async def test_method_events(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.events(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(SessionEventsResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_events_with_all_params(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.events(
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            compressed=True,
+            limit=-9007199254740991,
+            pointer="pointer",
         )
         assert_matches_type(SessionEventsResponse, session, path=["response"])
 
     @parametrize
     async def test_raw_response_events(self, async_client: AsyncSteel) -> None:
         response = await async_client.sessions.with_raw_response.events(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -1626,7 +1646,7 @@ class TestAsyncSessions:
     @parametrize
     async def test_streaming_response_events(self, async_client: AsyncSteel) -> None:
         async with async_client.sessions.with_streaming_response.events(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -1640,7 +1660,7 @@ class TestAsyncSessions:
     async def test_path_params_events(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             await async_client.sessions.with_raw_response.events(
-                "",
+                id="",
             )
 
     @parametrize

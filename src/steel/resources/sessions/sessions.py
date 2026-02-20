@@ -15,7 +15,7 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from ...types import session_list_params, session_create_params, session_computer_params
+from ...types import session_list_params, session_create_params, session_events_params, session_computer_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import required_args, maybe_transform, async_maybe_transform
 from .captchas import (
@@ -716,6 +716,9 @@ class SessionsResource(SyncAPIResource):
         self,
         id: str,
         *,
+        compressed: bool | Omit = omit,
+        limit: int | Omit = omit,
+        pointer: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -727,6 +730,12 @@ class SessionsResource(SyncAPIResource):
         This endpoint allows you to get the recorded session events in the RRWeb format
 
         Args:
+          compressed: Compress the events
+
+          limit: Optional pagination limit
+
+          pointer: Pagination pointer
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -740,7 +749,18 @@ class SessionsResource(SyncAPIResource):
         return self._get(
             f"/v1/sessions/{id}/events",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "compressed": compressed,
+                        "limit": limit,
+                        "pointer": pointer,
+                    },
+                    session_events_params.SessionEventsParams,
+                ),
             ),
             cast_to=SessionEventsResponse,
         )
@@ -1499,6 +1519,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         self,
         id: str,
         *,
+        compressed: bool | Omit = omit,
+        limit: int | Omit = omit,
+        pointer: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1510,6 +1533,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         This endpoint allows you to get the recorded session events in the RRWeb format
 
         Args:
+          compressed: Compress the events
+
+          limit: Optional pagination limit
+
+          pointer: Pagination pointer
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1523,7 +1552,18 @@ class AsyncSessionsResource(AsyncAPIResource):
         return await self._get(
             f"/v1/sessions/{id}/events",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "compressed": compressed,
+                        "limit": limit,
+                        "pointer": pointer,
+                    },
+                    session_events_params.SessionEventsParams,
+                ),
             ),
             cast_to=SessionEventsResponse,
         )
