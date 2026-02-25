@@ -734,7 +734,7 @@ class SessionsResource(SyncAPIResource):
 
           limit: Optional pagination limit
 
-          pointer: Pagination pointer
+          pointer: Opaque pagination token. Pass the Next-Cursor header value to get the next page.
 
           extra_headers: Send extra headers
 
@@ -1537,7 +1537,7 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           limit: Optional pagination limit
 
-          pointer: Pagination pointer
+          pointer: Opaque pagination token. Pass the Next-Cursor header value to get the next page.
 
           extra_headers: Send extra headers
 

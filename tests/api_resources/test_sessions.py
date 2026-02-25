@@ -756,7 +756,7 @@ class TestSessions:
         session = client.sessions.events(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             compressed=True,
-            limit=-9007199254740991,
+            limit=1,
             pointer="pointer",
         )
         assert_matches_type(SessionEventsResponse, session, path=["response"])
@@ -1627,7 +1627,7 @@ class TestAsyncSessions:
         session = await async_client.sessions.events(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             compressed=True,
-            limit=-9007199254740991,
+            limit=1,
             pointer="pointer",
         )
         assert_matches_type(SessionEventsResponse, session, path=["response"])
