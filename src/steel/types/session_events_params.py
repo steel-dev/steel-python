@@ -15,4 +15,7 @@ class SessionEventsParams(TypedDict, total=False):
     """Optional pagination limit"""
 
     pointer: str
-    """Pagination pointer"""
+    """Opaque pagination token.
+
+    Pass the Next-Cursor header value to get the next page.
+    """
