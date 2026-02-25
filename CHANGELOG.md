@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.17.0 (2026-02-25)
+
+Full Changelog: [v0.16.0...v0.17.0](https://github.com/steel-dev/steel-python/compare/v0.16.0...v0.17.0)
+
+### Features
+
+* **api:** api update ([bfcb31e](https://github.com/steel-dev/steel-python/commit/bfcb31ebdff79c4115bc2bb6c4f7e0c48a55f469))
+* **api:** api update ([20160d0](https://github.com/steel-dev/steel-python/commit/20160d01b7660dc2b3856a2069d3fe3bde7ad2c0))
+
+
+### Chores
+
+* format all `api.md` files ([99ec714](https://github.com/steel-dev/steel-python/commit/99ec714917e3375108409099c28ce0a8efc2171e))
+* **internal:** add request options to SSE classes ([5e72d8e](https://github.com/steel-dev/steel-python/commit/5e72d8e76a7e017a7611d87d3b49a1d7e25cd21e))
+* **internal:** bump dependencies ([d04a927](https://github.com/steel-dev/steel-python/commit/d04a92742a449ee597cc68b2312e90a835f9e8b2))
+* **internal:** fix lint error on Python 3.14 ([5bfdbc9](https://github.com/steel-dev/steel-python/commit/5bfdbc994392efd19eb97b366113416dddb4eb69))
+* **internal:** make `test_proxy_environment_variables` more resilient ([2e233ea](https://github.com/steel-dev/steel-python/commit/2e233ea37507adb2f05b4419ef0e8fd1932f6ba4))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([8b312f4](https://github.com/steel-dev/steel-python/commit/8b312f41858a4abf129a5e5da1ed75d5cddffe16))
+* update mock server docs ([98b44de](https://github.com/steel-dev/steel-python/commit/98b44de2a1a0eb2f17878fe3d01a2b45d5d0ded5))
+
 ## 0.16.0 (2026-02-06)
 
 Full Changelog: [v0.15.0...v0.16.0](https://github.com/steel-dev/steel-python/compare/v0.15.0...v0.16.0)
