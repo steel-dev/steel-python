@@ -25,14 +25,14 @@ class TestProfiles:
     @parametrize
     def test_method_create(self, client: Steel) -> None:
         profile = client.profiles.create(
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         )
         assert_matches_type(ProfileCreateResponse, profile, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Steel) -> None:
         profile = client.profiles.create(
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
             dimensions={
                 "height": 0,
                 "width": 0,
@@ -45,7 +45,7 @@ class TestProfiles:
     @parametrize
     def test_raw_response_create(self, client: Steel) -> None:
         response = client.profiles.with_raw_response.create(
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         )
 
         assert response.is_closed is True
@@ -56,7 +56,7 @@ class TestProfiles:
     @parametrize
     def test_streaming_response_create(self, client: Steel) -> None:
         with client.profiles.with_streaming_response.create(
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -70,7 +70,7 @@ class TestProfiles:
     def test_method_update(self, client: Steel) -> None:
         profile = client.profiles.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         )
         assert_matches_type(ProfileUpdateResponse, profile, path=["response"])
 
@@ -78,7 +78,7 @@ class TestProfiles:
     def test_method_update_with_all_params(self, client: Steel) -> None:
         profile = client.profiles.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
             dimensions={
                 "height": 0,
                 "width": 0,
@@ -92,7 +92,7 @@ class TestProfiles:
     def test_raw_response_update(self, client: Steel) -> None:
         response = client.profiles.with_raw_response.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         )
 
         assert response.is_closed is True
@@ -104,7 +104,7 @@ class TestProfiles:
     def test_streaming_response_update(self, client: Steel) -> None:
         with client.profiles.with_streaming_response.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -119,7 +119,7 @@ class TestProfiles:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             client.profiles.with_raw_response.update(
                 id="",
-                user_data_dir=b"raw file contents",
+                user_data_dir=b"Example data",
             )
 
     @parametrize
@@ -194,14 +194,14 @@ class TestAsyncProfiles:
     @parametrize
     async def test_method_create(self, async_client: AsyncSteel) -> None:
         profile = await async_client.profiles.create(
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         )
         assert_matches_type(ProfileCreateResponse, profile, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         profile = await async_client.profiles.create(
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
             dimensions={
                 "height": 0,
                 "width": 0,
@@ -214,7 +214,7 @@ class TestAsyncProfiles:
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSteel) -> None:
         response = await async_client.profiles.with_raw_response.create(
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         )
 
         assert response.is_closed is True
@@ -225,7 +225,7 @@ class TestAsyncProfiles:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSteel) -> None:
         async with async_client.profiles.with_streaming_response.create(
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -239,7 +239,7 @@ class TestAsyncProfiles:
     async def test_method_update(self, async_client: AsyncSteel) -> None:
         profile = await async_client.profiles.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         )
         assert_matches_type(ProfileUpdateResponse, profile, path=["response"])
 
@@ -247,7 +247,7 @@ class TestAsyncProfiles:
     async def test_method_update_with_all_params(self, async_client: AsyncSteel) -> None:
         profile = await async_client.profiles.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
             dimensions={
                 "height": 0,
                 "width": 0,
@@ -261,7 +261,7 @@ class TestAsyncProfiles:
     async def test_raw_response_update(self, async_client: AsyncSteel) -> None:
         response = await async_client.profiles.with_raw_response.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         )
 
         assert response.is_closed is True
@@ -273,7 +273,7 @@ class TestAsyncProfiles:
     async def test_streaming_response_update(self, async_client: AsyncSteel) -> None:
         async with async_client.profiles.with_streaming_response.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
-            user_data_dir=b"raw file contents",
+            user_data_dir=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -288,7 +288,7 @@ class TestAsyncProfiles:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             await async_client.profiles.with_raw_response.update(
                 id="",
-                user_data_dir=b"raw file contents",
+                user_data_dir=b"Example data",
             )
 
     @parametrize
