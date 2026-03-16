@@ -58,6 +58,9 @@ class SessionCreateParams(TypedDict, total=False):
     dimensions: Dimensions
     """Viewport and browser window dimensions for the session"""
 
+    experimental_features: Annotated[SequenceNotStr[str], PropertyInfo(alias="experimentalFeatures")]
+    """Enable experimental features for the session."""
+
     extension_ids: Annotated[SequenceNotStr[str], PropertyInfo(alias="extensionIds")]
     """Array of extension IDs to install in the session.
 

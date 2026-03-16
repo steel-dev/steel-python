@@ -15,7 +15,7 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from ...types import session_list_params, session_create_params, session_computer_params
+from ...types import session_list_params, session_create_params, session_events_params, session_computer_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import required_args, maybe_transform, async_maybe_transform
 from .captchas import (
@@ -85,6 +85,7 @@ class SessionsResource(SyncAPIResource):
         debug_config: session_create_params.DebugConfig | Omit = omit,
         device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
+        experimental_features: SequenceNotStr[str] | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
         headless: bool | Omit = omit,
         is_selenium: bool | Omit = omit,
@@ -125,6 +126,8 @@ class SessionsResource(SyncAPIResource):
               fingerprints and configurations.
 
           dimensions: Viewport and browser window dimensions for the session
+
+          experimental_features: Enable experimental features for the session.
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
@@ -183,6 +186,7 @@ class SessionsResource(SyncAPIResource):
                     "debug_config": debug_config,
                     "device_config": device_config,
                     "dimensions": dimensions,
+                    "experimental_features": experimental_features,
                     "extension_ids": extension_ids,
                     "headless": headless,
                     "is_selenium": is_selenium,
@@ -716,6 +720,9 @@ class SessionsResource(SyncAPIResource):
         self,
         id: str,
         *,
+        compressed: bool | Omit = omit,
+        limit: int | Omit = omit,
+        pointer: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -727,6 +734,12 @@ class SessionsResource(SyncAPIResource):
         This endpoint allows you to get the recorded session events in the RRWeb format
 
         Args:
+          compressed: Compress the events
+
+          limit: Optional pagination limit
+
+          pointer: Opaque pagination token. Pass the Next-Cursor header value to get the next page.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -740,7 +753,18 @@ class SessionsResource(SyncAPIResource):
         return self._get(
             f"/v1/sessions/{id}/events",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "compressed": compressed,
+                        "limit": limit,
+                        "pointer": pointer,
+                    },
+                    session_events_params.SessionEventsParams,
+                ),
             ),
             cast_to=SessionEventsResponse,
         )
@@ -868,6 +892,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         debug_config: session_create_params.DebugConfig | Omit = omit,
         device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
+        experimental_features: SequenceNotStr[str] | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
         headless: bool | Omit = omit,
         is_selenium: bool | Omit = omit,
@@ -908,6 +933,8 @@ class AsyncSessionsResource(AsyncAPIResource):
               fingerprints and configurations.
 
           dimensions: Viewport and browser window dimensions for the session
+
+          experimental_features: Enable experimental features for the session.
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
@@ -966,6 +993,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "debug_config": debug_config,
                     "device_config": device_config,
                     "dimensions": dimensions,
+                    "experimental_features": experimental_features,
                     "extension_ids": extension_ids,
                     "headless": headless,
                     "is_selenium": is_selenium,
@@ -1499,6 +1527,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         self,
         id: str,
         *,
+        compressed: bool | Omit = omit,
+        limit: int | Omit = omit,
+        pointer: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1510,6 +1541,12 @@ class AsyncSessionsResource(AsyncAPIResource):
         This endpoint allows you to get the recorded session events in the RRWeb format
 
         Args:
+          compressed: Compress the events
+
+          limit: Optional pagination limit
+
+          pointer: Opaque pagination token. Pass the Next-Cursor header value to get the next page.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -1523,7 +1560,18 @@ class AsyncSessionsResource(AsyncAPIResource):
         return await self._get(
             f"/v1/sessions/{id}/events",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "compressed": compressed,
+                        "limit": limit,
+                        "pointer": pointer,
+                    },
+                    session_events_params.SessionEventsParams,
+                ),
             ),
             cast_to=SessionEventsResponse,
         )

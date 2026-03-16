@@ -19,6 +19,7 @@ from .profile_create_params import ProfileCreateParams as ProfileCreateParams
 from .profile_list_response import ProfileListResponse as ProfileListResponse
 from .profile_update_params import ProfileUpdateParams as ProfileUpdateParams
 from .session_create_params import SessionCreateParams as SessionCreateParams
+from .session_events_params import SessionEventsParams as SessionEventsParams
 from .credential_list_params import CredentialListParams as CredentialListParams
 from .extension_list_response import ExtensionListResponse as ExtensionListResponse
 from .extension_update_params import ExtensionUpdateParams as ExtensionUpdateParams
