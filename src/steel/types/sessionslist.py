@@ -177,5 +177,8 @@ class Sessionslist(BaseModel):
     sessions: List[Session]
     """List of browser sessions"""
 
-    total_count: int = FieldInfo(alias="totalCount")
-    """Total number of sessions matching the query"""
+    total_count: Optional[int] = FieldInfo(alias="totalCount", default=None)
+    """Total number of sessions matching the query.
+
+    Only included for filtered queries (e.g. status=live).
+    """

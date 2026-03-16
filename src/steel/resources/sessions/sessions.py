@@ -85,6 +85,7 @@ class SessionsResource(SyncAPIResource):
         debug_config: session_create_params.DebugConfig | Omit = omit,
         device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
+        experimental_features: SequenceNotStr[str] | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
         headless: bool | Omit = omit,
         is_selenium: bool | Omit = omit,
@@ -125,6 +126,8 @@ class SessionsResource(SyncAPIResource):
               fingerprints and configurations.
 
           dimensions: Viewport and browser window dimensions for the session
+
+          experimental_features: Enable experimental features for the session.
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
@@ -183,6 +186,7 @@ class SessionsResource(SyncAPIResource):
                     "debug_config": debug_config,
                     "device_config": device_config,
                     "dimensions": dimensions,
+                    "experimental_features": experimental_features,
                     "extension_ids": extension_ids,
                     "headless": headless,
                     "is_selenium": is_selenium,
@@ -888,6 +892,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         debug_config: session_create_params.DebugConfig | Omit = omit,
         device_config: session_create_params.DeviceConfig | Omit = omit,
         dimensions: session_create_params.Dimensions | Omit = omit,
+        experimental_features: SequenceNotStr[str] | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
         headless: bool | Omit = omit,
         is_selenium: bool | Omit = omit,
@@ -928,6 +933,8 @@ class AsyncSessionsResource(AsyncAPIResource):
               fingerprints and configurations.
 
           dimensions: Viewport and browser window dimensions for the session
+
+          experimental_features: Enable experimental features for the session.
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
@@ -986,6 +993,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "debug_config": debug_config,
                     "device_config": device_config,
                     "dimensions": dimensions,
+                    "experimental_features": experimental_features,
                     "extension_ids": extension_ids,
                     "headless": headless,
                     "is_selenium": is_selenium,
