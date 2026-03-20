@@ -17,7 +17,7 @@ from .files import (
 )
 from ...types import session_list_params, session_create_params, session_events_params, session_computer_params
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import required_args, maybe_transform, async_maybe_transform
+from ..._utils import path_template, required_args, maybe_transform, async_maybe_transform
 from .captchas import (
     CaptchasResource,
     AsyncCaptchasResource,
@@ -238,7 +238,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sessions/{id}",
+            path_template("/v1/sessions/{id}", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -658,7 +658,7 @@ class SessionsResource(SyncAPIResource):
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         return self._post(
-            f"/v1/sessions/{session_id}/computer",
+            path_template("/v1/sessions/{session_id}/computer", session_id=session_id),
             body=maybe_transform(
                 {
                     "action": action,
@@ -709,7 +709,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sessions/{id}/context",
+            path_template("/v1/sessions/{id}/context", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -751,7 +751,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sessions/{id}/events",
+            path_template("/v1/sessions/{id}/events", id=id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -795,7 +795,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sessions/{id}/live-details",
+            path_template("/v1/sessions/{id}/live-details", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -828,7 +828,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._post(
-            f"/v1/sessions/{id}/release",
+            path_template("/v1/sessions/{id}/release", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1045,7 +1045,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sessions/{id}",
+            path_template("/v1/sessions/{id}", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1465,7 +1465,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         return await self._post(
-            f"/v1/sessions/{session_id}/computer",
+            path_template("/v1/sessions/{session_id}/computer", session_id=session_id),
             body=await async_maybe_transform(
                 {
                     "action": action,
@@ -1516,7 +1516,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sessions/{id}/context",
+            path_template("/v1/sessions/{id}/context", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1558,7 +1558,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sessions/{id}/events",
+            path_template("/v1/sessions/{id}/events", id=id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -1602,7 +1602,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sessions/{id}/live-details",
+            path_template("/v1/sessions/{id}/live-details", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1635,7 +1635,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._post(
-            f"/v1/sessions/{id}/release",
+            path_template("/v1/sessions/{id}/release", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
