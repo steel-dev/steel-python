@@ -8,7 +8,7 @@ import httpx
 
 from ..types import profile_create_params, profile_update_params
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
-from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from .._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -154,7 +154,7 @@ class ProfilesResource(SyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._patch(
-            f"/v1/profiles/{id}",
+            path_template("/v1/profiles/{id}", id=id),
             body=maybe_transform(body, profile_update_params.ProfileUpdateParams),
             files=files,
             options=make_request_options(
@@ -208,7 +208,7 @@ class ProfilesResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/profiles/{id}",
+            path_template("/v1/profiles/{id}", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -344,7 +344,7 @@ class AsyncProfilesResource(AsyncAPIResource):
         # multipart/form-data; boundary=---abc--
         extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._patch(
-            f"/v1/profiles/{id}",
+            path_template("/v1/profiles/{id}", id=id),
             body=await async_maybe_transform(body, profile_update_params.ProfileUpdateParams),
             files=files,
             options=make_request_options(
@@ -398,7 +398,7 @@ class AsyncProfilesResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/profiles/{id}",
+            path_template("/v1/profiles/{id}", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
