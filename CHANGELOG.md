@@ -1,5 +1,36 @@
 # Changelog
 
+## 0.18.0 (2026-03-27)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/steel-dev/steel-python/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **internal:** implement indices array format for query and form serialization ([5e7b0a2](https://github.com/steel-dev/steel-python/commit/5e7b0a243b6d3fd6299b60695e57ef709096e265))
+
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([3815a72](https://github.com/steel-dev/steel-python/commit/3815a72732d737d7403f91fbec741c95dd5f89d5))
+* **pydantic:** do not pass `by_alias` unless set ([f9686b4](https://github.com/steel-dev/steel-python/commit/f9686b47001a452f8591d9d65c7dd8c70dad5204))
+* sanitize endpoint path params ([abb806c](https://github.com/steel-dev/steel-python/commit/abb806c6ada0cb749bf734ada489eeff02738673))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([a90bcd7](https://github.com/steel-dev/steel-python/commit/a90bcd7ec396cded3006818beffe1c1f8780f6d1))
+* **internal:** tweak CI branches ([35a8acc](https://github.com/steel-dev/steel-python/commit/35a8acc7fd278d27398979892a10832291f74e9d))
+* **internal:** update gitignore ([4f0a06c](https://github.com/steel-dev/steel-python/commit/4f0a06c5eb8b1b88597e4d562de24284d4c9e2d3))
+* **tests:** bump steady to v0.19.4 ([fc582c4](https://github.com/steel-dev/steel-python/commit/fc582c4da1253d3851af25e753398ed6139cdac6))
+* **tests:** bump steady to v0.19.5 ([9927574](https://github.com/steel-dev/steel-python/commit/9927574b27a5d281732032176c9da052e7da5ea0))
+* **tests:** bump steady to v0.19.6 ([81717f3](https://github.com/steel-dev/steel-python/commit/81717f34046cb49e43a25db03d8b5bb153429284))
+* **tests:** bump steady to v0.19.7 ([4d06b71](https://github.com/steel-dev/steel-python/commit/4d06b71429d4341474d75d915d17bd597ebd42ec))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([791de4d](https://github.com/steel-dev/steel-python/commit/791de4d8baf003a3600e7e7a9422a36fc6729c12))
+
 ## 0.17.0 (2026-03-16)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/steel-dev/steel-python/compare/v0.16.0...v0.17.0)
