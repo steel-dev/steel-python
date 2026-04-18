@@ -7,8 +7,9 @@ from typing import Mapping, cast
 import httpx
 
 from ..types import profile_create_params, profile_update_params
+from .._files import deepcopy_with_paths
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
-from .._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
+from .._utils import extract_files, path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -80,13 +81,14 @@ class ProfilesResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "user_data_dir": user_data_dir,
                 "dimensions": dimensions,
                 "proxy_url": proxy_url,
                 "user_agent": user_agent,
-            }
+            },
+            [["userDataDir"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["userDataDir"]])
         # It should be noted that the actual Content-Type header that will be
@@ -140,13 +142,14 @@ class ProfilesResource(SyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "user_data_dir": user_data_dir,
                 "dimensions": dimensions,
                 "proxy_url": proxy_url,
                 "user_agent": user_agent,
-            }
+            },
+            [["userDataDir"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["userDataDir"]])
         # It should be noted that the actual Content-Type header that will be
@@ -270,13 +273,14 @@ class AsyncProfilesResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "user_data_dir": user_data_dir,
                 "dimensions": dimensions,
                 "proxy_url": proxy_url,
                 "user_agent": user_agent,
-            }
+            },
+            [["userDataDir"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["userDataDir"]])
         # It should be noted that the actual Content-Type header that will be
@@ -330,13 +334,14 @@ class AsyncProfilesResource(AsyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "user_data_dir": user_data_dir,
                 "dimensions": dimensions,
                 "proxy_url": proxy_url,
                 "user_agent": user_agent,
-            }
+            },
+            [["userDataDir"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["userDataDir"]])
         # It should be noted that the actual Content-Type header that will be
