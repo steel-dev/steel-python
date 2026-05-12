@@ -87,6 +87,7 @@ class SessionsResource(SyncAPIResource):
         dimensions: session_create_params.Dimensions | Omit = omit,
         experimental_features: SequenceNotStr[str] | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
+        fullscreen: bool | Omit = omit,
         headless: bool | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
@@ -131,6 +132,9 @@ class SessionsResource(SyncAPIResource):
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
+
+          fullscreen: Launch the browser in fullscreen mode, covering the full screen with no Chrome
+              UI. Default is false.
 
           headless: Enable headless browser mode (disable Headful mode)
 
@@ -188,6 +192,7 @@ class SessionsResource(SyncAPIResource):
                     "dimensions": dimensions,
                     "experimental_features": experimental_features,
                     "extension_ids": extension_ids,
+                    "fullscreen": fullscreen,
                     "headless": headless,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
@@ -894,6 +899,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         dimensions: session_create_params.Dimensions | Omit = omit,
         experimental_features: SequenceNotStr[str] | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
+        fullscreen: bool | Omit = omit,
         headless: bool | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
@@ -938,6 +944,9 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
+
+          fullscreen: Launch the browser in fullscreen mode, covering the full screen with no Chrome
+              UI. Default is false.
 
           headless: Enable headless browser mode (disable Headful mode)
 
@@ -995,6 +1004,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "dimensions": dimensions,
                     "experimental_features": experimental_features,
                     "extension_ids": extension_ids,
+                    "fullscreen": fullscreen,
                     "headless": headless,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
