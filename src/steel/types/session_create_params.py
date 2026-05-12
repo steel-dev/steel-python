@@ -67,6 +67,12 @@ class SessionCreateParams(TypedDict, total=False):
     Use ['all_ext'] to install all uploaded extensions.
     """
 
+    fullscreen: bool
+    """
+    Launch the browser in fullscreen mode, covering the full screen with no Chrome
+    UI. Default is false.
+    """
+
     headless: bool
     """Enable headless browser mode (disable Headful mode)"""
 

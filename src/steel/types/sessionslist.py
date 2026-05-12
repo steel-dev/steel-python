@@ -143,6 +143,12 @@ class Session(BaseModel):
     device_config: Optional[SessionDeviceConfig] = FieldInfo(alias="deviceConfig", default=None)
     """Device configuration for the session"""
 
+    fullscreen: Optional[bool] = None
+    """
+    Launch the browser in fullscreen mode, covering the full screen with no Chrome
+    UI.
+    """
+
     headless: Optional[bool] = None
     """Indicates if the session is headless or headful"""
 
