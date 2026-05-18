@@ -106,9 +106,10 @@ class SessionCreateParams(TypedDict, total=False):
     """
 
     region: object
-    """The desired region for the session to be started in.
+    """The desired region for the session.
 
-    Available regions are lax, ord, iad
+    Available: us-east, us-west, us-central, eu-west, eu-central, ap-northeast,
+    ap-southeast, sa-east. Legacy codes (iad, lax, ord) are also accepted.
     """
 
     session_context: Annotated[SessionContext, PropertyInfo(alias="sessionContext")]
