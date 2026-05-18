@@ -161,7 +161,9 @@ class Session(BaseModel):
     profile_id: Optional[str] = FieldInfo(alias="profileId", default=None)
     """The ID of the profile associated with the session"""
 
-    region: Optional[Literal["lax", "ord", "iad", "scl", "fra", "nrt"]] = None
+    region: Optional[
+        Literal["us-east", "us-west", "us-central", "eu-west", "eu-central", "ap-northeast", "ap-southeast", "sa-east"]
+    ] = None
     """The region where the session was created"""
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
