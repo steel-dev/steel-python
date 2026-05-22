@@ -179,10 +179,7 @@ class Session(BaseModel):
             "sa-east",
         ]
     ] = None
-    """The region where the session was created.
-
-    Fly sessions return airport codes; multi-provider sessions return meta-regions.
-    """
+    """The region where the session was created."""
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
     """Indicates if captcha solving is enabled"""
