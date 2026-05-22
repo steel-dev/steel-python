@@ -287,7 +287,6 @@ class TestSessions:
         session = client.sessions.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         )
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
@@ -310,7 +309,6 @@ class TestSessions:
         response = client.sessions.with_raw_response.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         )
 
         assert response.is_closed is True
@@ -323,7 +321,6 @@ class TestSessions:
         with client.sessions.with_streaming_response.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -339,7 +336,6 @@ class TestSessions:
             client.sessions.with_raw_response.computer(
                 session_id="",
                 action="click_mouse",
-                button="left",
             )
 
     @parametrize
@@ -1160,7 +1156,6 @@ class TestAsyncSessions:
         session = await async_client.sessions.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         )
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
@@ -1183,7 +1178,6 @@ class TestAsyncSessions:
         response = await async_client.sessions.with_raw_response.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         )
 
         assert response.is_closed is True
@@ -1196,7 +1190,6 @@ class TestAsyncSessions:
         async with async_client.sessions.with_streaming_response.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -1212,7 +1205,6 @@ class TestAsyncSessions:
             await async_client.sessions.with_raw_response.computer(
                 session_id="",
                 action="click_mouse",
-                button="left",
             )
 
     @parametrize

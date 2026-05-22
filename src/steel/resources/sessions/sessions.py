@@ -344,7 +344,7 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         action: Literal["click_mouse"],
-        button: Literal["left", "right", "middle", "back", "forward"],
+        button: Literal["left", "right", "middle", "back", "forward"] | Omit = omit,
         click_type: Literal["down", "up", "click"] | Omit = omit,
         coordinates: Iterable[float] | Omit = omit,
         hold_keys: SequenceNotStr[str] | Omit = omit,
@@ -361,7 +361,7 @@ class SessionsResource(SyncAPIResource):
         Execute computer actions like mouse movements, clicks, keyboard input, and more
 
         Args:
-          button: Mouse button to click
+          button: Mouse button to click. Defaults to 'left'
 
           click_type: Type of click (down, up, or click). Defaults to 'click'
 
@@ -622,9 +622,8 @@ class SessionsResource(SyncAPIResource):
 
     @required_args(
         ["action", "coordinates"],
-        ["action", "button"],
-        ["action", "path"],
         ["action"],
+        ["action", "path"],
         ["action", "keys"],
         ["action", "text"],
         ["action", "duration"],
@@ -1157,7 +1156,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         action: Literal["click_mouse"],
-        button: Literal["left", "right", "middle", "back", "forward"],
+        button: Literal["left", "right", "middle", "back", "forward"] | Omit = omit,
         click_type: Literal["down", "up", "click"] | Omit = omit,
         coordinates: Iterable[float] | Omit = omit,
         hold_keys: SequenceNotStr[str] | Omit = omit,
@@ -1174,7 +1173,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         Execute computer actions like mouse movements, clicks, keyboard input, and more
 
         Args:
-          button: Mouse button to click
+          button: Mouse button to click. Defaults to 'left'
 
           click_type: Type of click (down, up, or click). Defaults to 'click'
 
@@ -1435,9 +1434,8 @@ class AsyncSessionsResource(AsyncAPIResource):
 
     @required_args(
         ["action", "coordinates"],
-        ["action", "button"],
-        ["action", "path"],
         ["action"],
+        ["action", "path"],
         ["action", "keys"],
         ["action", "text"],
         ["action", "duration"],

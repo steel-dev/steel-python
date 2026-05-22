@@ -37,8 +37,8 @@ class Variant0(TypedDict, total=False):
 class Variant1(TypedDict, total=False):
     action: Required[Literal["click_mouse"]]
 
-    button: Required[Literal["left", "right", "middle", "back", "forward"]]
-    """Mouse button to click"""
+    button: Literal["left", "right", "middle", "back", "forward"]
+    """Mouse button to click. Defaults to 'left'"""
 
     click_type: Literal["down", "up", "click"]
     """Type of click (down, up, or click). Defaults to 'click'"""

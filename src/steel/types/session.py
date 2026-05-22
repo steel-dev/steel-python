@@ -154,9 +154,27 @@ class Session(BaseModel):
     """The ID of the profile associated with the session"""
 
     region: Optional[
-        Literal["us-east", "us-west", "us-central", "eu-west", "eu-central", "ap-northeast", "ap-southeast", "sa-east"]
+        Literal[
+            "lax",
+            "ord",
+            "iad",
+            "scl",
+            "fra",
+            "nrt",
+            "us-east",
+            "us-west",
+            "us-central",
+            "eu-west",
+            "eu-central",
+            "ap-northeast",
+            "ap-southeast",
+            "sa-east",
+        ]
     ] = None
-    """The region where the session was created"""
+    """The region where the session was created.
+
+    Fly sessions return airport codes; multi-provider sessions return meta-regions.
+    """
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
     """Indicates if captcha solving is enabled"""
