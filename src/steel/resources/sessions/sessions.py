@@ -126,7 +126,9 @@ class SessionsResource(SyncAPIResource):
           device_config: Device configuration for the session. Specify 'mobile' for mobile device
               fingerprints and configurations.
 
-          dimensions: Viewport and browser window dimensions for the session
+          dimensions: Viewport and browser window dimensions for the session. Mobile sessions require
+              dimensions of at least 508x1074; smaller mobile dimensions are rejected with a
+              400 response.
 
           experimental_features: Enable experimental features for the session.
 
@@ -938,7 +940,9 @@ class AsyncSessionsResource(AsyncAPIResource):
           device_config: Device configuration for the session. Specify 'mobile' for mobile device
               fingerprints and configurations.
 
-          dimensions: Viewport and browser window dimensions for the session
+          dimensions: Viewport and browser window dimensions for the session. Mobile sessions require
+              dimensions of at least 508x1074; smaller mobile dimensions are rejected with a
+              400 response.
 
           experimental_features: Enable experimental features for the session.
 
