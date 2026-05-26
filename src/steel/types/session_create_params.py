@@ -56,7 +56,11 @@ class SessionCreateParams(TypedDict, total=False):
     """
 
     dimensions: Dimensions
-    """Viewport and browser window dimensions for the session"""
+    """Viewport and browser window dimensions for the session.
+
+    Mobile sessions require dimensions of at least 508x1074; smaller mobile
+    dimensions are rejected with a 400 response.
+    """
 
     experimental_features: Annotated[SequenceNotStr[str], PropertyInfo(alias="experimentalFeatures")]
     """Enable experimental features for the session."""
@@ -177,7 +181,10 @@ class DeviceConfig(TypedDict, total=False):
 
 
 class Dimensions(TypedDict, total=False):
-    """Viewport and browser window dimensions for the session"""
+    """Viewport and browser window dimensions for the session.
+
+    Mobile sessions require dimensions of at least 508x1074; smaller mobile dimensions are rejected with a 400 response.
+    """
 
     height: Required[int]
     """Height of the session"""
