@@ -6,7 +6,7 @@ from typing import Mapping, cast
 
 import httpx
 
-from ..types import profile_create_params, profile_update_params
+from ..types import profile_get_params, profile_list_params, profile_create_params, profile_update_params
 from .._files import deepcopy_with_paths
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, omit, not_given
 from .._utils import extract_files, path_template, maybe_transform, async_maybe_transform
@@ -52,6 +52,7 @@ class ProfilesResource(SyncAPIResource):
         *,
         user_data_dir: FileTypes,
         dimensions: profile_create_params.Dimensions | Omit = omit,
+        project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -69,6 +70,8 @@ class ProfilesResource(SyncAPIResource):
 
           dimensions: The dimensions associated with the profile
 
+          project_id: Project to create the profile in
+
           proxy_url: The proxy associated with the profile
 
           user_agent: The user agent associated with the profile
@@ -85,6 +88,7 @@ class ProfilesResource(SyncAPIResource):
             {
                 "user_data_dir": user_data_dir,
                 "dimensions": dimensions,
+                "project_id": project_id,
                 "proxy_url": proxy_url,
                 "user_agent": user_agent,
             },
@@ -110,7 +114,9 @@ class ProfilesResource(SyncAPIResource):
         id: str,
         *,
         user_data_dir: FileTypes,
+        query_project_id: str | Omit = omit,
         dimensions: profile_update_params.Dimensions | Omit = omit,
+        body_project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -126,7 +132,11 @@ class ProfilesResource(SyncAPIResource):
         Args:
           user_data_dir: The user data directory associated with the profile
 
+          query_project_id: Project to query profiles from
+
           dimensions: The dimensions associated with the profile
+
+          body_project_id: Project to create the profile in
 
           proxy_url: The proxy associated with the profile
 
@@ -146,6 +156,7 @@ class ProfilesResource(SyncAPIResource):
             {
                 "user_data_dir": user_data_dir,
                 "dimensions": dimensions,
+                "body_project_id": body_project_id,
                 "proxy_url": proxy_url,
                 "user_agent": user_agent,
             },
@@ -161,7 +172,13 @@ class ProfilesResource(SyncAPIResource):
             body=maybe_transform(body, profile_update_params.ProfileUpdateParams),
             files=files,
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {"query_project_id": query_project_id}, profile_update_params.ProfileUpdateParams
+                ),
             ),
             cast_to=ProfileUpdateResponse,
         )
@@ -169,6 +186,7 @@ class ProfilesResource(SyncAPIResource):
     def list(
         self,
         *,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -176,11 +194,28 @@ class ProfilesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProfileListResponse:
-        """Retrieve a list of all profiles"""
+        """
+        Retrieve a list of all profiles
+
+        Args:
+          project_id: Project to query profiles from
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return self._get(
             "/v1/profiles",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"project_id": project_id}, profile_list_params.ProfileListParams),
             ),
             cast_to=ProfileListResponse,
         )
@@ -189,6 +224,7 @@ class ProfilesResource(SyncAPIResource):
         self,
         id: str,
         *,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -200,6 +236,8 @@ class ProfilesResource(SyncAPIResource):
         Retrieve a profile by ID
 
         Args:
+          project_id: Project to query profiles from
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -213,7 +251,11 @@ class ProfilesResource(SyncAPIResource):
         return self._get(
             path_template("/v1/profiles/{id}", id=id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"project_id": project_id}, profile_get_params.ProfileGetParams),
             ),
             cast_to=ProfileGetResponse,
         )
@@ -244,6 +286,7 @@ class AsyncProfilesResource(AsyncAPIResource):
         *,
         user_data_dir: FileTypes,
         dimensions: profile_create_params.Dimensions | Omit = omit,
+        project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -261,6 +304,8 @@ class AsyncProfilesResource(AsyncAPIResource):
 
           dimensions: The dimensions associated with the profile
 
+          project_id: Project to create the profile in
+
           proxy_url: The proxy associated with the profile
 
           user_agent: The user agent associated with the profile
@@ -277,6 +322,7 @@ class AsyncProfilesResource(AsyncAPIResource):
             {
                 "user_data_dir": user_data_dir,
                 "dimensions": dimensions,
+                "project_id": project_id,
                 "proxy_url": proxy_url,
                 "user_agent": user_agent,
             },
@@ -302,7 +348,9 @@ class AsyncProfilesResource(AsyncAPIResource):
         id: str,
         *,
         user_data_dir: FileTypes,
+        query_project_id: str | Omit = omit,
         dimensions: profile_update_params.Dimensions | Omit = omit,
+        body_project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -318,7 +366,11 @@ class AsyncProfilesResource(AsyncAPIResource):
         Args:
           user_data_dir: The user data directory associated with the profile
 
+          query_project_id: Project to query profiles from
+
           dimensions: The dimensions associated with the profile
+
+          body_project_id: Project to create the profile in
 
           proxy_url: The proxy associated with the profile
 
@@ -338,6 +390,7 @@ class AsyncProfilesResource(AsyncAPIResource):
             {
                 "user_data_dir": user_data_dir,
                 "dimensions": dimensions,
+                "body_project_id": body_project_id,
                 "proxy_url": proxy_url,
                 "user_agent": user_agent,
             },
@@ -353,7 +406,13 @@ class AsyncProfilesResource(AsyncAPIResource):
             body=await async_maybe_transform(body, profile_update_params.ProfileUpdateParams),
             files=files,
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"query_project_id": query_project_id}, profile_update_params.ProfileUpdateParams
+                ),
             ),
             cast_to=ProfileUpdateResponse,
         )
@@ -361,6 +420,7 @@ class AsyncProfilesResource(AsyncAPIResource):
     async def list(
         self,
         *,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -368,11 +428,28 @@ class AsyncProfilesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProfileListResponse:
-        """Retrieve a list of all profiles"""
+        """
+        Retrieve a list of all profiles
+
+        Args:
+          project_id: Project to query profiles from
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return await self._get(
             "/v1/profiles",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"project_id": project_id}, profile_list_params.ProfileListParams),
             ),
             cast_to=ProfileListResponse,
         )
@@ -381,6 +458,7 @@ class AsyncProfilesResource(AsyncAPIResource):
         self,
         id: str,
         *,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -392,6 +470,8 @@ class AsyncProfilesResource(AsyncAPIResource):
         Retrieve a profile by ID
 
         Args:
+          project_id: Project to query profiles from
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -405,7 +485,11 @@ class AsyncProfilesResource(AsyncAPIResource):
         return await self._get(
             path_template("/v1/profiles/{id}", id=id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"project_id": project_id}, profile_get_params.ProfileGetParams),
             ),
             cast_to=ProfileGetResponse,
         )

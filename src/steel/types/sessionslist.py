@@ -152,6 +152,9 @@ class Session(BaseModel):
     headless: Optional[bool] = None
     """Indicates if the session is headless or headful"""
 
+    inactivity_timeout: Optional[int] = FieldInfo(alias="inactivityTimeout", default=None)
+    """Inactivity timeout in milliseconds, if one was set when the session was created"""
+
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
 
@@ -160,6 +163,9 @@ class Session(BaseModel):
 
     profile_id: Optional[str] = FieldInfo(alias="profileId", default=None)
     """The ID of the profile associated with the session"""
+
+    project_id: Optional[str] = FieldInfo(alias="projectId", default=None)
+    """The project associated with the session"""
 
     region: Optional[
         Literal[

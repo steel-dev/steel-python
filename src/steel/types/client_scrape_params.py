@@ -23,6 +23,9 @@ class ClientScrapeParams(TypedDict, total=False):
     pdf: bool
     """Include a PDF in the response"""
 
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to execute the scrape in."""
+
     region: object
     """The desired region for the action to be performed in"""
 

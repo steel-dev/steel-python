@@ -33,6 +33,7 @@ class TestClient:
         client_ = client.pdf(
             url="https://example.com",
             delay=0,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             region={},
             use_proxy=True,
         )
@@ -76,6 +77,7 @@ class TestClient:
             delay=0,
             format=["html"],
             pdf=True,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             region={},
             screenshot=True,
             use_proxy=True,
@@ -119,6 +121,7 @@ class TestClient:
             url="https://example.com",
             delay=0,
             full_page=True,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             region={},
             use_proxy=True,
         )
@@ -166,6 +169,7 @@ class TestAsyncClient:
         client = await async_client.pdf(
             url="https://example.com",
             delay=0,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             region={},
             use_proxy=True,
         )
@@ -209,6 +213,7 @@ class TestAsyncClient:
             delay=0,
             format=["html"],
             pdf=True,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             region={},
             screenshot=True,
             use_proxy=True,
@@ -252,6 +257,7 @@ class TestAsyncClient:
             url="https://example.com",
             delay=0,
             full_page=True,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             region={},
             use_proxy=True,
         )

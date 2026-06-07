@@ -238,6 +238,7 @@ class Steel(SyncAPIClient):
         *,
         url: str,
         delay: float | Omit = omit,
+        project_id: str | Omit = omit,
         region: object | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -254,6 +255,8 @@ class Steel(SyncAPIClient):
           url: URL of the webpage to convert to PDF
 
           delay: Delay before generating the PDF (in milliseconds)
+
+          project_id: Project to execute the PDF generation in.
 
           region: The desired region for the action to be performed in
 
@@ -273,6 +276,7 @@ class Steel(SyncAPIClient):
                 {
                     "url": url,
                     "delay": delay,
+                    "project_id": project_id,
                     "region": region,
                     "use_proxy": use_proxy,
                 },
@@ -291,6 +295,7 @@ class Steel(SyncAPIClient):
         delay: float | Omit = omit,
         format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | Omit = omit,
         pdf: bool | Omit = omit,
+        project_id: str | Omit = omit,
         region: object | Omit = omit,
         screenshot: bool | Omit = omit,
         use_proxy: bool | Omit = omit,
@@ -312,6 +317,8 @@ class Steel(SyncAPIClient):
           format: Desired format(s) for the scraped content. Default is `html`.
 
           pdf: Include a PDF in the response
+
+          project_id: Project to execute the scrape in.
 
           region: The desired region for the action to be performed in
 
@@ -335,6 +342,7 @@ class Steel(SyncAPIClient):
                     "delay": delay,
                     "format": format,
                     "pdf": pdf,
+                    "project_id": project_id,
                     "region": region,
                     "screenshot": screenshot,
                     "use_proxy": use_proxy,
@@ -353,6 +361,7 @@ class Steel(SyncAPIClient):
         url: str,
         delay: float | Omit = omit,
         full_page: bool | Omit = omit,
+        project_id: str | Omit = omit,
         region: object | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -371,6 +380,8 @@ class Steel(SyncAPIClient):
           delay: Delay before capturing the screenshot (in milliseconds)
 
           full_page: Capture the full page screenshot. Default is `false`.
+
+          project_id: Project to execute the screenshot in.
 
           region: The desired region for the action to be performed in
 
@@ -391,6 +402,7 @@ class Steel(SyncAPIClient):
                     "url": url,
                     "delay": delay,
                     "full_page": full_page,
+                    "project_id": project_id,
                     "region": region,
                     "use_proxy": use_proxy,
                 },
@@ -612,6 +624,7 @@ class AsyncSteel(AsyncAPIClient):
         *,
         url: str,
         delay: float | Omit = omit,
+        project_id: str | Omit = omit,
         region: object | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -628,6 +641,8 @@ class AsyncSteel(AsyncAPIClient):
           url: URL of the webpage to convert to PDF
 
           delay: Delay before generating the PDF (in milliseconds)
+
+          project_id: Project to execute the PDF generation in.
 
           region: The desired region for the action to be performed in
 
@@ -647,6 +662,7 @@ class AsyncSteel(AsyncAPIClient):
                 {
                     "url": url,
                     "delay": delay,
+                    "project_id": project_id,
                     "region": region,
                     "use_proxy": use_proxy,
                 },
@@ -665,6 +681,7 @@ class AsyncSteel(AsyncAPIClient):
         delay: float | Omit = omit,
         format: List[Literal["html", "readability", "cleaned_html", "markdown"]] | Omit = omit,
         pdf: bool | Omit = omit,
+        project_id: str | Omit = omit,
         region: object | Omit = omit,
         screenshot: bool | Omit = omit,
         use_proxy: bool | Omit = omit,
@@ -686,6 +703,8 @@ class AsyncSteel(AsyncAPIClient):
           format: Desired format(s) for the scraped content. Default is `html`.
 
           pdf: Include a PDF in the response
+
+          project_id: Project to execute the scrape in.
 
           region: The desired region for the action to be performed in
 
@@ -709,6 +728,7 @@ class AsyncSteel(AsyncAPIClient):
                     "delay": delay,
                     "format": format,
                     "pdf": pdf,
+                    "project_id": project_id,
                     "region": region,
                     "screenshot": screenshot,
                     "use_proxy": use_proxy,
@@ -727,6 +747,7 @@ class AsyncSteel(AsyncAPIClient):
         url: str,
         delay: float | Omit = omit,
         full_page: bool | Omit = omit,
+        project_id: str | Omit = omit,
         region: object | Omit = omit,
         use_proxy: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -745,6 +766,8 @@ class AsyncSteel(AsyncAPIClient):
           delay: Delay before capturing the screenshot (in milliseconds)
 
           full_page: Capture the full page screenshot. Default is `false`.
+
+          project_id: Project to execute the screenshot in.
 
           region: The desired region for the action to be performed in
 
@@ -765,6 +788,7 @@ class AsyncSteel(AsyncAPIClient):
                     "url": url,
                     "delay": delay,
                     "full_page": full_page,
+                    "project_id": project_id,
                     "region": region,
                     "use_proxy": use_proxy,
                 },

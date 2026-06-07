@@ -14,8 +14,14 @@ class ProfileUpdateParams(TypedDict, total=False):
     user_data_dir: Required[Annotated[FileTypes, PropertyInfo(alias="userDataDir")]]
     """The user data directory associated with the profile"""
 
+    query_project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to query profiles from"""
+
     dimensions: Dimensions
     """The dimensions associated with the profile"""
+
+    body_project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to create the profile in"""
 
     proxy_url: Annotated[str, PropertyInfo(alias="proxyUrl")]
     """The proxy associated with the profile"""

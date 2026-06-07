@@ -36,6 +36,7 @@ class TestCredentials:
             label="label",
             namespace="namespace",
             origin="origin",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CredentialCreateResponse, credential, path=["response"])
 
@@ -74,6 +75,7 @@ class TestCredentials:
             label="label",
             namespace="namespace",
             origin="origin",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             value={"foo": "string"},
         )
         assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
@@ -108,6 +110,7 @@ class TestCredentials:
         credential = client.credentials.list(
             namespace="namespace",
             origin="origin",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CredentialListResponse, credential, path=["response"])
 
@@ -143,6 +146,7 @@ class TestCredentials:
         credential = client.credentials.delete(
             origin="origin",
             namespace="namespace",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CredentialDeleteResponse, credential, path=["response"])
 
@@ -190,6 +194,7 @@ class TestAsyncCredentials:
             label="label",
             namespace="namespace",
             origin="origin",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CredentialCreateResponse, credential, path=["response"])
 
@@ -228,6 +233,7 @@ class TestAsyncCredentials:
             label="label",
             namespace="namespace",
             origin="origin",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             value={"foo": "string"},
         )
         assert_matches_type(CredentialUpdateResponse, credential, path=["response"])
@@ -262,6 +268,7 @@ class TestAsyncCredentials:
         credential = await async_client.credentials.list(
             namespace="namespace",
             origin="origin",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CredentialListResponse, credential, path=["response"])
 
@@ -297,6 +304,7 @@ class TestAsyncCredentials:
         credential = await async_client.credentials.delete(
             origin="origin",
             namespace="namespace",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CredentialDeleteResponse, credential, path=["response"])
 

@@ -15,7 +15,13 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from ...types import session_list_params, session_create_params, session_events_params, session_computer_params
+from ...types import (
+    session_list_params,
+    session_create_params,
+    session_events_params,
+    session_computer_params,
+    session_release_all_params,
+)
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from ..._utils import path_template, required_args, maybe_transform, async_maybe_transform
 from .captchas import (
@@ -89,11 +95,13 @@ class SessionsResource(SyncAPIResource):
         extension_ids: SequenceNotStr[str] | Omit = omit,
         fullscreen: bool | Omit = omit,
         headless: bool | Omit = omit,
+        inactivity_timeout: int | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
         optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
         persist_profile: bool | Omit = omit,
         profile_id: str | Omit = omit,
+        project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         region: object | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
@@ -140,6 +148,12 @@ class SessionsResource(SyncAPIResource):
 
           headless: Enable headless browser mode (disable Headful mode)
 
+          inactivity_timeout: Inactivity timeout in milliseconds. When set, the session is released if no CDP
+              command or remote input is received for this duration, even if `timeout` has not
+              yet elapsed. Note that `timeout` remains the hard cap on session lifetime: if
+              `inactivityTimeout` is greater than or equal to the effective `timeout`, it has
+              no effect since `timeout` always elapses first. Omit to disable.
+
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
 
@@ -151,6 +165,9 @@ class SessionsResource(SyncAPIResource):
           persist_profile: This flag will persist the user profile for the session.
 
           profile_id: This flag will set the profile for the session.
+
+          project_id: The project to create the session in. When provided, the session namespace is
+              resolved from the project.
 
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
@@ -197,11 +214,13 @@ class SessionsResource(SyncAPIResource):
                     "extension_ids": extension_ids,
                     "fullscreen": fullscreen,
                     "headless": headless,
+                    "inactivity_timeout": inactivity_timeout,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "optimize_bandwidth": optimize_bandwidth,
                     "persist_profile": persist_profile,
                     "profile_id": profile_id,
+                    "project_id": project_id,
                     "proxy_url": proxy_url,
                     "region": region,
                     "session_context": session_context,
@@ -258,6 +277,7 @@ class SessionsResource(SyncAPIResource):
         *,
         cursor_id: str | Omit = omit,
         limit: int | Omit = omit,
+        project_id: str | Omit = omit,
         status: Literal["live", "released", "failed"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -273,6 +293,8 @@ class SessionsResource(SyncAPIResource):
           cursor_id: Cursor ID for pagination
 
           limit: Number of sessions to return. Default is 50, max is 100.
+
+          project_id: Filter sessions by project
 
           status: Filter sessions by current status
 
@@ -296,6 +318,7 @@ class SessionsResource(SyncAPIResource):
                     {
                         "cursor_id": cursor_id,
                         "limit": limit,
+                        "project_id": project_id,
                         "status": status,
                     },
                     session_list_params.SessionListParams,
@@ -845,6 +868,7 @@ class SessionsResource(SyncAPIResource):
     def release_all(
         self,
         *,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -852,11 +876,28 @@ class SessionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionReleaseAllResponse:
-        """Releases all active sessions for the current organization."""
+        """
+        Releases all active sessions for the current organization.
+
+        Args:
+          project_id: Release sessions only within this project
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return self._post(
             "/v1/sessions/release",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"project_id": project_id}, session_release_all_params.SessionReleaseAllParams),
             ),
             cast_to=SessionReleaseAllResponse,
         )
@@ -903,11 +944,13 @@ class AsyncSessionsResource(AsyncAPIResource):
         extension_ids: SequenceNotStr[str] | Omit = omit,
         fullscreen: bool | Omit = omit,
         headless: bool | Omit = omit,
+        inactivity_timeout: int | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
         optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
         persist_profile: bool | Omit = omit,
         profile_id: str | Omit = omit,
+        project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         region: object | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
@@ -954,6 +997,12 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           headless: Enable headless browser mode (disable Headful mode)
 
+          inactivity_timeout: Inactivity timeout in milliseconds. When set, the session is released if no CDP
+              command or remote input is received for this duration, even if `timeout` has not
+              yet elapsed. Note that `timeout` remains the hard cap on session lifetime: if
+              `inactivityTimeout` is greater than or equal to the effective `timeout`, it has
+              no effect since `timeout` always elapses first. Omit to disable.
+
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
 
@@ -965,6 +1014,9 @@ class AsyncSessionsResource(AsyncAPIResource):
           persist_profile: This flag will persist the user profile for the session.
 
           profile_id: This flag will set the profile for the session.
+
+          project_id: The project to create the session in. When provided, the session namespace is
+              resolved from the project.
 
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
@@ -1011,11 +1063,13 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "extension_ids": extension_ids,
                     "fullscreen": fullscreen,
                     "headless": headless,
+                    "inactivity_timeout": inactivity_timeout,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "optimize_bandwidth": optimize_bandwidth,
                     "persist_profile": persist_profile,
                     "profile_id": profile_id,
+                    "project_id": project_id,
                     "proxy_url": proxy_url,
                     "region": region,
                     "session_context": session_context,
@@ -1072,6 +1126,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         *,
         cursor_id: str | Omit = omit,
         limit: int | Omit = omit,
+        project_id: str | Omit = omit,
         status: Literal["live", "released", "failed"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1087,6 +1142,8 @@ class AsyncSessionsResource(AsyncAPIResource):
           cursor_id: Cursor ID for pagination
 
           limit: Number of sessions to return. Default is 50, max is 100.
+
+          project_id: Filter sessions by project
 
           status: Filter sessions by current status
 
@@ -1110,6 +1167,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     {
                         "cursor_id": cursor_id,
                         "limit": limit,
+                        "project_id": project_id,
                         "status": status,
                     },
                     session_list_params.SessionListParams,
@@ -1659,6 +1717,7 @@ class AsyncSessionsResource(AsyncAPIResource):
     async def release_all(
         self,
         *,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1666,11 +1725,30 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionReleaseAllResponse:
-        """Releases all active sessions for the current organization."""
+        """
+        Releases all active sessions for the current organization.
+
+        Args:
+          project_id: Release sessions only within this project
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return await self._post(
             "/v1/sessions/release",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"project_id": project_id}, session_release_all_params.SessionReleaseAllParams
+                ),
             ),
             cast_to=SessionReleaseAllResponse,
         )
