@@ -37,6 +37,7 @@ class TestProfiles:
                 "height": 0,
                 "width": 0,
             },
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             user_agent="userAgent",
         )
@@ -79,10 +80,12 @@ class TestProfiles:
         profile = client.profiles.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             user_data_dir=b"Example data",
+            query_project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             dimensions={
                 "height": 0,
                 "width": 0,
             },
+            body_project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             user_agent="userAgent",
         )
@@ -128,6 +131,13 @@ class TestProfiles:
         assert_matches_type(ProfileListResponse, profile, path=["response"])
 
     @parametrize
+    def test_method_list_with_all_params(self, client: Steel) -> None:
+        profile = client.profiles.list(
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ProfileListResponse, profile, path=["response"])
+
+    @parametrize
     def test_raw_response_list(self, client: Steel) -> None:
         response = client.profiles.with_raw_response.list()
 
@@ -150,14 +160,22 @@ class TestProfiles:
     @parametrize
     def test_method_get(self, client: Steel) -> None:
         profile = client.profiles.get(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ProfileGetResponse, profile, path=["response"])
+
+    @parametrize
+    def test_method_get_with_all_params(self, client: Steel) -> None:
+        profile = client.profiles.get(
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ProfileGetResponse, profile, path=["response"])
 
     @parametrize
     def test_raw_response_get(self, client: Steel) -> None:
         response = client.profiles.with_raw_response.get(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -168,7 +186,7 @@ class TestProfiles:
     @parametrize
     def test_streaming_response_get(self, client: Steel) -> None:
         with client.profiles.with_streaming_response.get(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -182,7 +200,7 @@ class TestProfiles:
     def test_path_params_get(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             client.profiles.with_raw_response.get(
-                "",
+                id="",
             )
 
 
@@ -206,6 +224,7 @@ class TestAsyncProfiles:
                 "height": 0,
                 "width": 0,
             },
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             user_agent="userAgent",
         )
@@ -248,10 +267,12 @@ class TestAsyncProfiles:
         profile = await async_client.profiles.update(
             id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             user_data_dir=b"Example data",
+            query_project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             dimensions={
                 "height": 0,
                 "width": 0,
             },
+            body_project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             user_agent="userAgent",
         )
@@ -297,6 +318,13 @@ class TestAsyncProfiles:
         assert_matches_type(ProfileListResponse, profile, path=["response"])
 
     @parametrize
+    async def test_method_list_with_all_params(self, async_client: AsyncSteel) -> None:
+        profile = await async_client.profiles.list(
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ProfileListResponse, profile, path=["response"])
+
+    @parametrize
     async def test_raw_response_list(self, async_client: AsyncSteel) -> None:
         response = await async_client.profiles.with_raw_response.list()
 
@@ -319,14 +347,22 @@ class TestAsyncProfiles:
     @parametrize
     async def test_method_get(self, async_client: AsyncSteel) -> None:
         profile = await async_client.profiles.get(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(ProfileGetResponse, profile, path=["response"])
+
+    @parametrize
+    async def test_method_get_with_all_params(self, async_client: AsyncSteel) -> None:
+        profile = await async_client.profiles.get(
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(ProfileGetResponse, profile, path=["response"])
 
     @parametrize
     async def test_raw_response_get(self, async_client: AsyncSteel) -> None:
         response = await async_client.profiles.with_raw_response.get(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -337,7 +373,7 @@ class TestAsyncProfiles:
     @parametrize
     async def test_streaming_response_get(self, async_client: AsyncSteel) -> None:
         async with async_client.profiles.with_streaming_response.get(
-            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -351,5 +387,5 @@ class TestAsyncProfiles:
     async def test_path_params_get(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             await async_client.profiles.with_raw_response.get(
-                "",
+                id="",
             )

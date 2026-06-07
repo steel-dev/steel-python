@@ -17,6 +17,9 @@ class ProfileCreateParams(TypedDict, total=False):
     dimensions: Dimensions
     """The dimensions associated with the profile"""
 
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to create the profile in"""
+
     proxy_url: Annotated[str, PropertyInfo(alias="proxyUrl")]
     """The proxy associated with the profile"""
 

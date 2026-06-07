@@ -56,11 +56,13 @@ class TestSessions:
             extension_ids=["string"],
             fullscreen=True,
             headless=True,
+            inactivity_timeout=1,
             is_selenium=True,
             namespace="namespace",
             optimize_bandwidth=True,
             persist_profile=True,
             profile_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             region={},
             session_context={
@@ -201,6 +203,7 @@ class TestSessions:
         session = client.sessions.list(
             cursor_id="cursorId",
             limit=1,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             status="live",
         )
         assert_matches_type(SyncSessionsCursor[SessionslistSession], session, path=["response"])
@@ -872,6 +875,13 @@ class TestSessions:
         assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
 
     @parametrize
+    def test_method_release_all_with_all_params(self, client: Steel) -> None:
+        session = client.sessions.release_all(
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
+
+    @parametrize
     def test_raw_response_release_all(self, client: Steel) -> None:
         response = client.sessions.with_raw_response.release_all()
 
@@ -925,11 +935,13 @@ class TestAsyncSessions:
             extension_ids=["string"],
             fullscreen=True,
             headless=True,
+            inactivity_timeout=1,
             is_selenium=True,
             namespace="namespace",
             optimize_bandwidth=True,
             persist_profile=True,
             profile_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             region={},
             session_context={
@@ -1070,6 +1082,7 @@ class TestAsyncSessions:
         session = await async_client.sessions.list(
             cursor_id="cursorId",
             limit=1,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             status="live",
         )
         assert_matches_type(AsyncSessionsCursor[SessionslistSession], session, path=["response"])
@@ -1738,6 +1751,13 @@ class TestAsyncSessions:
     @parametrize
     async def test_method_release_all(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.release_all()
+        assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_release_all_with_all_params(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.release_all(
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
         assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
 
     @parametrize

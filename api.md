@@ -74,7 +74,7 @@ Methods:
 - <code title="get /v1/sessions/{id}/events">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">events</a>(id, \*\*<a href="src/steel/types/session_events_params.py">params</a>) -> <a href="./src/steel/types/session_events_response.py">SessionEventsResponse</a></code>
 - <code title="get /v1/sessions/{id}/live-details">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">live_details</a>(id) -> <a href="./src/steel/types/session_live_details_response.py">SessionLiveDetailsResponse</a></code>
 - <code title="post /v1/sessions/{id}/release">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">release</a>(id) -> <a href="./src/steel/types/session_release_response.py">SessionReleaseResponse</a></code>
-- <code title="post /v1/sessions/release">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">release_all</a>() -> <a href="./src/steel/types/session_release_all_response.py">SessionReleaseAllResponse</a></code>
+- <code title="post /v1/sessions/release">client.sessions.<a href="./src/steel/resources/sessions/sessions.py">release_all</a>(\*\*<a href="src/steel/types/session_release_all_params.py">params</a>) -> <a href="./src/steel/types/session_release_all_response.py">SessionReleaseAllResponse</a></code>
 
 ## Files
 
@@ -146,5 +146,5 @@ Methods:
 
 - <code title="post /v1/profiles">client.profiles.<a href="./src/steel/resources/profiles.py">create</a>(\*\*<a href="src/steel/types/profile_create_params.py">params</a>) -> <a href="./src/steel/types/profile_create_response.py">ProfileCreateResponse</a></code>
 - <code title="patch /v1/profiles/{id}">client.profiles.<a href="./src/steel/resources/profiles.py">update</a>(id, \*\*<a href="src/steel/types/profile_update_params.py">params</a>) -> <a href="./src/steel/types/profile_update_response.py">ProfileUpdateResponse</a></code>
-- <code title="get /v1/profiles">client.profiles.<a href="./src/steel/resources/profiles.py">list</a>() -> <a href="./src/steel/types/profile_list_response.py">ProfileListResponse</a></code>
-- <code title="get /v1/profiles/{id}">client.profiles.<a href="./src/steel/resources/profiles.py">get</a>(id) -> <a href="./src/steel/types/profile_get_response.py">ProfileGetResponse</a></code>
+- <code title="get /v1/profiles">client.profiles.<a href="./src/steel/resources/profiles.py">list</a>(\*\*<a href="src/steel/types/profile_list_params.py">params</a>) -> <a href="./src/steel/types/profile_list_response.py">ProfileListResponse</a></code>
+- <code title="get /v1/profiles/{id}">client.profiles.<a href="./src/steel/resources/profiles.py">get</a>(id, \*\*<a href="src/steel/types/profile_get_params.py">params</a>) -> <a href="./src/steel/types/profile_get_response.py">ProfileGetResponse</a></code>

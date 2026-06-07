@@ -494,6 +494,9 @@ class ProfileUpdateResponse(BaseModel):
     fingerprint: Optional[Fingerprint] = None
     """The fingerprint associated with the profile"""
 
+    project_id: Optional[str] = FieldInfo(alias="projectId", default=None)
+    """The project ID associated with the profile"""
+
     source_session_id: Optional[str] = FieldInfo(alias="sourceSessionId", default=None)
     """The last session ID associated with the profile"""
 

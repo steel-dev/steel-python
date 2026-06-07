@@ -16,6 +16,9 @@ class ClientPdfParams(TypedDict, total=False):
     delay: float
     """Delay before generating the PDF (in milliseconds)"""
 
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to execute the PDF generation in."""
+
     region: object
     """The desired region for the action to be performed in"""
 

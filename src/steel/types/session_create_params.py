@@ -80,6 +80,16 @@ class SessionCreateParams(TypedDict, total=False):
     headless: bool
     """Enable headless browser mode (disable Headful mode)"""
 
+    inactivity_timeout: Annotated[int, PropertyInfo(alias="inactivityTimeout")]
+    """Inactivity timeout in milliseconds.
+
+    When set, the session is released if no CDP command or remote input is received
+    for this duration, even if `timeout` has not yet elapsed. Note that `timeout`
+    remains the hard cap on session lifetime: if `inactivityTimeout` is greater than
+    or equal to the effective `timeout`, it has no effect since `timeout` always
+    elapses first. Omit to disable.
+    """
+
     is_selenium: Annotated[bool, PropertyInfo(alias="isSelenium")]
     """Enable Selenium mode for the browser session (default is false).
 
@@ -101,6 +111,12 @@ class SessionCreateParams(TypedDict, total=False):
 
     profile_id: Annotated[str, PropertyInfo(alias="profileId")]
     """This flag will set the profile for the session."""
+
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """The project to create the session in.
+
+    When provided, the session namespace is resolved from the project.
+    """
 
     proxy_url: Annotated[str, PropertyInfo(alias="proxyUrl")]
     """Custom proxy URL for the browser session.
