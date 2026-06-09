@@ -86,6 +86,7 @@ class SessionsResource(SyncAPIResource):
         self,
         *,
         block_ads: bool | Omit = omit,
+        ca_certificates: SequenceNotStr[str] | Omit = omit,
         concurrency: int | Omit = omit,
         credentials: session_create_params.Credentials | Omit = omit,
         debug_config: session_create_params.DebugConfig | Omit = omit,
@@ -123,6 +124,9 @@ class SessionsResource(SyncAPIResource):
 
         Args:
           block_ads: Block ads in the browser session. Default is false.
+
+          ca_certificates: PEM-encoded root CA certificates to trust in this session. THIS IS CURRENTLY AN
+              EXPERIMENTAL FEATURE.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
@@ -205,6 +209,7 @@ class SessionsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "block_ads": block_ads,
+                    "ca_certificates": ca_certificates,
                     "concurrency": concurrency,
                     "credentials": credentials,
                     "debug_config": debug_config,
@@ -935,6 +940,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         self,
         *,
         block_ads: bool | Omit = omit,
+        ca_certificates: SequenceNotStr[str] | Omit = omit,
         concurrency: int | Omit = omit,
         credentials: session_create_params.Credentials | Omit = omit,
         debug_config: session_create_params.DebugConfig | Omit = omit,
@@ -972,6 +978,9 @@ class AsyncSessionsResource(AsyncAPIResource):
 
         Args:
           block_ads: Block ads in the browser session. Default is false.
+
+          ca_certificates: PEM-encoded root CA certificates to trust in this session. THIS IS CURRENTLY AN
+              EXPERIMENTAL FEATURE.
 
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
@@ -1054,6 +1063,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "block_ads": block_ads,
+                    "ca_certificates": ca_certificates,
                     "concurrency": concurrency,
                     "credentials": credentials,
                     "debug_config": debug_config,
