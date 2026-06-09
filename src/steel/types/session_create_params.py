@@ -36,6 +36,12 @@ class SessionCreateParams(TypedDict, total=False):
     block_ads: Annotated[bool, PropertyInfo(alias="blockAds")]
     """Block ads in the browser session. Default is false."""
 
+    ca_certificates: Annotated[SequenceNotStr[str], PropertyInfo(alias="caCertificates")]
+    """PEM-encoded root CA certificates to trust in this session.
+
+    THIS IS CURRENTLY AN EXPERIMENTAL FEATURE.
+    """
+
     concurrency: int
     """Number of sessions to create concurrently (check your plan limit)"""
 

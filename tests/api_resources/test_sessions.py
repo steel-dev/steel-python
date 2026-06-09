@@ -37,6 +37,7 @@ class TestSessions:
     def test_method_create_with_all_params(self, client: Steel) -> None:
         session = client.sessions.create(
             block_ads=True,
+            ca_certificates=["string"],
             concurrency=-9007199254740991,
             credentials={
                 "auto_submit": True,
@@ -916,6 +917,7 @@ class TestAsyncSessions:
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.create(
             block_ads=True,
+            ca_certificates=["string"],
             concurrency=-9007199254740991,
             credentials={
                 "auto_submit": True,
