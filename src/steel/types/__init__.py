@@ -11,6 +11,8 @@ from .scrape_response import ScrapeResponse as ScrapeResponse
 from .session_context import SessionContext as SessionContext
 from .client_pdf_params import ClientPdfParams as ClientPdfParams
 from .file_upload_params import FileUploadParams as FileUploadParams
+from .profile_get_params import ProfileGetParams as ProfileGetParams
+from .profile_list_params import ProfileListParams as ProfileListParams
 from .screenshot_response import ScreenshotResponse as ScreenshotResponse
 from .session_list_params import SessionListParams as SessionListParams
 from .client_scrape_params import ClientScrapeParams as ClientScrapeParams
@@ -41,6 +43,7 @@ from .session_computer_response import SessionComputerResponse as SessionCompute
 from .credential_create_response import CredentialCreateResponse as CredentialCreateResponse
 from .credential_delete_response import CredentialDeleteResponse as CredentialDeleteResponse
 from .credential_update_response import CredentialUpdateResponse as CredentialUpdateResponse
+from .session_release_all_params import SessionReleaseAllParams as SessionReleaseAllParams
 from .extension_download_response import ExtensionDownloadResponse as ExtensionDownloadResponse
 from .session_release_all_response import SessionReleaseAllResponse as SessionReleaseAllResponse
 from .extension_delete_all_response import ExtensionDeleteAllResponse as ExtensionDeleteAllResponse

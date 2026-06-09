@@ -53,6 +53,7 @@ class CredentialsResource(SyncAPIResource):
         label: str | Omit = omit,
         namespace: str | Omit = omit,
         origin: str | Omit = omit,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -72,6 +73,8 @@ class CredentialsResource(SyncAPIResource):
 
           origin: Website origin the credential is for
 
+          project_id: Project to store the credential in.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -88,6 +91,7 @@ class CredentialsResource(SyncAPIResource):
                     "label": label,
                     "namespace": namespace,
                     "origin": origin,
+                    "project_id": project_id,
                 },
                 credential_create_params.CredentialCreateParams,
             ),
@@ -103,6 +107,7 @@ class CredentialsResource(SyncAPIResource):
         label: str | Omit = omit,
         namespace: str | Omit = omit,
         origin: str | Omit = omit,
+        project_id: str | Omit = omit,
         value: Dict[str, str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -121,6 +126,8 @@ class CredentialsResource(SyncAPIResource):
 
           origin: Website origin the credential is for
 
+          project_id: Project to update the credential in.
+
           value: Value for the credential
 
           extra_headers: Send extra headers
@@ -138,6 +145,7 @@ class CredentialsResource(SyncAPIResource):
                     "label": label,
                     "namespace": namespace,
                     "origin": origin,
+                    "project_id": project_id,
                     "value": value,
                 },
                 credential_update_params.CredentialUpdateParams,
@@ -153,6 +161,7 @@ class CredentialsResource(SyncAPIResource):
         *,
         namespace: str | Omit = omit,
         origin: str | Omit = omit,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -167,6 +176,8 @@ class CredentialsResource(SyncAPIResource):
           namespace: namespace credential is stored against
 
           origin: website origin the credential is for
+
+          project_id: Project to query credentials from.
 
           extra_headers: Send extra headers
 
@@ -187,6 +198,7 @@ class CredentialsResource(SyncAPIResource):
                     {
                         "namespace": namespace,
                         "origin": origin,
+                        "project_id": project_id,
                     },
                     credential_list_params.CredentialListParams,
                 ),
@@ -199,6 +211,7 @@ class CredentialsResource(SyncAPIResource):
         *,
         origin: str,
         namespace: str | Omit = omit,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -214,6 +227,8 @@ class CredentialsResource(SyncAPIResource):
 
           namespace: The namespace the credential is stored against. Defaults to "default".
 
+          project_id: Project to delete the credential from.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -228,6 +243,7 @@ class CredentialsResource(SyncAPIResource):
                 {
                     "origin": origin,
                     "namespace": namespace,
+                    "project_id": project_id,
                 },
                 credential_delete_params.CredentialDeleteParams,
             ),
@@ -265,6 +281,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         label: str | Omit = omit,
         namespace: str | Omit = omit,
         origin: str | Omit = omit,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -284,6 +301,8 @@ class AsyncCredentialsResource(AsyncAPIResource):
 
           origin: Website origin the credential is for
 
+          project_id: Project to store the credential in.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -300,6 +319,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                     "label": label,
                     "namespace": namespace,
                     "origin": origin,
+                    "project_id": project_id,
                 },
                 credential_create_params.CredentialCreateParams,
             ),
@@ -315,6 +335,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         label: str | Omit = omit,
         namespace: str | Omit = omit,
         origin: str | Omit = omit,
+        project_id: str | Omit = omit,
         value: Dict[str, str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -333,6 +354,8 @@ class AsyncCredentialsResource(AsyncAPIResource):
 
           origin: Website origin the credential is for
 
+          project_id: Project to update the credential in.
+
           value: Value for the credential
 
           extra_headers: Send extra headers
@@ -350,6 +373,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                     "label": label,
                     "namespace": namespace,
                     "origin": origin,
+                    "project_id": project_id,
                     "value": value,
                 },
                 credential_update_params.CredentialUpdateParams,
@@ -365,6 +389,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         *,
         namespace: str | Omit = omit,
         origin: str | Omit = omit,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -379,6 +404,8 @@ class AsyncCredentialsResource(AsyncAPIResource):
           namespace: namespace credential is stored against
 
           origin: website origin the credential is for
+
+          project_id: Project to query credentials from.
 
           extra_headers: Send extra headers
 
@@ -399,6 +426,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                     {
                         "namespace": namespace,
                         "origin": origin,
+                        "project_id": project_id,
                     },
                     credential_list_params.CredentialListParams,
                 ),
@@ -411,6 +439,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
         *,
         origin: str,
         namespace: str | Omit = omit,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -426,6 +455,8 @@ class AsyncCredentialsResource(AsyncAPIResource):
 
           namespace: The namespace the credential is stored against. Defaults to "default".
 
+          project_id: Project to delete the credential from.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -440,6 +471,7 @@ class AsyncCredentialsResource(AsyncAPIResource):
                 {
                     "origin": origin,
                     "namespace": namespace,
+                    "project_id": project_id,
                 },
                 credential_delete_params.CredentialDeleteParams,
             ),

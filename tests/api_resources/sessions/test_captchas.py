@@ -24,14 +24,14 @@ class TestCaptchas:
     @parametrize
     def test_method_solve(self, client: Steel) -> None:
         captcha = client.sessions.captchas.solve(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CaptchaSolveResponse, captcha, path=["response"])
 
     @parametrize
     def test_method_solve_with_all_params(self, client: Steel) -> None:
         captcha = client.sessions.captchas.solve(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_id="pageId",
             task_id="taskId",
             url="url",
@@ -41,7 +41,7 @@ class TestCaptchas:
     @parametrize
     def test_raw_response_solve(self, client: Steel) -> None:
         response = client.sessions.captchas.with_raw_response.solve(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -52,7 +52,7 @@ class TestCaptchas:
     @parametrize
     def test_streaming_response_solve(self, client: Steel) -> None:
         with client.sessions.captchas.with_streaming_response.solve(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -72,7 +72,7 @@ class TestCaptchas:
     @parametrize
     def test_method_solve_image(self, client: Steel) -> None:
         captcha = client.sessions.captchas.solve_image(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             image_x_path="imageXPath",
             input_x_path="inputXPath",
         )
@@ -81,7 +81,7 @@ class TestCaptchas:
     @parametrize
     def test_method_solve_image_with_all_params(self, client: Steel) -> None:
         captcha = client.sessions.captchas.solve_image(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             image_x_path="imageXPath",
             input_x_path="inputXPath",
             url="url",
@@ -91,7 +91,7 @@ class TestCaptchas:
     @parametrize
     def test_raw_response_solve_image(self, client: Steel) -> None:
         response = client.sessions.captchas.with_raw_response.solve_image(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             image_x_path="imageXPath",
             input_x_path="inputXPath",
         )
@@ -104,7 +104,7 @@ class TestCaptchas:
     @parametrize
     def test_streaming_response_solve_image(self, client: Steel) -> None:
         with client.sessions.captchas.with_streaming_response.solve_image(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             image_x_path="imageXPath",
             input_x_path="inputXPath",
         ) as response:
@@ -128,14 +128,14 @@ class TestCaptchas:
     @parametrize
     def test_method_status(self, client: Steel) -> None:
         captcha = client.sessions.captchas.status(
-            "sessionId",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CaptchaStatusResponse, captcha, path=["response"])
 
     @parametrize
     def test_raw_response_status(self, client: Steel) -> None:
         response = client.sessions.captchas.with_raw_response.status(
-            "sessionId",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -146,7 +146,7 @@ class TestCaptchas:
     @parametrize
     def test_streaming_response_status(self, client: Steel) -> None:
         with client.sessions.captchas.with_streaming_response.status(
-            "sessionId",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -172,14 +172,14 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_method_solve(self, async_client: AsyncSteel) -> None:
         captcha = await async_client.sessions.captchas.solve(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CaptchaSolveResponse, captcha, path=["response"])
 
     @parametrize
     async def test_method_solve_with_all_params(self, async_client: AsyncSteel) -> None:
         captcha = await async_client.sessions.captchas.solve(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             page_id="pageId",
             task_id="taskId",
             url="url",
@@ -189,7 +189,7 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_raw_response_solve(self, async_client: AsyncSteel) -> None:
         response = await async_client.sessions.captchas.with_raw_response.solve(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -200,7 +200,7 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_streaming_response_solve(self, async_client: AsyncSteel) -> None:
         async with async_client.sessions.captchas.with_streaming_response.solve(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -220,7 +220,7 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_method_solve_image(self, async_client: AsyncSteel) -> None:
         captcha = await async_client.sessions.captchas.solve_image(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             image_x_path="imageXPath",
             input_x_path="inputXPath",
         )
@@ -229,7 +229,7 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_method_solve_image_with_all_params(self, async_client: AsyncSteel) -> None:
         captcha = await async_client.sessions.captchas.solve_image(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             image_x_path="imageXPath",
             input_x_path="inputXPath",
             url="url",
@@ -239,7 +239,7 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_raw_response_solve_image(self, async_client: AsyncSteel) -> None:
         response = await async_client.sessions.captchas.with_raw_response.solve_image(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             image_x_path="imageXPath",
             input_x_path="inputXPath",
         )
@@ -252,7 +252,7 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_streaming_response_solve_image(self, async_client: AsyncSteel) -> None:
         async with async_client.sessions.captchas.with_streaming_response.solve_image(
-            session_id="sessionId",
+            session_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             image_x_path="imageXPath",
             input_x_path="inputXPath",
         ) as response:
@@ -276,14 +276,14 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_method_status(self, async_client: AsyncSteel) -> None:
         captcha = await async_client.sessions.captchas.status(
-            "sessionId",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
         assert_matches_type(CaptchaStatusResponse, captcha, path=["response"])
 
     @parametrize
     async def test_raw_response_status(self, async_client: AsyncSteel) -> None:
         response = await async_client.sessions.captchas.with_raw_response.status(
-            "sessionId",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         )
 
         assert response.is_closed is True
@@ -294,7 +294,7 @@ class TestAsyncCaptchas:
     @parametrize
     async def test_streaming_response_status(self, async_client: AsyncSteel) -> None:
         async with async_client.sessions.captchas.with_streaming_response.status(
-            "sessionId",
+            "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

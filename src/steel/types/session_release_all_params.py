@@ -6,15 +6,9 @@ from typing_extensions import Annotated, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["CredentialListParams"]
+__all__ = ["SessionReleaseAllParams"]
 
 
-class CredentialListParams(TypedDict, total=False):
-    namespace: str
-    """namespace credential is stored against"""
-
-    origin: str
-    """website origin the credential is for"""
-
+class SessionReleaseAllParams(TypedDict, total=False):
     project_id: Annotated[str, PropertyInfo(alias="projectId")]
-    """Project to query credentials from."""
+    """Release sessions only within this project"""

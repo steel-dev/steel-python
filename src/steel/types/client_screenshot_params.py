@@ -19,6 +19,9 @@ class ClientScreenshotParams(TypedDict, total=False):
     full_page: Annotated[bool, PropertyInfo(alias="fullPage")]
     """Capture the full page screenshot. Default is `false`."""
 
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to execute the screenshot in."""
+
     region: object
     """The desired region for the action to be performed in"""
 

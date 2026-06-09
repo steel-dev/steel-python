@@ -15,9 +15,15 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
-from ...types import session_list_params, session_create_params, session_events_params, session_computer_params
+from ...types import (
+    session_list_params,
+    session_create_params,
+    session_events_params,
+    session_computer_params,
+    session_release_all_params,
+)
 from ..._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from ..._utils import required_args, maybe_transform, async_maybe_transform
+from ..._utils import path_template, required_args, maybe_transform, async_maybe_transform
 from .captchas import (
     CaptchasResource,
     AsyncCaptchasResource,
@@ -80,6 +86,7 @@ class SessionsResource(SyncAPIResource):
         self,
         *,
         block_ads: bool | Omit = omit,
+        ca_certificates: SequenceNotStr[str] | Omit = omit,
         concurrency: int | Omit = omit,
         credentials: session_create_params.Credentials | Omit = omit,
         debug_config: session_create_params.DebugConfig | Omit = omit,
@@ -87,12 +94,15 @@ class SessionsResource(SyncAPIResource):
         dimensions: session_create_params.Dimensions | Omit = omit,
         experimental_features: SequenceNotStr[str] | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
+        fullscreen: bool | Omit = omit,
         headless: bool | Omit = omit,
+        inactivity_timeout: int | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
         optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
         persist_profile: bool | Omit = omit,
         profile_id: str | Omit = omit,
+        project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         region: object | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
@@ -115,6 +125,9 @@ class SessionsResource(SyncAPIResource):
         Args:
           block_ads: Block ads in the browser session. Default is false.
 
+          ca_certificates: PEM-encoded root CA certificates to trust in this session. THIS IS CURRENTLY AN
+              EXPERIMENTAL FEATURE.
+
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
           credentials: Configuration for session credentials
@@ -125,14 +138,25 @@ class SessionsResource(SyncAPIResource):
           device_config: Device configuration for the session. Specify 'mobile' for mobile device
               fingerprints and configurations.
 
-          dimensions: Viewport and browser window dimensions for the session
+          dimensions: Viewport and browser window dimensions for the session. Mobile sessions require
+              dimensions of at least 508x1074; smaller mobile dimensions are rejected with a
+              400 response.
 
           experimental_features: Enable experimental features for the session.
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
 
+          fullscreen: Launch the browser in fullscreen mode, covering the full screen with no Chrome
+              UI. Default is false.
+
           headless: Enable headless browser mode (disable Headful mode)
+
+          inactivity_timeout: Inactivity timeout in milliseconds. When set, the session is released if no CDP
+              command or remote input is received for this duration, even if `timeout` has not
+              yet elapsed. Note that `timeout` remains the hard cap on session lifetime: if
+              `inactivityTimeout` is greater than or equal to the effective `timeout`, it has
+              no effect since `timeout` always elapses first. Omit to disable.
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -146,12 +170,16 @@ class SessionsResource(SyncAPIResource):
 
           profile_id: This flag will set the profile for the session.
 
+          project_id: The project to create the session in. When provided, the session namespace is
+              resolved from the project.
+
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
               http(s)://username:password@hostname:port
 
-          region: The desired region for the session to be started in. Available regions are lax,
-              ord, iad
+          region: The desired region for the session. Available: us-east, us-west, us-central,
+              eu-west, eu-central, ap-northeast, ap-southeast, sa-east. Legacy codes (iad,
+              lax, ord) are also accepted.
 
           session_context: Session context data to be used in the created session. Sessions will start with
               an empty context by default.
@@ -181,6 +209,7 @@ class SessionsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "block_ads": block_ads,
+                    "ca_certificates": ca_certificates,
                     "concurrency": concurrency,
                     "credentials": credentials,
                     "debug_config": debug_config,
@@ -188,12 +217,15 @@ class SessionsResource(SyncAPIResource):
                     "dimensions": dimensions,
                     "experimental_features": experimental_features,
                     "extension_ids": extension_ids,
+                    "fullscreen": fullscreen,
                     "headless": headless,
+                    "inactivity_timeout": inactivity_timeout,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "optimize_bandwidth": optimize_bandwidth,
                     "persist_profile": persist_profile,
                     "profile_id": profile_id,
+                    "project_id": project_id,
                     "proxy_url": proxy_url,
                     "region": region,
                     "session_context": session_context,
@@ -238,7 +270,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sessions/{id}",
+            path_template("/v1/sessions/{id}", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -250,6 +282,7 @@ class SessionsResource(SyncAPIResource):
         *,
         cursor_id: str | Omit = omit,
         limit: int | Omit = omit,
+        project_id: str | Omit = omit,
         status: Literal["live", "released", "failed"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -265,6 +298,8 @@ class SessionsResource(SyncAPIResource):
           cursor_id: Cursor ID for pagination
 
           limit: Number of sessions to return. Default is 50, max is 100.
+
+          project_id: Filter sessions by project
 
           status: Filter sessions by current status
 
@@ -288,6 +323,7 @@ class SessionsResource(SyncAPIResource):
                     {
                         "cursor_id": cursor_id,
                         "limit": limit,
+                        "project_id": project_id,
                         "status": status,
                     },
                     session_list_params.SessionListParams,
@@ -338,7 +374,7 @@ class SessionsResource(SyncAPIResource):
         session_id: str,
         *,
         action: Literal["click_mouse"],
-        button: Literal["left", "right", "middle", "back", "forward"],
+        button: Literal["left", "right", "middle", "back", "forward"] | Omit = omit,
         click_type: Literal["down", "up", "click"] | Omit = omit,
         coordinates: Iterable[float] | Omit = omit,
         hold_keys: SequenceNotStr[str] | Omit = omit,
@@ -355,7 +391,7 @@ class SessionsResource(SyncAPIResource):
         Execute computer actions like mouse movements, clicks, keyboard input, and more
 
         Args:
-          button: Mouse button to click
+          button: Mouse button to click. Defaults to 'left'
 
           click_type: Type of click (down, up, or click). Defaults to 'click'
 
@@ -616,9 +652,8 @@ class SessionsResource(SyncAPIResource):
 
     @required_args(
         ["action", "coordinates"],
-        ["action", "button"],
-        ["action", "path"],
         ["action"],
+        ["action", "path"],
         ["action", "keys"],
         ["action", "text"],
         ["action", "duration"],
@@ -658,7 +693,7 @@ class SessionsResource(SyncAPIResource):
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         return self._post(
-            f"/v1/sessions/{session_id}/computer",
+            path_template("/v1/sessions/{session_id}/computer", session_id=session_id),
             body=maybe_transform(
                 {
                     "action": action,
@@ -709,7 +744,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sessions/{id}/context",
+            path_template("/v1/sessions/{id}/context", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -751,7 +786,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sessions/{id}/events",
+            path_template("/v1/sessions/{id}/events", id=id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -795,7 +830,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._get(
-            f"/v1/sessions/{id}/live-details",
+            path_template("/v1/sessions/{id}/live-details", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -828,7 +863,7 @@ class SessionsResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._post(
-            f"/v1/sessions/{id}/release",
+            path_template("/v1/sessions/{id}/release", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -838,6 +873,7 @@ class SessionsResource(SyncAPIResource):
     def release_all(
         self,
         *,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -845,11 +881,28 @@ class SessionsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionReleaseAllResponse:
-        """Releases all active sessions for the current organization."""
+        """
+        Releases all active sessions for the current organization.
+
+        Args:
+          project_id: Release sessions only within this project
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return self._post(
             "/v1/sessions/release",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"project_id": project_id}, session_release_all_params.SessionReleaseAllParams),
             ),
             cast_to=SessionReleaseAllResponse,
         )
@@ -887,6 +940,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         self,
         *,
         block_ads: bool | Omit = omit,
+        ca_certificates: SequenceNotStr[str] | Omit = omit,
         concurrency: int | Omit = omit,
         credentials: session_create_params.Credentials | Omit = omit,
         debug_config: session_create_params.DebugConfig | Omit = omit,
@@ -894,12 +948,15 @@ class AsyncSessionsResource(AsyncAPIResource):
         dimensions: session_create_params.Dimensions | Omit = omit,
         experimental_features: SequenceNotStr[str] | Omit = omit,
         extension_ids: SequenceNotStr[str] | Omit = omit,
+        fullscreen: bool | Omit = omit,
         headless: bool | Omit = omit,
+        inactivity_timeout: int | Omit = omit,
         is_selenium: bool | Omit = omit,
         namespace: str | Omit = omit,
         optimize_bandwidth: session_create_params.OptimizeBandwidth | Omit = omit,
         persist_profile: bool | Omit = omit,
         profile_id: str | Omit = omit,
+        project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
         region: object | Omit = omit,
         session_context: session_create_params.SessionContext | Omit = omit,
@@ -922,6 +979,9 @@ class AsyncSessionsResource(AsyncAPIResource):
         Args:
           block_ads: Block ads in the browser session. Default is false.
 
+          ca_certificates: PEM-encoded root CA certificates to trust in this session. THIS IS CURRENTLY AN
+              EXPERIMENTAL FEATURE.
+
           concurrency: Number of sessions to create concurrently (check your plan limit)
 
           credentials: Configuration for session credentials
@@ -932,14 +992,25 @@ class AsyncSessionsResource(AsyncAPIResource):
           device_config: Device configuration for the session. Specify 'mobile' for mobile device
               fingerprints and configurations.
 
-          dimensions: Viewport and browser window dimensions for the session
+          dimensions: Viewport and browser window dimensions for the session. Mobile sessions require
+              dimensions of at least 508x1074; smaller mobile dimensions are rejected with a
+              400 response.
 
           experimental_features: Enable experimental features for the session.
 
           extension_ids: Array of extension IDs to install in the session. Use ['all_ext'] to install all
               uploaded extensions.
 
+          fullscreen: Launch the browser in fullscreen mode, covering the full screen with no Chrome
+              UI. Default is false.
+
           headless: Enable headless browser mode (disable Headful mode)
+
+          inactivity_timeout: Inactivity timeout in milliseconds. When set, the session is released if no CDP
+              command or remote input is received for this duration, even if `timeout` has not
+              yet elapsed. Note that `timeout` remains the hard cap on session lifetime: if
+              `inactivityTimeout` is greater than or equal to the effective `timeout`, it has
+              no effect since `timeout` always elapses first. Omit to disable.
 
           is_selenium: Enable Selenium mode for the browser session (default is false). Use this when
               you plan to connect to the browser session via Selenium.
@@ -953,12 +1024,16 @@ class AsyncSessionsResource(AsyncAPIResource):
 
           profile_id: This flag will set the profile for the session.
 
+          project_id: The project to create the session in. When provided, the session namespace is
+              resolved from the project.
+
           proxy_url: Custom proxy URL for the browser session. Overrides useProxy, disabling
               Steel-provided proxies in favor of your specified proxy. Format:
               http(s)://username:password@hostname:port
 
-          region: The desired region for the session to be started in. Available regions are lax,
-              ord, iad
+          region: The desired region for the session. Available: us-east, us-west, us-central,
+              eu-west, eu-central, ap-northeast, ap-southeast, sa-east. Legacy codes (iad,
+              lax, ord) are also accepted.
 
           session_context: Session context data to be used in the created session. Sessions will start with
               an empty context by default.
@@ -988,6 +1063,7 @@ class AsyncSessionsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "block_ads": block_ads,
+                    "ca_certificates": ca_certificates,
                     "concurrency": concurrency,
                     "credentials": credentials,
                     "debug_config": debug_config,
@@ -995,12 +1071,15 @@ class AsyncSessionsResource(AsyncAPIResource):
                     "dimensions": dimensions,
                     "experimental_features": experimental_features,
                     "extension_ids": extension_ids,
+                    "fullscreen": fullscreen,
                     "headless": headless,
+                    "inactivity_timeout": inactivity_timeout,
                     "is_selenium": is_selenium,
                     "namespace": namespace,
                     "optimize_bandwidth": optimize_bandwidth,
                     "persist_profile": persist_profile,
                     "profile_id": profile_id,
+                    "project_id": project_id,
                     "proxy_url": proxy_url,
                     "region": region,
                     "session_context": session_context,
@@ -1045,7 +1124,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sessions/{id}",
+            path_template("/v1/sessions/{id}", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1057,6 +1136,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         *,
         cursor_id: str | Omit = omit,
         limit: int | Omit = omit,
+        project_id: str | Omit = omit,
         status: Literal["live", "released", "failed"] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -1072,6 +1152,8 @@ class AsyncSessionsResource(AsyncAPIResource):
           cursor_id: Cursor ID for pagination
 
           limit: Number of sessions to return. Default is 50, max is 100.
+
+          project_id: Filter sessions by project
 
           status: Filter sessions by current status
 
@@ -1095,6 +1177,7 @@ class AsyncSessionsResource(AsyncAPIResource):
                     {
                         "cursor_id": cursor_id,
                         "limit": limit,
+                        "project_id": project_id,
                         "status": status,
                     },
                     session_list_params.SessionListParams,
@@ -1145,7 +1228,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         session_id: str,
         *,
         action: Literal["click_mouse"],
-        button: Literal["left", "right", "middle", "back", "forward"],
+        button: Literal["left", "right", "middle", "back", "forward"] | Omit = omit,
         click_type: Literal["down", "up", "click"] | Omit = omit,
         coordinates: Iterable[float] | Omit = omit,
         hold_keys: SequenceNotStr[str] | Omit = omit,
@@ -1162,7 +1245,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         Execute computer actions like mouse movements, clicks, keyboard input, and more
 
         Args:
-          button: Mouse button to click
+          button: Mouse button to click. Defaults to 'left'
 
           click_type: Type of click (down, up, or click). Defaults to 'click'
 
@@ -1423,9 +1506,8 @@ class AsyncSessionsResource(AsyncAPIResource):
 
     @required_args(
         ["action", "coordinates"],
-        ["action", "button"],
-        ["action", "path"],
         ["action"],
+        ["action", "path"],
         ["action", "keys"],
         ["action", "text"],
         ["action", "duration"],
@@ -1465,7 +1547,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not session_id:
             raise ValueError(f"Expected a non-empty value for `session_id` but received {session_id!r}")
         return await self._post(
-            f"/v1/sessions/{session_id}/computer",
+            path_template("/v1/sessions/{session_id}/computer", session_id=session_id),
             body=await async_maybe_transform(
                 {
                     "action": action,
@@ -1516,7 +1598,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sessions/{id}/context",
+            path_template("/v1/sessions/{id}/context", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1558,7 +1640,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sessions/{id}/events",
+            path_template("/v1/sessions/{id}/events", id=id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -1602,7 +1684,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._get(
-            f"/v1/sessions/{id}/live-details",
+            path_template("/v1/sessions/{id}/live-details", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1635,7 +1717,7 @@ class AsyncSessionsResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._post(
-            f"/v1/sessions/{id}/release",
+            path_template("/v1/sessions/{id}/release", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -1645,6 +1727,7 @@ class AsyncSessionsResource(AsyncAPIResource):
     async def release_all(
         self,
         *,
+        project_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1652,11 +1735,30 @@ class AsyncSessionsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SessionReleaseAllResponse:
-        """Releases all active sessions for the current organization."""
+        """
+        Releases all active sessions for the current organization.
+
+        Args:
+          project_id: Release sessions only within this project
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return await self._post(
             "/v1/sessions/release",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"project_id": project_id}, session_release_all_params.SessionReleaseAllParams
+                ),
             ),
             cast_to=SessionReleaseAllResponse,
         )

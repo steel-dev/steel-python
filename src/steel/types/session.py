@@ -135,8 +135,17 @@ class Session(BaseModel):
     device_config: Optional[DeviceConfig] = FieldInfo(alias="deviceConfig", default=None)
     """Device configuration for the session"""
 
+    fullscreen: Optional[bool] = None
+    """
+    Launch the browser in fullscreen mode, covering the full screen with no Chrome
+    UI.
+    """
+
     headless: Optional[bool] = None
     """Indicates if the session is headless or headful"""
+
+    inactivity_timeout: Optional[int] = FieldInfo(alias="inactivityTimeout", default=None)
+    """Inactivity timeout in milliseconds, if one was set when the session was created"""
 
     is_selenium: Optional[bool] = FieldInfo(alias="isSelenium", default=None)
     """Indicates if Selenium is used in the session"""
@@ -147,8 +156,28 @@ class Session(BaseModel):
     profile_id: Optional[str] = FieldInfo(alias="profileId", default=None)
     """The ID of the profile associated with the session"""
 
-    region: Optional[Literal["lax", "ord", "iad", "scl", "fra", "nrt"]] = None
-    """The region where the session was created"""
+    project_id: Optional[str] = FieldInfo(alias="projectId", default=None)
+    """The project associated with the session"""
+
+    region: Optional[
+        Literal[
+            "lax",
+            "ord",
+            "iad",
+            "scl",
+            "fra",
+            "nrt",
+            "us-east",
+            "us-west",
+            "us-central",
+            "eu-west",
+            "eu-central",
+            "ap-northeast",
+            "ap-southeast",
+            "sa-east",
+        ]
+    ] = None
+    """The region where the session was created."""
 
     solve_captcha: Optional[bool] = FieldInfo(alias="solveCaptcha", default=None)
     """Indicates if captcha solving is enabled"""

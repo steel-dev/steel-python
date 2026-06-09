@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from typing import Dict
-from typing_extensions import Required, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
+
+from .._utils import PropertyInfo
 
 __all__ = ["CredentialCreateParams"]
 
@@ -20,3 +22,6 @@ class CredentialCreateParams(TypedDict, total=False):
 
     origin: str
     """Website origin the credential is for"""
+
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to store the credential in."""

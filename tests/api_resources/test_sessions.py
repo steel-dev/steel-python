@@ -37,6 +37,7 @@ class TestSessions:
     def test_method_create_with_all_params(self, client: Steel) -> None:
         session = client.sessions.create(
             block_ads=True,
+            ca_certificates=["string"],
             concurrency=-9007199254740991,
             credentials={
                 "auto_submit": True,
@@ -54,12 +55,15 @@ class TestSessions:
             },
             experimental_features=["string"],
             extension_ids=["string"],
+            fullscreen=True,
             headless=True,
+            inactivity_timeout=1,
             is_selenium=True,
             namespace="namespace",
             optimize_bandwidth=True,
             persist_profile=True,
             profile_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             region={},
             session_context={
@@ -200,6 +204,7 @@ class TestSessions:
         session = client.sessions.list(
             cursor_id="cursorId",
             limit=1,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             status="live",
         )
         assert_matches_type(SyncSessionsCursor[SessionslistSession], session, path=["response"])
@@ -286,7 +291,6 @@ class TestSessions:
         session = client.sessions.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         )
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
@@ -309,7 +313,6 @@ class TestSessions:
         response = client.sessions.with_raw_response.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         )
 
         assert response.is_closed is True
@@ -322,7 +325,6 @@ class TestSessions:
         with client.sessions.with_streaming_response.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -338,7 +340,6 @@ class TestSessions:
             client.sessions.with_raw_response.computer(
                 session_id="",
                 action="click_mouse",
-                button="left",
             )
 
     @parametrize
@@ -875,6 +876,13 @@ class TestSessions:
         assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
 
     @parametrize
+    def test_method_release_all_with_all_params(self, client: Steel) -> None:
+        session = client.sessions.release_all(
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
+        assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
+
+    @parametrize
     def test_raw_response_release_all(self, client: Steel) -> None:
         response = client.sessions.with_raw_response.release_all()
 
@@ -909,6 +917,7 @@ class TestAsyncSessions:
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.create(
             block_ads=True,
+            ca_certificates=["string"],
             concurrency=-9007199254740991,
             credentials={
                 "auto_submit": True,
@@ -926,12 +935,15 @@ class TestAsyncSessions:
             },
             experimental_features=["string"],
             extension_ids=["string"],
+            fullscreen=True,
             headless=True,
+            inactivity_timeout=1,
             is_selenium=True,
             namespace="namespace",
             optimize_bandwidth=True,
             persist_profile=True,
             profile_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
             region={},
             session_context={
@@ -1072,6 +1084,7 @@ class TestAsyncSessions:
         session = await async_client.sessions.list(
             cursor_id="cursorId",
             limit=1,
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             status="live",
         )
         assert_matches_type(AsyncSessionsCursor[SessionslistSession], session, path=["response"])
@@ -1158,7 +1171,6 @@ class TestAsyncSessions:
         session = await async_client.sessions.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         )
         assert_matches_type(SessionComputerResponse, session, path=["response"])
 
@@ -1181,7 +1193,6 @@ class TestAsyncSessions:
         response = await async_client.sessions.with_raw_response.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         )
 
         assert response.is_closed is True
@@ -1194,7 +1205,6 @@ class TestAsyncSessions:
         async with async_client.sessions.with_streaming_response.computer(
             session_id="sessionId",
             action="click_mouse",
-            button="left",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -1210,7 +1220,6 @@ class TestAsyncSessions:
             await async_client.sessions.with_raw_response.computer(
                 session_id="",
                 action="click_mouse",
-                button="left",
             )
 
     @parametrize
@@ -1744,6 +1753,13 @@ class TestAsyncSessions:
     @parametrize
     async def test_method_release_all(self, async_client: AsyncSteel) -> None:
         session = await async_client.sessions.release_all()
+        assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
+
+    @parametrize
+    async def test_method_release_all_with_all_params(self, async_client: AsyncSteel) -> None:
+        session = await async_client.sessions.release_all(
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+        )
         assert_matches_type(SessionReleaseAllResponse, session, path=["response"])
 
     @parametrize

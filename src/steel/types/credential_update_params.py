@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from typing import Dict
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
+
+from .._utils import PropertyInfo
 
 __all__ = ["CredentialUpdateParams"]
 
@@ -17,6 +19,9 @@ class CredentialUpdateParams(TypedDict, total=False):
 
     origin: str
     """Website origin the credential is for"""
+
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to update the credential in."""
 
     value: Dict[str, str]
     """Value for the credential"""

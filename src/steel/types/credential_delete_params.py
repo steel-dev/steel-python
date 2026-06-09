@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
+
+from .._utils import PropertyInfo
 
 __all__ = ["CredentialDeleteParams"]
 
@@ -13,3 +15,6 @@ class CredentialDeleteParams(TypedDict, total=False):
 
     namespace: str
     """The namespace the credential is stored against. Defaults to "default"."""
+
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+    """Project to delete the credential from."""

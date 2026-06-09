@@ -1,5 +1,59 @@
 # Changelog
 
+## 0.18.0 (2026-06-09)
+
+Full Changelog: [v0.17.0...v0.18.0](https://github.com/steel-dev/steel-python/compare/v0.17.0...v0.18.0)
+
+### Features
+
+* **api:** api update ([bcad7fe](https://github.com/steel-dev/steel-python/commit/bcad7fec1bbbfd69a0e2e3548e16dc5ddf5d5d82))
+* **api:** api update ([1d3059d](https://github.com/steel-dev/steel-python/commit/1d3059d039ec229fb10fb443e95b29359b64af02))
+* **api:** api update ([2d6f812](https://github.com/steel-dev/steel-python/commit/2d6f81208d2ddd9ebc2517bc79770cd1a4d9cf04))
+* **api:** api update ([3127882](https://github.com/steel-dev/steel-python/commit/31278821116d4ef0ca92eb33c2a0b4de3cf95cb7))
+* **api:** api update ([e62a897](https://github.com/steel-dev/steel-python/commit/e62a897643478d28ad024c164721f56586dc5d87))
+* **api:** api update ([8ac9d34](https://github.com/steel-dev/steel-python/commit/8ac9d344a185b06ad9805c2eac4f2a87a6713de5))
+* **api:** api update ([e297172](https://github.com/steel-dev/steel-python/commit/e297172d0831fc7caf8929a278cfce8f17ddef8e))
+* **internal/types:** support eagerly validating pydantic iterators ([688b723](https://github.com/steel-dev/steel-python/commit/688b7237d5a1640ceaa5ef5c728620471968cb84))
+* **internal:** implement indices array format for query and form serialization ([5e7b0a2](https://github.com/steel-dev/steel-python/commit/5e7b0a243b6d3fd6299b60695e57ef709096e265))
+* support setting headers via env ([d2489e3](https://github.com/steel-dev/steel-python/commit/d2489e35d20022c328e01d19aacfa755bba7f4a8))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([6819424](https://github.com/steel-dev/steel-python/commit/68194248ddc4a4cab0920e9a92c107be665e3ad1))
+* **client:** preserve hardcoded query params when merging with user params ([a2ee006](https://github.com/steel-dev/steel-python/commit/a2ee00611edec4afc18dbe55707afcff37738b18))
+* **deps:** bump minimum typing-extensions version ([3815a72](https://github.com/steel-dev/steel-python/commit/3815a72732d737d7403f91fbec741c95dd5f89d5))
+* ensure file data are only sent as 1 parameter ([3d0485c](https://github.com/steel-dev/steel-python/commit/3d0485c4ab6faf9bf4cdf46b80f8bd5267a8b033))
+* **pydantic:** do not pass `by_alias` unless set ([f9686b4](https://github.com/steel-dev/steel-python/commit/f9686b47001a452f8591d9d65c7dd8c70dad5204))
+* sanitize endpoint path params ([abb806c](https://github.com/steel-dev/steel-python/commit/abb806c6ada0cb749bf734ada489eeff02738673))
+* use correct field name format for multipart file arrays ([5151960](https://github.com/steel-dev/steel-python/commit/51519607a71818a4d69119c6e4dffaf88a53071c))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([fe678f2](https://github.com/steel-dev/steel-python/commit/fe678f2ed6cd4eac844a0c260c62e4fba9a84cbb))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([a90bcd7](https://github.com/steel-dev/steel-python/commit/a90bcd7ec396cded3006818beffe1c1f8780f6d1))
+* **internal:** more robust bootstrap script ([c6d65ae](https://github.com/steel-dev/steel-python/commit/c6d65ae060526ed85fc7e27040a921cad3c00196))
+* **internal:** reformat pyproject.toml ([0af9144](https://github.com/steel-dev/steel-python/commit/0af9144bf8bb11c063deb6686b28c2e09e4319e6))
+* **internal:** tweak CI branches ([35a8acc](https://github.com/steel-dev/steel-python/commit/35a8acc7fd278d27398979892a10832291f74e9d))
+* **internal:** update gitignore ([4f0a06c](https://github.com/steel-dev/steel-python/commit/4f0a06c5eb8b1b88597e4d562de24284d4c9e2d3))
+* **tests:** bump steady to v0.19.4 ([fc582c4](https://github.com/steel-dev/steel-python/commit/fc582c4da1253d3851af25e753398ed6139cdac6))
+* **tests:** bump steady to v0.19.5 ([9927574](https://github.com/steel-dev/steel-python/commit/9927574b27a5d281732032176c9da052e7da5ea0))
+* **tests:** bump steady to v0.19.6 ([81717f3](https://github.com/steel-dev/steel-python/commit/81717f34046cb49e43a25db03d8b5bb153429284))
+* **tests:** bump steady to v0.19.7 ([4d06b71](https://github.com/steel-dev/steel-python/commit/4d06b71429d4341474d75d915d17bd597ebd42ec))
+* **tests:** bump steady to v0.20.1 ([793aca8](https://github.com/steel-dev/steel-python/commit/793aca80bd008a31fe47a9fff8380f2a9ab513f4))
+* **tests:** bump steady to v0.20.2 ([0be42f6](https://github.com/steel-dev/steel-python/commit/0be42f6789832bc33a87b8f5ce0a374cce1a4508))
+* **tests:** bump steady to v0.22.1 ([1fe72c6](https://github.com/steel-dev/steel-python/commit/1fe72c6a2ef34388e815315acbf93026c5727d5d))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([791de4d](https://github.com/steel-dev/steel-python/commit/791de4d8baf003a3600e7e7a9422a36fc6729c12))
+
 ## 0.17.0 (2026-03-16)
 
 Full Changelog: [v0.16.0...v0.17.0](https://github.com/steel-dev/steel-python/compare/v0.16.0...v0.17.0)
