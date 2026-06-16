@@ -1,4 +1,4 @@
 configured_endpoints: 39
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/nen-labs/steel-f075774c87d572f7c062bafae551f282ee92e97b3fdc27e0ddf21a4a10d28b52.yml
-openapi_spec_hash: cc0386ac0723401923529d1852a86899
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/nen-labs/steel-207e37e5d4e8fdec73cabe4c3b6e5385bd96d8c3b8feff654e4fb00cabd470df.yml
+openapi_spec_hash: 100829fde8079085f7a18af33a51f23a
 config_hash: dce4dea59023b0a00890fa654fbfffb4
