@@ -29,6 +29,7 @@ __all__ = [
     "UseProxyGeolocation",
     "UseProxyGeolocationGeolocation",
     "UseProxyServer",
+    "UseProxyUnionMember3",
 ]
 
 
@@ -1724,4 +1725,12 @@ class UseProxyServer(TypedDict, total=False):
     """Proxy server URL"""
 
 
-UseProxy: TypeAlias = Union[bool, UseProxyGeolocation, UseProxyServer, object]
+class UseProxyUnionMember3(TypedDict, total=False):
+    type: Required[Literal["fixed"]]
+    """Use Steel fixed IP proxies"""
+
+    id: str
+    """Specific fixed IP identifier. Omit to use any active fixed IP owned by the org."""
+
+
+UseProxy: TypeAlias = Union[bool, UseProxyGeolocation, UseProxyServer, UseProxyUnionMember3, object]
