@@ -54,6 +54,7 @@ class ProfilesResource(SyncAPIResource):
         dimensions: profile_create_params.Dimensions | Omit = omit,
         project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
+        use_proxy: str | Omit = omit,
         user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -74,6 +75,9 @@ class ProfilesResource(SyncAPIResource):
 
           proxy_url: The proxy associated with the profile
 
+          use_proxy: JSON-encoded proxy configuration associated with the profile. For fixed IPs,
+              send {"type":"fixed","id":"fixed:<id>"}.
+
           user_agent: The user agent associated with the profile
 
           extra_headers: Send extra headers
@@ -90,6 +94,7 @@ class ProfilesResource(SyncAPIResource):
                 "dimensions": dimensions,
                 "project_id": project_id,
                 "proxy_url": proxy_url,
+                "use_proxy": use_proxy,
                 "user_agent": user_agent,
             },
             [["userDataDir"]],
@@ -118,6 +123,7 @@ class ProfilesResource(SyncAPIResource):
         dimensions: profile_update_params.Dimensions | Omit = omit,
         body_project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
+        use_proxy: str | Omit = omit,
         user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -140,6 +146,9 @@ class ProfilesResource(SyncAPIResource):
 
           proxy_url: The proxy associated with the profile
 
+          use_proxy: JSON-encoded proxy configuration associated with the profile. For fixed IPs,
+              send {"type":"fixed","id":"fixed:<id>"}.
+
           user_agent: The user agent associated with the profile
 
           extra_headers: Send extra headers
@@ -158,6 +167,7 @@ class ProfilesResource(SyncAPIResource):
                 "dimensions": dimensions,
                 "body_project_id": body_project_id,
                 "proxy_url": proxy_url,
+                "use_proxy": use_proxy,
                 "user_agent": user_agent,
             },
             [["userDataDir"]],
@@ -288,6 +298,7 @@ class AsyncProfilesResource(AsyncAPIResource):
         dimensions: profile_create_params.Dimensions | Omit = omit,
         project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
+        use_proxy: str | Omit = omit,
         user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -308,6 +319,9 @@ class AsyncProfilesResource(AsyncAPIResource):
 
           proxy_url: The proxy associated with the profile
 
+          use_proxy: JSON-encoded proxy configuration associated with the profile. For fixed IPs,
+              send {"type":"fixed","id":"fixed:<id>"}.
+
           user_agent: The user agent associated with the profile
 
           extra_headers: Send extra headers
@@ -324,6 +338,7 @@ class AsyncProfilesResource(AsyncAPIResource):
                 "dimensions": dimensions,
                 "project_id": project_id,
                 "proxy_url": proxy_url,
+                "use_proxy": use_proxy,
                 "user_agent": user_agent,
             },
             [["userDataDir"]],
@@ -352,6 +367,7 @@ class AsyncProfilesResource(AsyncAPIResource):
         dimensions: profile_update_params.Dimensions | Omit = omit,
         body_project_id: str | Omit = omit,
         proxy_url: str | Omit = omit,
+        use_proxy: str | Omit = omit,
         user_agent: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -374,6 +390,9 @@ class AsyncProfilesResource(AsyncAPIResource):
 
           proxy_url: The proxy associated with the profile
 
+          use_proxy: JSON-encoded proxy configuration associated with the profile. For fixed IPs,
+              send {"type":"fixed","id":"fixed:<id>"}.
+
           user_agent: The user agent associated with the profile
 
           extra_headers: Send extra headers
@@ -392,6 +411,7 @@ class AsyncProfilesResource(AsyncAPIResource):
                 "dimensions": dimensions,
                 "body_project_id": body_project_id,
                 "proxy_url": proxy_url,
+                "use_proxy": use_proxy,
                 "user_agent": user_agent,
             },
             [["userDataDir"]],
