@@ -26,6 +26,12 @@ class ProfileUpdateParams(TypedDict, total=False):
     proxy_url: Annotated[str, PropertyInfo(alias="proxyUrl")]
     """The proxy associated with the profile"""
 
+    use_proxy: Annotated[str, PropertyInfo(alias="useProxy")]
+    """JSON-encoded proxy configuration associated with the profile.
+
+    For fixed IPs, send {"type":"fixed","id":"fixed:<id>"}.
+    """
+
     user_agent: Annotated[str, PropertyInfo(alias="userAgent")]
     """The user agent associated with the profile"""
 

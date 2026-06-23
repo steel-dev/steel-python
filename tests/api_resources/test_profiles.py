@@ -39,6 +39,7 @@ class TestProfiles:
             },
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
+            use_proxy="useProxy",
             user_agent="userAgent",
         )
         assert_matches_type(ProfileCreateResponse, profile, path=["response"])
@@ -87,6 +88,7 @@ class TestProfiles:
             },
             body_project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
+            use_proxy="useProxy",
             user_agent="userAgent",
         )
         assert_matches_type(ProfileUpdateResponse, profile, path=["response"])
@@ -226,6 +228,7 @@ class TestAsyncProfiles:
             },
             project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
+            use_proxy="useProxy",
             user_agent="userAgent",
         )
         assert_matches_type(ProfileCreateResponse, profile, path=["response"])
@@ -274,6 +277,7 @@ class TestAsyncProfiles:
             },
             body_project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
             proxy_url="https://example.com",
+            use_proxy="useProxy",
             user_agent="userAgent",
         )
         assert_matches_type(ProfileUpdateResponse, profile, path=["response"])
