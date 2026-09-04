@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.20.0 (2026-09-04)
+
+Full Changelog: [v0.19.0...v0.20.0](https://github.com/steel-dev/steel-python/compare/v0.19.0...v0.20.0)
+
+### Features
+
+* **api:** api update ([879f6dc](https://github.com/steel-dev/steel-python/commit/879f6dcfb4d245beee7b46a75d4701193d91fb58))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([837c9ae](https://github.com/steel-dev/steel-python/commit/837c9ae8c741960dc8fac522a738fc352124da93))
+
+
+### Chores
+
+* **internal:** allow the mock server port to be set with STAINLESS_MOCK_PORT ([213dcea](https://github.com/steel-dev/steel-python/commit/213dcea7ab877262c656780e437ea9ce44c68331))
+
 ## 0.19.0 (2026-06-23)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/steel-dev/steel-python/compare/v0.18.0...v0.19.0)
