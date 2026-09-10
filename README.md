@@ -17,7 +17,7 @@ The REST API documentation can be found on [docs.steel.dev](https://docs.steel.d
 
 ```sh
 # install from PyPI
-pip install '--pre steel-sdk'
+pip install steel-sdk
 ```
 
 ## Usage
@@ -79,7 +79,7 @@ You can enable this by installing `aiohttp`:
 
 ```sh
 # install from PyPI
-pip install '--pre steel-sdk[aiohttp]'
+pip install steel-sdk[aiohttp]
 ```
 
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
