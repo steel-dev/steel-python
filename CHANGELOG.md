@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.20.0](https://github.com/steel-dev/steel-python/compare/v0.19.0...v0.20.0) (2026-09-10)
+
+
+### Features
+
+* **api:** drop region and make the computer template optional ([304cb1d](https://github.com/steel-dev/steel-python/commit/304cb1da117ebb95100c6e0b8b38ea1f3dec184f))
+* restore custom code and changelog ([94683e6](https://github.com/steel-dev/steel-python/commit/94683e6ce8e7a00863dd3aca7cdfe4c4e7e08943))
+
+
+### Chores
+
+* restore the changelog ([5059286](https://github.com/steel-dev/steel-python/commit/50592867e89c2b4815632d5b54f5c8266618ce61))
+
 ## 0.19.0 (2026-06-23)
 
 Full Changelog: [v0.18.0...v0.19.0](https://github.com/steel-dev/steel-python/compare/v0.18.0...v0.19.0)
