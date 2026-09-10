@@ -52,10 +52,12 @@ from .types.scrape_response import ScrapeResponse
 from .types.screenshot_response import ScreenshotResponse
 
 if TYPE_CHECKING:
-    from .resources import files, profiles, sessions, extensions, credentials
+    from .resources import files, profiles, sessions, computers, extensions, checkpoints, credentials
     from .resources.files import FilesResource, AsyncFilesResource
     from .resources.profiles import ProfilesResource, AsyncProfilesResource
+    from .resources.computers import ComputersResource, AsyncComputersResource
     from .resources.extensions import ExtensionsResource, AsyncExtensionsResource
+    from .resources.checkpoints import CheckpointsResource, AsyncCheckpointsResource
     from .resources.credentials import CredentialsResource, AsyncCredentialsResource
     from .resources.sessions.sessions import SessionsResource, AsyncSessionsResource
 
@@ -151,6 +153,18 @@ class Steel(SyncAPIClient):
         from .resources.profiles import ProfilesResource
 
         return ProfilesResource(self)
+
+    @cached_property
+    def computers(self) -> ComputersResource:
+        from .resources.computers import ComputersResource
+
+        return ComputersResource(self)
+
+    @cached_property
+    def checkpoints(self) -> CheckpointsResource:
+        from .resources.checkpoints import CheckpointsResource
+
+        return CheckpointsResource(self)
 
     @cached_property
     def with_raw_response(self) -> SteelWithRawResponse:
@@ -539,6 +553,18 @@ class AsyncSteel(AsyncAPIClient):
         return AsyncProfilesResource(self)
 
     @cached_property
+    def computers(self) -> AsyncComputersResource:
+        from .resources.computers import AsyncComputersResource
+
+        return AsyncComputersResource(self)
+
+    @cached_property
+    def checkpoints(self) -> AsyncCheckpointsResource:
+        from .resources.checkpoints import AsyncCheckpointsResource
+
+        return AsyncCheckpointsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncSteelWithRawResponse:
         return AsyncSteelWithRawResponse(self)
 
@@ -880,6 +906,18 @@ class SteelWithRawResponse:
 
         return ProfilesResourceWithRawResponse(self._client.profiles)
 
+    @cached_property
+    def computers(self) -> computers.ComputersResourceWithRawResponse:
+        from .resources.computers import ComputersResourceWithRawResponse
+
+        return ComputersResourceWithRawResponse(self._client.computers)
+
+    @cached_property
+    def checkpoints(self) -> checkpoints.CheckpointsResourceWithRawResponse:
+        from .resources.checkpoints import CheckpointsResourceWithRawResponse
+
+        return CheckpointsResourceWithRawResponse(self._client.checkpoints)
+
 
 class AsyncSteelWithRawResponse:
     _client: AsyncSteel
@@ -926,6 +964,18 @@ class AsyncSteelWithRawResponse:
         from .resources.profiles import AsyncProfilesResourceWithRawResponse
 
         return AsyncProfilesResourceWithRawResponse(self._client.profiles)
+
+    @cached_property
+    def computers(self) -> computers.AsyncComputersResourceWithRawResponse:
+        from .resources.computers import AsyncComputersResourceWithRawResponse
+
+        return AsyncComputersResourceWithRawResponse(self._client.computers)
+
+    @cached_property
+    def checkpoints(self) -> checkpoints.AsyncCheckpointsResourceWithRawResponse:
+        from .resources.checkpoints import AsyncCheckpointsResourceWithRawResponse
+
+        return AsyncCheckpointsResourceWithRawResponse(self._client.checkpoints)
 
 
 class SteelWithStreamedResponse:
@@ -974,6 +1024,18 @@ class SteelWithStreamedResponse:
 
         return ProfilesResourceWithStreamingResponse(self._client.profiles)
 
+    @cached_property
+    def computers(self) -> computers.ComputersResourceWithStreamingResponse:
+        from .resources.computers import ComputersResourceWithStreamingResponse
+
+        return ComputersResourceWithStreamingResponse(self._client.computers)
+
+    @cached_property
+    def checkpoints(self) -> checkpoints.CheckpointsResourceWithStreamingResponse:
+        from .resources.checkpoints import CheckpointsResourceWithStreamingResponse
+
+        return CheckpointsResourceWithStreamingResponse(self._client.checkpoints)
+
 
 class AsyncSteelWithStreamedResponse:
     _client: AsyncSteel
@@ -1020,6 +1082,18 @@ class AsyncSteelWithStreamedResponse:
         from .resources.profiles import AsyncProfilesResourceWithStreamingResponse
 
         return AsyncProfilesResourceWithStreamingResponse(self._client.profiles)
+
+    @cached_property
+    def computers(self) -> computers.AsyncComputersResourceWithStreamingResponse:
+        from .resources.computers import AsyncComputersResourceWithStreamingResponse
+
+        return AsyncComputersResourceWithStreamingResponse(self._client.computers)
+
+    @cached_property
+    def checkpoints(self) -> checkpoints.AsyncCheckpointsResourceWithStreamingResponse:
+        from .resources.checkpoints import AsyncCheckpointsResourceWithStreamingResponse
+
+        return AsyncCheckpointsResourceWithStreamingResponse(self._client.checkpoints)
 
 
 Client = Steel

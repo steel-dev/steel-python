@@ -87,6 +87,9 @@ class Session(BaseModel):
     id: str
     """Unique identifier for the session"""
 
+    browser_mode: Literal["stealth", "standard", "unknown"] = FieldInfo(alias="browserMode")
+    """Browser mode used for this session."""
+
     created_at: datetime = FieldInfo(alias="createdAt")
     """Timestamp when the session started"""
 
@@ -159,24 +162,7 @@ class Session(BaseModel):
     project_id: Optional[str] = FieldInfo(alias="projectId", default=None)
     """The project associated with the session"""
 
-    region: Optional[
-        Literal[
-            "lax",
-            "ord",
-            "iad",
-            "scl",
-            "fra",
-            "nrt",
-            "us-east",
-            "us-west",
-            "us-central",
-            "eu-west",
-            "eu-central",
-            "ap-northeast",
-            "ap-southeast",
-            "sa-east",
-        ]
-    ] = None
+    region: Optional[str] = None
     """The region where the session was created."""
 
     release_reason: Optional[

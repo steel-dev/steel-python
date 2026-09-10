@@ -24,6 +24,14 @@ from .sessions import (
     SessionsResourceWithStreamingResponse,
     AsyncSessionsResourceWithStreamingResponse,
 )
+from .computers import (
+    ComputersResource,
+    AsyncComputersResource,
+    ComputersResourceWithRawResponse,
+    AsyncComputersResourceWithRawResponse,
+    ComputersResourceWithStreamingResponse,
+    AsyncComputersResourceWithStreamingResponse,
+)
 from .extensions import (
     ExtensionsResource,
     AsyncExtensionsResource,
@@ -31,6 +39,14 @@ from .extensions import (
     AsyncExtensionsResourceWithRawResponse,
     ExtensionsResourceWithStreamingResponse,
     AsyncExtensionsResourceWithStreamingResponse,
+)
+from .checkpoints import (
+    CheckpointsResource,
+    AsyncCheckpointsResource,
+    CheckpointsResourceWithRawResponse,
+    AsyncCheckpointsResourceWithRawResponse,
+    CheckpointsResourceWithStreamingResponse,
+    AsyncCheckpointsResourceWithStreamingResponse,
 )
 from .credentials import (
     CredentialsResource,
@@ -72,4 +88,16 @@ __all__ = [
     "AsyncProfilesResourceWithRawResponse",
     "ProfilesResourceWithStreamingResponse",
     "AsyncProfilesResourceWithStreamingResponse",
+    "ComputersResource",
+    "AsyncComputersResource",
+    "ComputersResourceWithRawResponse",
+    "AsyncComputersResourceWithRawResponse",
+    "ComputersResourceWithStreamingResponse",
+    "AsyncComputersResourceWithStreamingResponse",
+    "CheckpointsResource",
+    "AsyncCheckpointsResource",
+    "CheckpointsResourceWithRawResponse",
+    "AsyncCheckpointsResourceWithRawResponse",
+    "CheckpointsResourceWithStreamingResponse",
+    "AsyncCheckpointsResourceWithStreamingResponse",
 ]
