@@ -22,8 +22,6 @@ class Computer(BaseModel):
 
     memory_mib: int = FieldInfo(alias="memoryMib")
 
-    region: Optional[str] = None
-
     status: Literal[
         "none", "creating", "running", "pausing", "paused", "waking", "stopped", "failed", "deleting", "deleted"
     ]
