@@ -55,7 +55,7 @@ class CheckpointsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Checkpoint:
         """
-        Get a checkpoint
+        Retrieve a checkpoint by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -86,7 +86,7 @@ class CheckpointsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CheckpointList:
-        """List checkpoints"""
+        """List the organization's checkpoints, newest first; deleted ones are omitted."""
         return self._get(
             "/v1/checkpoints",
             options=make_request_options(
@@ -107,7 +107,7 @@ class CheckpointsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Checkpoint:
         """
-        Delete a checkpoint
+        Request a delete; already deleting or deleted is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -142,9 +142,14 @@ class CheckpointsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Create a computer from a checkpoint
+        Start a new computer from a ready checkpoint; it restores asynchronously.
 
         Args:
+          auto_pause: Pause at the timeout instead of stopping.
+
+          timeout_seconds: How long the restored computer may run before it is stopped, or paused when
+              autoPause is set.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -203,7 +208,7 @@ class AsyncCheckpointsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Checkpoint:
         """
-        Get a checkpoint
+        Retrieve a checkpoint by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -234,7 +239,7 @@ class AsyncCheckpointsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> CheckpointList:
-        """List checkpoints"""
+        """List the organization's checkpoints, newest first; deleted ones are omitted."""
         return await self._get(
             "/v1/checkpoints",
             options=make_request_options(
@@ -255,7 +260,7 @@ class AsyncCheckpointsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Checkpoint:
         """
-        Delete a checkpoint
+        Request a delete; already deleting or deleted is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -290,9 +295,14 @@ class AsyncCheckpointsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Create a computer from a checkpoint
+        Start a new computer from a ready checkpoint; it restores asynchronously.
 
         Args:
+          auto_pause: Pause at the timeout instead of stopping.
+
+          timeout_seconds: How long the restored computer may run before it is stopped, or paused when
+              autoPause is set.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request

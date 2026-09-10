@@ -26,19 +26,16 @@ class TestComputers:
 
     @parametrize
     def test_method_create(self, client: Steel) -> None:
-        computer = client.computers.create(
-            template="x",
-        )
+        computer = client.computers.create()
         assert_matches_type(Computer, computer, path=["response"])
 
     @parametrize
     def test_method_create_with_all_params(self, client: Steel) -> None:
         computer = client.computers.create(
-            template="x",
             auto_pause=True,
             disk_mib=1,
             memory_mib=128,
-            region="us-east",
+            template="x",
             timeout_seconds=1,
             vcpu=1,
         )
@@ -46,9 +43,7 @@ class TestComputers:
 
     @parametrize
     def test_raw_response_create(self, client: Steel) -> None:
-        response = client.computers.with_raw_response.create(
-            template="x",
-        )
+        response = client.computers.with_raw_response.create()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -57,9 +52,7 @@ class TestComputers:
 
     @parametrize
     def test_streaming_response_create(self, client: Steel) -> None:
-        with client.computers.with_streaming_response.create(
-            template="x",
-        ) as response:
+        with client.computers.with_streaming_response.create() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -412,19 +405,16 @@ class TestAsyncComputers:
 
     @parametrize
     async def test_method_create(self, async_client: AsyncSteel) -> None:
-        computer = await async_client.computers.create(
-            template="x",
-        )
+        computer = await async_client.computers.create()
         assert_matches_type(Computer, computer, path=["response"])
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSteel) -> None:
         computer = await async_client.computers.create(
-            template="x",
             auto_pause=True,
             disk_mib=1,
             memory_mib=128,
-            region="us-east",
+            template="x",
             timeout_seconds=1,
             vcpu=1,
         )
@@ -432,9 +422,7 @@ class TestAsyncComputers:
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSteel) -> None:
-        response = await async_client.computers.with_raw_response.create(
-            template="x",
-        )
+        response = await async_client.computers.with_raw_response.create()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -443,9 +431,7 @@ class TestAsyncComputers:
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSteel) -> None:
-        async with async_client.computers.with_streaming_response.create(
-            template="x",
-        ) as response:
+        async with async_client.computers.with_streaming_response.create() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

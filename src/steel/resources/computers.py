@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from typing import Dict
-from typing_extensions import Literal
 
 import httpx
 
@@ -52,14 +51,10 @@ class ComputersResource(SyncAPIResource):
     def create(
         self,
         *,
-        template: str,
         auto_pause: bool | Omit = omit,
         disk_mib: int | Omit = omit,
         memory_mib: int | Omit = omit,
-        region: Literal[
-            "us-east", "us-west", "us-central", "eu-west", "eu-central", "ap-northeast", "ap-southeast", "sa-east"
-        ]
-        | Omit = omit,
+        template: str | Omit = omit,
         timeout_seconds: int | Omit = omit,
         vcpu: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -70,9 +65,17 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Create a computer
+        Declare a new computer; it boots asynchronously.
 
         Args:
+          auto_pause: Pause at the timeout instead of stopping, so a later resume continues where the
+              computer left off. The pause begins about 30 seconds before the deadline.
+
+          disk_mib: Ignored today. Every computer gets the disk its host is configured for.
+
+          timeout_seconds: How long the computer may run before it is stopped, or paused when autoPause is
+              set. A resume starts a fresh window.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -85,11 +88,10 @@ class ComputersResource(SyncAPIResource):
             "/v1/computers",
             body=maybe_transform(
                 {
-                    "template": template,
                     "auto_pause": auto_pause,
                     "disk_mib": disk_mib,
                     "memory_mib": memory_mib,
-                    "region": region,
+                    "template": template,
                     "timeout_seconds": timeout_seconds,
                     "vcpu": vcpu,
                 },
@@ -113,7 +115,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Get a computer
+        Retrieve a computer by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -144,7 +146,7 @@ class ComputersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerList:
-        """List computers"""
+        """List the organization's computers, newest first; deleted ones are omitted."""
         return self._get(
             "/v1/computers",
             options=make_request_options(
@@ -165,7 +167,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Delete a computer
+        Request a delete; already deleting or deleted is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -199,7 +201,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Checkpoint:
         """
-        Create a checkpoint
+        Save the computer's current state as a checkpoint; it uploads asynchronously.
 
         Args:
           extra_headers: Send extra headers
@@ -293,7 +295,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Pause a computer
+        Request a pause; already pausing or paused is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -324,7 +326,7 @@ class ComputersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerQuota:
-        """Get computer quota"""
+        """The organization's computer limits and current usage."""
         return self._get(
             "/v1/computers/quota",
             options=make_request_options(
@@ -345,7 +347,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Resume a computer
+        Request a resume; already waking or running is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -378,7 +380,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerTransitions:
         """
-        List computer transitions
+        The computer's status ledger, newest first.
 
         Args:
           extra_headers: Send extra headers
@@ -423,14 +425,10 @@ class AsyncComputersResource(AsyncAPIResource):
     async def create(
         self,
         *,
-        template: str,
         auto_pause: bool | Omit = omit,
         disk_mib: int | Omit = omit,
         memory_mib: int | Omit = omit,
-        region: Literal[
-            "us-east", "us-west", "us-central", "eu-west", "eu-central", "ap-northeast", "ap-southeast", "sa-east"
-        ]
-        | Omit = omit,
+        template: str | Omit = omit,
         timeout_seconds: int | Omit = omit,
         vcpu: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -441,9 +439,17 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Create a computer
+        Declare a new computer; it boots asynchronously.
 
         Args:
+          auto_pause: Pause at the timeout instead of stopping, so a later resume continues where the
+              computer left off. The pause begins about 30 seconds before the deadline.
+
+          disk_mib: Ignored today. Every computer gets the disk its host is configured for.
+
+          timeout_seconds: How long the computer may run before it is stopped, or paused when autoPause is
+              set. A resume starts a fresh window.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -456,11 +462,10 @@ class AsyncComputersResource(AsyncAPIResource):
             "/v1/computers",
             body=await async_maybe_transform(
                 {
-                    "template": template,
                     "auto_pause": auto_pause,
                     "disk_mib": disk_mib,
                     "memory_mib": memory_mib,
-                    "region": region,
+                    "template": template,
                     "timeout_seconds": timeout_seconds,
                     "vcpu": vcpu,
                 },
@@ -484,7 +489,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Get a computer
+        Retrieve a computer by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -515,7 +520,7 @@ class AsyncComputersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerList:
-        """List computers"""
+        """List the organization's computers, newest first; deleted ones are omitted."""
         return await self._get(
             "/v1/computers",
             options=make_request_options(
@@ -536,7 +541,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Delete a computer
+        Request a delete; already deleting or deleted is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -570,7 +575,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Checkpoint:
         """
-        Create a checkpoint
+        Save the computer's current state as a checkpoint; it uploads asynchronously.
 
         Args:
           extra_headers: Send extra headers
@@ -666,7 +671,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Pause a computer
+        Request a pause; already pausing or paused is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -697,7 +702,7 @@ class AsyncComputersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerQuota:
-        """Get computer quota"""
+        """The organization's computer limits and current usage."""
         return await self._get(
             "/v1/computers/quota",
             options=make_request_options(
@@ -718,7 +723,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Resume a computer
+        Request a resume; already waking or running is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -751,7 +756,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerTransitions:
         """
-        List computer transitions
+        The computer's status ledger, newest first.
 
         Args:
           extra_headers: Send extra headers
