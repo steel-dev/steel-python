@@ -70,7 +70,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Create a computer
+        Declare a new computer; it boots asynchronously.
 
         Args:
           extra_headers: Send extra headers
@@ -113,7 +113,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Get a computer
+        Retrieve a computer by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -144,7 +144,7 @@ class ComputersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerList:
-        """List computers"""
+        """List the organization's computers, newest first; deleted ones are omitted."""
         return self._get(
             "/v1/computers",
             options=make_request_options(
@@ -165,7 +165,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Delete a computer
+        Request a delete; already deleting or deleted is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -199,7 +199,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Checkpoint:
         """
-        Create a checkpoint
+        Save the computer's current state as a checkpoint; it uploads asynchronously.
 
         Args:
           extra_headers: Send extra headers
@@ -293,7 +293,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Pause a computer
+        Request a pause; already pausing or paused is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -324,7 +324,7 @@ class ComputersResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerQuota:
-        """Get computer quota"""
+        """The organization's computer limits and current usage."""
         return self._get(
             "/v1/computers/quota",
             options=make_request_options(
@@ -345,7 +345,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Resume a computer
+        Request a resume; already waking or running is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -378,7 +378,7 @@ class ComputersResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerTransitions:
         """
-        List computer transitions
+        The computer's status ledger, newest first.
 
         Args:
           extra_headers: Send extra headers
@@ -441,7 +441,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Create a computer
+        Declare a new computer; it boots asynchronously.
 
         Args:
           extra_headers: Send extra headers
@@ -484,7 +484,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Get a computer
+        Retrieve a computer by its ID.
 
         Args:
           extra_headers: Send extra headers
@@ -515,7 +515,7 @@ class AsyncComputersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerList:
-        """List computers"""
+        """List the organization's computers, newest first; deleted ones are omitted."""
         return await self._get(
             "/v1/computers",
             options=make_request_options(
@@ -536,7 +536,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Delete a computer
+        Request a delete; already deleting or deleted is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -570,7 +570,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Checkpoint:
         """
-        Create a checkpoint
+        Save the computer's current state as a checkpoint; it uploads asynchronously.
 
         Args:
           extra_headers: Send extra headers
@@ -666,7 +666,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Pause a computer
+        Request a pause; already pausing or paused is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -697,7 +697,7 @@ class AsyncComputersResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerQuota:
-        """Get computer quota"""
+        """The organization's computer limits and current usage."""
         return await self._get(
             "/v1/computers/quota",
             options=make_request_options(
@@ -718,7 +718,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Computer:
         """
-        Resume a computer
+        Request a resume; already waking or running is a success.
 
         Args:
           extra_headers: Send extra headers
@@ -751,7 +751,7 @@ class AsyncComputersResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ComputerTransitions:
         """
-        List computer transitions
+        The computer's status ledger, newest first.
 
         Args:
           extra_headers: Send extra headers
