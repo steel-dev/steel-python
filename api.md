@@ -148,3 +148,39 @@ Methods:
 - <code title="patch /v1/profiles/{id}">client.profiles.<a href="./src/steel/resources/profiles.py">update</a>(id, \*\*<a href="src/steel/types/profile_update_params.py">params</a>) -> <a href="./src/steel/types/profile_update_response.py">ProfileUpdateResponse</a></code>
 - <code title="get /v1/profiles">client.profiles.<a href="./src/steel/resources/profiles.py">list</a>(\*\*<a href="src/steel/types/profile_list_params.py">params</a>) -> <a href="./src/steel/types/profile_list_response.py">ProfileListResponse</a></code>
 - <code title="get /v1/profiles/{id}">client.profiles.<a href="./src/steel/resources/profiles.py">get</a>(id, \*\*<a href="src/steel/types/profile_get_params.py">params</a>) -> <a href="./src/steel/types/profile_get_response.py">ProfileGetResponse</a></code>
+
+# Computers
+
+Types:
+
+```python
+from steel.types import Computer, ComputerList, ComputerQuota, ComputerTransitions, ExecResult
+```
+
+Methods:
+
+- <code title="post /v1/computers">client.computers.<a href="./src/steel/resources/computers.py">create</a>(\*\*<a href="src/steel/types/computer_create_params.py">params</a>) -> <a href="./src/steel/types/computer.py">Computer</a></code>
+- <code title="get /v1/computers/{id}">client.computers.<a href="./src/steel/resources/computers.py">retrieve</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
+- <code title="get /v1/computers">client.computers.<a href="./src/steel/resources/computers.py">list</a>() -> <a href="./src/steel/types/computer_list.py">ComputerList</a></code>
+- <code title="delete /v1/computers/{id}">client.computers.<a href="./src/steel/resources/computers.py">delete</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
+- <code title="post /v1/computers/{id}/checkpoints">client.computers.<a href="./src/steel/resources/computers.py">create_checkpoint</a>(id, \*\*<a href="src/steel/types/computer_create_checkpoint_params.py">params</a>) -> <a href="./src/steel/types/checkpoint.py">Checkpoint</a></code>
+- <code title="post /v1/computers/{id}/exec">client.computers.<a href="./src/steel/resources/computers.py">exec</a>(id, \*\*<a href="src/steel/types/computer_exec_params.py">params</a>) -> <a href="./src/steel/types/exec_result.py">ExecResult</a></code>
+- <code title="post /v1/computers/{id}/pause">client.computers.<a href="./src/steel/resources/computers.py">pause</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
+- <code title="get /v1/computers/quota">client.computers.<a href="./src/steel/resources/computers.py">quota</a>() -> <a href="./src/steel/types/computer_quota.py">ComputerQuota</a></code>
+- <code title="post /v1/computers/{id}/resume">client.computers.<a href="./src/steel/resources/computers.py">resume</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
+- <code title="get /v1/computers/{id}/transitions">client.computers.<a href="./src/steel/resources/computers.py">transitions</a>(id) -> <a href="./src/steel/types/computer_transitions.py">ComputerTransitions</a></code>
+
+# Checkpoints
+
+Types:
+
+```python
+from steel.types import Checkpoint, CheckpointList
+```
+
+Methods:
+
+- <code title="get /v1/checkpoints/{id}">client.checkpoints.<a href="./src/steel/resources/checkpoints.py">retrieve</a>(id) -> <a href="./src/steel/types/checkpoint.py">Checkpoint</a></code>
+- <code title="get /v1/checkpoints">client.checkpoints.<a href="./src/steel/resources/checkpoints.py">list</a>() -> <a href="./src/steel/types/checkpoint_list.py">CheckpointList</a></code>
+- <code title="delete /v1/checkpoints/{id}">client.checkpoints.<a href="./src/steel/resources/checkpoints.py">delete</a>(id) -> <a href="./src/steel/types/checkpoint.py">Checkpoint</a></code>
+- <code title="post /v1/checkpoints/{id}/computers">client.checkpoints.<a href="./src/steel/resources/checkpoints.py">restore</a>(id, \*\*<a href="src/steel/types/checkpoint_restore_params.py">params</a>) -> <a href="./src/steel/types/computer.py">Computer</a></code>
