@@ -130,6 +130,7 @@ class TestCheckpoints:
         checkpoint = client.checkpoints.restore(
             id="x",
             auto_pause=True,
+            idle_timeout_seconds=0,
             timeout_seconds=1,
         )
         assert_matches_type(Computer, checkpoint, path=["response"])
@@ -284,6 +285,7 @@ class TestAsyncCheckpoints:
         checkpoint = await async_client.checkpoints.restore(
             id="x",
             auto_pause=True,
+            idle_timeout_seconds=0,
             timeout_seconds=1,
         )
         assert_matches_type(Computer, checkpoint, path=["response"])

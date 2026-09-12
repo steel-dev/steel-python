@@ -167,7 +167,10 @@ Methods:
 - <code title="post /v1/computers/{id}/exec">client.computers.<a href="./src/steel/resources/computers.py">exec</a>(id, \*\*<a href="src/steel/types/computer_exec_params.py">params</a>) -> <a href="./src/steel/types/exec_result.py">ExecResult</a></code>
 - <code title="post /v1/computers/{id}/pause">client.computers.<a href="./src/steel/resources/computers.py">pause</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
 - <code title="get /v1/computers/quota">client.computers.<a href="./src/steel/resources/computers.py">quota</a>() -> <a href="./src/steel/types/computer_quota.py">ComputerQuota</a></code>
+- <code title="post /v1/computers/{id}/restart">client.computers.<a href="./src/steel/resources/computers.py">restart</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
 - <code title="post /v1/computers/{id}/resume">client.computers.<a href="./src/steel/resources/computers.py">resume</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
+- <code title="post /v1/computers/{id}/start">client.computers.<a href="./src/steel/resources/computers.py">start</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
+- <code title="post /v1/computers/{id}/stop">client.computers.<a href="./src/steel/resources/computers.py">stop</a>(id) -> <a href="./src/steel/types/computer.py">Computer</a></code>
 - <code title="get /v1/computers/{id}/transitions">client.computers.<a href="./src/steel/resources/computers.py">transitions</a>(id) -> <a href="./src/steel/types/computer_transitions.py">ComputerTransitions</a></code>
 
 # Checkpoints
@@ -184,3 +187,35 @@ Methods:
 - <code title="get /v1/checkpoints">client.checkpoints.<a href="./src/steel/resources/checkpoints.py">list</a>() -> <a href="./src/steel/types/checkpoint_list.py">CheckpointList</a></code>
 - <code title="delete /v1/checkpoints/{id}">client.checkpoints.<a href="./src/steel/resources/checkpoints.py">delete</a>(id) -> <a href="./src/steel/types/checkpoint.py">Checkpoint</a></code>
 - <code title="post /v1/checkpoints/{id}/computers">client.checkpoints.<a href="./src/steel/resources/checkpoints.py">restore</a>(id, \*\*<a href="src/steel/types/checkpoint_restore_params.py">params</a>) -> <a href="./src/steel/types/computer.py">Computer</a></code>
+
+# Secrets
+
+Types:
+
+```python
+from steel.types import Secret, SecretList
+```
+
+Methods:
+
+- <code title="post /v1/secrets">client.secrets.<a href="./src/steel/resources/secrets.py">create</a>(\*\*<a href="src/steel/types/secret_create_params.py">params</a>) -> <a href="./src/steel/types/secret.py">Secret</a></code>
+- <code title="get /v1/secrets/{id}">client.secrets.<a href="./src/steel/resources/secrets.py">retrieve</a>(id, \*\*<a href="src/steel/types/secret_retrieve_params.py">params</a>) -> <a href="./src/steel/types/secret.py">Secret</a></code>
+- <code title="patch /v1/secrets/{id}">client.secrets.<a href="./src/steel/resources/secrets.py">update</a>(id, \*\*<a href="src/steel/types/secret_update_params.py">params</a>) -> <a href="./src/steel/types/secret.py">Secret</a></code>
+- <code title="get /v1/secrets">client.secrets.<a href="./src/steel/resources/secrets.py">list</a>(\*\*<a href="src/steel/types/secret_list_params.py">params</a>) -> <a href="./src/steel/types/secret_list.py">SecretList</a></code>
+- <code title="delete /v1/secrets/{id}">client.secrets.<a href="./src/steel/resources/secrets.py">delete</a>(id, \*\*<a href="src/steel/types/secret_delete_params.py">params</a>) -> None</code>
+
+# Environments
+
+Types:
+
+```python
+from steel.types import Environment, EnvironmentList
+```
+
+Methods:
+
+- <code title="post /v1/environments">client.environments.<a href="./src/steel/resources/environments.py">create</a>(\*\*<a href="src/steel/types/environment_create_params.py">params</a>) -> <a href="./src/steel/types/environment.py">Environment</a></code>
+- <code title="get /v1/environments/{id}">client.environments.<a href="./src/steel/resources/environments.py">retrieve</a>(id, \*\*<a href="src/steel/types/environment_retrieve_params.py">params</a>) -> <a href="./src/steel/types/environment.py">Environment</a></code>
+- <code title="patch /v1/environments/{id}">client.environments.<a href="./src/steel/resources/environments.py">update</a>(id, \*\*<a href="src/steel/types/environment_update_params.py">params</a>) -> <a href="./src/steel/types/environment.py">Environment</a></code>
+- <code title="get /v1/environments">client.environments.<a href="./src/steel/resources/environments.py">list</a>(\*\*<a href="src/steel/types/environment_list_params.py">params</a>) -> <a href="./src/steel/types/environment_list.py">EnvironmentList</a></code>
+- <code title="delete /v1/environments/{id}">client.environments.<a href="./src/steel/resources/environments.py">delete</a>(id, \*\*<a href="src/steel/types/environment_delete_params.py">params</a>) -> None</code>

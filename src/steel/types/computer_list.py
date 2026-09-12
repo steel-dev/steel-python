@@ -20,7 +20,13 @@ class Computer(BaseModel):
 
     disk_mib: int = FieldInfo(alias="diskMib")
 
+    environment_id: Optional[str] = FieldInfo(alias="environmentId", default=None)
+
+    idle_timeout_seconds: int = FieldInfo(alias="idleTimeoutSeconds")
+
     memory_mib: int = FieldInfo(alias="memoryMib")
+
+    project_id: str = FieldInfo(alias="projectId")
 
     status: Literal[
         "none", "creating", "running", "pausing", "paused", "waking", "stopped", "failed", "deleting", "deleted"

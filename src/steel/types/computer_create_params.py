@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
-from typing_extensions import Annotated, TypedDict
+from typing import Dict, Iterable
+from typing_extensions import Required, Annotated, TypedDict
 
+from .._types import SequenceNotStr
 from .._utils import PropertyInfo
 
-__all__ = ["ComputerCreateParams"]
+__all__ = ["ComputerCreateParams", "NetworkPolicy", "NetworkPolicyCidrs", "NetworkPolicyDomains", "NetworkSecret"]
 
 
 class ComputerCreateParams(TypedDict, total=False):
@@ -19,7 +21,27 @@ class ComputerCreateParams(TypedDict, total=False):
     disk_mib: Annotated[int, PropertyInfo(alias="diskMib")]
     """Ignored today. Every computer gets the disk its host is configured for."""
 
+    env: Dict[str, str]
+
+    environment_id: Annotated[str, PropertyInfo(alias="environmentId")]
+
+    idle_timeout_seconds: Annotated[int, PropertyInfo(alias="idleTimeoutSeconds")]
+    """
+    Pause the computer after this many seconds without incoming traffic, so a later
+    resume continues where it left off. 0 disables idle pausing.
+    """
+
     memory_mib: Annotated[int, PropertyInfo(alias="memoryMib")]
+
+    name: str
+
+    network_policy: Annotated[NetworkPolicy, PropertyInfo(alias="networkPolicy")]
+
+    network_secrets: Annotated[Iterable[NetworkSecret], PropertyInfo(alias="networkSecrets")]
+
+    project_id: Annotated[str, PropertyInfo(alias="projectId")]
+
+    secrets: Dict[str, str]
 
     template: str
 
@@ -30,3 +52,35 @@ class ComputerCreateParams(TypedDict, total=False):
     """
 
     vcpu: int
+
+
+class NetworkPolicyCidrs(TypedDict, total=False):
+    allow: SequenceNotStr[str]
+
+    deny: SequenceNotStr[str]
+
+
+class NetworkPolicyDomains(TypedDict, total=False):
+    allow: SequenceNotStr[str]
+
+    deny: SequenceNotStr[str]
+
+
+class NetworkPolicy(TypedDict, total=False):
+    cidrs: NetworkPolicyCidrs
+
+    domains: NetworkPolicyDomains
+
+    internet_access: Annotated[bool, PropertyInfo(alias="internetAccess")]
+
+
+class NetworkSecret(TypedDict, total=False):
+    domain: Required[str]
+
+    header: Required[str]
+
+    secret_id: Required[Annotated[str, PropertyInfo(alias="secretId")]]
+
+    template: Required[str]
+
+    port: int

@@ -52,13 +52,25 @@ from .types.scrape_response import ScrapeResponse
 from .types.screenshot_response import ScreenshotResponse
 
 if TYPE_CHECKING:
-    from .resources import files, profiles, sessions, computers, extensions, checkpoints, credentials
+    from .resources import (
+        files,
+        secrets,
+        profiles,
+        sessions,
+        computers,
+        extensions,
+        checkpoints,
+        credentials,
+        environments,
+    )
     from .resources.files import FilesResource, AsyncFilesResource
+    from .resources.secrets import SecretsResource, AsyncSecretsResource
     from .resources.profiles import ProfilesResource, AsyncProfilesResource
     from .resources.computers import ComputersResource, AsyncComputersResource
     from .resources.extensions import ExtensionsResource, AsyncExtensionsResource
     from .resources.checkpoints import CheckpointsResource, AsyncCheckpointsResource
     from .resources.credentials import CredentialsResource, AsyncCredentialsResource
+    from .resources.environments import EnvironmentsResource, AsyncEnvironmentsResource
     from .resources.sessions.sessions import SessionsResource, AsyncSessionsResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Steel", "AsyncSteel", "Client", "AsyncClient"]
@@ -165,6 +177,18 @@ class Steel(SyncAPIClient):
         from .resources.checkpoints import CheckpointsResource
 
         return CheckpointsResource(self)
+
+    @cached_property
+    def secrets(self) -> SecretsResource:
+        from .resources.secrets import SecretsResource
+
+        return SecretsResource(self)
+
+    @cached_property
+    def environments(self) -> EnvironmentsResource:
+        from .resources.environments import EnvironmentsResource
+
+        return EnvironmentsResource(self)
 
     @cached_property
     def with_raw_response(self) -> SteelWithRawResponse:
@@ -565,6 +589,18 @@ class AsyncSteel(AsyncAPIClient):
         return AsyncCheckpointsResource(self)
 
     @cached_property
+    def secrets(self) -> AsyncSecretsResource:
+        from .resources.secrets import AsyncSecretsResource
+
+        return AsyncSecretsResource(self)
+
+    @cached_property
+    def environments(self) -> AsyncEnvironmentsResource:
+        from .resources.environments import AsyncEnvironmentsResource
+
+        return AsyncEnvironmentsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncSteelWithRawResponse:
         return AsyncSteelWithRawResponse(self)
 
@@ -918,6 +954,18 @@ class SteelWithRawResponse:
 
         return CheckpointsResourceWithRawResponse(self._client.checkpoints)
 
+    @cached_property
+    def secrets(self) -> secrets.SecretsResourceWithRawResponse:
+        from .resources.secrets import SecretsResourceWithRawResponse
+
+        return SecretsResourceWithRawResponse(self._client.secrets)
+
+    @cached_property
+    def environments(self) -> environments.EnvironmentsResourceWithRawResponse:
+        from .resources.environments import EnvironmentsResourceWithRawResponse
+
+        return EnvironmentsResourceWithRawResponse(self._client.environments)
+
 
 class AsyncSteelWithRawResponse:
     _client: AsyncSteel
@@ -976,6 +1024,18 @@ class AsyncSteelWithRawResponse:
         from .resources.checkpoints import AsyncCheckpointsResourceWithRawResponse
 
         return AsyncCheckpointsResourceWithRawResponse(self._client.checkpoints)
+
+    @cached_property
+    def secrets(self) -> secrets.AsyncSecretsResourceWithRawResponse:
+        from .resources.secrets import AsyncSecretsResourceWithRawResponse
+
+        return AsyncSecretsResourceWithRawResponse(self._client.secrets)
+
+    @cached_property
+    def environments(self) -> environments.AsyncEnvironmentsResourceWithRawResponse:
+        from .resources.environments import AsyncEnvironmentsResourceWithRawResponse
+
+        return AsyncEnvironmentsResourceWithRawResponse(self._client.environments)
 
 
 class SteelWithStreamedResponse:
@@ -1036,6 +1096,18 @@ class SteelWithStreamedResponse:
 
         return CheckpointsResourceWithStreamingResponse(self._client.checkpoints)
 
+    @cached_property
+    def secrets(self) -> secrets.SecretsResourceWithStreamingResponse:
+        from .resources.secrets import SecretsResourceWithStreamingResponse
+
+        return SecretsResourceWithStreamingResponse(self._client.secrets)
+
+    @cached_property
+    def environments(self) -> environments.EnvironmentsResourceWithStreamingResponse:
+        from .resources.environments import EnvironmentsResourceWithStreamingResponse
+
+        return EnvironmentsResourceWithStreamingResponse(self._client.environments)
+
 
 class AsyncSteelWithStreamedResponse:
     _client: AsyncSteel
@@ -1094,6 +1166,18 @@ class AsyncSteelWithStreamedResponse:
         from .resources.checkpoints import AsyncCheckpointsResourceWithStreamingResponse
 
         return AsyncCheckpointsResourceWithStreamingResponse(self._client.checkpoints)
+
+    @cached_property
+    def secrets(self) -> secrets.AsyncSecretsResourceWithStreamingResponse:
+        from .resources.secrets import AsyncSecretsResourceWithStreamingResponse
+
+        return AsyncSecretsResourceWithStreamingResponse(self._client.secrets)
+
+    @cached_property
+    def environments(self) -> environments.AsyncEnvironmentsResourceWithStreamingResponse:
+        from .resources.environments import AsyncEnvironmentsResourceWithStreamingResponse
+
+        return AsyncEnvironmentsResourceWithStreamingResponse(self._client.environments)
 
 
 Client = Steel

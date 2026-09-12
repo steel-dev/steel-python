@@ -34,7 +34,33 @@ class TestComputers:
         computer = client.computers.create(
             auto_pause=True,
             disk_mib=1,
+            env={"foo": "string"},
+            environment_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            idle_timeout_seconds=0,
             memory_mib=128,
+            name="x",
+            network_policy={
+                "cidrs": {
+                    "allow": ["x"],
+                    "deny": ["x"],
+                },
+                "domains": {
+                    "allow": ["x"],
+                    "deny": ["x"],
+                },
+                "internet_access": True,
+            },
+            network_secrets=[
+                {
+                    "domain": "domain",
+                    "header": "header",
+                    "secret_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "template": "{{secret}}",
+                    "port": 1,
+                }
+            ],
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            secrets={"foo": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"},
             template="x",
             timeout_seconds=1,
             vcpu=1,
@@ -322,6 +348,44 @@ class TestComputers:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
+    def test_method_restart(self, client: Steel) -> None:
+        computer = client.computers.restart(
+            "x",
+        )
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    def test_raw_response_restart(self, client: Steel) -> None:
+        response = client.computers.with_raw_response.restart(
+            "x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        computer = response.parse()
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    def test_streaming_response_restart(self, client: Steel) -> None:
+        with client.computers.with_streaming_response.restart(
+            "x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            computer = response.parse()
+            assert_matches_type(Computer, computer, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_restart(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            client.computers.with_raw_response.restart(
+                "",
+            )
+
+    @parametrize
     def test_method_resume(self, client: Steel) -> None:
         computer = client.computers.resume(
             "x",
@@ -356,6 +420,82 @@ class TestComputers:
     def test_path_params_resume(self, client: Steel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             client.computers.with_raw_response.resume(
+                "",
+            )
+
+    @parametrize
+    def test_method_start(self, client: Steel) -> None:
+        computer = client.computers.start(
+            "x",
+        )
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    def test_raw_response_start(self, client: Steel) -> None:
+        response = client.computers.with_raw_response.start(
+            "x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        computer = response.parse()
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    def test_streaming_response_start(self, client: Steel) -> None:
+        with client.computers.with_streaming_response.start(
+            "x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            computer = response.parse()
+            assert_matches_type(Computer, computer, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_start(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            client.computers.with_raw_response.start(
+                "",
+            )
+
+    @parametrize
+    def test_method_stop(self, client: Steel) -> None:
+        computer = client.computers.stop(
+            "x",
+        )
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    def test_raw_response_stop(self, client: Steel) -> None:
+        response = client.computers.with_raw_response.stop(
+            "x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        computer = response.parse()
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    def test_streaming_response_stop(self, client: Steel) -> None:
+        with client.computers.with_streaming_response.stop(
+            "x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            computer = response.parse()
+            assert_matches_type(Computer, computer, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_stop(self, client: Steel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            client.computers.with_raw_response.stop(
                 "",
             )
 
@@ -413,7 +553,33 @@ class TestAsyncComputers:
         computer = await async_client.computers.create(
             auto_pause=True,
             disk_mib=1,
+            env={"foo": "string"},
+            environment_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            idle_timeout_seconds=0,
             memory_mib=128,
+            name="x",
+            network_policy={
+                "cidrs": {
+                    "allow": ["x"],
+                    "deny": ["x"],
+                },
+                "domains": {
+                    "allow": ["x"],
+                    "deny": ["x"],
+                },
+                "internet_access": True,
+            },
+            network_secrets=[
+                {
+                    "domain": "domain",
+                    "header": "header",
+                    "secret_id": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+                    "template": "{{secret}}",
+                    "port": 1,
+                }
+            ],
+            project_id="182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+            secrets={"foo": "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"},
             template="x",
             timeout_seconds=1,
             vcpu=1,
@@ -701,6 +867,44 @@ class TestAsyncComputers:
         assert cast(Any, response.is_closed) is True
 
     @parametrize
+    async def test_method_restart(self, async_client: AsyncSteel) -> None:
+        computer = await async_client.computers.restart(
+            "x",
+        )
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    async def test_raw_response_restart(self, async_client: AsyncSteel) -> None:
+        response = await async_client.computers.with_raw_response.restart(
+            "x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        computer = await response.parse()
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_restart(self, async_client: AsyncSteel) -> None:
+        async with async_client.computers.with_streaming_response.restart(
+            "x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            computer = await response.parse()
+            assert_matches_type(Computer, computer, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_restart(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            await async_client.computers.with_raw_response.restart(
+                "",
+            )
+
+    @parametrize
     async def test_method_resume(self, async_client: AsyncSteel) -> None:
         computer = await async_client.computers.resume(
             "x",
@@ -735,6 +939,82 @@ class TestAsyncComputers:
     async def test_path_params_resume(self, async_client: AsyncSteel) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             await async_client.computers.with_raw_response.resume(
+                "",
+            )
+
+    @parametrize
+    async def test_method_start(self, async_client: AsyncSteel) -> None:
+        computer = await async_client.computers.start(
+            "x",
+        )
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    async def test_raw_response_start(self, async_client: AsyncSteel) -> None:
+        response = await async_client.computers.with_raw_response.start(
+            "x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        computer = await response.parse()
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_start(self, async_client: AsyncSteel) -> None:
+        async with async_client.computers.with_streaming_response.start(
+            "x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            computer = await response.parse()
+            assert_matches_type(Computer, computer, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_start(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            await async_client.computers.with_raw_response.start(
+                "",
+            )
+
+    @parametrize
+    async def test_method_stop(self, async_client: AsyncSteel) -> None:
+        computer = await async_client.computers.stop(
+            "x",
+        )
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    async def test_raw_response_stop(self, async_client: AsyncSteel) -> None:
+        response = await async_client.computers.with_raw_response.stop(
+            "x",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        computer = await response.parse()
+        assert_matches_type(Computer, computer, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_stop(self, async_client: AsyncSteel) -> None:
+        async with async_client.computers.with_streaming_response.stop(
+            "x",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            computer = await response.parse()
+            assert_matches_type(Computer, computer, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_stop(self, async_client: AsyncSteel) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            await async_client.computers.with_raw_response.stop(
                 "",
             )
 
