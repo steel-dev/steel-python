@@ -8,6 +8,14 @@ from .files import (
     FilesResourceWithStreamingResponse,
     AsyncFilesResourceWithStreamingResponse,
 )
+from .secrets import (
+    SecretsResource,
+    AsyncSecretsResource,
+    SecretsResourceWithRawResponse,
+    AsyncSecretsResourceWithRawResponse,
+    SecretsResourceWithStreamingResponse,
+    AsyncSecretsResourceWithStreamingResponse,
+)
 from .profiles import (
     ProfilesResource,
     AsyncProfilesResource,
@@ -56,6 +64,14 @@ from .credentials import (
     CredentialsResourceWithStreamingResponse,
     AsyncCredentialsResourceWithStreamingResponse,
 )
+from .environments import (
+    EnvironmentsResource,
+    AsyncEnvironmentsResource,
+    EnvironmentsResourceWithRawResponse,
+    AsyncEnvironmentsResourceWithRawResponse,
+    EnvironmentsResourceWithStreamingResponse,
+    AsyncEnvironmentsResourceWithStreamingResponse,
+)
 
 __all__ = [
     "CredentialsResource",
@@ -100,4 +116,16 @@ __all__ = [
     "AsyncCheckpointsResourceWithRawResponse",
     "CheckpointsResourceWithStreamingResponse",
     "AsyncCheckpointsResourceWithStreamingResponse",
+    "SecretsResource",
+    "AsyncSecretsResource",
+    "SecretsResourceWithRawResponse",
+    "AsyncSecretsResourceWithRawResponse",
+    "SecretsResourceWithStreamingResponse",
+    "AsyncSecretsResourceWithStreamingResponse",
+    "EnvironmentsResource",
+    "AsyncEnvironmentsResource",
+    "EnvironmentsResourceWithRawResponse",
+    "AsyncEnvironmentsResourceWithRawResponse",
+    "EnvironmentsResourceWithStreamingResponse",
+    "AsyncEnvironmentsResourceWithStreamingResponse",
 ]

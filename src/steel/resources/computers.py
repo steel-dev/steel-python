@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, Iterable
 
 import httpx
 
@@ -53,7 +53,15 @@ class ComputersResource(SyncAPIResource):
         *,
         auto_pause: bool | Omit = omit,
         disk_mib: int | Omit = omit,
+        env: Dict[str, str] | Omit = omit,
+        environment_id: str | Omit = omit,
+        idle_timeout_seconds: int | Omit = omit,
         memory_mib: int | Omit = omit,
+        name: str | Omit = omit,
+        network_policy: computer_create_params.NetworkPolicy | Omit = omit,
+        network_secrets: Iterable[computer_create_params.NetworkSecret] | Omit = omit,
+        project_id: str | Omit = omit,
+        secrets: Dict[str, str] | Omit = omit,
         template: str | Omit = omit,
         timeout_seconds: int | Omit = omit,
         vcpu: int | Omit = omit,
@@ -73,6 +81,9 @@ class ComputersResource(SyncAPIResource):
 
           disk_mib: Ignored today. Every computer gets the disk its host is configured for.
 
+          idle_timeout_seconds: Pause the computer after this many seconds without incoming traffic, so a later
+              resume continues where it left off. 0 disables idle pausing.
+
           timeout_seconds: How long the computer may run before it is stopped, or paused when autoPause is
               set. A resume starts a fresh window.
 
@@ -90,7 +101,15 @@ class ComputersResource(SyncAPIResource):
                 {
                     "auto_pause": auto_pause,
                     "disk_mib": disk_mib,
+                    "env": env,
+                    "environment_id": environment_id,
+                    "idle_timeout_seconds": idle_timeout_seconds,
                     "memory_mib": memory_mib,
+                    "name": name,
+                    "network_policy": network_policy,
+                    "network_secrets": network_secrets,
+                    "project_id": project_id,
+                    "secrets": secrets,
                     "template": template,
                     "timeout_seconds": timeout_seconds,
                     "vcpu": vcpu,
@@ -335,6 +354,40 @@ class ComputersResource(SyncAPIResource):
             cast_to=ComputerQuota,
         )
 
+    def restart(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Computer:
+        """Reboot a running computer in place.
+
+        The disk survives; memory does not.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._post(
+            path_template("/v1/computers/{id}/restart", id=id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Computer,
+        )
+
     def resume(
         self,
         id: str,
@@ -362,6 +415,74 @@ class ComputersResource(SyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._post(
             path_template("/v1/computers/{id}/resume", id=id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Computer,
+        )
+
+    def start(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Computer:
+        """
+        Boot a stopped computer; already waking or running is a success.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._post(
+            path_template("/v1/computers/{id}/start", id=id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Computer,
+        )
+
+    def stop(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Computer:
+        """Shut the computer down but keep its disk; already stopped is a success.
+
+        Start it
+        again to pick up where the disk left off.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._post(
+            path_template("/v1/computers/{id}/stop", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -427,7 +548,15 @@ class AsyncComputersResource(AsyncAPIResource):
         *,
         auto_pause: bool | Omit = omit,
         disk_mib: int | Omit = omit,
+        env: Dict[str, str] | Omit = omit,
+        environment_id: str | Omit = omit,
+        idle_timeout_seconds: int | Omit = omit,
         memory_mib: int | Omit = omit,
+        name: str | Omit = omit,
+        network_policy: computer_create_params.NetworkPolicy | Omit = omit,
+        network_secrets: Iterable[computer_create_params.NetworkSecret] | Omit = omit,
+        project_id: str | Omit = omit,
+        secrets: Dict[str, str] | Omit = omit,
         template: str | Omit = omit,
         timeout_seconds: int | Omit = omit,
         vcpu: int | Omit = omit,
@@ -447,6 +576,9 @@ class AsyncComputersResource(AsyncAPIResource):
 
           disk_mib: Ignored today. Every computer gets the disk its host is configured for.
 
+          idle_timeout_seconds: Pause the computer after this many seconds without incoming traffic, so a later
+              resume continues where it left off. 0 disables idle pausing.
+
           timeout_seconds: How long the computer may run before it is stopped, or paused when autoPause is
               set. A resume starts a fresh window.
 
@@ -464,7 +596,15 @@ class AsyncComputersResource(AsyncAPIResource):
                 {
                     "auto_pause": auto_pause,
                     "disk_mib": disk_mib,
+                    "env": env,
+                    "environment_id": environment_id,
+                    "idle_timeout_seconds": idle_timeout_seconds,
                     "memory_mib": memory_mib,
+                    "name": name,
+                    "network_policy": network_policy,
+                    "network_secrets": network_secrets,
+                    "project_id": project_id,
+                    "secrets": secrets,
                     "template": template,
                     "timeout_seconds": timeout_seconds,
                     "vcpu": vcpu,
@@ -711,6 +851,40 @@ class AsyncComputersResource(AsyncAPIResource):
             cast_to=ComputerQuota,
         )
 
+    async def restart(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Computer:
+        """Reboot a running computer in place.
+
+        The disk survives; memory does not.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._post(
+            path_template("/v1/computers/{id}/restart", id=id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Computer,
+        )
+
     async def resume(
         self,
         id: str,
@@ -738,6 +912,74 @@ class AsyncComputersResource(AsyncAPIResource):
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._post(
             path_template("/v1/computers/{id}/resume", id=id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Computer,
+        )
+
+    async def start(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Computer:
+        """
+        Boot a stopped computer; already waking or running is a success.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._post(
+            path_template("/v1/computers/{id}/start", id=id),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=Computer,
+        )
+
+    async def stop(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Computer:
+        """Shut the computer down but keep its disk; already stopped is a success.
+
+        Start it
+        again to pick up where the disk left off.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._post(
+            path_template("/v1/computers/{id}/stop", id=id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -806,8 +1048,17 @@ class ComputersResourceWithRawResponse:
         self.quota = to_raw_response_wrapper(
             computers.quota,
         )
+        self.restart = to_raw_response_wrapper(
+            computers.restart,
+        )
         self.resume = to_raw_response_wrapper(
             computers.resume,
+        )
+        self.start = to_raw_response_wrapper(
+            computers.start,
+        )
+        self.stop = to_raw_response_wrapper(
+            computers.stop,
         )
         self.transitions = to_raw_response_wrapper(
             computers.transitions,
@@ -842,8 +1093,17 @@ class AsyncComputersResourceWithRawResponse:
         self.quota = async_to_raw_response_wrapper(
             computers.quota,
         )
+        self.restart = async_to_raw_response_wrapper(
+            computers.restart,
+        )
         self.resume = async_to_raw_response_wrapper(
             computers.resume,
+        )
+        self.start = async_to_raw_response_wrapper(
+            computers.start,
+        )
+        self.stop = async_to_raw_response_wrapper(
+            computers.stop,
         )
         self.transitions = async_to_raw_response_wrapper(
             computers.transitions,
@@ -878,8 +1138,17 @@ class ComputersResourceWithStreamingResponse:
         self.quota = to_streamed_response_wrapper(
             computers.quota,
         )
+        self.restart = to_streamed_response_wrapper(
+            computers.restart,
+        )
         self.resume = to_streamed_response_wrapper(
             computers.resume,
+        )
+        self.start = to_streamed_response_wrapper(
+            computers.start,
+        )
+        self.stop = to_streamed_response_wrapper(
+            computers.stop,
         )
         self.transitions = to_streamed_response_wrapper(
             computers.transitions,
@@ -914,8 +1183,17 @@ class AsyncComputersResourceWithStreamingResponse:
         self.quota = async_to_streamed_response_wrapper(
             computers.quota,
         )
+        self.restart = async_to_streamed_response_wrapper(
+            computers.restart,
+        )
         self.resume = async_to_streamed_response_wrapper(
             computers.resume,
+        )
+        self.start = async_to_streamed_response_wrapper(
+            computers.start,
+        )
+        self.stop = async_to_streamed_response_wrapper(
+            computers.stop,
         )
         self.transitions = async_to_streamed_response_wrapper(
             computers.transitions,

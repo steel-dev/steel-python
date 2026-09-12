@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 from .file import File as File
+from .secret import Secret as Secret
 from .session import Session as Session
 from .computer import Computer as Computer
 from .fileslist import Fileslist as Fileslist
 from .checkpoint import Checkpoint as Checkpoint
+from .environment import Environment as Environment
 from .exec_result import ExecResult as ExecResult
+from .secret_list import SecretList as SecretList
 from .pdf_response import PdfResponse as PdfResponse
 from .sessionslist import Sessionslist as Sessionslist
 from .computer_list import ComputerList as ComputerList
@@ -15,9 +18,11 @@ from .computer_quota import ComputerQuota as ComputerQuota
 from .checkpoint_list import CheckpointList as CheckpointList
 from .scrape_response import ScrapeResponse as ScrapeResponse
 from .session_context import SessionContext as SessionContext
+from .environment_list import EnvironmentList as EnvironmentList
 from .client_pdf_params import ClientPdfParams as ClientPdfParams
 from .file_upload_params import FileUploadParams as FileUploadParams
 from .profile_get_params import ProfileGetParams as ProfileGetParams
+from .secret_list_params import SecretListParams as SecretListParams
 from .profile_list_params import ProfileListParams as ProfileListParams
 from .screenshot_response import ScreenshotResponse as ScreenshotResponse
 from .session_list_params import SessionListParams as SessionListParams
@@ -25,6 +30,9 @@ from .client_scrape_params import ClientScrapeParams as ClientScrapeParams
 from .computer_exec_params import ComputerExecParams as ComputerExecParams
 from .computer_transitions import ComputerTransitions as ComputerTransitions
 from .profile_get_response import ProfileGetResponse as ProfileGetResponse
+from .secret_create_params import SecretCreateParams as SecretCreateParams
+from .secret_delete_params import SecretDeleteParams as SecretDeleteParams
+from .secret_update_params import SecretUpdateParams as SecretUpdateParams
 from .profile_create_params import ProfileCreateParams as ProfileCreateParams
 from .profile_list_response import ProfileListResponse as ProfileListResponse
 from .profile_update_params import ProfileUpdateParams as ProfileUpdateParams
@@ -32,6 +40,8 @@ from .session_create_params import SessionCreateParams as SessionCreateParams
 from .session_events_params import SessionEventsParams as SessionEventsParams
 from .computer_create_params import ComputerCreateParams as ComputerCreateParams
 from .credential_list_params import CredentialListParams as CredentialListParams
+from .secret_retrieve_params import SecretRetrieveParams as SecretRetrieveParams
+from .environment_list_params import EnvironmentListParams as EnvironmentListParams
 from .extension_list_response import ExtensionListResponse as ExtensionListResponse
 from .extension_update_params import ExtensionUpdateParams as ExtensionUpdateParams
 from .extension_upload_params import ExtensionUploadParams as ExtensionUploadParams
@@ -46,6 +56,9 @@ from .credential_list_response import CredentialListResponse as CredentialListRe
 from .credential_update_params import CredentialUpdateParams as CredentialUpdateParams
 from .session_release_response import SessionReleaseResponse as SessionReleaseResponse
 from .checkpoint_restore_params import CheckpointRestoreParams as CheckpointRestoreParams
+from .environment_create_params import EnvironmentCreateParams as EnvironmentCreateParams
+from .environment_delete_params import EnvironmentDeleteParams as EnvironmentDeleteParams
+from .environment_update_params import EnvironmentUpdateParams as EnvironmentUpdateParams
 from .extension_delete_response import ExtensionDeleteResponse as ExtensionDeleteResponse
 from .extension_update_response import ExtensionUpdateResponse as ExtensionUpdateResponse
 from .extension_upload_response import ExtensionUploadResponse as ExtensionUploadResponse
@@ -54,6 +67,7 @@ from .credential_create_response import CredentialCreateResponse as CredentialCr
 from .credential_delete_response import CredentialDeleteResponse as CredentialDeleteResponse
 from .credential_update_response import CredentialUpdateResponse as CredentialUpdateResponse
 from .session_release_all_params import SessionReleaseAllParams as SessionReleaseAllParams
+from .environment_retrieve_params import EnvironmentRetrieveParams as EnvironmentRetrieveParams
 from .extension_download_response import ExtensionDownloadResponse as ExtensionDownloadResponse
 from .session_release_all_response import SessionReleaseAllResponse as SessionReleaseAllResponse
 from .extension_delete_all_response import ExtensionDeleteAllResponse as ExtensionDeleteAllResponse

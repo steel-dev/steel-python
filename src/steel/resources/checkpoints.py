@@ -133,6 +133,7 @@ class CheckpointsResource(SyncAPIResource):
         id: str,
         *,
         auto_pause: bool | Omit = omit,
+        idle_timeout_seconds: int | Omit = omit,
         timeout_seconds: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -146,6 +147,9 @@ class CheckpointsResource(SyncAPIResource):
 
         Args:
           auto_pause: Pause at the timeout instead of stopping.
+
+          idle_timeout_seconds: Pause the restored computer after this many seconds without incoming traffic. 0
+              disables idle pausing.
 
           timeout_seconds: How long the restored computer may run before it is stopped, or paused when
               autoPause is set.
@@ -165,6 +169,7 @@ class CheckpointsResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "auto_pause": auto_pause,
+                    "idle_timeout_seconds": idle_timeout_seconds,
                     "timeout_seconds": timeout_seconds,
                 },
                 checkpoint_restore_params.CheckpointRestoreParams,
@@ -286,6 +291,7 @@ class AsyncCheckpointsResource(AsyncAPIResource):
         id: str,
         *,
         auto_pause: bool | Omit = omit,
+        idle_timeout_seconds: int | Omit = omit,
         timeout_seconds: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -299,6 +305,9 @@ class AsyncCheckpointsResource(AsyncAPIResource):
 
         Args:
           auto_pause: Pause at the timeout instead of stopping.
+
+          idle_timeout_seconds: Pause the restored computer after this many seconds without incoming traffic. 0
+              disables idle pausing.
 
           timeout_seconds: How long the restored computer may run before it is stopped, or paused when
               autoPause is set.
@@ -318,6 +327,7 @@ class AsyncCheckpointsResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "auto_pause": auto_pause,
+                    "idle_timeout_seconds": idle_timeout_seconds,
                     "timeout_seconds": timeout_seconds,
                 },
                 checkpoint_restore_params.CheckpointRestoreParams,
